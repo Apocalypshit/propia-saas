@@ -1,7 +1,5 @@
-// api/usage.js
-// Consulta el uso actual del usuario y sus límites por plan
-
-import { createClient } from '@supabase/supabase-js';
+// api/usage.js — Compatible con Vercel Serverless Functions
+const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -15,10 +13,12 @@ const PLAN_LIMITS = {
   enterprise: { listings: 99999,  leads: 99999, label: 'Empresarial — $399/mes' }
 };
 
-export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Método no permitido' });
-  }
+module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Método no permitido' });
 
   try {
     const token = req.headers.authorization?.replace('Bearer ', '');
@@ -30,33 +30,14 @@ export default async function handler(req, res) {
     const { data: profile } = await supabase
       .from('profiles')
       .select('plan, listings_used_this_month, leads_used_this_month, billing_period_start')
-      .eq('id', user.id)
-      .single();
+      .eq('id', user.id).single();
 
     const plan = profile?.plan || 'free';
     const limits = PLAN_LIMITS[plan];
 
-    // Resetear contador si ya pasó el mes
-    const periodStart = new Date(profile?.billing_period_start || Date.now());
-    const now = new Date();
-    const daysSincePeriodStart = (now - periodStart) / (1000 * 60 * 60 * 24);
-
-    if (daysSincePeriodStart >= 30) {
-      await supabase.from('profiles').update({
-        listings_used_this_month: 0,
-        leads_used_this_month: 0,
-        billing_period_start: now.toISOString()
-      }).eq('id', user.id);
-
-      return res.status(200).json({
-        plan, planLabel: limits.label,
-        listings: { used: 0, limit: limits.listings },
-        leads:    { used: 0, limit: limits.leads }
-      });
-    }
-
     return res.status(200).json({
-      plan, planLabel: limits.label,
+      plan,
+      planLabel: limits.label,
       listings: { used: profile?.listings_used_this_month || 0, limit: limits.listings },
       leads:    { used: profile?.leads_used_this_month || 0,    limit: limits.leads }
     });
@@ -65,4 +46,4 @@ export default async function handler(req, res) {
     console.error('Error en /api/usage:', err);
     return res.status(500).json({ error: 'Error interno del servidor.' });
   }
-}
+};
