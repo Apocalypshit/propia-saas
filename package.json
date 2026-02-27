@@ -1,0 +1,9 @@
+{
+  "name": "propia-saas",
+  "version": "1.0.0",
+  "description": "PropIA — SaaS de Inteligencia Artificial para Agentes de Bienes Raíces Latinos en USA",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  }
+}

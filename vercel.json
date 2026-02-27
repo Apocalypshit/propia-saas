@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "buildCommand": "echo 'No build needed'",
+  "outputDirectory": ".",
+  "functions": {
+    "api/*.js": {
+      "runtime": "node@18"
+    }
+  },
+  "rewrites": [
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/",          "destination": "/index.html" }
+  ]
+}
