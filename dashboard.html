@@ -1,508 +1,438 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PropIA — Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #07090f;
-      --surface: #0f1420;
-      --surface2: #161d2e;
-      --border: rgba(255,255,255,0.07);
-      --gold: #c9a84c;
-      --gold-light: #e8c96a;
-      --gold-dim: rgba(201,168,76,0.12);
-      --text: #eeeae0;
-      --muted: #7a8099;
-      --radius: 14px;
-      --success: #22c55e;
-      --error: #ef4444;
-      --sidebar: 240px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-      display: flex;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PropIA — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:     #0c0c0f;
+  --s1:     #111116;
+  --s2:     #18181f;
+  --s3:     #1f1f28;
+  --border: rgba(255,255,255,0.06);
+  --b2:     rgba(255,255,255,0.04);
+  --violet: #a78bfa;
+  --v2:     #c4b5fd;
+  --v-dim:  rgba(167,139,250,0.1);
+  --v-glow: rgba(167,139,250,0.16);
+  --emerald:#34d399;
+  --e-dim:  rgba(52,211,153,0.09);
+  --amber:  #fbbf24;
+  --a-dim:  rgba(251,191,36,0.1);
+  --text:   #f4f4f6;
+  --muted:  #71717a;
+  --muted2: #3f3f46;
+  --error:  #f87171;
+  --radius: 13px;
+  --sw:     240px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Instrument Sans',sans-serif;min-height:100vh;display:flex;}
 
-    /* ── SIDEBAR ── */
-    .sidebar {
-      width: var(--sidebar);
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      position: fixed; top: 0; left: 0; bottom: 0;
-      z-index: 100;
-    }
-    .sidebar-logo {
-      padding: 24px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .sidebar-logo .icon {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--gold), #8a5e1e);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
-    .sidebar-logo .name {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px; font-weight: 700;
-    }
-    .sidebar-logo .name span { color: var(--gold); }
+/* ══ SIDEBAR ══ */
+.sidebar{
+  width:var(--sw);background:var(--s1);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;z-index:200;
+  transition:transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+.s-top{
+  padding:20px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.s-logo{display:flex;align-items:center;gap:9px;}
+.s-mark{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,var(--violet),#7c3aed);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+}
+.s-name{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:800;color:var(--text);letter-spacing:-0.4px;}
+.s-name span{color:var(--violet);}
+.s-close{display:none;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px;line-height:1;}
 
-    .sidebar-nav {
-      flex: 1; padding: 16px 10px;
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    .nav-section-label {
-      font-size: 10px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 1px; color: var(--muted);
-      padding: 10px 10px 6px;
-    }
-    .nav-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 12px; border-radius: 9px;
-      cursor: pointer; color: var(--muted);
-      font-size: 13px; font-weight: 500;
-      transition: all 0.15s; border: none; background: none;
-      width: 100%; text-align: left;
-    }
-    .nav-item:hover { background: var(--surface2); color: var(--text); }
-    .nav-item.active {
-      background: var(--gold-dim);
-      color: var(--gold-light); font-weight: 600;
-    }
-    .nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+.s-nav{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;}
+.nav-lbl{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);padding:12px 10px 5px;}
+.nav-item{
+  display:flex;align-items:center;gap:9px;
+  padding:10px 12px;border-radius:9px;
+  cursor:pointer;color:var(--muted);
+  font-size:13px;font-weight:500;
+  transition:all 0.15s;border:none;background:none;
+  width:100%;text-align:left;
+}
+.nav-item:hover{background:var(--s2);color:var(--text);}
+.nav-item.active{background:var(--v-dim);color:var(--v2);font-weight:600;border:1px solid rgba(167,139,250,0.12);}
+.nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
 
-    .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .user-card {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px; border-radius: 9px;
-      background: var(--surface2);
-    }
-    .user-avatar {
-      width: 34px; height: 34px;
-      background: linear-gradient(135deg, var(--gold), #8a5e1e);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; color: var(--bg);
-      flex-shrink: 0;
-    }
-    .user-info { flex: 1; overflow: hidden; }
-    .user-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .user-plan {
-      font-size: 10px; color: var(--gold);
-      text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;
-    }
-    .btn-logout {
-      background: none; border: none; cursor: pointer;
-      color: var(--muted); font-size: 16px; padding: 4px;
-      transition: color 0.15s;
-    }
-    .btn-logout:hover { color: var(--error); }
+.s-foot{padding:12px;border-top:1px solid var(--border);}
+.u-card{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 11px;border-radius:9px;
+  background:var(--s2);border:1px solid var(--b2);
+}
+.u-av{
+  width:30px;height:30px;
+  background:linear-gradient(135deg,var(--violet),#7c3aed);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:#fff;flex-shrink:0;
+  font-family:'Bricolage Grotesque',sans-serif;
+}
+.u-info{flex:1;overflow:hidden;}
+.u-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.u-plan{font-size:10px;color:var(--violet);text-transform:uppercase;letter-spacing:0.5px;font-weight:600;}
+.btn-out{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:15px;padding:4px;transition:color 0.15s;flex-shrink:0;}
+.btn-out:hover{color:var(--error);}
 
-    /* ── MAIN CONTENT ── */
-    .main {
-      margin-left: var(--sidebar);
-      flex: 1;
-      display: flex; flex-direction: column;
-    }
+/* ══ MAIN ══ */
+.main{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.topbar{
+  background:var(--s1);border-bottom:1px solid var(--border);
+  padding:0 26px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.t-left{display:flex;align-items:center;gap:11px;}
+.hamburger{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:4px;line-height:1;}
+.page-title{font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:700;color:var(--text);letter-spacing:-0.3px;}
+.t-right{display:flex;align-items:center;gap:10px;}
+.usage-pill{
+  display:flex;align-items:center;gap:5px;
+  background:var(--v-dim);border:1px solid rgba(167,139,250,0.15);
+  border-radius:20px;padding:4px 12px;
+  font-size:12px;font-weight:600;color:var(--v2);
+}
 
-    .topbar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 32px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 50;
-    }
-    .page-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px; font-weight: 700;
-    }
+.content{flex:1;padding:22px 26px;overflow-y:auto;}
+.panel{display:none;}
+.panel.active{display:block;animation:fadeUp 0.2s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
-    .usage-bar {
-      display: flex; align-items: center; gap: 20px;
-    }
-    .usage-item { font-size: 12px; color: var(--muted); }
-    .usage-item strong { color: var(--text); }
-    .usage-item .used { color: var(--gold); }
+/* ══ OVERVIEW ══ */
+.greeting{margin-bottom:22px;}
+.greeting h2{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:3px;}
+.greeting p{font-size:14px;color:var(--muted);}
 
-    .content {
-      flex: 1;
-      padding: 32px;
-      overflow-y: auto;
-    }
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px;}
+.stat-card{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:var(--radius);padding:18px 20px;
+  position:relative;overflow:hidden;transition:border-color 0.2s;
+}
+.stat-card:hover{border-color:rgba(167,139,250,0.2);}
+.stat-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;}
+.stat-value{
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:36px;font-weight:800;
+  color:var(--violet);line-height:1;margin-bottom:4px;letter-spacing:-2px;
+}
+.stat-sub{font-size:12px;color:var(--muted);}
+.progress-wrap{margin-top:12px;}
+.progress-track{background:var(--s2);border-radius:4px;height:3px;overflow:hidden;}
+.progress-fill{background:linear-gradient(90deg,var(--violet),var(--v2));height:100%;border-radius:4px;transition:width 0.6s cubic-bezier(.4,0,.2,1);}
 
-    /* PANELS */
-    .panel { display: none; }
-    .panel.active { display: block; animation: fadeIn 0.25s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;}
 
-    /* ── OVERVIEW PANEL ── */
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 16px; margin-bottom: 28px;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 24px;
-    }
-    .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); margin-bottom: 8px; }
-    .stat-value { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
-    .stat-sub { font-size: 12px; color: var(--muted); }
+.history-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.history-head{
+  padding:10px 18px;border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:1fr 100px 110px;gap:12px;
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);
+}
+.history-row{
+  padding:13px 18px;border-bottom:1px solid var(--b2);
+  display:grid;grid-template-columns:1fr 100px 110px;gap:12px;align-items:center;
+  transition:background 0.12s;
+}
+.history-row:last-child{border-bottom:none;}
+.history-row:hover{background:var(--s2);}
+.h-addr{font-size:13px;font-weight:500;}
+.h-price{font-size:12px;color:var(--muted);margin-top:2px;}
+.empty-state{padding:44px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.8;}
+.empty-state a{color:var(--violet);font-weight:600;cursor:pointer;}
+.tag{display:inline-block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:3px 9px;border-radius:20px;}
+.tag-v{background:var(--v-dim);color:var(--v2);border:1px solid rgba(167,139,250,0.12);}
 
-    .progress-bar-wrap { margin-top: 10px; }
-    .progress-track { background: var(--surface2); border-radius: 4px; height: 5px; overflow: hidden; }
-    .progress-fill { background: linear-gradient(90deg, var(--gold), #e8c96a); height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+/* ══ GENERATOR ══ */
+.gen-layout{display:grid;grid-template-columns:1fr 350px;gap:16px;align-items:start;}
 
-    .history-table {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .table-header {
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px; font-weight: 600; color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.5px;
-      display: grid; grid-template-columns: 1fr auto auto;
-      gap: 16px;
-    }
-    .table-row {
-      padding: 16px 24px;
-      border-bottom: 1px solid var(--border);
-      display: grid; grid-template-columns: 1fr auto auto;
-      gap: 16px; align-items: center;
-      font-size: 13px;
-    }
-    .table-row:last-child { border-bottom: none; }
-    .table-row:hover { background: var(--surface2); }
-    .empty-state {
-      padding: 40px; text-align: center;
-      color: var(--muted); font-size: 14px;
-    }
-    .tag {
-      font-size: 10px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.5px; padding: 4px 10px; border-radius: 20px;
-    }
-    .tag-gold { background: var(--gold-dim); color: var(--gold-light); }
-    .tag-free { background: rgba(122,128,153,0.15); color: var(--muted); }
+.card{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.card-title{font-family:'Bricolage Grotesque',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--violet);margin-bottom:16px;}
 
-    /* ── GENERATOR PANEL ── */
-    .gen-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-    }
-    @media (max-width: 900px) { .gen-grid { grid-template-columns: 1fr; } }
+.fg{margin-bottom:13px;}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;}
+.fg input,.fg select,.fg textarea{
+  width:100%;background:var(--s2);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);
+  font-family:'Instrument Sans',sans-serif;font-size:14px;padding:10px 12px;outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px var(--v-glow);}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--muted2);}
+.fg textarea{resize:vertical;min-height:78px;line-height:1.55;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-    }
-    .card-title {
-      font-size: 12px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 1px; color: var(--gold);
-      margin-bottom: 22px; display: flex; align-items: center; gap: 8px;
-    }
-    .form-group { margin-bottom: 16px; }
-    .form-group label {
-      display: block; font-size: 11px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--muted); margin-bottom: 7px;
-    }
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 9px; color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px; padding: 11px 14px; outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
-    }
-    .form-group input::placeholder, .form-group textarea::placeholder { color: #3a4158; }
-    .form-group select option { background: var(--surface); }
-    .form-group textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.tone-btn{
+  background:var(--s2);border:1px solid var(--border);
+  border-radius:8px;color:var(--muted);
+  font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:500;
+  padding:8px 4px;cursor:pointer;text-align:center;transition:all 0.15s;
+}
+.tone-btn:hover{border-color:var(--violet);color:var(--violet);}
+.tone-btn.active{background:var(--v-dim);border-color:var(--violet);color:var(--v2);font-weight:600;}
 
-    .tone-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
-    .tone-btn {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; color: var(--muted);
-      font-family: 'DM Sans', sans-serif; font-size: 12px;
-      font-weight: 500; padding: 9px 6px; cursor: pointer;
-      text-align: center; transition: all 0.18s;
-    }
-    .tone-btn:hover { border-color: var(--gold); color: var(--text); }
-    .tone-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-light); font-weight: 600; }
+.btn-primary{
+  width:100%;
+  background:linear-gradient(135deg,var(--violet),#7c3aed);
+  border:none;border-radius:10px;
+  color:#fff;font-family:'Bricolage Grotesque',sans-serif;
+  font-size:16px;font-weight:700;padding:13px;cursor:pointer;
+  transition:all 0.2s;margin-top:6px;letter-spacing:-0.3px;
+}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 8px 24px var(--v-glow);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;filter:none;}
+.btn-primary.is-loading .label{display:none;}
+.btn-primary.is-loading .loading{display:flex;justify-content:center;align-items:center;gap:8px;}
+.btn-primary .loading{display:none;}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
 
-    .btn-primary {
-      width: 100%;
-      background: linear-gradient(135deg, var(--gold), #9a6e20);
-      border: none; border-radius: 10px;
-      color: #07090f; font-family: 'DM Sans', sans-serif;
-      font-size: 15px; font-weight: 700; padding: 14px;
-      cursor: pointer; transition: opacity 0.2s, transform 0.1s;
-      margin-top: 8px;
-    }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-primary.is-loading .label { display: none; }
-    .btn-primary.is-loading .loading { display: flex; justify-content: center; align-items: center; gap: 8px; }
-    .btn-primary .loading { display: none; }
+.alert{border-radius:9px;padding:11px 13px;font-size:13px;line-height:1.5;}
+.alert.error{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.2);color:var(--error);}
+.alert.upgrade{background:var(--a-dim);border:1px solid rgba(251,191,36,0.2);color:var(--amber);}
 
-    .spinner { width: 16px; height: 16px; border: 2px solid rgba(7,9,15,0.3); border-top-color: #07090f; border-radius: 50%; animation: spin 0.7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+.info-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:14px;}
+.info-feat{display:flex;gap:11px;align-items:flex-start;}
+.info-icon{width:30px;height:30px;flex-shrink:0;background:var(--v-dim);border:1px solid rgba(167,139,250,0.12);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.info-title{font-size:13px;font-weight:600;margin-bottom:2px;}
+.info-sub{font-size:12px;color:var(--muted);line-height:1.5;}
+.info-tip{background:var(--e-dim);border:1px solid rgba(52,211,153,0.12);border-radius:8px;padding:11px 13px;font-size:12px;color:var(--emerald);line-height:1.6;}
+.info-tip strong{font-weight:600;}
 
-    .alert { border-radius: 8px; padding: 12px 14px; font-size: 13px; line-height: 1.5; display: none; margin-top: 8px; }
-    .alert.error   { background: rgba(239,68,68,0.1);  border: 1px solid rgba(239,68,68,0.3);  color: #fca5a5; display: block; }
-    .alert.success { background: rgba(34,197,94,0.1);  border: 1px solid rgba(34,197,94,0.3);  color: #86efac; display: block; }
-    .alert.upgrade { background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3); color: var(--gold-light); display: block; }
+/* OUTPUT */
+.output-wrap{grid-column:1/-1;display:none;animation:fadeUp 0.3s ease;}
+.output-wrap.visible{display:block;}
+.output-bar{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.output-ok{width:24px;height:24px;background:var(--e-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.output-ok-text{font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:700;}
+.output-tag{font-size:12px;color:var(--muted);background:var(--s1);border:1px solid var(--border);padding:3px 10px;border-radius:20px;}
 
-    /* OUTPUT */
-    .output-wrap { grid-column: 1 / -1; display: none; }
-    .output-wrap.visible { display: block; animation: fadeIn 0.3s ease; }
+.output-tabs{
+  display:flex;background:var(--s1);border:1px solid var(--border);
+  border-radius:9px;overflow:hidden;margin-bottom:13px;
+  width:fit-content;padding:3px;gap:2px;
+}
+.otab{
+  background:none;border:none;border-radius:7px;
+  color:var(--muted);font-family:'Instrument Sans',sans-serif;
+  font-size:13px;font-weight:500;padding:7px 15px;
+  cursor:pointer;transition:all 0.15s;white-space:nowrap;
+}
+.otab:hover{color:var(--text);}
+.otab.active{background:var(--violet);color:#fff;font-weight:600;}
 
-    .output-tabs {
-      display: flex; gap: 4px;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 10px; padding: 4px; width: fit-content; margin-bottom: 20px;
-    }
-    .otab {
-      background: none; border: none; border-radius: 7px;
-      color: var(--muted); font-family: 'DM Sans', sans-serif;
-      font-size: 13px; font-weight: 500; padding: 8px 16px;
-      cursor: pointer; transition: all 0.18s;
-    }
-    .otab.active { background: var(--gold-dim); color: var(--gold-light); font-weight: 600; }
+.otab-content{display:none;}
+.otab-content.active{display:block;animation:fadeUp 0.2s ease;}
 
-    .otab-content { display: none; }
-    .otab-content.active { display: block; animation: fadeIn 0.25s ease; }
+.output-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.output-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:11px;border-bottom:1px solid var(--b2);}
+.output-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);}
+.btn-copy{background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--muted);font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:500;padding:5px 12px;cursor:pointer;transition:all 0.15s;}
+.btn-copy:hover{border-color:var(--violet);color:var(--violet);}
+.btn-copy.copied{color:var(--emerald);border-color:rgba(52,211,153,0.3);}
+.output-text{font-size:14px;line-height:1.8;color:var(--text);white-space:pre-wrap;word-break:break-word;}
 
-    .output-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
-    .output-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
-    .output-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
-    .btn-copy {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 7px; color: var(--muted);
-      font-family: 'DM Sans', sans-serif; font-size: 12px;
-      font-weight: 500; padding: 6px 14px; cursor: pointer; transition: all 0.18s;
-    }
-    .btn-copy:hover { border-color: var(--gold); color: var(--gold-light); }
-    .btn-copy.copied { color: var(--success); border-color: var(--success); }
-    .output-text { font-size: 14px; line-height: 1.75; white-space: pre-wrap; word-break: break-word; }
-    .post-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; position: relative; }
-    .post-num { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 8px; }
-    .post-text { font-size: 13px; line-height: 1.65; white-space: pre-wrap; }
-    .post-copy { position: absolute; top: 14px; right: 14px; background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-size: 11px; padding: 4px 10px; cursor: pointer; transition: all 0.15s; }
-    .post-copy:hover { border-color: var(--gold); color: var(--gold-light); }
+.post-item{background:var(--s2);border:1px solid var(--b2);border-radius:9px;padding:15px;margin-bottom:9px;position:relative;}
+.post-item:last-child{margin-bottom:0;}
+.post-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--violet);margin-bottom:7px;}
+.post-text{font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;padding-right:40px;}
+.post-copy{position:absolute;top:11px;right:11px;background:var(--s1);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:3px 9px;cursor:pointer;transition:all 0.12s;}
+.post-copy:hover{border-color:var(--violet);color:var(--violet);}
 
-    /* PLAN PANEL */
-    .plans-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
-    @media (max-width: 1100px) { .plans-grid { grid-template-columns: repeat(2,1fr); } }
-    .plan-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px;
-      display: flex; flex-direction: column;
-      position: relative; transition: border-color 0.2s;
-    }
-    .plan-card.current { border-color: var(--gold); }
-    .plan-card.popular { border-color: rgba(42,110,245,0.4); }
-    .plan-badge {
-      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.8px; padding: 4px 12px; border-radius: 20px;
-      white-space: nowrap;
-    }
-    .plan-badge.gold-badge { background: var(--gold); color: var(--bg); }
-    .plan-badge.blue-badge { background: #2a6ef5; color: #fff; }
-    .plan-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-    .plan-price { font-size: 32px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 4px; }
-    .plan-price span { font-size: 14px; font-weight: 400; color: var(--muted); }
-    .plan-desc { font-size: 12px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
-    .plan-features { flex: 1; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-    .plan-feat { font-size: 13px; display: flex; gap: 8px; align-items: flex-start; }
-    .plan-feat .check { color: var(--gold); flex-shrink: 0; }
-    .plan-feat .cross { color: var(--muted); flex-shrink: 0; }
-    .btn-plan {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 9px; color: var(--text);
-      font-family: 'DM Sans', sans-serif; font-size: 14px;
-      font-weight: 600; padding: 12px; cursor: pointer;
-      transition: all 0.18s; text-align: center;
-    }
-    .btn-plan:hover { border-color: var(--gold); color: var(--gold-light); }
-    .btn-plan.current { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-light); cursor: default; }
-    .btn-plan.upgrade-btn { background: linear-gradient(135deg, var(--gold), #9a6e20); border-color: transparent; color: var(--bg); font-weight: 700; }
-    .btn-plan.upgrade-btn:hover { opacity: 0.9; }
+/* ══ PLANS ══ */
+.plans-intro{margin-bottom:20px;}
+.plans-intro h2{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px;}
+.plans-intro p{font-size:14px;color:var(--muted);}
 
-    @media (max-width: 640px) {
-      .main { margin-left: 0; }
-      .sidebar { display: none; }
-      .stats-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+.plans-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.plan-card{
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;
+  display:flex;flex-direction:column;position:relative;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.plan-card:hover{transform:translateY(-2px);}
+.plan-card.current{border-color:var(--violet);}
+.plan-card.popular{border-color:var(--amber);}
+.plan-badge-top{
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;
+  padding:3px 11px;border-radius:20px;white-space:nowrap;
+}
+.b-violet{background:var(--violet);color:#0c0c0f;}
+.b-amber{background:var(--amber);color:#0c0c0f;}
+.plan-name{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;font-weight:800;margin-bottom:4px;letter-spacing:-0.3px;}
+.plan-price{font-family:'Bricolage Grotesque',sans-serif;font-size:26px;font-weight:800;color:var(--violet);line-height:1;margin-bottom:4px;letter-spacing:-1px;}
+.plan-price span{font-size:12px;font-weight:400;color:var(--muted);font-family:'Instrument Sans',sans-serif;}
+.plan-desc{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.plan-feats{flex:1;display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.plan-feat{font-size:13px;display:flex;gap:7px;align-items:flex-start;line-height:1.4;}
+.check{color:var(--emerald);flex-shrink:0;font-weight:700;}
+.cross{color:var(--muted2);flex-shrink:0;}
+.btn-plan{
+  background:var(--s2);border:1px solid var(--border);
+  border-radius:8px;color:var(--muted);
+  font-family:'Instrument Sans',sans-serif;font-size:13px;font-weight:600;
+  padding:10px;cursor:pointer;transition:all 0.15s;text-align:center;
+}
+.btn-plan:hover{border-color:var(--violet);color:var(--violet);}
+.btn-plan.current{background:var(--v-dim);border-color:var(--violet);color:var(--v2);cursor:default;}
+.btn-plan.up{background:linear-gradient(135deg,var(--violet),#7c3aed);border-color:transparent;color:#fff;font-weight:700;}
+.btn-plan.up:hover{filter:brightness(1.1);box-shadow:0 4px 16px var(--v-glow);}
+
+/* ══ MOBILE ══ */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--s1);border-top:1px solid var(--border);z-index:200;padding:8px 0 max(8px,env(safe-area-inset-bottom));}
+.mobile-nav-inner{display:flex;justify-content:space-around;}
+.mob-btn{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:'Instrument Sans',sans-serif;font-size:10px;font-weight:500;padding:4px 16px;transition:color 0.15s;}
+.mob-btn.active{color:var(--violet);font-weight:600;}
+.mob-icon{font-size:19px;line-height:1;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:190;backdrop-filter:blur(3px);}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1100px){.plans-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:900px){.gen-layout{grid-template-columns:1fr;}.info-card{display:none;}.stats-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:768px){
+  :root{--sw:256px;}
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .s-close{display:block;}
+  .overlay.open{display:block;}
+  .main{margin-left:0;}
+  .topbar{padding:0 14px;}
+  .hamburger{display:block;}
+  .usage-pill{display:none;}
+  .content{padding:14px;padding-bottom:78px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .history-head,.history-row{grid-template-columns:1fr 80px;}
+  .h-date{display:none;}
+  .plans-grid{grid-template-columns:1fr;}
+  .mobile-nav{display:block;}
+  .output-tabs{flex-wrap:wrap;}
+  .otab{font-size:12px;padding:7px 10px;}
+}
+@media(max-width:420px){
+  .stats-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .tone-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
 </head>
 <body>
 
-<!-- ── SIDEBAR ── -->
-<div class="sidebar">
-  <div class="sidebar-logo">
-    <div class="icon">🏠</div>
-    <div class="name">Prop<span>IA</span></div>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="sidebar" id="sidebar">
+  <div class="s-top">
+    <div class="s-logo">
+      <div class="s-mark">🏠</div>
+      <div class="s-name">Prop<span>IA</span></div>
+    </div>
+    <button class="s-close" onclick="closeSidebar()">✕</button>
   </div>
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Principal</div>
-    <button class="nav-item active" onclick="showPanel('overview',this)">
-      <span class="nav-icon">📊</span> Resumen
-    </button>
-    <button class="nav-item" onclick="showPanel('generator',this)">
-      <span class="nav-icon">✨</span> Generar Listing
-    </button>
-    <div class="nav-section-label" style="margin-top:8px;">Cuenta</div>
-    <button class="nav-item" onclick="showPanel('plans',this)">
-      <span class="nav-icon">💎</span> Planes y Precios
-    </button>
+  <nav class="s-nav">
+    <div class="nav-lbl">Principal</div>
+    <button class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon">📊</span>Resumen</button>
+    <button class="nav-item" onclick="showPanel('generator',this)"><span class="nav-icon">✨</span>Generar Listing</button>
+    <div class="nav-lbl" style="margin-top:8px;">Cuenta</div>
+    <button class="nav-item" onclick="showPanel('plans',this)"><span class="nav-icon">💎</span>Planes y Precios</button>
   </nav>
-  <div class="sidebar-footer">
-    <div class="user-card">
-      <div class="user-avatar" id="userInitial">?</div>
-      <div class="user-info">
-        <div class="user-name" id="userName">Cargando...</div>
-        <div class="user-plan" id="userPlan">free</div>
+  <div class="s-foot">
+    <div class="u-card">
+      <div class="u-av" id="userInitial">?</div>
+      <div class="u-info">
+        <div class="u-name" id="userName">Cargando...</div>
+        <div class="u-plan" id="userPlan">FREE</div>
       </div>
-      <button class="btn-logout" onclick="logout()" title="Cerrar sesión">⬡</button>
+      <button class="btn-out" onclick="logout()" title="Salir">↩</button>
     </div>
   </div>
 </div>
 
-<!-- ── MAIN ── -->
 <div class="main">
   <div class="topbar">
-    <div class="page-title" id="pageTitle">Resumen</div>
-    <div class="usage-bar">
-      <div class="usage-item">Listings: <strong><span class="used" id="topUsed">0</span>/<span id="topLimit">5</span></strong></div>
-      <div class="usage-item">Plan: <strong id="topPlan">Gratis</strong></div>
+    <div class="t-left">
+      <button class="hamburger" onclick="openSidebar()">☰</button>
+      <div class="page-title" id="pageTitle">Resumen</div>
+    </div>
+    <div class="t-right">
+      <div class="usage-pill">Listings: <strong><span id="topUsed">0</span>/<span id="topLimit">5</span></strong></div>
     </div>
   </div>
 
   <div class="content">
 
-    <!-- ── OVERVIEW PANEL ── -->
+    <!-- OVERVIEW -->
     <div class="panel active" id="panel-overview">
+      <div class="greeting">
+        <h2 id="greetingName">Hola 👋</h2>
+        <p>Resumen de tu actividad este mes.</p>
+      </div>
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-label">Listings Generados</div>
+          <div class="stat-label">Listings generados</div>
           <div class="stat-value" id="statUsed">0</div>
-          <div class="stat-sub" id="statLimit">de 5 en tu plan Gratis</div>
-          <div class="progress-bar-wrap">
-            <div class="progress-track">
-              <div class="progress-fill" id="statProgress" style="width:0%"></div>
-            </div>
-          </div>
+          <div class="stat-sub" id="statLimit">de 5 disponibles</div>
+          <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="statProgress" style="width:0%"></div></div></div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Tu Plan Actual</div>
-          <div class="stat-value" style="font-size:24px;padding-top:6px;" id="statPlan">Gratis</div>
-          <div class="stat-sub">Renueva el próximo mes</div>
+          <div class="stat-label">Plan activo</div>
+          <div class="stat-value" style="font-size:19px;padding-top:8px;" id="statPlan">Gratis</div>
+          <div class="stat-sub">Renueva mensualmente</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Assets Generados</div>
+          <div class="stat-label">Assets creados</div>
           <div class="stat-value" id="statAssets">0</div>
-          <div class="stat-sub">MLS + Posts + Email + Video</div>
+          <div class="stat-sub">MLS · Posts · Email · Video</div>
         </div>
       </div>
-
-      <div class="history-table">
-        <div class="table-header">
-          <div>Propiedad</div>
-          <div>Tono</div>
-          <div>Fecha</div>
-        </div>
+      <div class="section-title">Historial reciente</div>
+      <div class="history-card">
+        <div class="history-head"><div>Propiedad</div><div>Tono</div><div class="h-date">Fecha</div></div>
         <div id="historyBody">
-          <div class="empty-state">
-            Aún no has generado ningún listing.<br>
-            <span style="color:var(--gold);cursor:pointer;" onclick="showPanel('generator', document.querySelectorAll('.nav-item')[1])">Genera tu primer listing →</span>
-          </div>
+          <div class="empty-state">Aún no has generado ningún listing.<br><a onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">Genera tu primer listing →</a></div>
         </div>
       </div>
     </div>
 
-    <!-- ── GENERATOR PANEL ── -->
+    <!-- GENERATOR -->
     <div class="panel" id="panel-generator">
-      <div class="gen-grid">
-        <!-- FORM -->
+      <div class="gen-layout">
         <div class="card">
-          <div class="card-title">📋 Datos de la Propiedad</div>
-          <div class="form-group">
-            <label>Dirección</label>
-            <input type="text" id="gAddress" placeholder="123 Oak Street, Miami, FL 33101" />
+          <div class="card-title">📋 Datos de la propiedad</div>
+          <div class="fg"><label>Dirección completa</label><input type="text" id="gAddress" placeholder="123 Oak Street, Miami, FL 33101"/></div>
+          <div class="form-row">
+            <div class="fg"><label>Precio</label><input type="text" id="gPrice" placeholder="$450,000"/></div>
+            <div class="fg"><label>Tipo</label><select id="gType"><option value="casa">Casa unifamiliar</option><option value="condo">Condominio</option><option value="townhouse">Townhouse</option><option value="multifamiliar">Multifamiliar</option><option value="terreno">Terreno</option><option value="comercial">Comercial</option></select></div>
           </div>
           <div class="form-row">
-            <div class="form-group">
-              <label>Precio</label>
-              <input type="text" id="gPrice" placeholder="$450,000" />
-            </div>
-            <div class="form-group">
-              <label>Tipo</label>
-              <select id="gType">
-                <option value="casa">Casa unifamiliar</option>
-                <option value="condo">Condominio</option>
-                <option value="townhouse">Townhouse</option>
-                <option value="multifamiliar">Multifamiliar</option>
-                <option value="terreno">Terreno</option>
-                <option value="comercial">Comercial</option>
-              </select>
-            </div>
+            <div class="fg"><label>Recámaras</label><input type="number" id="gBeds" placeholder="4" min="0" max="20"/></div>
+            <div class="fg"><label>Baños</label><input type="number" id="gBaths" placeholder="3" min="1" max="20" step="0.5"/></div>
           </div>
           <div class="form-row">
-            <div class="form-group">
-              <label>Recámaras</label>
-              <input type="number" id="gBeds" placeholder="4" min="0" max="20" />
-            </div>
-            <div class="form-group">
-              <label>Baños</label>
-              <input type="number" id="gBaths" placeholder="3" min="1" max="20" step="0.5" />
-            </div>
+            <div class="fg"><label>Pies cuadrados</label><input type="text" id="gSqft" placeholder="2,200"/></div>
+            <div class="fg"><label>Año</label><input type="text" id="gYear" placeholder="2018"/></div>
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Pies cuadrados</label>
-              <input type="text" id="gSqft" placeholder="2,200" />
-            </div>
-            <div class="form-group">
-              <label>Año de construcción</label>
-              <input type="text" id="gYear" placeholder="2018" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Características especiales</label>
-            <textarea id="gFeatures" placeholder="Piscina, cocina remodelada, garage doble, vista al lago..."></textarea>
-          </div>
-          <div class="form-group">
+          <div class="fg"><label>Características especiales</label><textarea id="gFeatures" placeholder="Piscina, cocina remodelada, garage doble, vista al lago..."></textarea></div>
+          <div class="fg">
             <label>Tono del contenido</label>
             <div class="tone-grid">
               <button class="tone-btn active" onclick="setTone(this,'lujoso')">✨ Lujoso</button>
               <button class="tone-btn" onclick="setTone(this,'familiar')">👨‍👩‍👧 Familiar</button>
-              <button class="tone-btn" onclick="setTone(this,'inversionista')">📈 Inversionista</button>
+              <button class="tone-btn" onclick="setTone(this,'inversionista')">📈 Inversión</button>
               <button class="tone-btn" onclick="setTone(this,'moderno')">🏙️ Moderno</button>
               <button class="tone-btn" onclick="setTone(this,'urgente')">⚡ Urgente</button>
               <button class="tone-btn" onclick="setTone(this,'emocional')">❤️ Emocional</button>
@@ -510,55 +440,25 @@
           </div>
           <button class="btn-primary" id="genBtn" onclick="generateListing()">
             <span class="label">✨ Generar con IA</span>
-            <span class="loading"><span class="spinner"></span> Generando...</span>
+            <span class="loading"><span class="spinner"></span>Generando...</span>
           </button>
-          <div id="genAlert"></div>
+          <div id="genAlert" style="margin-top:10px;"></div>
         </div>
 
-        <!-- INFO CARD -->
-        <div class="card" style="align-self:start;">
-          <div class="card-title">🚀 ¿Qué genera la IA?</div>
-          <div style="display:flex;flex-direction:column;gap:16px;">
-            <div style="display:flex;gap:12px;">
-              <div style="font-size:20px;">📝</div>
-              <div>
-                <div style="font-size:13px;font-weight:600;margin-bottom:3px;">Descripción MLS</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.5;">150-200 palabras profesionales listas para el MLS</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;">
-              <div style="font-size:20px;">📱</div>
-              <div>
-                <div style="font-size:13px;font-weight:600;margin-bottom:3px;">3 Posts para Redes</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.5;">Instagram y Facebook con emojis y hashtags en español</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;">
-              <div style="font-size:20px;">📧</div>
-              <div>
-                <div style="font-size:13px;font-weight:600;margin-bottom:3px;">Email de Marketing</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.5;">Con asunto y cuerpo listos para enviar a tu lista</div>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;">
-              <div style="font-size:20px;">🎬</div>
-              <div>
-                <div style="font-size:13px;font-weight:600;margin-bottom:3px;">Script para Video</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.5;">Guión de 60-90 segundos para Reels o YouTube</div>
-              </div>
-            </div>
-          </div>
-          <div style="margin-top:20px;padding:14px;background:var(--gold-dim);border:1px solid rgba(201,168,76,0.2);border-radius:9px;">
-            <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">💡 Consejo Pro</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.5;">Agrega detalles únicos en "Características especiales" para obtener contenido más personalizado y persuasivo.</div>
-          </div>
+        <div class="info-card">
+          <div class="card-title" style="margin-bottom:4px;">🚀 Qué genera la IA</div>
+          <div class="info-feat"><div class="info-icon">📝</div><div><div class="info-title">Descripción MLS</div><div class="info-sub">150-200 palabras profesionales listas para publicar</div></div></div>
+          <div class="info-feat"><div class="info-icon">📱</div><div><div class="info-title">3 Posts para Redes</div><div class="info-sub">Instagram y Facebook con emojis y hashtags en español</div></div></div>
+          <div class="info-feat"><div class="info-icon">📧</div><div><div class="info-title">Email de Marketing</div><div class="info-sub">Con asunto y cuerpo listos para tu lista de clientes</div></div></div>
+          <div class="info-feat"><div class="info-icon">🎬</div><div><div class="info-title">Script para Video</div><div class="info-sub">Guión de 60-90 segundos para Reels o YouTube</div></div></div>
+          <div class="info-tip">💡 <strong>Consejo:</strong> Entre más detalles en "Características", mejor será el resultado.</div>
         </div>
 
-        <!-- OUTPUT -->
         <div class="output-wrap" id="outputWrap">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-            <div style="font-size:15px;font-weight:600;">✅ Contenido generado exitosamente</div>
-            <div style="font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:4px 12px;border-radius:20px;" id="outputPropTitle"></div>
+          <div class="output-bar">
+            <div class="output-ok">✅</div>
+            <div class="output-ok-text">Contenido generado</div>
+            <div class="output-tag" id="outputPropTitle"></div>
           </div>
           <div class="output-tabs">
             <button class="otab active" onclick="showOTab('mls',this)">📝 MLS</button>
@@ -566,364 +466,203 @@
             <button class="otab" onclick="showOTab('email',this)">📧 Email</button>
             <button class="otab" onclick="showOTab('video',this)">🎬 Video</button>
           </div>
-          <div class="otab-content active" id="otab-mls">
-            <div class="output-card">
-              <div class="output-header">
-                <div class="output-label">Descripción MLS</div>
-                <button class="btn-copy" onclick="copyOut('outMls',this)">📋 Copiar</button>
-              </div>
-              <div class="output-text" id="outMls"></div>
-            </div>
-          </div>
-          <div class="otab-content" id="otab-posts">
-            <div class="output-card">
-              <div class="output-header">
-                <div class="output-label">Posts para Redes Sociales</div>
-                <button class="btn-copy" onclick="copyAllPosts(this)">📋 Copiar todos</button>
-              </div>
-              <div id="postsContainer"></div>
-            </div>
-          </div>
-          <div class="otab-content" id="otab-email">
-            <div class="output-card">
-              <div class="output-header">
-                <div class="output-label">Email de Marketing</div>
-                <button class="btn-copy" onclick="copyOut('outEmail',this)">📋 Copiar</button>
-              </div>
-              <div class="output-text" id="outEmail"></div>
-            </div>
-          </div>
-          <div class="otab-content" id="otab-video">
-            <div class="output-card">
-              <div class="output-header">
-                <div class="output-label">Script para Video</div>
-                <button class="btn-copy" onclick="copyOut('outVideo',this)">📋 Copiar</button>
-              </div>
-              <div class="output-text" id="outVideo"></div>
-            </div>
-          </div>
+          <div class="otab-content active" id="otab-mls"><div class="output-card"><div class="output-head"><div class="output-lbl">Descripción MLS</div><button class="btn-copy" onclick="copyOut('outMls',this)">📋 Copiar</button></div><div class="output-text" id="outMls"></div></div></div>
+          <div class="otab-content" id="otab-posts"><div class="output-card"><div class="output-head"><div class="output-lbl">Posts para Redes Sociales</div><button class="btn-copy" onclick="copyAllPosts(this)">📋 Copiar todos</button></div><div id="postsContainer"></div></div></div>
+          <div class="otab-content" id="otab-email"><div class="output-card"><div class="output-head"><div class="output-lbl">Email de Marketing</div><button class="btn-copy" onclick="copyOut('outEmail',this)">📋 Copiar</button></div><div class="output-text" id="outEmail"></div></div></div>
+          <div class="otab-content" id="otab-video"><div class="output-card"><div class="output-head"><div class="output-lbl">Script para Video</div><button class="btn-copy" onclick="copyOut('outVideo',this)">📋 Copiar</button></div><div class="output-text" id="outVideo"></div></div></div>
         </div>
       </div>
     </div>
 
-    <!-- ── PLANS PANEL ── -->
+    <!-- PLANS -->
     <div class="panel" id="panel-plans">
-      <div style="margin-bottom:28px;">
-        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:8px;">Elige tu Plan</div>
-        <div style="color:var(--muted);font-size:14px;">Empieza gratis. Mejora cuando estés listo.</div>
+      <div class="plans-intro">
+        <h2>Planes y Precios</h2>
+        <p>Empieza gratis. Mejora cuando estés listo.</p>
       </div>
       <div class="plans-grid">
-        <!-- FREE -->
         <div class="plan-card current" id="planCardFree">
-          <div class="plan-badge gold-badge">Tu Plan Actual</div>
+          <div class="plan-badge-top b-violet">Tu Plan</div>
           <div class="plan-name">Gratis</div>
           <div class="plan-price">$0<span>/mes</span></div>
-          <div class="plan-desc">Para comenzar a explorar PropIA</div>
-          <div class="plan-features">
-            <div class="plan-feat"><span class="check">✓</span> 5 listings / mes</div>
-            <div class="plan-feat"><span class="check">✓</span> 20 leads / mes</div>
-            <div class="plan-feat"><span class="check">✓</span> 1 agente</div>
-            <div class="plan-feat"><span class="cross">✗</span> Dashboard broker</div>
-            <div class="plan-feat"><span class="cross">✗</span> Historial completo</div>
+          <div class="plan-desc">Para explorar PropIA</div>
+          <div class="plan-feats">
+            <div class="plan-feat"><span class="check">✓</span>5 listings / mes</div>
+            <div class="plan-feat"><span class="check">✓</span>20 leads / mes</div>
+            <div class="plan-feat"><span class="check">✓</span>1 agente</div>
+            <div class="plan-feat"><span class="cross">✗</span>Dashboard broker</div>
+            <div class="plan-feat"><span class="cross">✗</span>Historial completo</div>
           </div>
           <div class="btn-plan current">Plan Actual</div>
         </div>
-        <!-- BASIC -->
         <div class="plan-card" id="planCardBasic">
           <div class="plan-name">Básico</div>
           <div class="plan-price">$49<span>/mes</span></div>
-          <div class="plan-desc">Para el agente activo que necesita producir más</div>
-          <div class="plan-features">
-            <div class="plan-feat"><span class="check">✓</span> 50 listings / mes</div>
-            <div class="plan-feat"><span class="check">✓</span> 200 leads / mes</div>
-            <div class="plan-feat"><span class="check">✓</span> 3 agentes</div>
-            <div class="plan-feat"><span class="check">✓</span> Historial completo</div>
-            <div class="plan-feat"><span class="cross">✗</span> Dashboard broker</div>
+          <div class="plan-desc">Para el agente activo</div>
+          <div class="plan-feats">
+            <div class="plan-feat"><span class="check">✓</span>50 listings / mes</div>
+            <div class="plan-feat"><span class="check">✓</span>200 leads / mes</div>
+            <div class="plan-feat"><span class="check">✓</span>3 agentes</div>
+            <div class="plan-feat"><span class="check">✓</span>Historial completo</div>
+            <div class="plan-feat"><span class="cross">✗</span>Dashboard broker</div>
           </div>
-          <div class="btn-plan upgrade-btn" onclick="upgradePlan('basic')">Mejorar a Básico</div>
+          <div class="btn-plan up" onclick="upgradePlan('basic')">Mejorar a Básico</div>
         </div>
-        <!-- PRO -->
         <div class="plan-card popular" id="planCardPro">
-          <div class="plan-badge blue-badge">⭐ Más Popular</div>
+          <div class="plan-badge-top b-amber">⭐ Popular</div>
           <div class="plan-name">Pro</div>
           <div class="plan-price">$149<span>/mes</span></div>
           <div class="plan-desc">Para brokerages en crecimiento</div>
-          <div class="plan-features">
-            <div class="plan-feat"><span class="check">✓</span> 200 listings / mes</div>
-            <div class="plan-feat"><span class="check">✓</span> 1,000 leads / mes</div>
-            <div class="plan-feat"><span class="check">✓</span> 10 agentes</div>
-            <div class="plan-feat"><span class="check">✓</span> Dashboard broker</div>
-            <div class="plan-feat"><span class="check">✓</span> Reportes avanzados</div>
+          <div class="plan-feats">
+            <div class="plan-feat"><span class="check">✓</span>200 listings / mes</div>
+            <div class="plan-feat"><span class="check">✓</span>1,000 leads / mes</div>
+            <div class="plan-feat"><span class="check">✓</span>10 agentes</div>
+            <div class="plan-feat"><span class="check">✓</span>Dashboard broker</div>
+            <div class="plan-feat"><span class="check">✓</span>Reportes avanzados</div>
           </div>
-          <div class="btn-plan upgrade-btn" onclick="upgradePlan('pro')">Mejorar a Pro</div>
+          <div class="btn-plan up" onclick="upgradePlan('pro')">Mejorar a Pro</div>
         </div>
-        <!-- ENTERPRISE -->
         <div class="plan-card" id="planCardEnterprise">
           <div class="plan-name">Empresarial</div>
           <div class="plan-price">$399<span>/mes</span></div>
-          <div class="plan-desc">Para grandes brokerages con equipo completo</div>
-          <div class="plan-features">
-            <div class="plan-feat"><span class="check">✓</span> Listings ilimitados</div>
-            <div class="plan-feat"><span class="check">✓</span> Leads ilimitados</div>
-            <div class="plan-feat"><span class="check">✓</span> Agentes ilimitados</div>
-            <div class="plan-feat"><span class="check">✓</span> White label</div>
-            <div class="plan-feat"><span class="check">✓</span> Soporte dedicado</div>
+          <div class="plan-desc">Para grandes brokerages</div>
+          <div class="plan-feats">
+            <div class="plan-feat"><span class="check">✓</span>Listings ilimitados</div>
+            <div class="plan-feat"><span class="check">✓</span>Leads ilimitados</div>
+            <div class="plan-feat"><span class="check">✓</span>Agentes ilimitados</div>
+            <div class="plan-feat"><span class="check">✓</span>White label</div>
+            <div class="plan-feat"><span class="check">✓</span>Soporte dedicado</div>
           </div>
-          <div class="btn-plan upgrade-btn" onclick="upgradePlan('enterprise')">Contactar Ventas</div>
+          <div class="btn-plan up" onclick="upgradePlan('enterprise')">Contactar Ventas</div>
         </div>
       </div>
     </div>
 
-  </div><!-- end content -->
-</div><!-- end main -->
+  </div>
+</div>
+
+<div class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <button class="mob-btn active" id="mn1" onclick="showPanel('overview',document.querySelectorAll('.nav-item')[0]);setMNav('mn1')"><span class="mob-icon">📊</span>Resumen</button>
+    <button class="mob-btn" id="mn2" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1]);setMNav('mn2')"><span class="mob-icon">✨</span>Generar</button>
+    <button class="mob-btn" id="mn3" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[2]);setMNav('mn3')"><span class="mob-icon">💎</span>Planes</button>
+  </div>
+</div>
 
 <script>
-  // ── AUTH CHECK ──
-  const token = localStorage.getItem('propia_token');
-  const userRaw = localStorage.getItem('propia_user');
-  if (!token) { window.location.href = '/'; }
+  const token=localStorage.getItem('propia_token');
+  const userRaw=localStorage.getItem('propia_user');
+  if(!token){window.location.href='/';}
+  let user={};try{user=JSON.parse(userRaw)||{};}catch{user={};}
+  let selectedTone='lujoso';
+  let usageData={listings:{used:0,limit:5},plan:'free',planLabel:'Gratis'};
+  let historyData=[];
 
-  let user = {};
-  try { user = JSON.parse(userRaw) || {}; } catch { user = {}; }
+  document.addEventListener('DOMContentLoaded',()=>{setUserUI();loadUsage();});
 
-  let selectedTone = 'lujoso';
-  let usageData = { listings: { used: 0, limit: 5 }, plan: 'free', planLabel: 'Gratis' };
-  let historyData = [];
-
-  // ── INIT ──
-  document.addEventListener('DOMContentLoaded', () => {
-    setUserUI();
-    loadUsage();
-  });
-
-  function setUserUI() {
-    const name = user.name || user.email || 'Agente';
-    const initial = name.charAt(0).toUpperCase();
-    document.getElementById('userInitial').textContent = initial;
-    document.getElementById('userName').textContent = name;
-    document.getElementById('userPlan').textContent = (user.plan || 'free').toUpperCase();
+  function setUserUI(){
+    const name=user.name||user.email||'Agente';
+    const first=name.split(' ')[0];
+    document.getElementById('userInitial').textContent=name.charAt(0).toUpperCase();
+    document.getElementById('userName').textContent=name;
+    document.getElementById('greetingName').textContent=`Hola, ${first} 👋`;
   }
 
-  async function loadUsage() {
-    try {
-      const res = await fetch('/api/usage', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.status === 401) { logout(); return; }
-      const data = await res.json();
-      if (data.plan) {
-        usageData = data;
-        updateUsageUI();
-      }
-    } catch { /* silent */ }
+  async function loadUsage(){
+    try{
+      const res=await fetch('/api/usage',{headers:{'Authorization':`Bearer ${token}`}});
+      if(res.status===401){logout();return;}
+      const data=await res.json();
+      if(data.plan){usageData=data;updateUsageUI();}
+    }catch{}
   }
 
-  function updateUsageUI() {
-    const { listings, plan, planLabel } = usageData;
-    const pct = Math.min((listings.used / listings.limit) * 100, 100);
-
-    document.getElementById('statUsed').textContent = listings.used;
-    document.getElementById('statLimit').textContent = `de ${listings.limit} en tu plan ${planLabel}`;
-    document.getElementById('statProgress').style.width = pct + '%';
-    document.getElementById('statPlan').textContent = planLabel;
-    document.getElementById('statAssets').textContent = listings.used * 4;
-
-    document.getElementById('topUsed').textContent = listings.used;
-    document.getElementById('topLimit').textContent = listings.limit;
-    document.getElementById('topPlan').textContent = planLabel;
-    document.getElementById('userPlan').textContent = plan.toUpperCase();
-
-    // Highlight current plan card
-    ['free','basic','pro','enterprise'].forEach(p => {
-      const card = document.getElementById('planCard' + p.charAt(0).toUpperCase() + p.slice(1));
-      const btn = card?.querySelector('.btn-plan');
-      if (p === plan) {
-        card?.classList.add('current');
-        if (btn) { btn.className = 'btn-plan current'; btn.textContent = 'Plan Actual'; }
-      }
+  function updateUsageUI(){
+    const{listings,plan,planLabel}=usageData;
+    const pct=Math.min((listings.used/listings.limit)*100,100);
+    document.getElementById('statUsed').textContent=listings.used;
+    document.getElementById('statLimit').textContent=`de ${listings.limit} disponibles`;
+    document.getElementById('statProgress').style.width=pct+'%';
+    document.getElementById('statPlan').textContent=planLabel;
+    document.getElementById('statAssets').textContent=listings.used*4;
+    document.getElementById('topUsed').textContent=listings.used;
+    document.getElementById('topLimit').textContent=listings.limit;
+    document.getElementById('userPlan').textContent=plan.toUpperCase();
+    ['free','basic','pro','enterprise'].forEach(p=>{
+      const card=document.getElementById('planCard'+p.charAt(0).toUpperCase()+p.slice(1));
+      const btn=card?.querySelector('.btn-plan');
+      if(p===plan){card?.classList.add('current');if(btn){btn.className='btn-plan current';btn.textContent='Plan Actual';}}
     });
   }
 
-  // ── NAVIGATION ──
-  function showPanel(name, btn) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    document.getElementById('panel-' + name).classList.add('active');
-    btn.classList.add('active');
-    const titles = { overview: 'Resumen', generator: 'Generar Listing', plans: 'Planes y Precios' };
-    document.getElementById('pageTitle').textContent = titles[name] || '';
+  function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden';}
+  function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';}
+
+  function showPanel(name,btn){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+    document.getElementById('panel-'+name).classList.add('active');
+    if(btn)btn.classList.add('active');
+    const titles={overview:'Resumen',generator:'Generar Listing',plans:'Planes y Precios'};
+    document.getElementById('pageTitle').textContent=titles[name]||'';
+    closeSidebar();
   }
 
-  function setTone(btn, tone) {
-    document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedTone = tone;
-  }
+  function setMNav(id){document.querySelectorAll('.mob-btn').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');}
+  function setTone(btn,tone){document.querySelectorAll('.tone-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedTone=tone;}
 
-  // ── GENERATE ──
-  async function generateListing() {
-    const address = document.getElementById('gAddress').value.trim();
-    const price = document.getElementById('gPrice').value.trim();
-
-    if (!address || !price) {
-      setAlert('genAlert', 'Por favor ingresa la dirección y el precio.', 'error');
-      return;
-    }
-
+  async function generateListing(){
+    const address=document.getElementById('gAddress').value.trim();
+    const price=document.getElementById('gPrice').value.trim();
+    if(!address||!price){setAlert('genAlert','Por favor ingresa la dirección y el precio.','error');return;}
     clearAlert('genAlert');
-    const btn = document.getElementById('genBtn');
-    setLoading(btn, true);
-
-    try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          address, price,
-          type: document.getElementById('gType').value,
-          beds: document.getElementById('gBeds').value,
-          baths: document.getElementById('gBaths').value,
-          sqft: document.getElementById('gSqft').value,
-          year: document.getElementById('gYear').value,
-          features: document.getElementById('gFeatures').value,
-          tone: selectedTone
-        })
-      });
-
-      const data = await res.json();
-
-      if (res.status === 401) { logout(); return; }
-
-      if (!res.ok || !data.success) {
-        const type = data.upgrade ? 'upgrade' : 'error';
-        const msg = data.upgrade
-          ? `⚠️ ${data.error} <br><br>Mejora tu plan para continuar generando listings.`
-          : (data.error || 'Error al generar el contenido.');
-        setAlert('genAlert', msg, type);
-        return;
-      }
-
-      displayOutput(data.content, address, price);
-      usageData.listings.used = data.usage.used;
+    const btn=document.getElementById('genBtn');
+    setLoading(btn,true);
+    try{
+      const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({address,price,type:document.getElementById('gType').value,beds:document.getElementById('gBeds').value,baths:document.getElementById('gBaths').value,sqft:document.getElementById('gSqft').value,year:document.getElementById('gYear').value,features:document.getElementById('gFeatures').value,tone:selectedTone})});
+      const data=await res.json();
+      if(res.status===401){logout();return;}
+      if(!res.ok||!data.success){setAlert('genAlert',data.upgrade?`⚠️ ${data.error}\n\nMejora tu plan para continuar.`:(data.error||'Error al generar.'),data.upgrade?'upgrade':'error');return;}
+      displayOutput(data.content,address,price);
+      usageData.listings.used=data.usage.used;
       updateUsageUI();
-
-      // Add to history
-      historyData.unshift({ address, price, tone: selectedTone, date: new Date() });
+      historyData.unshift({address,price,tone:selectedTone,date:new Date()});
       renderHistory();
-
-    } catch {
-      setAlert('genAlert', 'Error de conexión. Intenta de nuevo.', 'error');
-    } finally {
-      setLoading(btn, false);
-    }
+    }catch{setAlert('genAlert','Error de conexión. Intenta de nuevo.','error');}
+    finally{setLoading(btn,false);}
   }
 
-  function displayOutput(content, address, price) {
-    document.getElementById('outputPropTitle').textContent = `${address} · ${price}`;
-    document.getElementById('outMls').textContent = content.mls || '';
-    document.getElementById('outEmail').textContent = content.email || '';
-    document.getElementById('outVideo').textContent = content.video || '';
-
-    const container = document.getElementById('postsContainer');
-    container.innerHTML = '';
-    const labels = ['Post 1 — Presentación', 'Post 2 — Características', 'Post 3 — Llamada a la Acción'];
-    (content.posts || []).forEach((p, i) => {
-      container.innerHTML += `
-        <div class="post-item">
-          <div class="post-num">${labels[i] || 'Post ' + (i+1)}</div>
-          <div class="post-text">${p}</div>
-          <button class="post-copy" onclick="copyPostItem(this,${i})">📋</button>
-        </div>`;
-    });
-
-    const wrap = document.getElementById('outputWrap');
+  function displayOutput(content,address,price){
+    document.getElementById('outputPropTitle').textContent=`${address} · ${price}`;
+    document.getElementById('outMls').textContent=content.mls||'';
+    document.getElementById('outEmail').textContent=content.email||'';
+    document.getElementById('outVideo').textContent=content.video||'';
+    const container=document.getElementById('postsContainer');
+    container.innerHTML='';
+    const labels=['Post 1 — Presentación','Post 2 — Características','Post 3 — Llamada a la Acción'];
+    (content.posts||[]).forEach((p,i)=>{container.innerHTML+=`<div class="post-item"><div class="post-num">${labels[i]||'Post '+(i+1)}</div><div class="post-text">${p}</div><button class="post-copy" onclick="copyPostItem(this,${i})">📋</button></div>`;});
+    const wrap=document.getElementById('outputWrap');
     wrap.classList.add('visible');
-    showOTab('mls', document.querySelector('.otab'));
-    wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    showOTab('mls',document.querySelector('.otab'));
+    wrap.scrollIntoView({behavior:'smooth',block:'start'});
   }
 
-  function renderHistory() {
-    const body = document.getElementById('historyBody');
-    if (historyData.length === 0) {
-      body.innerHTML = '<div class="empty-state">Aún no has generado ningún listing.<br><span style="color:var(--gold);cursor:pointer;" onclick="showPanel(\'generator\', document.querySelectorAll(\'.nav-item\')[1])">Genera tu primer listing →</span></div>';
-      return;
-    }
-    body.innerHTML = historyData.map(h => `
-      <div class="table-row">
-        <div>
-          <div style="font-size:13px;font-weight:500;">${h.address}</div>
-          <div style="font-size:12px;color:var(--muted);">${h.price}</div>
-        </div>
-        <div><span class="tag tag-gold">${h.tone}</span></div>
-        <div style="font-size:12px;color:var(--muted);">${formatDate(h.date)}</div>
-      </div>`).join('');
+  function renderHistory(){
+    const body=document.getElementById('historyBody');
+    if(!historyData.length){body.innerHTML='<div class="empty-state">Aún no has generado ningún listing.<br><a onclick="showPanel(\'generator\',document.querySelectorAll(\'.nav-item\')[1])">Genera tu primer listing →</a></div>';return;}
+    body.innerHTML=historyData.map(h=>`<div class="history-row"><div><div class="h-addr">${h.address}</div><div class="h-price">${h.price}</div></div><div><span class="tag tag-v">${h.tone}</span></div><div class="h-date" style="font-size:12px;color:var(--muted);">${formatDate(h.date)}</div></div>`).join('');
   }
 
-  function formatDate(d) {
-    return new Intl.DateTimeFormat('es-MX', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' }).format(d);
-  }
-
-  // ── OUTPUT TABS ──
-  function showOTab(name, btn) {
-    document.querySelectorAll('.otab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.otab').forEach(b => b.classList.remove('active'));
-    document.getElementById('otab-' + name).classList.add('active');
-    btn.classList.add('active');
-  }
-
-  // ── COPY ──
-  function copyOut(id, btn) {
-    navigator.clipboard.writeText(document.getElementById(id)?.textContent || '').then(() => {
-      btn.textContent = '✓ Copiado'; btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = '📋 Copiar'; btn.classList.remove('copied'); }, 2000);
-    });
-  }
-
-  function copyAllPosts(btn) {
-    const text = [...document.querySelectorAll('.post-text')].map((el, i) => `POST ${i+1}:\n${el.textContent}`).join('\n\n');
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = '✓ Copiado'; btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = '📋 Copiar todos'; btn.classList.remove('copied'); }, 2000);
-    });
-  }
-
-  function copyPostItem(btn, idx) {
-    const posts = document.querySelectorAll('.post-text');
-    navigator.clipboard.writeText(posts[idx]?.textContent || '').then(() => {
-      btn.textContent = '✓'; setTimeout(() => btn.textContent = '📋', 2000);
-    });
-  }
-
-  // ── PLANS ──
-  function upgradePlan(plan) {
-    alert(`Para mejorar al plan ${plan.toUpperCase()}, próximamente integraremos Stripe. Por ahora contáctanos en: soporte@propia.app`);
-  }
-
-  // ── HELPERS ──
-  function setLoading(btn, val) {
-    btn.disabled = val;
-    btn.classList.toggle('is-loading', val);
-  }
-
-  function setAlert(id, msg, type) {
-    const el = document.getElementById(id);
-    el.innerHTML = msg;
-    el.className = `alert ${type}`;
-  }
-
-  function clearAlert(id) {
-    const el = document.getElementById(id);
-    el.className = 'alert'; el.innerHTML = '';
-  }
-
-  function logout() {
-    localStorage.removeItem('propia_token');
-    localStorage.removeItem('propia_user');
-    window.location.href = '/';
-  }
+  function formatDate(d){return new Intl.DateTimeFormat('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).format(d);}
+  function showOTab(name,btn){document.querySelectorAll('.otab-content').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.otab').forEach(b=>b.classList.remove('active'));document.getElementById('otab-'+name).classList.add('active');if(btn)btn.classList.add('active');}
+  function copyOut(id,btn){navigator.clipboard.writeText(document.getElementById(id)?.textContent||'').then(()=>{btn.textContent='✓ Copiado';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 Copiar';btn.classList.remove('copied');},2000);});}
+  function copyAllPosts(btn){const text=[...document.querySelectorAll('.post-text')].map((el,i)=>`POST ${i+1}:\n${el.textContent}`).join('\n\n');navigator.clipboard.writeText(text).then(()=>{btn.textContent='✓ Copiado';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 Copiar todos';btn.classList.remove('copied');},2000);});}
+  function copyPostItem(btn,idx){const posts=document.querySelectorAll('.post-text');navigator.clipboard.writeText(posts[idx]?.textContent||'').then(()=>{btn.textContent='✓';setTimeout(()=>btn.textContent='📋',2000);});}
+  function upgradePlan(plan){alert(`Para mejorar al plan ${plan.toUpperCase()}, próximamente integraremos Stripe. Contáctanos: soporte@propia.app`);}
+  function setLoading(btn,val){btn.disabled=val;btn.classList.toggle('is-loading',val);}
+  function setAlert(id,msg,type){const el=document.getElementById(id);el.innerHTML=msg;el.className=`alert ${type}`;}
+  function clearAlert(id){const el=document.getElementById(id);el.className='alert';el.innerHTML='';}
+  function logout(){localStorage.removeItem('propia_token');localStorage.removeItem('propia_user');window.location.href='/';}
 </script>
 </body>
 </html>
