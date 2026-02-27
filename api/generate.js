@@ -7,8 +7,8 @@ const supabase = createClient(
 );
 
 const PLAN_LIMITS = {
-  free:       { listings: 5   },
-  basic:      { listings: 50  },
+  free:       { listings: 5 },
+  basic:      { listings: 50 },
   pro:        { listings: 200 },
   enterprise: { listings: 99999 }
 };
@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
     if (!token) return res.status(401).json({ error: 'No autorizado. Por favor inicia sesión.' });
 
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
-    if (authError || !user) return res.status(401).json({ error: 'Sesión inválida. Por favor inicia sesión de nuevo.' });
+    if (authError || !user) return res.status(401).json({ error: 'Sesión inválida.' });
 
     const { data: profile } = await supabase
       .from('profiles').select('plan, listings_used_this_month').eq('id', user.id).single();
@@ -36,7 +36,7 @@ module.exports = async function handler(req, res) {
 
     if (used >= limit) {
       return res.status(429).json({
-        error: `Alcanzaste tu límite de ${limit} listings este mes en el plan ${plan.toUpperCase()}.`,
+        error: `Alcanzaste tu límite de ${limit} listings este mes.`,
         upgrade: true, plan, used, limit
       });
     }
@@ -45,26 +45,36 @@ module.exports = async function handler(req, res) {
     if (!address || !price) return res.status(400).json({ error: 'Dirección y precio son requeridos.' });
 
     const toneDesc = {
-      lujoso: 'sofisticado, elegante y exclusivo',
-      familiar: 'cálido, acogedor y centrado en la familia',
-      inversionista: 'analítico, orientado al ROI',
-      moderno: 'fresco, contemporáneo y minimalista',
-      urgente: 'urgencia y escasez, oportunidad única',
+      lujoso: 'sofisticado y elegante',
+      familiar: 'cálido y familiar',
+      inversionista: 'analítico y orientado al ROI',
+      moderno: 'fresco y contemporáneo',
+      urgente: 'urgente, oportunidad única',
       emocional: 'emocional y aspiracional'
     };
 
-    const prompt = `Eres experto en marketing de bienes raíces para latinos en USA. Genera contenido en español con tono ${toneDesc[tone] || toneDesc.lujoso}.
+    // Prompt simplificado para que Groq devuelva JSON limpio y consistente
+    const prompt = `Eres experto en marketing de bienes raíces para latinos en USA. 
+Genera contenido de marketing en español con tono ${toneDesc[tone] || 'profesional'} para esta propiedad:
 
-PROPIEDAD:
-- Dirección: ${address}
-- Precio: ${price}
-- Tipo: ${type || 'casa'}
-- Recámaras: ${beds || 'N/A'} | Baños: ${baths || 'N/A'}
-- Pies cuadrados: ${sqft || 'N/A'} | Año: ${year || 'N/A'}
-- Características: ${features || 'No especificadas'}
+Dirección: ${address}
+Precio: ${price}
+Tipo: ${type || 'casa'}
+Recámaras: ${beds || 'N/A'} | Baños: ${baths || 'N/A'}
+Pies cuadrados: ${sqft || 'N/A'} | Año: ${year || 'N/A'}
+Características: ${features || 'No especificadas'}
 
-Responde SOLO con este JSON (sin markdown ni backticks):
-{"mls":"descripción MLS de 150-200 palabras","posts":["post 1 con emojis y hashtags en español","post 2 diferente al 1","post 3 más urgente"],"email":"Asunto: [asunto]\\n\\nCuerpo del email completo de 200 palabras","video":"Script de 60-90 segundos con [indicaciones de escena]"}`;
+Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta, sin texto adicional, sin explicaciones, sin markdown:
+{
+  "mls": "descripción profesional de 150 palabras para MLS",
+  "posts": [
+    "post 1 para Instagram con emojis y hashtags en español",
+    "post 2 con ángulo diferente y hashtags en español",
+    "post 3 más urgente con hashtags en español"
+  ],
+  "email": "Asunto: titulo del email aqui\\n\\nHola [Nombre],\\n\\ncuerpo del email aqui de 150 palabras\\n\\nSaludos,\\nTu Agente",
+  "video": "script de video de 60 segundos con [indicaciones de escena entre corchetes]"
+}`;
 
     const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -74,8 +84,17 @@ Responde SOLO con este JSON (sin markdown ni backticks):
       },
       body: JSON.stringify({
         model: 'llama-3.1-8b-instant',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.75,
+        messages: [
+          {
+            role: 'system',
+            content: 'Eres un asistente que SOLO responde con JSON válido. Nunca incluyas markdown, backticks, ni texto fuera del JSON.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.7,
         max_tokens: 3000
       })
     });
@@ -86,24 +105,49 @@ Responde SOLO con este JSON (sin markdown ni backticks):
     }
 
     const groqData = await groqRes.json();
-    const rawText = groqData.choices[0]?.message?.content || '';
-    let parsed;
-    try {
-      parsed = JSON.parse(rawText.replace(/```json|```/g, '').trim());
-    } catch {
-      throw new Error('Error procesando respuesta de la IA. Intenta de nuevo.');
+    let rawText = groqData.choices[0]?.message?.content || '';
+
+    // Limpieza agresiva del texto para extraer el JSON
+    rawText = rawText.trim();
+    rawText = rawText.replace(/^```json\s*/i, '');
+    rawText = rawText.replace(/^```\s*/i, '');
+    rawText = rawText.replace(/\s*```$/i, '');
+    rawText = rawText.trim();
+
+    // Si no empieza con { buscar el primer {
+    const firstBrace = rawText.indexOf('{');
+    const lastBrace = rawText.lastIndexOf('}');
+    if (firstBrace !== -1 && lastBrace !== -1) {
+      rawText = rawText.substring(firstBrace, lastBrace + 1);
     }
 
+    let parsed;
+    try {
+      parsed = JSON.parse(rawText);
+    } catch (parseErr) {
+      // Si aún falla, devolver estructura básica con el texto crudo
+      console.error('JSON parse error:', parseErr.message);
+      console.error('Raw text received:', rawText.substring(0, 500));
+      parsed = {
+        mls: rawText.substring(0, 500) || 'Error generando contenido. Intenta de nuevo.',
+        posts: ['Intenta generar de nuevo para obtener los posts.', '', ''],
+        email: 'Intenta generar de nuevo para obtener el email.',
+        video: 'Intenta generar de nuevo para obtener el script de video.'
+      };
+    }
+
+    // Guardar uso
     await supabase.from('profiles')
       .update({ listings_used_this_month: used + 1 }).eq('id', user.id);
 
     await supabase.from('listings').insert({
-      user_id: user.id, address, price, type, tone, content: parsed,
-      created_at: new Date().toISOString()
+      user_id: user.id, address, price, type, tone,
+      content: parsed, created_at: new Date().toISOString()
     });
 
     return res.status(200).json({
-      success: true, content: parsed,
+      success: true,
+      content: parsed,
       usage: { used: used + 1, limit, plan }
     });
 
