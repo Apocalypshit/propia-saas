@@ -5,246 +5,362 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PropIA — IA para Agentes de Bienes Raíces Latinos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg:      #0c0c0f;
-  --s1:      #111116;
-  --s2:      #18181f;
-  --s3:      #1f1f28;
+  --bg:      #070a12;
+  --s1:      #0e1220;
+  --s2:      #141928;
+  --s3:      #1c2234;
   --border:  rgba(255,255,255,0.06);
-  --violet:  #a78bfa;
-  --violet2: #c4b5fd;
-  --v-dim:   rgba(167,139,250,0.1);
-  --v-glow:  rgba(167,139,250,0.18);
-  --emerald: #34d399;
-  --e-dim:   rgba(52,211,153,0.1);
-  --text:    #f4f4f6;
-  --muted:   #71717a;
-  --muted2:  #3f3f46;
-  --white:   #ffffff;
+  --b2:      rgba(255,255,255,0.04);
+  --cyan:    #06b6d4;
+  --cyan2:   #22d3ee;
+  --c-dim:   rgba(6,182,212,0.1);
+  --c-glow:  rgba(6,182,212,0.22);
+  --c-glow2: rgba(6,182,212,0.08);
+  --violet:  #8b5cf6;
+  --v-dim:   rgba(139,92,246,0.1);
+  --v-glow:  rgba(139,92,246,0.2);
+  --green:   #10b981;
+  --g-dim:   rgba(16,185,129,0.1);
+  --text:    #e2e8f0;
+  --text2:   #cbd5e1;
+  --muted:   #64748b;
+  --muted2:  #334155;
   --error:   #f87171;
   --radius:  14px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{
-  background:var(--bg);color:var(--text);
-  font-family:'Instrument Sans',sans-serif;
-  min-height:100vh;display:grid;
-  grid-template-columns:1.1fr 0.9fr;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Onest',sans-serif;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
 }
-@media(max-width:768px){body{grid-template-columns:1fr;display:block;}.left{display:none;}}
+@media(max-width:768px){body{display:block;}.left{display:none;}}
 
-/* ── LEFT ── */
+/* ══════════════════════════════
+   NOISE OVERLAY — depth texture
+══════════════════════════════ */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ══════════════════════════════
+   LEFT PANEL
+══════════════════════════════ */
 .left{
   background:var(--s1);
   border-right:1px solid var(--border);
   padding:52px 56px;
   display:flex;flex-direction:column;justify-content:space-between;
   position:relative;overflow:hidden;min-height:100vh;
-}
-/* grid texture */
-.left::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(167,139,250,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(167,139,250,0.04) 1px, transparent 1px);
-  background-size:40px 40px;
-  pointer-events:none;
-}
-.left-blob{
-  position:absolute;
-  width:480px;height:480px;
-  background:radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 65%);
-  top:-80px;right:-120px;pointer-events:none;
-}
-.left-blob2{
-  position:absolute;
-  width:300px;height:300px;
-  background:radial-gradient(circle, rgba(52,211,153,0.07) 0%, transparent 65%);
-  bottom:60px;left:-60px;pointer-events:none;
+  z-index:1;
 }
 
-.left-logo{display:flex;align-items:center;gap:11px;position:relative;z-index:1;}
-.left-logo-mark{
-  width:38px;height:38px;
-  background:linear-gradient(135deg,var(--violet),#7c3aed);
-  border-radius:9px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;flex-shrink:0;
+/* dot grid */
+.left::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle, rgba(6,182,212,0.12) 1px, transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
 }
-.left-logo-name{
-  font-family:'Bricolage Grotesque',sans-serif;
+
+/* ambient glows */
+.glow-a{
+  position:absolute;
+  width:560px;height:560px;
+  background:radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 65%);
+  top:-160px;right:-180px;pointer-events:none;
+}
+.glow-b{
+  position:absolute;
+  width:360px;height:360px;
+  background:radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 65%);
+  bottom:40px;left:-80px;pointer-events:none;
+}
+
+.logo{display:flex;align-items:center;gap:11px;position:relative;z-index:2;}
+.logo-mark{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--cyan),#0e7490);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;flex-shrink:0;
+  box-shadow:0 0 20px var(--c-glow);
+}
+.logo-name{
   font-size:21px;font-weight:800;
   color:var(--text);letter-spacing:-0.5px;
 }
-.left-logo-name span{color:var(--violet);}
+.logo-name span{color:var(--cyan);}
 
-.left-body{position:relative;z-index:1;}
+.left-body{position:relative;z-index:2;}
 
-.eyebrow{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:5px 13px;margin-bottom:26px;
-  background:var(--v-dim);
-  border:1px solid rgba(167,139,250,0.2);
+/* AI status pill — agentic transparency signal */
+.ai-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 14px 5px 8px;margin-bottom:28px;
+  background:rgba(6,182,212,0.08);
+  border:1px solid rgba(6,182,212,0.2);
   border-radius:20px;
-  font-size:11px;font-weight:600;letter-spacing:1.2px;
-  text-transform:uppercase;color:var(--violet2);
+  font-size:11px;font-weight:600;letter-spacing:0.5px;
+  color:var(--cyan2);
 }
-.eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--emerald);}
+.ai-pill-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 8px var(--cyan);
+  animation:pulse-dot 2s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 6px var(--cyan);}50%{opacity:0.6;box-shadow:0 0 12px var(--cyan);}}
 
-.left-h1{
-  font-family:'Bricolage Grotesque',sans-serif;
-  font-size:clamp(30px,3.2vw,48px);
+.headline{
+  font-size:clamp(28px,3vw,46px);
   font-weight:800;line-height:1.06;
-  letter-spacing:-2px;
-  color:var(--text);margin-bottom:18px;
+  letter-spacing:-2px;color:var(--text);
+  margin-bottom:18px;
 }
-.left-h1 mark{
-  background:linear-gradient(90deg,var(--violet),var(--emerald));
+.headline .grad{
+  background:linear-gradient(90deg, var(--cyan), var(--violet), var(--cyan2));
+  background-size:200% auto;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
+  animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer{0%{background-position:0% center;}100%{background-position:200% center;}}
+
+.tagline{
+  font-size:15px;line-height:1.75;color:var(--muted);
+  max-width:380px;margin-bottom:44px;font-weight:400;
 }
 
-.left-desc{
-  font-size:15px;line-height:1.75;
-  color:var(--muted);max-width:380px;margin-bottom:44px;
-  font-weight:400;
-}
-
-.feats{display:flex;flex-direction:column;gap:10px;}
+/* Feature cards — depth layered */
+.feats{display:flex;flex-direction:column;gap:9px;}
 .feat{
   display:flex;align-items:center;gap:13px;
-  padding:12px 14px;
-  background:rgba(255,255,255,0.02);
-  border:1px solid var(--border);border-radius:10px;
-  transition:border-color 0.2s,background 0.2s;cursor:default;
+  padding:13px 16px;
+  background:linear-gradient(135deg, rgba(14,18,32,0.9), rgba(20,25,40,0.7));
+  border:1px solid var(--border);
+  border-radius:11px;
+  transition:border-color 0.25s,box-shadow 0.25s;
+  position:relative;overflow:hidden;
 }
-.feat:hover{border-color:rgba(167,139,250,0.2);background:rgba(167,139,250,0.04);}
-.feat-icon{font-size:17px;width:32px;text-align:center;flex-shrink:0;}
-.feat-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:1px;}
-.feat-sub{font-size:11px;color:var(--muted);}
+.feat::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(6,182,212,0.04), transparent 60%);
+  opacity:0;transition:opacity 0.25s;
+}
+.feat:hover{border-color:rgba(6,182,212,0.2);box-shadow:0 0 20px rgba(6,182,212,0.06);}
+.feat:hover::before{opacity:1;}
+.feat-icon{font-size:18px;flex-shrink:0;width:34px;text-align:center;position:relative;z-index:1;}
+.feat-title{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:1px;position:relative;z-index:1;}
+.feat-sub{font-size:11px;color:var(--muted);font-weight:400;position:relative;z-index:1;}
 
 .left-foot{
-  position:relative;z-index:1;
+  position:relative;z-index:2;
   font-size:12px;color:var(--muted2);
   padding-top:18px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
 }
+.left-foot-badge{
+  display:flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:600;color:var(--green);
+  background:var(--g-dim);
+  border:1px solid rgba(16,185,129,0.15);
+  border-radius:12px;padding:3px 10px;
+}
+.left-foot-badge::before{content:'●';font-size:7px;}
 
-/* ── RIGHT ── */
+/* ══════════════════════════════
+   RIGHT PANEL
+══════════════════════════════ */
 .right{
   background:var(--bg);
   display:flex;align-items:center;justify-content:center;
   padding:40px 48px;min-height:100vh;overflow-y:auto;
+  position:relative;z-index:1;
 }
 @media(max-width:768px){.right{padding:32px 20px;}}
-.auth-box{width:100%;max-width:396px;}
+
+/* right ambient */
+.right::before{
+  content:'';position:absolute;
+  width:400px;height:400px;
+  background:radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 65%);
+  bottom:0;right:0;pointer-events:none;
+}
+
+.auth-box{width:100%;max-width:400px;position:relative;z-index:1;}
 
 .mobile-logo{display:none;align-items:center;gap:9px;margin-bottom:28px;}
-.mobile-logo-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--violet),#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.mobile-logo-name{font-family:'Bricolage Grotesque',sans-serif;font-size:19px;font-weight:800;color:var(--text);}
-.mobile-logo-name span{color:var(--violet);}
+.mobile-logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--cyan),#0e7490);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 0 16px var(--c-glow);}
+.mobile-logo-name{font-size:19px;font-weight:800;color:var(--text);letter-spacing:-0.4px;}
+.mobile-logo-name span{color:var(--cyan);}
 @media(max-width:768px){.mobile-logo{display:flex;}}
 
+/* Switcher */
 .auth-switcher{
   display:flex;gap:3px;
-  background:var(--s1);border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;
-  margin-bottom:28px;padding:4px;
+  background:var(--s1);
+  border:1px solid var(--border);
+  border-radius:13px;padding:4px;
+  margin-bottom:28px;
 }
 .auth-tab{
   flex:1;background:none;border:none;
-  color:var(--muted);font-family:'Instrument Sans',sans-serif;
-  font-size:14px;font-weight:500;padding:10px;
-  cursor:pointer;transition:all 0.18s;border-radius:8px;
+  color:var(--muted);
+  font-family:'Onest',sans-serif;
+  font-size:13px;font-weight:500;padding:10px;
+  cursor:pointer;transition:all 0.18s;border-radius:9px;
 }
-.auth-tab.active{background:var(--violet);color:#0c0c0f;font-weight:700;}
+.auth-tab.active{
+  background:linear-gradient(135deg,var(--cyan),#0e7490);
+  color:var(--bg);font-weight:700;
+  box-shadow:0 2px 12px var(--c-glow);
+}
 
 .auth-form{display:flex;flex-direction:column;gap:16px;}
 .auth-form.hidden{display:none;}
 
 .form-title{
-  font-family:'Bricolage Grotesque',sans-serif;
-  font-size:27px;font-weight:800;
-  color:var(--text);letter-spacing:-1px;margin-bottom:4px;
+  font-size:26px;font-weight:800;
+  color:var(--text);letter-spacing:-0.8px;
+  margin-bottom:4px;
 }
 .form-subtitle{font-size:14px;color:var(--muted);line-height:1.55;}
 
+/* Field */
 .field label{
   display:block;font-size:11px;font-weight:600;
   color:var(--muted);text-transform:uppercase;
-  letter-spacing:0.8px;margin-bottom:6px;
+  letter-spacing:0.9px;margin-bottom:6px;
 }
 .field input{
-  width:100%;background:var(--s1);
+  width:100%;
+  background:var(--s1);
   border:1px solid var(--border);
-  border-radius:10px;color:var(--text);
-  font-family:'Instrument Sans',sans-serif;
-  font-size:15px;padding:13px 15px;outline:none;
-  transition:border-color 0.2s,box-shadow 0.2s;
+  border-radius:10px;
+  color:var(--text);
+  font-family:'Onest',sans-serif;
+  font-size:15px;padding:12px 14px;outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;
 }
-.field input:focus{border-color:var(--violet);box-shadow:0 0 0 3px var(--v-glow);}
+.field input:focus{
+  border-color:var(--cyan);
+  background:var(--s2);
+  box-shadow:0 0 0 3px var(--c-glow2);
+}
 .field input::placeholder{color:var(--muted2);}
 
+/* Submit button */
 .btn-submit{
   width:100%;
-  background:linear-gradient(135deg,var(--violet),#7c3aed);
-  border:none;border-radius:11px;
-  color:#fff;font-family:'Bricolage Grotesque',sans-serif;
-  font-size:16px;font-weight:700;
+  background:linear-gradient(135deg,var(--cyan),#0e7490);
+  border:none;border-radius:12px;
+  color:var(--bg);
+  font-family:'Onest',sans-serif;
+  font-size:15px;font-weight:700;
   padding:14px;cursor:pointer;
-  transition:all 0.2s;margin-top:4px;letter-spacing:-0.3px;
+  transition:all 0.2s;margin-top:4px;
+  box-shadow:0 4px 16px var(--c-glow2);
+  position:relative;overflow:hidden;
 }
-.btn-submit:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 10px 28px var(--v-glow);}
+.btn-submit::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);
+  opacity:0;transition:opacity 0.2s;
+}
+.btn-submit:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 8px 28px var(--c-glow);}
+.btn-submit:hover::after{opacity:1;}
 .btn-submit:active{transform:translateY(0);}
 .btn-submit:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;filter:none;}
 .btn-submit .loading{display:none;align-items:center;justify-content:center;gap:8px;}
 .btn-submit.is-loading .label{display:none;}
 .btn-submit.is-loading .loading{display:flex;}
 
-.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
+.spinner{
+  width:15px;height:15px;
+  border:2px solid rgba(7,10,18,0.3);
+  border-top-color:var(--bg);
+  border-radius:50%;animation:spin 0.7s linear infinite;
+}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-.divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;}
+.divider{
+  display:flex;align-items:center;gap:12px;
+  color:var(--muted2);font-size:12px;
+}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
+/* Plan badge — glass morphism */
 .plan-badge{
-  background:var(--e-dim);border:1px solid rgba(52,211,153,0.15);
-  border-radius:11px;padding:13px 15px;
-  font-size:13px;line-height:1.6;color:var(--muted);
+  background:linear-gradient(135deg,rgba(6,182,212,0.06),rgba(16,185,129,0.04));
+  border:1px solid rgba(6,182,212,0.14);
+  border-radius:12px;padding:14px 16px;
+  font-size:13px;line-height:1.65;color:var(--muted);
+  backdrop-filter:blur(10px);
 }
-.plan-badge strong{color:var(--emerald);font-weight:600;}
+.plan-badge strong{color:var(--cyan);font-weight:700;}
 
 .alert{border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.5;display:none;font-weight:500;}
-.alert.success{background:var(--e-dim);border:1px solid rgba(52,211,153,0.2);color:var(--emerald);display:block;}
-.alert.error{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.2);color:var(--error);display:block;}
+.alert.success{background:var(--g-dim);border:1px solid rgba(16,185,129,0.2);color:var(--green);display:block;}
+.alert.error{background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.18);color:var(--error);display:block;}
 .alert.visible{display:block;}
 </style>
 </head>
 <body>
 
 <div class="left">
-  <div class="left-blob"></div><div class="left-blob2"></div>
+  <div class="glow-a"></div><div class="glow-b"></div>
 
-  <div class="left-logo">
-    <div class="left-logo-mark">🏠</div>
-    <div class="left-logo-name">Prop<span>IA</span></div>
+  <div class="logo">
+    <div class="logo-mark">🏠</div>
+    <div class="logo-name">Prop<span>IA</span></div>
   </div>
 
   <div class="left-body">
-    <div class="eyebrow"><span class="eyebrow-dot"></span>Bienes Raíces · Inteligencia Artificial</div>
-    <h1 class="left-h1">La IA que trabaja<br>para <mark>agentes latinos</mark><br>en USA</h1>
-    <p class="left-desc">Genera listings profesionales, califica leads automáticamente y retén a tus clientes — todo en español, todo con IA.</p>
+    <div class="ai-pill">
+      <div class="ai-pill-dot"></div>
+      Sistema de IA activo · En línea
+    </div>
+    <h1 class="headline">
+      La IA que trabaja<br>
+      para <span class="grad">agentes latinos</span><br>
+      en USA
+    </h1>
+    <p class="tagline">Genera listings profesionales, califica leads automáticamente y retén a tus clientes — todo en español, todo con IA.</p>
     <div class="feats">
-      <div class="feat"><div class="feat-icon">⚡</div><div><div class="feat-title">Contenido en 30 segundos</div><div class="feat-sub">MLS, posts para redes y email al instante</div></div></div>
-      <div class="feat"><div class="feat-icon">🤖</div><div><div class="feat-title">Calificación automática de leads</div><div class="feat-sub">Tu IA trabaja 24/7 mientras tú cierras</div></div></div>
-      <div class="feat"><div class="feat-icon">📊</div><div><div class="feat-title">Dashboard para brokers</div><div class="feat-sub">Todo tu equipo en un solo lugar</div></div></div>
-      <div class="feat"><div class="feat-icon">🔒</div><div><div class="feat-title">100% seguro y privado</div><div class="feat-sub">Tus datos siempre bajo tu control</div></div></div>
+      <div class="feat">
+        <div class="feat-icon">⚡</div>
+        <div><div class="feat-title">Contenido en 30 segundos</div><div class="feat-sub">MLS, posts y email generados al instante</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🤖</div>
+        <div><div class="feat-title">IA trabaja 24/7 por ti</div><div class="feat-sub">Calificación de leads automática mientras cierras</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📊</div>
+        <div><div class="feat-title">Dashboard para brokers</div><div class="feat-sub">Todo tu equipo en un solo lugar</div></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔒</div>
+        <div><div class="feat-title">100% seguro y privado</div><div class="feat-sub">Tus datos siempre bajo tu control</div></div>
+      </div>
     </div>
   </div>
 
-  <div class="left-foot">© 2025 PropIA · Hecho para la comunidad latina en USA</div>
+  <div class="left-foot">
+    <span>© 2025 PropIA · Comunidad latina en USA</span>
+    <div class="left-foot-badge">SSL Seguro</div>
+  </div>
 </div>
 
 <div class="right">
@@ -253,10 +369,12 @@ body{
       <div class="mobile-logo-mark">🏠</div>
       <div class="mobile-logo-name">Prop<span>IA</span></div>
     </div>
+
     <div class="auth-switcher">
       <button class="auth-tab active" onclick="switchTab('login',this)">Iniciar Sesión</button>
       <button class="auth-tab" onclick="switchTab('register',this)">Crear Cuenta</button>
     </div>
+
     <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
       <div>
         <div class="form-title">Bienvenido de nuevo</div>
@@ -272,6 +390,7 @@ body{
       <div class="divider">Plan Gratis disponible</div>
       <div class="plan-badge">🎁 El plan <strong>Gratis</strong> incluye 5 listings y 20 leads al mes. Sin tarjeta de crédito.</div>
     </form>
+
     <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
       <div>
         <div class="form-title">Crea tu cuenta</div>
@@ -292,8 +411,8 @@ body{
 </div>
 
 <script>
-  const session = localStorage.getItem('propia_token');
-  if (session) window.location.href = '/dashboard';
+  const session=localStorage.getItem('propia_token');
+  if(session)window.location.href='/dashboard';
   function switchTab(tab,btn){document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(tab==='login'){document.getElementById('loginForm').classList.remove('hidden');document.getElementById('registerForm').classList.add('hidden');}else{document.getElementById('loginForm').classList.add('hidden');document.getElementById('registerForm').classList.remove('hidden');}}
   async function handleLogin(e){e.preventDefault();const btn=document.getElementById('loginBtn');const alert=document.getElementById('loginAlert');setLoading(btn,true);hideAlert(alert);try{const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',email:document.getElementById('loginEmail').value.trim(),password:document.getElementById('loginPassword').value})});const data=await res.json();if(!res.ok||!data.success){showAlert(alert,data.error||'Error al iniciar sesión.','error');return;}localStorage.setItem('propia_token',data.token);localStorage.setItem('propia_user',JSON.stringify(data.user));window.location.href='/dashboard';}catch{showAlert(alert,'Error de conexión. Intenta de nuevo.','error');}finally{setLoading(btn,false);}}
   async function handleRegister(e){e.preventDefault();const btn=document.getElementById('registerBtn');const alert=document.getElementById('registerAlert');setLoading(btn,true);hideAlert(alert);try{const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'register',name:document.getElementById('regName').value.trim(),brokerage:document.getElementById('regBrokerage').value.trim(),email:document.getElementById('regEmail').value.trim(),password:document.getElementById('regPassword').value})});const data=await res.json();if(!res.ok||!data.success){showAlert(alert,data.error||'Error al crear la cuenta.','error');return;}showAlert(alert,'✅ Cuenta creada. Ahora inicia sesión.','success');document.getElementById('registerForm').reset();}catch{showAlert(alert,'Error de conexión. Intenta de nuevo.','error');}finally{setLoading(btn,false);}}
