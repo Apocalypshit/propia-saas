@@ -839,7 +839,7 @@ body {
 
           <div class="fg"><label>Dirección completa</label><input type="text" id="gAddress" placeholder="123 Oak Street, Miami, FL 33101"/></div>
           <div class="form-row">
-            <div class="fg"><label>Precio de venta</label><input type="text" id="gPrice" placeholder="$450,000"/></div>
+            <div class="fg"><label>Precio de venta</label><input type="text" id="gPrice" placeholder="$450,000" oninput="formatPrice(this)"/></div>
             <div class="fg"><label>Tipo de propiedad</label><select id="gType"><option value="casa">Casa unifamiliar</option><option value="condo">Condominio</option><option value="townhouse">Townhouse</option><option value="multifamiliar">Multifamiliar</option><option value="terreno">Terreno</option><option value="comercial">Comercial</option></select></div>
           </div>
           <div class="form-row">
@@ -847,7 +847,7 @@ body {
             <div class="fg"><label>Baños</label><input type="number" id="gBaths" placeholder="3" min="1" max="20" step="0.5"/></div>
           </div>
           <div class="form-row">
-            <div class="fg"><label>Pies cuadrados</label><input type="text" id="gSqft" placeholder="2,200 sq ft"/></div>
+            <div class="fg"><label>Pies cuadrados</label><input type="text" id="gSqft" placeholder="2,200 sq ft" oninput="formatSqft(this)"/></div>
             <div class="fg"><label>Año de construcción</label><input type="text" id="gYear" placeholder="2018"/></div>
           </div>
           <div class="fg"><label>Características especiales</label><textarea id="gFeatures" placeholder="Piscina, cocina renovada, garage doble, vista al lago, smart home..."></textarea></div>
@@ -1062,6 +1062,9 @@ body {
           address: l.address,
           price:   l.price,
           tone:    l.tone || 'lujoso',
+          type:    l.type || (l.content && l.content._meta ? l.content._meta.type : '') || '',
+          beds:    l.content && l.content._meta ? l.content._meta.beds  || '' : '',
+          baths:   l.content && l.content._meta ? l.content._meta.baths || '' : '',
           date:    new Date(l.created_at)
         }));
         renderHistory();
@@ -1212,7 +1215,13 @@ body {
     if (filter && filter.trim()) {
       var q = filter.trim().toLowerCase();
       data = data.filter(function(h) {
-        return (h.address||'').toLowerCase().indexOf(q) !== -1 || (h.price||'').toLowerCase().indexOf(q) !== -1;
+        var dateStr = formatDate(h.date).toLowerCase();
+        return (h.address||'').toLowerCase().indexOf(q) !== -1
+          || (h.price||'').toLowerCase().indexOf(q) !== -1
+          || (h.type||'').toLowerCase().indexOf(q) !== -1
+          || String(h.beds||'').indexOf(q) !== -1
+          || String(h.baths||'').indexOf(q) !== -1
+          || dateStr.indexOf(q) !== -1;
       });
     }
     if (!data.length) {
@@ -1246,6 +1255,17 @@ body {
   function copyAllPosts(btn) { const text = [...document.querySelectorAll('.post-text')].map((el,i) => `POST ${i+1}:\n${el.textContent}`).join('\n\n'); navigator.clipboard.writeText(text).then(() => { btn.textContent = '✓ Copiado'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = '📋 Copiar todos'; btn.classList.remove('copied'); }, 2000); }); }
   function copyPostItem(btn, idx) { const posts = document.querySelectorAll('.post-text'); navigator.clipboard.writeText(posts[idx]?.textContent || '').then(() => { btn.textContent = '✓'; setTimeout(() => btn.textContent = '📋', 2000); }); }
   function upgradePlan(plan) { alert(`Para mejorar al plan ${plan.toUpperCase()}, próximamente integraremos Stripe. Contáctanos: soporte@propia.app`); }
+  function formatPrice(input) {
+    var raw = input.value.replace(/[^0-9.]/g, '');
+    var parts = raw.split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    var formatted = parts.slice(0, 2).join('.');
+    input.value = formatted ? '$' + formatted : '';
+  }
+  function formatSqft(input) {
+    var raw = input.value.replace(/[^0-9]/g, '');
+    input.value = raw ? raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '';
+  }
   function setLoading(btn, val) { btn.disabled = val; btn.classList.toggle('is-loading', val); }
   function setAlert(msg, type) { const el = document.getElementById('genAlert'); el.textContent = msg; el.className = `alert ${type}`; }
   function clearAlert() { const el = document.getElementById('genAlert'); el.className = 'alert hidden'; }
