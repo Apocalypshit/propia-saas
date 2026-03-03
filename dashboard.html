@@ -290,6 +290,14 @@ body {
 .hp-done { background: rgba(16,185,129,0.10); color: #059669; }
 .hp-prog { background: var(--p-light); color: var(--purple); }
 .hp-soon { background: var(--a-light); color: #b45309; }
+.hist-item-edit { margin-left: 8px; font-size: 11px; font-weight: 700; color: var(--purple); background: var(--p-light); border: 1px solid var(--p-border); border-radius: 6px; padding: 3px 9px; cursor: pointer; opacity: 0; transition: opacity 0.15s; flex-shrink: 0; }
+.hist-item:hover .hist-item-edit { opacity: 1; }
+.edit-banner { display: none; align-items: center; justify-content: space-between; gap: 12px; background: var(--p-light); border: 1.5px solid var(--p-border); border-radius: 12px; padding: 12px 16px; margin-bottom: 18px; }
+.edit-banner.visible { display: flex; }
+.edit-banner-text { font-size: 13px; font-weight: 700; color: var(--purple); }
+.edit-banner-addr { font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 1px; }
+.edit-banner-cancel { font-size: 12px; font-weight: 700; color: var(--muted); background: white; border: 1px solid var(--border); border-radius: 8px; padding: 5px 11px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.edit-banner-cancel:hover { color: var(--text); border-color: var(--muted2); }
 
 /* ═══════════════════════════════════════════
    QUICK ACTION CARD
@@ -790,6 +798,15 @@ body {
         <div class="form-card">
           <div class="form-section-title"><div class="dot"></div>Datos de la propiedad</div>
 
+          <!-- Edit mode banner — hidden by default -->
+          <div class="edit-banner" id="editBanner">
+            <div>
+              <div class="edit-banner-text">✏️ Modo Edición</div>
+              <div class="edit-banner-addr" id="editBannerAddr"></div>
+            </div>
+            <button class="edit-banner-cancel" onclick="cancelEdit()">✕ Cancelar</button>
+          </div>
+
           <div class="fg"><label>Dirección completa</label><input type="text" id="gAddress" placeholder="123 Oak Street, Miami, FL 33101"/></div>
           <div class="form-row">
             <div class="fg"><label>Precio de venta</label><input type="text" id="gPrice" placeholder="$450,000"/></div>
@@ -947,6 +964,7 @@ body {
   if (!token) { window.location.href = '/'; }
   let user = {}; try { user = JSON.parse(userRaw) || {}; } catch { user = {}; }
   let selectedTone = 'lujoso';
+  let editingListingId = null;  // null = nuevo listing, uuid = editando existente
   let usageData = { listings: { used: 0, limit: 5 }, plan: 'free', planLabel: 'Gratis' };
   let historyData = [];
   let agentTimer = null;
@@ -988,12 +1006,12 @@ body {
       const data = await res.json();
       if (data.success) {
         historyData = data.listings.map(l => ({
-          address:  l.address,
-          price:    l.price,
-          tone:     l.tone || 'lujoso',
-          date:     new Date(l.created_at)
+          id:      l.id,
+          address: l.address,
+          price:   l.price,
+          tone:    l.tone || 'lujoso',
+          date:    new Date(l.created_at)
         }));
-        renderHistory();
       }
     } catch {}
   }
@@ -1061,7 +1079,7 @@ body {
     const btn = document.getElementById('genBtn');
     setLoading(btn, true); startAgentSteps();
     try {
-      const res = await fetch('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ address, price, type: document.getElementById('gType').value, beds: document.getElementById('gBeds').value, baths: document.getElementById('gBaths').value, sqft: document.getElementById('gSqft').value, year: document.getElementById('gYear').value, features: document.getElementById('gFeatures').value, tone: selectedTone }) });
+      const res = await fetch('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ address, price, type: document.getElementById('gType').value, beds: document.getElementById('gBeds').value, baths: document.getElementById('gBaths').value, sqft: document.getElementById('gSqft').value, year: document.getElementById('gYear').value, features: document.getElementById('gFeatures').value, tone: selectedTone, listingId: editingListingId }) });
       const data = await res.json();
       if (res.status === 401) { logout(); return; }
       if (!res.ok || !data.success) { setAlert(data.upgrade ? `⚠️ ${data.error}\n\nMejora tu plan para continuar.` : (data.error || 'Error al generar.'), data.upgrade ? 'upgrade' : 'error'); return; }
@@ -1090,7 +1108,45 @@ body {
     const body = document.getElementById('historyBody');
     if (!historyData.length) { body.innerHTML = '<div class="hist-empty">Aún no has generado ningún listing.<br><a onclick="showPanel(\'generator\',document.querySelectorAll(\'.nav-item\')[1])">Genera tu primer listing →</a></div>'; return; }
     const pillMap = { lujoso:'hp-prog', familiar:'hp-done', inversionista:'hp-prog', moderno:'hp-done', urgente:  'hp-soon', emocional:'hp-done' };
-    body.innerHTML = historyData.map(h => `<div class="hist-item"><div class="hist-item-icon">🏠</div><div class="hist-item-body"><div class="hist-item-addr">${h.address}</div><div class="hist-item-meta"><span>${h.price}</span><span>${formatDate(h.date)}</span></div></div><div class="hist-pill ${pillMap[h.tone]||'hp-prog'}">${h.tone}</div></div>`).join('');
+    body.innerHTML = historyData.map(h => `<div class="hist-item"><div class="hist-item-icon">🏠</div><div class="hist-item-body"><div class="hist-item-addr">${h.address}</div><div class="hist-item-meta"><span>${h.price}</span><span>${formatDate(h.date)}</span></div></div><div class="hist-pill ${pillMap[h.tone]||'hp-prog'}">${h.tone}</div><button class="hist-item-edit" onclick="loadForEdit('${h.id}')">✏️ Editar</button></div>`).join('');
+  }
+
+  async function loadForEdit(id) {
+    try {
+      const res = await fetch('/api/history?id=' + id, { headers: { Authorization: 'Bearer ' + token } });
+      if (!res.ok) { setAlert('No se pudo cargar el listing.', 'error'); return; }
+      const data = await res.json();
+      if (!data.success || !data.listing) return;
+      const l = data.listing;
+      const m = (l.content && l.content._meta) ? l.content._meta : {};
+      document.getElementById('gAddress').value  = l.address   || '';
+      document.getElementById('gPrice').value    = l.price     || '';
+      document.getElementById('gBeds').value     = m.beds      || '';
+      document.getElementById('gBaths').value    = m.baths     || '';
+      document.getElementById('gSqft').value     = m.sqft      || '';
+      document.getElementById('gYear').value     = m.year      || '';
+      document.getElementById('gFeatures').value = m.features  || '';
+      var typeEl = document.getElementById('gType');
+      if (m.type) { for (var j=0; j<typeEl.options.length; j++) { if (typeEl.options[j].value===m.type) { typeEl.selectedIndex=j; break; } } }
+      document.querySelectorAll('.tone-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.tone-btn').forEach(function(b){ if ((b.getAttribute('onclick')||'').indexOf(l.tone)!==-1){ b.classList.add('active'); selectedTone=l.tone; } });
+      editingListingId = l.id;
+      document.getElementById('editBannerAddr').textContent = l.address;
+      document.getElementById('editBanner').classList.add('visible');
+      document.querySelector('#genBtn .label').textContent = '🔄 Regenerar listing';
+      showPanel('generator', document.querySelectorAll('.nav-item')[1]);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch(e) { console.error(e); setAlert('Error al cargar el listing.', 'error'); }
+  }
+
+  function cancelEdit() {
+    editingListingId = null;
+    document.getElementById('editBanner').classList.remove('visible');
+    document.querySelector('#genBtn .label').textContent = '✶ Generar con PropIA';
+    ['gAddress','gPrice','gBeds','gBaths','gSqft','gYear','gFeatures'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.querySelectorAll('.tone-btn').forEach(function(b,i){ b.classList.toggle('active',i===0); });
+    selectedTone = 'lujoso';
+    clearAlert();
   }
 
   function formatDate(d) { return new Intl.DateTimeFormat('es-MX', { day:'2-digit', month:'short' }).format(d); }
