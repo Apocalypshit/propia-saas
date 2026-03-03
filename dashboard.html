@@ -955,6 +955,7 @@ body {
     setUserUI();
     setDate();
     loadUsage();
+    loadHistory();
   });
 
   function setDate() {
@@ -977,6 +978,23 @@ body {
       if (res.status === 401) { logout(); return; }
       const data = await res.json();
       if (data.plan) { usageData = data; updateUsageUI(); }
+    } catch {}
+  }
+
+  async function loadHistory() {
+    try {
+      const res = await fetch('/api/history', { headers: { 'Authorization': `Bearer ${token}` } });
+      if (res.status === 401) { logout(); return; }
+      const data = await res.json();
+      if (data.success) {
+        historyData = data.listings.map(l => ({
+          address:  l.address,
+          price:    l.price,
+          tone:     l.tone || 'lujoso',
+          date:     new Date(l.created_at)
+        }));
+        renderHistory();
+      }
     } catch {}
   }
 
@@ -1050,8 +1068,7 @@ body {
       displayOutput(data.content, address, price);
       usageData.listings.used = data.usage.used;
       updateUsageUI();
-      historyData.unshift({ address, price, tone: selectedTone, date: new Date() });
-      renderHistory();
+      loadHistory();
     } catch { setAlert('Error de conexión. Intenta de nuevo.', 'error'); }
     finally { setLoading(btn, false); stopAgentSteps(); }
   }
