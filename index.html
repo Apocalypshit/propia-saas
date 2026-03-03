@@ -382,6 +382,13 @@ body::before {
 <script>
   const session = localStorage.getItem('propia_token');
   if (session) window.location.href = '/dashboard';
+
+  // Auto-switch to register tab if URL has ?tab=register
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('tab') === 'register') {
+    const registerBtn = document.querySelectorAll('.auth-tab')[1];
+    if (registerBtn) switchTab('register', registerBtn);
+  }
   function switchTab(tab,btn){document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(tab==='login'){document.getElementById('loginForm').classList.remove('hidden');document.getElementById('registerForm').classList.add('hidden');}else{document.getElementById('loginForm').classList.add('hidden');document.getElementById('registerForm').classList.remove('hidden');}}
   async function handleLogin(e){e.preventDefault();const btn=document.getElementById('loginBtn');const al=document.getElementById('loginAlert');setLoading(btn,true);hide(al);try{const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',email:document.getElementById('loginEmail').value.trim(),password:document.getElementById('loginPassword').value})});const data=await res.json();if(!res.ok||!data.success){show(al,data.error||'Error al iniciar sesión.','error');return;}localStorage.setItem('propia_token',data.token);localStorage.setItem('propia_user',JSON.stringify(data.user));window.location.href='/dashboard';}catch{show(al,'Error de conexión. Intenta de nuevo.','error');}finally{setLoading(btn,false);}}
   async function handleRegister(e){e.preventDefault();const btn=document.getElementById('registerBtn');const al=document.getElementById('registerAlert');setLoading(btn,true);hide(al);try{const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'register',name:document.getElementById('regName').value.trim(),brokerage:document.getElementById('regBrokerage').value.trim(),email:document.getElementById('regEmail').value.trim(),password:document.getElementById('regPassword').value})});const data=await res.json();if(!res.ok||!data.success){show(al,data.error||'Error al crear la cuenta.','error');return;}show(al,'✅ Cuenta creada. Ahora inicia sesión.','success');document.getElementById('registerForm').reset();}catch{show(al,'Error de conexión. Intenta de nuevo.','error');}finally{setLoading(btn,false);}}
