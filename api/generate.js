@@ -66,14 +66,14 @@ Características: ${features || 'No especificadas'}
 
 Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta, sin texto adicional, sin explicaciones, sin markdown:
 {
-  "mls": "descripción profesional de 150 palabras para MLS",
+  "mls": "descripción profesional de 120 palabras para MLS",
   "posts": [
     "post 1 para Instagram con emojis y hashtags en español",
     "post 2 con ángulo diferente y hashtags en español",
     "post 3 más urgente con hashtags en español"
   ],
-  "email": "Asunto: titulo del email aqui\\n\\nHola [Nombre],\\n\\ncuerpo del email aqui de 150 palabras\\n\\nSaludos,\\nTu Agente",
-  "video": "script de video de 60 segundos con [indicaciones de escena entre corchetes]"
+  "email": "Asunto: titulo del email aqui\\n\\nHola [Nombre],\\n\\ncuerpo del email de 100 palabras\\n\\nSaludos,\\nTu Agente",
+  "video": "[HOOK 0:00] frase gancho de apertura\n[PROPIEDAD 0:05] presentar la propiedad\n[CARACTERISTICAS 0:15] mencionar 3 puntos clave de la propiedad\n[PRECIO Y ZONA 0:35] precio y ubicacion\n[CTA 0:45] como contactar al agente\n[CIERRE 0:55] frase final memorable"
 }`;
 
     const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -83,7 +83,7 @@ Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta, sin text
         'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
+        model: 'llama-3.3-70b-versatile',
         messages: [
           {
             role: 'system',
@@ -95,7 +95,7 @@ Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta, sin text
           }
         ],
         temperature: 0.7,
-        max_tokens: 3000
+        max_tokens: 4000
       })
     });
 
