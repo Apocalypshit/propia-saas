@@ -3,7 +3,7 @@
   "outputDirectory": ".",
   "rewrites": [
     { "source": "/dashboard", "destination": "/dashboard.html" },
-    { "source": "/app",       "destination": "/index.html" },
+    { "source": "/app",       "destination": "/login.html" },
     { "source": "/",          "destination": "/landing.html" }
   ]
 }
