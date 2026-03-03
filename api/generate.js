@@ -34,14 +34,14 @@ module.exports = async function handler(req, res) {
     const limit = PLAN_LIMITS[plan]?.listings || 5;
     const used = profile?.listings_used_this_month || 0;
 
-    if (used >= limit) {
+    if (!listingId && used >= limit) {
       return res.status(429).json({
         error: `Alcanzaste tu límite de ${limit} listings este mes.`,
         upgrade: true, plan, used, limit
       });
     }
 
-    const { address, price, type, beds, baths, sqft, year, features, tone } = req.body;
+    const { address, price, type, beds, baths, sqft, year, features, tone, listingId } = req.body;
     if (!address || !price) return res.status(400).json({ error: 'Dirección y precio son requeridos.' });
 
     const toneDesc = {
@@ -136,19 +136,32 @@ Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta, sin text
       };
     }
 
-    // Guardar uso
-    await supabase.from('profiles')
-      .update({ listings_used_this_month: used + 1 }).eq('id', user.id);
+    // Guardar campos del formulario en _meta para poder pre-llenar al editar
+    parsed._meta = {
+      beds: beds || '', baths: baths || '', sqft: sqft || '',
+      year: year || '', features: features || '', type: type || 'casa'
+    };
 
-    await supabase.from('listings').insert({
-      user_id: user.id, address, price, type, tone,
-      content: parsed, created_at: new Date().toISOString()
-    });
+    if (listingId) {
+      // EDITAR listing existente — no incrementar contador
+      await supabase.from('listings')
+        .update({ address, price, type, tone, content: parsed })
+        .eq('id', listingId).eq('user_id', user.id);
+    } else {
+      // NUEVO listing — incrementar contador e insertar
+      await supabase.from('profiles')
+        .update({ listings_used_this_month: used + 1 }).eq('id', user.id);
+      await supabase.from('listings').insert({
+        user_id: user.id, address, price, type, tone,
+        content: parsed, created_at: new Date().toISOString()
+      });
+    }
 
     return res.status(200).json({
       success: true,
       content: parsed,
-      usage: { used: used + 1, limit, plan }
+      listingId: listingId || null,
+      usage: { used: listingId ? used : used + 1, limit, plan }
     });
 
   } catch (err) {
