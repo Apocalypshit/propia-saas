@@ -161,14 +161,14 @@ body {
 /* ═══════════════════════════════════════════
    MAIN AREA
 ═══════════════════════════════════════════ */
-.main { margin-left: var(--sw); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+.main { margin-left: var(--sw); flex: 1; display: flex; flex-direction: column; min-height: 100vh; min-width: 0; overflow-x: hidden; }
 
 .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 22px; cursor: pointer; padding: 6px; line-height: 1; }
 
 /* ═══════════════════════════════════════════
    CONTENT AREA — no sticky topbar, like Prodify
 ═══════════════════════════════════════════ */
-.content { flex: 1; padding: 32px 36px; overflow-y: auto; max-width: 1200px; }
+.content { flex: 1; padding: 32px 36px; overflow-y: auto; width: 100%; max-width: 1140px; margin: 0 auto; }
 
 .panel { display: none; }
 .panel.active { display: block; animation: fadeUp 0.2s ease; }
@@ -526,30 +526,86 @@ body {
 .mob-icon { font-size: 20px; line-height: 1; }
 
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 290; backdrop-filter: blur(3px); }
+.overlay.open { display: block; }
+
+/* topbar hidden on desktop, shown on tablet/mobile via media query */
+#mobileTopbar { display: none; }
+@media(max-width:1024px) { #mobileTopbar { display: flex !important; } }
 
 /* ═══════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — Complete breakpoint system
 ═══════════════════════════════════════════ */
-@media(max-width:1100px) { .plans-grid { grid-template-columns: repeat(2,1fr); } }
-@media(max-width:960px) { .main-grid { grid-template-columns: 1fr; } .main-grid-right { display: none; } .gen-layout { grid-template-columns: 1fr; } .info-card { display: none; } .stats-grid { grid-template-columns: repeat(2,1fr); } }
-@media(max-width:768px) {
-  :root { --sw: 260px; }
-  .sidebar { transform: translateX(-100%); }
+
+/* ── Large Desktop (1280px+): sidebar + centered content ── */
+@media(min-width:1280px) {
+  .content { padding: 36px 48px; }
+}
+
+/* ── Desktop (1024px–1280px): sidebar visible, content adapts ── */
+@media(max-width:1280px) {
+  .plans-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+/* ── Tablet Landscape (900px–1024px): sidebar collapses ── */
+@media(max-width:1024px) {
+  :root { --sw: 0px; }
+  .sidebar { transform: translateX(-260px); width: 260px; }
   .sidebar.open { transform: translateX(0); }
   .s-close { display: block; }
-  .overlay.open { display: block; }
   .main { margin-left: 0; }
   .hamburger { display: block; }
-  .content { padding: 20px 16px 80px; }
-  .ov-greeting { font-size: 32px; }
-  .ov-sub { font-size: 20px; }
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .plans-grid { grid-template-columns: 1fr; }
+  .content { padding: 20px 24px 90px; }
+  .main-grid-right { display: none; }
+  .gen-layout { grid-template-columns: 1fr; }
+  .info-card { display: none; }
   .mobile-nav { display: block; }
-  .output-tabs { flex-wrap: wrap; }
-  .otab { font-size: 13px; padding: 8px 12px; }
 }
-@media(max-width:480px) { .stats-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .ov-actions { gap: 7px; } .ov-pill { font-size: 13px; padding: 8px 14px; } }
+
+/* ── Tablet Portrait (768px–900px) ── */
+@media(max-width:900px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .plans-grid { grid-template-columns: repeat(2,1fr); }
+  .main-grid { grid-template-columns: 1fr; }
+  .ov-greeting { font-size: 36px; }
+  .ov-sub { font-size: 22px; }
+}
+
+/* ── Mobile (max 768px) ── */
+@media(max-width:768px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .plans-grid { grid-template-columns: 1fr; }
+  .content { padding: 16px 14px 90px; }
+  .ov-greeting { font-size: 30px; letter-spacing: -1px; }
+  .ov-sub { font-size: 18px; letter-spacing: -0.3px; }
+  .ov-actions { gap: 8px; }
+  .ov-pill { font-size: 13px; padding: 8px 14px; }
+  .quick-grid { grid-template-columns: 1fr 1fr; }
+  .output-tabs { flex-wrap: wrap; }
+  .otab { font-size: 13px; padding: 8px 11px; }
+  .gen-header h2 { font-size: 26px; }
+  .gen-header p { font-size: 15px; }
+  .plans-header h2 { font-size: 26px; }
+  .plans-header p { font-size: 15px; }
+  .stat-value { font-size: 32px; }
+  .card { padding: 16px 18px; }
+  .form-card { padding: 18px; }
+}
+
+/* ── Small Mobile (max 480px) ── */
+@media(max-width:480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .quick-grid { grid-template-columns: 1fr; }
+  .ov-greeting { font-size: 26px; }
+  .ov-sub { font-size: 16px; }
+  .ov-pill { font-size: 12px; padding: 7px 12px; }
+  .tone-row { gap: 6px; }
+  .tone-btn { font-size: 12px; padding: 6px 11px; }
+  .plan-price { font-size: 26px; }
+  .stat-value { font-size: 28px; }
+  .output-tabs { gap: 2px; }
+  .otab { padding: 7px 9px; font-size: 12px; }
+}
 </style>
 </head>
 <body>
@@ -601,10 +657,13 @@ body {
 <!-- ═════════ MAIN ═════════ -->
 <div class="main">
 
-  <!-- mobile topbar -->
-  <div style="display:none;align-items:center;gap:10px;padding:14px 16px;background:white;border-bottom:1px solid rgba(0,0,0,0.06);box-shadow:0 1px 6px rgba(0,0,0,0.04);position:sticky;top:0;z-index:100;" id="mobileTopbar">
-    <button class="hamburger" onclick="openSidebar()" style="display:block;">☰</button>
-    <div style="font-size:18px;font-weight:800;color:var(--text);">Prop<span style="color:var(--purple);">IA</span></div>
+  <!-- mobile/tablet topbar — shown via CSS at ≤1024px -->
+  <div style="display:none;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;background:white;border-bottom:1px solid rgba(0,0,0,0.06);box-shadow:0 1px 6px rgba(0,0,0,0.04);position:sticky;top:0;z-index:100;" id="mobileTopbar">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="hamburger" onclick="openSidebar()" style="display:block !important;">☰</button>
+      <div style="font-size:18px;font-weight:800;color:var(--text);">Prop<span style="color:var(--purple);">IA</span></div>
+    </div>
+    <div id="topbarPlan" style="font-size:12px;font-weight:700;color:var(--purple);background:var(--p-light);border:1px solid var(--p-border);padding:4px 12px;border-radius:20px;">FREE</div>
   </div>
 
   <div class="content">
@@ -896,8 +955,6 @@ body {
     setUserUI();
     setDate();
     loadUsage();
-    // show mobile topbar on mobile
-    if (window.innerWidth <= 768) document.getElementById('mobileTopbar').style.display = 'flex';
   });
 
   function setDate() {
@@ -937,6 +994,8 @@ body {
     document.getElementById('assetsRow').textContent = `${listings.used * 4} este mes`;
     const planBadgeEl = document.getElementById('planBadge');
     planBadgeEl.textContent = planLabel;
+    const topbarPlan = document.getElementById('topbarPlan');
+    if (topbarPlan) { topbarPlan.textContent = planLabel.toUpperCase(); }
     const badgeMap = { free: 'pb-free', basic: 'pb-basic', pro: 'pb-pro', enterprise: 'pb-ent' };
     planBadgeEl.className = `plan-badge ${badgeMap[plan] || 'pb-free'}`;
     ['free','basic','pro','enterprise'].forEach(p => {

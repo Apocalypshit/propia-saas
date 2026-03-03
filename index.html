@@ -55,7 +55,25 @@ body::before {
   pointer-events: none;
 }
 
-@media(max-width:768px){body{display:block;}.left{display:none;}}
+/* Tablet: stack vertically */
+@media(max-width:900px){
+  body { grid-template-columns: 1fr; }
+  .left { min-height: auto; padding: 36px 32px 28px; border-right: none; border-bottom: 1px solid var(--p-border); }
+  .left .blob1 { width: 300px; height: 300px; top: -100px; right: -80px; }
+  .mock-card { max-width: 500px; }
+  .headline { font-size: 36px; }
+  .headline-teal { font-size: 22px; }
+  .tagline { max-width: 100%; }
+  .right { min-height: auto; padding: 32px 32px 48px; }
+}
+/* Mobile: hide left panel */
+@media(max-width:600px){
+  .left { display: none; }
+  body { display: block; }
+  .right { padding: 28px 18px 40px; background: var(--bg); min-height: 100vh; }
+  .form-title { font-size: 26px; }
+  .auth-tab { font-size: 14px; }
+}
 
 /* ─── LEFT ─── */
 .left {
@@ -176,7 +194,7 @@ body::before {
   position: relative; z-index: 1;
   border-left: none;
 }
-@media(max-width:768px){.right{padding:32px 20px;background:var(--bg);}}
+@media(max-width:600px){.right{padding:28px 18px;background:var(--bg);}}
 
 .auth-box { width: 100%; max-width: 420px; }
 
@@ -184,7 +202,7 @@ body::before {
 .mobile-logo-mark { width: 38px; height: 38px; background: var(--purple); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 4px 14px rgba(124,58,237,0.30); }
 .mobile-logo-name { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.6px; }
 .mobile-logo-name span { color: var(--purple); }
-@media(max-width:768px){.mobile-logo{display:flex;}}
+@media(max-width:600px){.mobile-logo{display:flex;}}
 
 /* switcher */
 .auth-switcher {
