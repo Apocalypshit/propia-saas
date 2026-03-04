@@ -40,6 +40,11 @@ module.exports = async function handler(req, res) {
       totalListings = count || 0;
     }
 
+
+    }
+
+    const { address, price, type, beds, baths, sqft, year, features, tone, listingId } = req.body;
+
     const plan = profile?.plan || 'free';
     const limit = PLAN_LIMITS[plan]?.listings || 2;
     const used = plan === 'free' ? totalListings : (profile?.listings_used_this_month || 0);
@@ -50,8 +55,6 @@ module.exports = async function handler(req, res) {
         upgrade: true, plan, used, limit
       });
     }
-
-    const { address, price, type, beds, baths, sqft, year, features, tone, listingId } = req.body;
     if (!address || !price) return res.status(400).json({ error: 'Dirección y precio son requeridos.' });
 
     const toneDesc = {
