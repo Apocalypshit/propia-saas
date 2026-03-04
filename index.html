@@ -1,6 +1,817 @@
 <!DOCTYPE html>
-<html><head>
+<html lang="es">
+<head>
 <meta charset="UTF-8"/>
-<meta http-equiv="refresh" content="0; url=/app"/>
-<title>PropIA</title>
-</head><body></body></html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PropIA — IA para Agentes de Bienes Raíces Latinos en USA</title>
+<meta name="description" content="PropIA genera listings MLS profesionales, posts para redes sociales, emails y scripts de video en segundos. La IA diseñada para agentes inmobiliarios latinos en Estados Unidos."/>
+<meta name="keywords" content="PropIA, agente inmobiliario latino, IA bienes raices, listing MLS espanol, real estate AI, agente real estate USA"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://propia-saas.vercel.app/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="PropIA — IA para Agentes de Bienes Raíces Latinos en USA"/>
+<meta property="og:description" content="Genera listings MLS, posts para redes y emails en segundos. Todo en español. Empieza gratis."/>
+<meta property="og:url" content="https://propia-saas.vercel.app/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+
+<!-- Google Fonts — safe simple URL format -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:      #f3f0ff;
+  --bg2:     #ede9fb;
+  --white:   #ffffff;
+  --purple:  #7c3aed;
+  --purple2: #6d28d9;
+  --p-light: rgba(124,58,237,0.09);
+  --p-border:rgba(124,58,237,0.18);
+  --teal:    #0d9488;
+  --teal2:   #14b8a6;
+  --t-light: rgba(20,184,166,0.10);
+  --t-border:rgba(20,184,166,0.20);
+  --green:   #10b981;
+  --amber:   #f59e0b;
+  --text:    #0f0a1e;
+  --text2:   #374151;
+  --muted:   #6b7280;
+  --muted2:  #9ca3af;
+  --border:  rgba(0,0,0,0.07);
+  --shadow:  0 2px 8px rgba(0,0,0,0.07), 0 4px 20px rgba(124,58,237,0.06);
+  --shadow-lg: 0 8px 40px rgba(124,58,237,0.14), 0 2px 10px rgba(0,0,0,0.06);
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'DM Mono', 'Courier New', monospace;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+a { text-decoration: none; color: inherit; }
+
+/* ══ NAVBAR ══ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 0 28px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.nav.scrolled {
+  background: rgba(243,240,255,0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto; height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.nav-logo-mark { width: 36px; height: 36px; background: var(--purple); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 3px 10px rgba(124,58,237,0.35); flex-shrink: 0; }
+.nav-logo-name { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+.nav-logo-name span { color: var(--purple); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 15px; font-weight: 500; color: var(--text2); transition: color 0.18s; }
+.nav-links a:hover { color: var(--purple); }
+.nav-btns { display: flex; align-items: center; gap: 10px; }
+.btn-ghost { font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text2); background: none; border: none; cursor: pointer; padding: 8px 14px; border-radius: 8px; transition: all 0.18s; }
+.btn-ghost:hover { color: var(--purple); background: var(--p-light); }
+.btn-nav { font-family: var(--font); font-size: 14px; font-weight: 700; color: white; background: var(--purple); border: none; border-radius: 10px; padding: 9px 20px; cursor: pointer; box-shadow: 0 3px 12px rgba(124,58,237,0.30); transition: all 0.18s; }
+.btn-nav:hover { background: var(--purple2); transform: translateY(-1px); }
+.hamburger { display: none; background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 11px; cursor: pointer; font-size: 18px; color: var(--text); transition: all 0.15s; }
+.hamburger:hover { background: var(--p-light); border-color: var(--p-border); }
+
+.mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 999; background: white; border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); padding: 12px 20px 20px; flex-direction: column; gap: 2px; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { display: block; padding: 12px 14px; border-radius: 10px; font-size: 15px; font-weight: 500; color: var(--text2); transition: all 0.15s; }
+.mobile-menu a:hover { background: var(--p-light); color: var(--purple); }
+.mobile-menu-btns { display: flex; gap: 10px; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--border); }
+.btn-mo { flex:1; font-family:var(--font); font-size:14px; font-weight:700; border-radius:11px; padding:11px; cursor:pointer; text-align:center; transition:all 0.15s; border:none; }
+.btn-mo-o { background:var(--p-light); color:var(--purple); border:1.5px solid var(--p-border); }
+.btn-mo-f { background:var(--purple); color:white; box-shadow:0 3px 12px rgba(124,58,237,0.30); }
+
+/* ══ HERO ══ */
+.hero { padding: 130px 28px 80px; position: relative; overflow: hidden; }
+.hero-blob1 { position: absolute; width: 650px; height: 650px; border-radius: 50%; background: radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 65%); top: -200px; right: -180px; pointer-events: none; }
+.hero-blob2 { position: absolute; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(20,184,166,0.10) 0%, transparent 65%); bottom: -100px; left: -120px; pointer-events: none; }
+.hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; margin-bottom: 22px; background: white; border: 1.5px solid var(--p-border); border-radius: 30px; font-size: 13px; font-weight: 600; color: var(--purple); box-shadow: 0 2px 8px rgba(124,58,237,0.10); width: fit-content; }
+.badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal2); box-shadow: 0 0 8px rgba(20,184,166,0.5); animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.5);} }
+.hero-title { font-size: clamp(38px, 4vw, 58px); font-weight: 800; line-height: 1.06; letter-spacing: -2px; color: var(--text); margin-bottom: 20px; }
+.hero-title .t-purple { color: var(--purple); }
+.hero-title .t-teal { color: var(--teal); }
+.hero-sub { font-size: 17px; line-height: 1.75; color: var(--muted); max-width: 460px; margin-bottom: 34px; }
+.hero-sub strong { color: var(--text2); font-weight: 700; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font); font-size: 16px; font-weight: 800; color: white; background: var(--purple); border: none; border-radius: 13px; padding: 15px 28px; cursor: pointer; box-shadow: 0 6px 24px rgba(124,58,237,0.38); transition: all 0.22s; }
+.btn-primary:hover { background: var(--purple2); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(124,58,237,0.48); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font); font-size: 16px; font-weight: 600; color: var(--text2); background: white; border: 1.5px solid var(--border); border-radius: 13px; padding: 15px 28px; cursor: pointer; box-shadow: var(--shadow); transition: all 0.22s; }
+.btn-secondary:hover { border-color: var(--p-border); color: var(--purple); transform: translateY(-1px); }
+.hero-proof { display: flex; align-items: center; gap: 14px; }
+.proof-avs { display: flex; }
+.proof-av { width: 32px; height: 32px; border-radius: 50%; border: 2px solid white; margin-left: -9px; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.proof-av:first-child { margin-left: 0; }
+.proof-stars { color: #f59e0b; font-size: 12px; margin-bottom: 2px; }
+.proof-text { font-size: 13px; color: var(--muted); font-weight: 500; }
+.proof-text strong { color: var(--text); font-weight: 700; }
+
+/* Hero mockup */
+.hero-mockup { position: relative; animation: float 7s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+.mockup-window { background: white; border-radius: 18px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); overflow: hidden; }
+.mockup-bar { background: var(--bg2); padding: 11px 16px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border); }
+.m-dot { width: 10px; height: 10px; border-radius: 50%; }
+.mockup-url { flex: 1; background: white; border-radius: 5px; padding: 5px 11px; font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); }
+.mockup-body { padding: 18px; }
+.m-date { font-size: 11px; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
+.m-greeting { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.6px; margin-bottom: 2px; }
+.m-sub { font-size: 13px; color: var(--teal); font-weight: 600; margin-bottom: 13px; }
+.m-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.m-pill { font-size: 11px; font-weight: 700; padding: 5px 11px; border-radius: 20px; }
+.m-pill-p { background: var(--purple); color: white; }
+.m-pill-o { background: white; color: var(--text2); border: 1px solid var(--border); }
+.m-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-bottom: 13px; }
+.m-stat { background: var(--bg2); border-radius: 9px; padding: 9px 11px; }
+.m-stat-l { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; margin-bottom: 3px; }
+.m-stat-v { font-family: var(--mono); font-size: 18px; color: var(--purple); font-weight: 500; }
+.m-listing { background: var(--bg2); border-radius: 9px; padding: 11px 13px; display: flex; align-items: center; gap: 9px; }
+.m-listing-ic { width: 30px; height: 30px; background: var(--p-light); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.m-listing-addr { font-size: 12px; font-weight: 700; color: var(--text); }
+.m-listing-meta { font-size: 10px; color: var(--muted); }
+.m-listing-pill { margin-left: auto; font-size: 10px; font-weight: 700; background: rgba(16,185,129,0.12); color: #059669; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+.float-badge1 { position: absolute; bottom: -16px; left: -22px; background: white; border-radius: 13px; padding: 11px 15px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); display: flex; align-items: center; gap: 9px; animation: fbadge 6s ease-in-out infinite; }
+@keyframes fbadge { 0%,100%{transform:rotate(-2deg) translateY(0);} 50%{transform:rotate(-2deg) translateY(-5px);} }
+.fb-icon { font-size: 20px; }
+.fb-main { font-size: 12px; font-weight: 800; color: var(--text); }
+.fb-sub { font-size: 10px; color: var(--muted); }
+.float-badge2 { position: absolute; top: 20px; right: -24px; background: white; border-radius: 13px; padding: 10px 13px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); display: flex; align-items: center; gap: 7px; animation: fbadge2 8s ease-in-out infinite; }
+@keyframes fbadge2 { 0%,100%{transform:rotate(1.5deg) translateY(0);} 50%{transform:rotate(1.5deg) translateY(-7px);} }
+
+/* ══ LOGOS ══ */
+.logos-strip { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 22px 28px; }
+.logos-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.logos-label { font-size: 13px; font-weight: 500; color: var(--muted2); margin-right: 8px; white-space: nowrap; }
+.logo-chip { font-size: 13px; font-weight: 700; color: var(--muted); padding: 6px 15px; border-radius: 30px; background: var(--bg2); border: 1px solid var(--border); }
+
+/* ══ STATS ══ */
+.stats-band { background-image: linear-gradient(135deg, var(--purple) 0%, #6d28d9 100%); padding: 64px 28px; }
+.stats-band-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; }
+.stat-item { text-align: center; }
+.stat-num { font-size: 50px; font-weight: 800; color: white; line-height: 1; letter-spacing: -2px; margin-bottom: 8px; }
+.stat-num .accent { color: var(--teal2); }
+.stat-desc { font-size: 14px; color: rgba(255,255,255,0.75); font-weight: 500; }
+
+/* ══ SECTION COMMON ══ */
+.section-eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--purple); background: var(--p-light); border: 1px solid var(--p-border); border-radius: 20px; padding: 5px 13px; margin-bottom: 16px; }
+.section-title { font-size: clamp(28px, 3.2vw, 44px); font-weight: 800; letter-spacing: -1.5px; color: var(--text); margin-bottom: 14px; line-height: 1.10; }
+.section-sub { font-size: 17px; color: var(--muted); max-width: 520px; line-height: 1.72; margin-bottom: 52px; }
+
+/* ══ FEATURES ══ */
+.features { padding: 96px 28px; }
+.features-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+.feat-card { background: white; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); padding: 30px; transition: all 0.22s; }
+.feat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--p-border); }
+.feat-icon { width: 50px; height: 50px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 23px; margin-bottom: 18px; }
+.fi-p { background: var(--p-light); }
+.fi-t { background: var(--t-light); }
+.fi-g { background: rgba(16,185,129,0.10); }
+.fi-a { background: rgba(245,158,11,0.10); }
+.feat-title { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; margin-bottom: 10px; }
+.feat-desc { font-size: 15px; color: var(--muted); line-height: 1.72; margin-bottom: 16px; }
+.feat-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.feat-chip { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: var(--bg2); color: var(--text2); border: 1px solid var(--border); }
+
+/* ══ HOW ══ */
+.how { padding: 96px 28px; background: white; }
+.how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; position: relative; }
+.how-grid::before { content: ''; position: absolute; top: 35px; left: calc(16.6% + 16px); right: calc(16.6% + 16px); height: 2px; background: linear-gradient(90deg, var(--purple), var(--teal2)); opacity: 0.20; }
+.how-step { text-align: center; padding: 0 12px; }
+.how-num { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), #a855f7); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; color: white; margin: 0 auto 22px; box-shadow: 0 8px 24px rgba(124,58,237,0.28); }
+.how-title { font-size: 19px; font-weight: 800; color: var(--text); letter-spacing: -0.4px; margin-bottom: 10px; }
+.how-desc { font-size: 15px; color: var(--muted); line-height: 1.70; }
+
+/* ══ DEMO ══ */
+.demo { padding: 96px 28px; background: var(--bg2); }
+.demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.demo-tabs { display: flex; gap: 7px; margin-bottom: 14px; flex-wrap: wrap; }
+.demo-tab { font-family: var(--font); font-size: 13px; font-weight: 600; padding: 7px 15px; border-radius: 20px; cursor: pointer; background: white; color: var(--muted); border: 1.5px solid var(--border); transition: all 0.18s; }
+.demo-tab.active { background: var(--purple); color: white; border-color: transparent; box-shadow: 0 3px 12px rgba(124,58,237,0.28); }
+.demo-box { background: white; border-radius: 16px; padding: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.demo-box-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.demo-box-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
+.demo-copy-btn { font-size: 12px; font-weight: 600; color: var(--purple); cursor: pointer; background: var(--p-light); border: 1px solid var(--p-border); border-radius: 6px; padding: 4px 10px; transition: all 0.15s; }
+.demo-copy-btn:hover { background: var(--purple); color: white; }
+.demo-text { font-size: 14px; line-height: 1.80; color: var(--text2); white-space: pre-line; }
+.why-title { font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 22px; }
+.why-list { display: flex; flex-direction: column; gap: 16px; }
+.why-item { display: flex; align-items: flex-start; gap: 12px; }
+.why-check { width: 26px; height: 26px; border-radius: 50%; background: rgba(16,185,129,0.12); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+.why-item-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.why-item-sub { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+/* ══ TESTIMONIALS ══ */
+.testimonials { padding: 96px 28px; }
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.testi-card { background: white; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow); padding: 26px; transition: all 0.22s; }
+.testi-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.testi-card.featured { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,58,237,0.07), var(--shadow); }
+.testi-stars { color: #f59e0b; font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+.testi-quote { font-size: 15px; line-height: 1.78; color: var(--text2); font-style: italic; margin-bottom: 20px; }
+.testi-author { display: flex; align-items: center; gap: 11px; }
+.testi-av { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; border: 2px solid var(--border); }
+.av-p { background: var(--p-light); color: var(--purple); }
+.av-t { background: var(--t-light); color: var(--teal); }
+.av-g { background: rgba(16,185,129,0.10); color: var(--green); }
+.testi-name { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 1px; }
+.testi-role { font-size: 12px; color: var(--muted); }
+.testi-loc { font-size: 11px; color: var(--muted2); margin-top: 2px; }
+
+/* ══ PRICING ══ */
+.pricing { padding: 96px 28px; background: white; }
+.pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+.price-card { background: var(--bg2); border-radius: 20px; border: 1.5px solid var(--border); padding: 26px 22px; display: flex; flex-direction: column; position: relative; transition: all 0.22s; }
+.price-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.price-card.featured { background: var(--purple); border-color: transparent; box-shadow: 0 12px 48px rgba(124,58,237,0.35); transform: translateY(-8px); }
+.price-card.featured:hover { transform: translateY(-12px); }
+.feat-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--amber); color: white; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 13px; border-radius: 20px; white-space: nowrap; box-shadow: 0 3px 10px rgba(245,158,11,0.35); }
+.price-name { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 5px; }
+.price-card.featured .price-name { color: white; }
+.price-amount { font-family: var(--mono); font-size: 36px; color: var(--purple); line-height: 1; margin-bottom: 3px; letter-spacing: -1px; }
+.price-card.featured .price-amount { color: white; }
+.price-period { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.price-card.featured .price-period { color: rgba(255,255,255,0.70); }
+.price-desc { font-size: 13px; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
+.price-card.featured .price-desc { color: rgba(255,255,255,0.75); }
+.price-divider { height: 1px; background: var(--border); margin-bottom: 16px; }
+.price-card.featured .price-divider { background: rgba(255,255,255,0.18); }
+.price-feats { flex: 1; display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
+.price-feat { display: flex; gap: 7px; align-items: flex-start; font-size: 13px; color: var(--text2); line-height: 1.45; }
+.price-card.featured .price-feat { color: rgba(255,255,255,0.90); }
+.pf-yes { color: var(--green); font-weight: 800; flex-shrink: 0; }
+.price-card.featured .pf-yes { color: var(--teal2); }
+.pf-no { color: var(--muted2); flex-shrink: 0; }
+.btn-price { width: 100%; font-family: var(--font); font-size: 14px; font-weight: 800; border-radius: 12px; padding: 12px; cursor: pointer; transition: all 0.18s; text-align: center; border: none; }
+.btn-price-outline { background: white; color: var(--purple); border: 1.5px solid var(--p-border); }
+.btn-price-outline:hover { background: var(--purple); color: white; box-shadow: 0 4px 16px rgba(124,58,237,0.28); }
+.btn-price-white { background: white; color: var(--purple); box-shadow: 0 4px 16px rgba(255,255,255,0.22); }
+.btn-price-white:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,255,255,0.32); }
+.price-footnote { text-align: center; margin-top: 24px; font-size: 13px; color: var(--muted); }
+.price-footnote a { color: var(--purple); font-weight: 600; }
+
+/* ══ FAQ ══ */
+.faq { padding: 96px 28px; background: var(--bg2); }
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.faq-item { background: white; border-radius: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; }
+.faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; background: none; border: none; cursor: pointer; text-align: left; gap: 12px; font-family: var(--font); font-size: 15px; font-weight: 700; color: var(--text); transition: color 0.15s; }
+.faq-q:hover { color: var(--purple); }
+.faq-q.open { color: var(--purple); }
+.faq-arrow { font-size: 14px; flex-shrink: 0; transition: transform 0.25s; color: var(--muted); }
+.faq-q.open .faq-arrow { transform: rotate(180deg); color: var(--purple); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; font-size: 14px; color: var(--muted); line-height: 1.75; padding: 0 20px; }
+.faq-a.open { max-height: 220px; padding: 0 20px 18px; }
+
+/* ══ CTA ══ */
+.cta-banner { padding: 96px 28px; background: linear-gradient(135deg, #6d28d9, var(--purple), #7c3aed); position: relative; overflow: hidden; }
+.cta-blob { position: absolute; border-radius: 50%; pointer-events: none; }
+.cta-blob1 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(20,184,166,0.16) 0%, transparent 65%); top: -150px; right: -80px; }
+.cta-blob2 { width: 340px; height: 340px; background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 65%); bottom: -80px; left: 10%; }
+.cta-inner { max-width: 660px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+.cta-eyebrow { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.20); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.90); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 18px; }
+.cta-title { font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -1.8px; color: white; line-height: 1.07; margin-bottom: 16px; }
+.cta-title .cta-teal { color: var(--teal2); }
+.cta-sub { font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.68; margin-bottom: 34px; }
+.cta-btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+.btn-cta-white { font-family: var(--font); font-size: 16px; font-weight: 800; color: var(--purple); background: white; border: none; border-radius: 13px; padding: 15px 30px; cursor: pointer; box-shadow: 0 6px 24px rgba(0,0,0,0.18); transition: all 0.22s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-cta-white:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(0,0,0,0.22); }
+.btn-cta-ghost { font-family: var(--font); font-size: 16px; font-weight: 700; color: white; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.28); border-radius: 13px; padding: 15px 26px; cursor: pointer; transition: all 0.22s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-cta-ghost:hover { background: rgba(255,255,255,0.20); transform: translateY(-1px); }
+.cta-note { font-size: 13px; color: rgba(255,255,255,0.55); }
+.cta-note strong { color: rgba(255,255,255,0.80); }
+
+/* ══ FOOTER ══ */
+.footer { background: #0f0a1e; padding: 60px 28px 28px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 44px; }
+.footer-logo { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.footer-logo-mark { width: 32px; height: 32px; background: var(--purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.footer-logo-name { font-size: 18px; font-weight: 800; color: white; letter-spacing: -0.3px; }
+.footer-logo-name span { color: #a78bfa; }
+.footer-tagline { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.68; max-width: 270px; margin-bottom: 16px; }
+.footer-social { display: flex; gap: 8px; }
+.footer-social-btn { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.10); display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; transition: all 0.15s; }
+.footer-social-btn:hover { background: var(--purple); border-color: var(--purple); }
+.footer-col-title { font-size: 13px; font-weight: 800; color: white; margin-bottom: 14px; }
+.footer-links { display: flex; flex-direction: column; gap: 9px; }
+.footer-links a { font-size: 14px; color: rgba(255,255,255,0.45); transition: color 0.15s; }
+.footer-links a:hover { color: white; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,0.30); }
+.footer-legal { display: flex; gap: 18px; }
+.footer-legal a { font-size: 13px; color: rgba(255,255,255,0.30); transition: color 0.15s; }
+.footer-legal a:hover { color: rgba(255,255,255,0.60); }
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px) {
+  .hero-inner { grid-template-columns: 1fr; max-width: 620px; }
+  .hero-mockup { display: none; }
+  .hero { padding: 110px 28px 64px; }
+  .hero-sub { max-width: 100%; }
+  .stats-band-inner { grid-template-columns: repeat(2,1fr); }
+  .features-grid { grid-template-columns: 1fr; max-width: 600px; }
+  .how-grid::before { display: none; }
+  .how-grid { grid-template-columns: 1fr; max-width: 440px; }
+  .demo-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; max-width: 480px; }
+  .pricing-grid { grid-template-columns: repeat(2,1fr); }
+  .price-card.featured { transform: none; }
+  .faq-grid { grid-template-columns: 1fr; max-width: 620px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .nav-links, .nav-btns { display: none; }
+  .hamburger { display: block; }
+}
+@media(max-width:768px) {
+  .pricing-grid { grid-template-columns: 1fr; max-width: 360px; }
+  .section-title { letter-spacing: -1px; }
+  .footer-top { grid-template-columns: 1fr; }
+}
+@media(max-width:520px) {
+  .hero-cta { flex-direction: column; }
+  .btn-primary, .btn-secondary { justify-content: center; }
+  .cta-btns { flex-direction: column; align-items: center; }
+  .btn-cta-white, .btn-cta-ghost { width: 100%; justify-content: center; }
+  .stats-band-inner { grid-template-columns: 1fr 1fr; }
+  .stat-num { font-size: 38px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <div class="nav-logo-mark">🏠</div>
+      <div class="nav-logo-name">Prop<span>IA</span></div>
+    </div>
+    <div class="nav-links">
+      <a href="#features">Funciones</a>
+      <a href="#how">Cómo funciona</a>
+      <a href="#testimonials">Testimonios</a>
+      <a href="#pricing">Precios</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-ghost" onclick="window.location.href='/app'">Iniciar Sesión</button>
+      <button class="btn-nav" onclick="window.location.href='/app?tab=register'">Empezar Gratis →</button>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features" onclick="toggleMenu()">Funciones</a>
+  <a href="#how" onclick="toggleMenu()">Cómo funciona</a>
+  <a href="#testimonials" onclick="toggleMenu()">Testimonios</a>
+  <a href="#pricing" onclick="toggleMenu()">Precios</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <div class="mobile-menu-btns">
+    <button class="btn-mo btn-mo-o" onclick="window.location.href='/app'">Iniciar Sesión</button>
+    <button class="btn-mo btn-mo-f" onclick="window.location.href='/app?tab=register'">Empezar Gratis</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blob1"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><div class="badge-dot"></div>IA activa · Más de 1,200 agentes latinos</div>
+      <h1 class="hero-title">La IA que trabaja<br>para <span class="t-purple">agentes</span><br><span class="t-teal">como tú</span></h1>
+      <p class="hero-sub">Genera <strong>listings MLS profesionales</strong>, posts para redes, emails y scripts de video en <strong>30 segundos</strong>. Todo en español. Diseñado para el agente latino en USA.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="window.location.href='/app?tab=register'">✦ Empezar Gratis</button>
+        <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">▶ Cómo funciona</button>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-avs">
+          <div class="proof-av">🧑</div><div class="proof-av">👩</div><div class="proof-av">🧑</div><div class="proof-av">👩</div><div class="proof-av">🧑</div>
+        </div>
+        <div>
+          <div class="proof-stars">★★★★★</div>
+          <div class="proof-text"><strong>+1,200 agentes</strong> ya usan PropIA</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-mockup">
+      <div class="mockup-window">
+        <div class="mockup-bar">
+          <div class="m-dot" style="background:#ff5f57"></div>
+          <div class="m-dot" style="background:#febc2e;margin-left:5px"></div>
+          <div class="m-dot" style="background:#28c840;margin-left:5px"></div>
+          <div class="mockup-url">propia-saas.vercel.app/dashboard</div>
+        </div>
+        <div class="mockup-body">
+          <div class="m-date">Lun, 7 de Julio</div>
+          <div class="m-greeting">Hola, María 👋</div>
+          <div class="m-sub">¿En qué te ayuda la IA hoy?</div>
+          <div class="m-pills">
+            <div class="m-pill m-pill-p">✦ Generar Listing</div>
+            <div class="m-pill m-pill-o">📊 Métricas</div>
+            <div class="m-pill m-pill-o">💎 Planes</div>
+          </div>
+          <div class="m-stats">
+            <div class="m-stat"><div class="m-stat-l">Listings</div><div class="m-stat-v">12</div></div>
+            <div class="m-stat"><div class="m-stat-l">Leads</div><div class="m-stat-v">48</div></div>
+            <div class="m-stat"><div class="m-stat-l">Assets</div><div class="m-stat-v">48</div></div>
+          </div>
+          <div class="m-listing">
+            <div class="m-listing-ic">🏠</div>
+            <div><div class="m-listing-addr">123 Oak St, Miami, FL</div><div class="m-listing-meta">4 rec · 3 baños · $450,000</div></div>
+            <div class="m-listing-pill">✓ Listo</div>
+          </div>
+        </div>
+      </div>
+      <div class="float-badge1"><div class="fb-icon">⚡</div><div><div class="fb-main">Generado en 28 seg</div><div class="fb-sub">MLS + posts + email + video</div></div></div>
+      <div class="float-badge2"><span style="font-size:17px">🤖</span><div><div style="font-size:12px;font-weight:800;color:var(--text)">IA activa</div><div style="font-size:10px;color:var(--muted)">Groq · Llama 3</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-strip">
+  <div class="logos-inner">
+    <span class="logos-label">Usado por agentes en:</span>
+    <div class="logo-chip">🏢 Keller Williams</div>
+    <div class="logo-chip">🏠 RE/MAX</div>
+    <div class="logo-chip">🌟 Century 21</div>
+    <div class="logo-chip">🏡 Coldwell Banker</div>
+    <div class="logo-chip">✨ eXp Realty</div>
+    <div class="logo-chip">🔑 Compass</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats-band">
+  <div class="stats-band-inner">
+    <div class="stat-item"><div class="stat-num">1,<span class="accent">2</span>00+</div><div class="stat-desc">Agentes usando PropIA</div></div>
+    <div class="stat-item"><div class="stat-num"><span class="accent">30</span>s</div><div class="stat-desc">Para generar un listing completo</div></div>
+    <div class="stat-item"><div class="stat-num">4<span class="accent">x</span></div><div class="stat-desc">Más listings por mes</div></div>
+    <div class="stat-item"><div class="stat-num"><span class="accent">98</span>%</div><div class="stat-desc">Satisfacción reportada</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-eyebrow">✦ Funciones</div>
+    <h2 class="section-title">Todo lo que necesitas<br>para vender más</h2>
+    <p class="section-sub">Desde la descripción MLS hasta el script de video — PropIA lo genera todo en segundos, en español perfecto.</p>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon fi-p">📝</div>
+        <div class="feat-title">Descripción MLS Profesional</div>
+        <p class="feat-desc">150-200 palabras optimizadas para el mercado. Tono profesional, palabras clave correctas, lista para publicar en minutos.</p>
+        <div class="feat-chips"><span class="feat-chip">MLS</span><span class="feat-chip">SEO inmobiliario</span><span class="feat-chip">Español neutro</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon fi-t">📱</div>
+        <div class="feat-title">3 Posts para Redes Sociales</div>
+        <p class="feat-desc">Instagram, Facebook y más. Tres variaciones con diferentes tonos — lujoso, emocional, urgente — con hashtags para el mercado latino.</p>
+        <div class="feat-chips"><span class="feat-chip">Instagram</span><span class="feat-chip">Facebook</span><span class="feat-chip">Hashtags incluidos</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon fi-g">📧</div>
+        <div class="feat-title">Email de Marketing Listo</div>
+        <p class="feat-desc">Asunto + cuerpo completo. Personalizado para enviar a tu base de contactos. Tono conversacional que convierte lectores en clientes.</p>
+        <div class="feat-chips"><span class="feat-chip">Asunto optimizado</span><span class="feat-chip">CTA incluido</span><span class="feat-chip">Alta apertura</span></div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon fi-a">🎬</div>
+        <div class="feat-title">Script para Video / Reels</div>
+        <p class="feat-desc">60-90 segundos de guión listo para grabar. Estructura hook → presentación → características → llamada a la acción. Ideal para Reels y YouTube.</p>
+        <div class="feat-chips"><span class="feat-chip">YouTube</span><span class="feat-chip">Reels</span><span class="feat-chip">TikTok</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-eyebrow">📋 Proceso</div>
+    <h2 class="section-title">Tan fácil como<br>enviar un mensaje</h2>
+    <p class="section-sub">No necesitas saber de tecnología. Si sabes usar WhatsApp, ya sabes usar PropIA.</p>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h3 class="how-title">Ingresa los datos</h3>
+        <p class="how-desc">Dirección, precio, recámaras, baños y características de la propiedad. Solo toma 2 minutos.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h3 class="how-title">La IA genera todo</h3>
+        <p class="how-desc">En menos de 30 segundos PropIA redacta el MLS, 3 posts, el email y el script de video. Todo al mismo tiempo.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h3 class="how-title">Copia y publica</h3>
+        <p class="how-desc">Un clic para copiar cada pieza. Pégala en tu MLS, redes o email y listo. Sin edición necesaria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo">
+  <div class="container">
+    <div class="section-eyebrow">👀 Demo en vivo</div>
+    <h2 class="section-title">Mira el resultado<br>antes de registrarte</h2>
+    <div style="height:40px"></div>
+    <div class="demo-grid">
+      <div>
+        <div class="demo-tabs">
+          <button class="demo-tab active" onclick="switchDemo(this,'mls')">📝 MLS</button>
+          <button class="demo-tab" onclick="switchDemo(this,'post')">📱 Post</button>
+          <button class="demo-tab" onclick="switchDemo(this,'email')">📧 Email</button>
+        </div>
+        <div class="demo-box">
+          <div class="demo-box-head">
+            <span class="demo-box-label" id="demoLabel">Descripción MLS</span>
+            <button class="demo-copy-btn" onclick="copyDemo()">📋 Copiar</button>
+          </div>
+          <div class="demo-text" id="demoText">Espectacular casa unifamiliar en una de las zonas más exclusivas de Miami, Florida. Esta residencia de 4 recámaras y 3 baños completos ofrece 2,200 pies cuadrados de lujosos espacios.
+
+La propiedad cuenta con cocina gourmet renovada, sala con techos altos, luz natural abundante y piscina privada rodeada de jardines impecables.
+
+Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</div>
+        </div>
+      </div>
+      <div>
+        <div class="why-title">Por qué los agentes<br>eligen PropIA</div>
+        <div class="why-list">
+          <div class="why-item"><div class="why-check">✓</div><div><div class="why-item-title">100% en español</div><div class="why-item-sub">Contenido pensado para el comprador latino. Expresiones naturales, no traducción de Google.</div></div></div>
+          <div class="why-item"><div class="why-check">✓</div><div><div class="why-item-title">4 formatos en un clic</div><div class="why-item-sub">MLS, redes, email y video. No hay que repetir información entre herramientas.</div></div></div>
+          <div class="why-item"><div class="why-check">✓</div><div><div class="why-item-title">6 tonos disponibles</div><div class="why-item-sub">Lujoso, familiar, inversión, moderno, urgente o emocional. Cada propiedad tiene su voz.</div></div></div>
+          <div class="why-item"><div class="why-check">✓</div><div><div class="why-item-title">Sin contrato ni tarjeta</div><div class="why-item-sub">Plan gratis sin límite de tiempo. Mejora solo cuando veas los resultados.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-eyebrow">💬 Testimonios</div>
+    <h2 class="section-title">Lo que dicen<br>nuestros agentes</h2>
+    <p class="section-sub">Más de 1,200 agentes en USA confían en PropIA cada día.</p>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Antes me tomaba 2 horas escribir el MLS, hacer los posts y el email. Con PropIA lo hago en 30 segundos. Literalmente cambió mi negocio."</p>
+        <div class="testi-author"><div class="testi-av av-p">MG</div><div><div class="testi-name">María González</div><div class="testi-role">Agente · Keller Williams</div><div class="testi-loc">📍 Miami, Florida</div></div></div>
+      </div>
+      <div class="testi-card featured">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Soy broker con 8 agentes en mi equipo. Todos usan PropIA y la producción subió un 40% en el primer mes. El plan Pro vale cada centavo."</p>
+        <div class="testi-author"><div class="testi-av av-t">CR</div><div><div class="testi-name">Carlos Ramírez</div><div class="testi-role">Broker Owner · RE/MAX Select</div><div class="testi-loc">📍 Orlando, Florida</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Empecé con el plan gratis y en mi primera semana generé 4 listings. Los posts de Instagram me trajeron 2 clientes nuevos."</p>
+        <div class="testi-author"><div class="testi-av av-g">LD</div><div><div class="testi-name">Lucía Domínguez</div><div class="testi-role">Agente · Century 21</div><div class="testi-loc">📍 Houston, Texas</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-eyebrow">💎 Precios</div>
+    <h2 class="section-title">Empieza gratis,<br>crece cuando quieras</h2>
+    <p class="section-sub">Sin contratos. Sin tarjeta de crédito. Cancela en cualquier momento.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Gratis</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">para siempre</div>
+        <div class="price-desc">Para explorar y comenzar</div>
+        <div class="price-divider"></div>
+        <div class="price-feats">
+          <div class="price-feat"><span class="pf-yes">✓</span>5 listings / mes</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>20 leads / mes</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Todos los 4 formatos</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>6 tonos disponibles</div>
+          <div class="price-feat"><span class="pf-no">✗</span>Historial completo</div>
+          <div class="price-feat"><span class="pf-no">✗</span>Dashboard de broker</div>
+        </div>
+        <button class="btn-price btn-price-outline" onclick="window.location.href='/app?tab=register'">Empezar Gratis</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Básico</div>
+        <div class="price-amount">$49</div>
+        <div class="price-period">/ mes</div>
+        <div class="price-desc">Para el agente activo</div>
+        <div class="price-divider"></div>
+        <div class="price-feats">
+          <div class="price-feat"><span class="pf-yes">✓</span>50 listings / mes</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>200 leads / mes</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Hasta 3 agentes</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Historial completo</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Soporte prioritario</div>
+          <div class="price-feat"><span class="pf-no">✗</span>Dashboard de broker</div>
+        </div>
+        <button class="btn-price btn-price-outline" onclick="window.location.href='/app?tab=register'">Empezar con Básico</button>
+      </div>
+      <div class="price-card featured">
+        <div class="feat-badge">⭐ Más Popular</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">$149</div>
+        <div class="price-period">/ mes</div>
+        <div class="price-desc">Para brokerages que crecen</div>
+        <div class="price-divider"></div>
+        <div class="price-feats">
+          <div class="price-feat"><span class="pf-yes">✓</span>200 listings / mes</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>1,000 leads / mes</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Hasta 10 agentes</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Dashboard de broker</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Reportes y Analytics</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Soporte dedicado</div>
+        </div>
+        <button class="btn-price btn-price-white" onclick="window.location.href='/app?tab=register'">Empezar con Pro →</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Empresarial</div>
+        <div class="price-amount">$399</div>
+        <div class="price-period">/ mes</div>
+        <div class="price-desc">Para grandes brokerages</div>
+        <div class="price-divider"></div>
+        <div class="price-feats">
+          <div class="price-feat"><span class="pf-yes">✓</span>Listings ilimitados</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Leads ilimitados</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Agentes ilimitados</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>White label</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>API Access</div>
+          <div class="price-feat"><span class="pf-yes">✓</span>Gerente dedicado</div>
+        </div>
+        <button class="btn-price btn-price-outline" onclick="window.location.href='mailto:ventas@propia.app'">Contactar Ventas</button>
+      </div>
+    </div>
+    <p class="price-footnote">¿Tienes preguntas? <a href="/cdn-cgi/l/email-protection#b8d0d7d4d9f8c8cad7c8d1d996d9c8c8">Escríbenos</a> — respondemos en menos de 24 horas.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-eyebrow">❓ Preguntas frecuentes</div>
+    <h2 class="section-title">Todo lo que<br>necesitas saber</h2>
+    <div style="height:40px"></div>
+    <div class="faq-grid">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">Todo el contenido se genera en español latinoamericano neutro, perfectamente comprensible para compradores de cualquier país hispanohablante. También puedes pedir inglés si lo necesitas.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Necesito saber de tecnología?<span class="faq-arrow">▼</span></button><div class="faq-a">Para nada. Si sabes usar WhatsApp o Facebook, puedes usar PropIA. Solo ingresa los datos de la propiedad, escoge el tono y haz clic en "Generar". En 30 segundos tienes todo listo.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Puedo cancelar cuando quiera?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí, cancela en cualquier momento desde tu cuenta. Sin penalizaciones ni cargos adicionales. No hay contratos anuales obligatorios.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Qué tan preciso es el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">El 98% de los usuarios reportan usar el contenido directamente sin edición. La IA usa los datos específicos que ingresas, por lo que el resultado siempre es relevante para esa propiedad.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Funciona para cualquier propiedad?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí. Casas unifamiliares, condominios, townhouses, multifamiliares, terrenos y propiedades comerciales. También funciona para rentas y propiedades de lujo.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Mis datos están seguros?<span class="faq-arrow">▼</span></button><div class="faq-a">Absolutamente. Usamos encriptación SSL, tus datos se almacenan en servidores seguros de Supabase y nunca vendemos ni compartimos tu información con terceros.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="cta-blob cta-blob1"></div>
+  <div class="cta-blob cta-blob2"></div>
+  <div class="cta-inner">
+    <div class="cta-eyebrow">🚀 Únete ahora</div>
+    <h2 class="cta-title">Tu competencia ya<br>usa IA. <span class="cta-teal">¿Y tú?</span></h2>
+    <p class="cta-sub">Más de 1,200 agentes latinos en USA ya generan sus listings con PropIA. El plan gratis no tiene fecha de vencimiento.</p>
+    <div class="cta-btns">
+      <button class="btn-cta-white" onclick="window.location.href='/app?tab=register'">✦ Empezar Gratis Ahora</button>
+      <button class="btn-cta-ghost" onclick="window.location.href='mailto:hola@propia.app'">💬 Hablar con el equipo</button>
+    </div>
+    <p class="cta-note">Sin tarjeta de crédito · <strong>5 listings gratis</strong> · Cancela cuando quieras</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><div class="footer-logo-mark">🏠</div><div class="footer-logo-name">Prop<span>IA</span></div></div>
+        <p class="footer-tagline">La inteligencia artificial diseñada para el agente inmobiliario latino en Estados Unidos. Genera más, vende más.</p>
+        <div class="footer-social">
+          <div class="footer-social-btn">📷</div>
+          <div class="footer-social-btn">👥</div>
+          <div class="footer-social-btn">💼</div>
+          <div class="footer-social-btn">▶</div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Producto</div>
+        <div class="footer-links">
+          <a href="#features">Funciones</a>
+          <a href="#pricing">Precios</a>
+          <a href="#how">Cómo funciona</a>
+          <a href="/app">Ingresar</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Empresa</div>
+        <div class="footer-links">
+          <a href="#">Sobre nosotros</a>
+          <a href="#">Blog</a>
+          <a href="/cdn-cgi/l/email-protection#2c4443404d6c5c5e435c454d024d5c5c">Contacto</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Soporte</div>
+        <div class="footer-links">
+          <a href="#faq">FAQ</a>
+          <a href="/cdn-cgi/l/email-protection#2b4344474a6b5b59445b424a054a5b5b">Centro de ayuda</a>
+          <a href="/cdn-cgi/l/email-protection#0472616a7065774474766b746d652a657474">Ventas</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 PropIA. Todos los derechos reservados. Hecho con ❤️ para la comunidad latina en USA.</div>
+      <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Términos</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Navbar scroll effect
+window.addEventListener('scroll', function() {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Mobile menu toggle
+function toggleMenu() {
+  var menu = document.getElementById('mobileMenu');
+  var btn = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  btn.textContent = menu.classList.contains('open') ? '✕' : '☰';
+}
+
+// FAQ accordion
+function toggleFaq(btn) {
+  var answer = btn.nextElementSibling;
+  var isOpen = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(function(q) {
+    q.classList.remove('open');
+    q.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) {
+    btn.classList.add('open');
+    answer.classList.add('open');
+  }
+}
+
+// Demo tabs
+var demoData = {
+  mls: {
+    label: 'Descripción MLS',
+    text: 'Espectacular casa unifamiliar en una de las zonas más exclusivas de Miami, Florida. Esta residencia de 4 recámaras y 3 baños completos ofrece 2,200 pies cuadrados de lujosos espacios diseñados para familias que buscan comodidad y elegancia.\n\nLa propiedad cuenta con cocina gourmet completamente renovada con electrodomésticos de acero inoxidable y encimeras de granito, sala de estar con techos altos y luz natural abundante, y una espectacular piscina privada rodeada de jardines impecables.\n\nUbicada a minutos de las mejores escuelas, centros comerciales y playas de Miami. Precio $450,000.'
+  },
+  post: {
+    label: 'Post para Instagram',
+    text: '🏠✨ ¡Nueva propiedad disponible en Miami!\n\n4 recámaras | 3 baños | Piscina privada | $450,000\n\nEsta joya en Miami combina elegancia y comodidad en cada rincón. Cocina renovada, techos altos y jardines que te harán sentir en el paraíso.\n\n¿Buscas tu hogar soñado? ¡Esta es tu oportunidad!\n\n📞 Llama ahora para agendar tu tour privado\n🔗 Link en bio para más fotos\n\n#CasasMiami #BienesRaices #Miami #PropiedadesLujo #AgentesLatinos #PropIA'
+  },
+  email: {
+    label: 'Email de Marketing',
+    text: 'Asunto: 🏠 La casa que estabas esperando — Miami, FL · $450,000\n\nHola [Nombre],\n\nSé que llevas tiempo buscando la propiedad perfecta en Miami. Hoy tengo algo que creo que te va a encantar.\n\nAcabo de listar una casa de 4 recámaras en una de las zonas más cotizadas. Tiene piscina, cocina moderna y jardín privado para tu familia.\n\nA solo 10 minutos de las mejores escuelas y 15 minutos de la playa.\n\nPrecio: $450,000\n\n¿Podemos agendar un tour esta semana?\n\nSaludos,\nMaría González\nAgente Inmobiliaria | Keller Williams'
+  }
+};
+
+function switchDemo(btn, key) {
+  document.querySelectorAll('.demo-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('demoLabel').textContent = demoData[key].label;
+  document.getElementById('demoText').textContent = demoData[key].text;
+}
+
+function copyDemo() {
+  var text = document.getElementById('demoText').textContent;
+  var btn = document.querySelector('.demo-copy-btn');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = '✓ Copiado';
+      setTimeout(function() { btn.textContent = '📋 Copiar'; }, 2000);
+    });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacit
