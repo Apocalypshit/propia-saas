@@ -83,6 +83,40 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ success: true, user: { ...user, ...profile } });
     }
 
+    // ACTUALIZAR PERFIL — nombre y brokerage
+    if (action === 'updateProfile') {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      if (!token) return res.status(401).json({ error: 'No autorizado.' });
+      const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+      if (authErr || !user) return res.status(401).json({ error: 'Sesión inválida.' });
+      const { name, brokerage } = req.body;
+      if (!name || !name.trim()) return res.status(400).json({ error: 'El nombre es requerido.' });
+      const { error: updateErr } = await supabase
+        .from('profiles')
+        .update({ name: name.trim(), brokerage: (brokerage || '').trim() || null })
+        .eq('id', user.id);
+      if (updateErr) return res.status(400).json({ error: updateErr.message });
+      return res.status(200).json({ success: true, name: name.trim(), brokerage: (brokerage || '').trim() || null });
+    }
+
+    // CAMBIAR CONTRASEÑA desde settings (usuario autenticado)
+    if (action === 'changePassword') {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      if (!token) return res.status(401).json({ error: 'No autorizado.' });
+      const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+      if (authErr || !user) return res.status(401).json({ error: 'Sesión inválida.' });
+      const { currentPassword, newPassword } = req.body;
+      if (!currentPassword || !newPassword) return res.status(400).json({ error: 'Todos los campos son requeridos.' });
+      if (newPassword.length < 8) return res.status(400).json({ error: 'La nueva contraseña debe tener al menos 8 caracteres.' });
+      // Verificar contraseña actual intentando iniciar sesión
+      const { error: signInErr } = await supabase.auth.signInWithPassword({ email: user.email, password: currentPassword });
+      if (signInErr) return res.status(401).json({ error: 'La contraseña actual es incorrecta.' });
+      // Actualizar contraseña
+      const { error: updateErr } = await supabase.auth.admin.updateUserById(user.id, { password: newPassword });
+      if (updateErr) return res.status(400).json({ error: updateErr.message });
+      return res.status(200).json({ success: true, message: 'Contraseña actualizada.' });
+    }
+
     // RECUPERAR CONTRASEÑA — paso 1: enviar email
     if (action === 'forgot') {
       if (!email) return res.status(400).json({ error: 'El correo electrónico es requerido.' });
