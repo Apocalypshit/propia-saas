@@ -83,6 +83,42 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ success: true, user: { ...user, ...profile } });
     }
 
+    // RECUPERAR CONTRASEÑA — paso 1: enviar email
+    if (action === 'forgot') {
+      if (!email) return res.status(400).json({ error: 'El correo electrónico es requerido.' });
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: 'https://propia-saas.vercel.app/reset'
+      });
+      // Siempre responder con éxito para no revelar si el email existe
+      if (error) console.error('resetPasswordForEmail error:', error.message);
+      return res.status(200).json({
+        success: true,
+        message: 'Si ese correo existe en nuestro sistema, recibirás un enlace en minutos.'
+      });
+    }
+
+    // RECUPERAR CONTRASEÑA — paso 2: establecer nueva contraseña con token
+    if (action === 'reset') {
+      const { token, newPassword } = req.body;
+      if (!token || !newPassword) {
+        return res.status(400).json({ error: 'Token y nueva contraseña son requeridos.' });
+      }
+      if (newPassword.length < 8) {
+        return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres.' });
+      }
+      // Verificar que el token sea válido
+      const { data: { user }, error: authErr } = await supabase.auth.getUser(token);
+      if (authErr || !user) {
+        return res.status(401).json({ error: 'El enlace expiró o no es válido. Solicita uno nuevo.' });
+      }
+      // Actualizar contraseña vía admin
+      const { error: updateErr } = await supabase.auth.admin.updateUserById(user.id, {
+        password: newPassword
+      });
+      if (updateErr) return res.status(400).json({ error: updateErr.message });
+      return res.status(200).json({ success: true, message: 'Contraseña actualizada correctamente.' });
+    }
+
     return res.status(400).json({ error: 'Acción no válida.' });
 
   } catch (err) {
