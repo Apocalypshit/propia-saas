@@ -7,7 +7,7 @@ const supabase = createClient(
 );
 
 const PLAN_LIMITS = {
-  free:       { listings: 5,      leads: 20,    label: 'Gratis' },
+  free:       { listings: 2,      leads: 20,    label: 'Gratis' },
   basic:      { listings: 50,     leads: 200,   label: 'Básico — $49/mes' },
   pro:        { listings: 200,    leads: 1000,  label: 'Pro — $149/mes' },
   enterprise: { listings: 99999,  leads: 99999, label: 'Empresarial — $399/mes' }
@@ -35,10 +35,20 @@ module.exports = async function handler(req, res) {
     const plan = profile?.plan || 'free';
     const limits = PLAN_LIMITS[plan];
 
+    // Free plan: count total listings ever (not monthly)
+    let listingsUsed = profile?.listings_used_this_month || 0;
+    if (plan === 'free') {
+      const { count } = await supabase
+        .from('listings')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+      listingsUsed = count || 0;
+    }
+
     return res.status(200).json({
       plan,
       planLabel: limits.label,
-      listings: { used: profile?.listings_used_this_month || 0, limit: limits.listings },
+      listings: { used: listingsUsed, limit: limits.listings },
       leads:    { used: profile?.leads_used_this_month || 0,    limit: limits.leads }
     });
 

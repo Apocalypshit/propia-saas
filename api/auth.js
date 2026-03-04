@@ -44,7 +44,7 @@ module.exports = async function handler(req, res) {
       }
       return res.status(200).json({
         success: true,
-        message: 'Cuenta creada. Ahora puedes iniciar sesión.'
+        message: 'Cuenta creada. Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.'
       });
     }
 
@@ -55,6 +55,11 @@ module.exports = async function handler(req, res) {
       }
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) return res.status(401).json({ error: 'Email o contraseña incorrectos.' });
+
+      // Block login if email not confirmed
+      if (!data.user.email_confirmed_at) {
+        return res.status(401).json({ error: 'Debes confirmar tu correo electrónico antes de iniciar sesión. Revisa tu bandeja de entrada.' });
+      }
 
       const { data: profile } = await supabase
         .from('profiles').select('*').eq('id', data.user.id).single();
