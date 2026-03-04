@@ -29,18 +29,20 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: error.message });
       }
       if (data.user) {
-        await supabase.from('profiles').insert({
+        const profileData = {
           id: data.user.id,
           email,
           name,
           brokerage: brokerage || null,
-          phone: phone || null,
           plan: 'free',
           listings_used_this_month: 0,
           leads_used_this_month: 0,
           billing_period_start: new Date().toISOString(),
           created_at: new Date().toISOString()
-        });
+        };
+        if (phone) profileData.phone = phone;
+        const { error: profileError } = await supabase.from('profiles').insert(profileData);
+        if (profileError) console.error('Profile insert error:', profileError.message);
       }
       return res.status(200).json({
         success: true,

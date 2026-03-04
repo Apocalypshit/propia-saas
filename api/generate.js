@@ -40,9 +40,6 @@ module.exports = async function handler(req, res) {
       totalListings = count || 0;
     }
 
-
-    }
-
     const { address, price, type, beds, baths, sqft, year, features, tone, listingId } = req.body;
 
     const plan = profile?.plan || 'free';
