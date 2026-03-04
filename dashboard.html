@@ -685,6 +685,96 @@ body {
   .output-tabs { gap: 2px; }
   .otab { padding: 7px 9px; font-size: 12px; }
 }
+
+/* ══ ONBOARDING MODAL ══ */
+.ob-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(15,10,30,0.60);
+  backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+.ob-overlay.visible { display: flex; }
+.ob-card {
+  background: white;
+  border-radius: 24px;
+  width: 100%; max-width: 520px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.22);
+  overflow: hidden;
+  animation: fadeUp .25s ease;
+}
+.ob-progress {
+  display: flex; gap: 6px;
+  padding: 24px 32px 0;
+}
+.ob-dot {
+  height: 4px; flex: 1; border-radius: 4px;
+  background: var(--border);
+  transition: background .3s;
+}
+.ob-dot.done { background: var(--purple); }
+.ob-body { padding: 32px 32px 28px; }
+.ob-step { display: none; }
+.ob-step.active { display: block; }
+.ob-emoji { font-size: 48px; margin-bottom: 18px; line-height: 1; }
+.ob-title {
+  font-size: 26px; font-weight: 900; color: var(--text);
+  letter-spacing: -.8px; margin-bottom: 8px; line-height: 1.15;
+}
+.ob-sub {
+  font-size: 15px; color: var(--muted); line-height: 1.7;
+  margin-bottom: 26px;
+}
+.ob-features {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 28px;
+}
+.ob-feat {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg2, #f3f0ff); border-radius: 12px; padding: 12px 14px;
+}
+.ob-feat-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+.ob-feat-icon.p { background: var(--p-light); }
+.ob-feat-icon.t { background: rgba(20,184,166,.12); }
+.ob-feat-icon.a { background: rgba(251,146,60,.12); }
+.ob-feat-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.ob-feat-desc { font-size: 12px; color: var(--muted); }
+.ob-actions { display: flex; align-items: center; gap: 12px; }
+.btn-ob-primary {
+  flex: 1; font-family: inherit; font-size: 15px; font-weight: 700;
+  color: white; background: var(--purple); border: none;
+  border-radius: 12px; padding: 14px; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(124,58,237,.35);
+  transition: all .18s;
+}
+.btn-ob-primary:hover { background: #6d28d9; transform: translateY(-1px); }
+.btn-ob-skip {
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  color: var(--muted); background: none; border: none;
+  cursor: pointer; padding: 8px 4px; transition: color .15s; white-space: nowrap;
+}
+.btn-ob-skip:hover { color: var(--text); }
+.ob-field { margin-bottom: 16px; }
+.ob-field label { display: block; font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.ob-field input {
+  width: 100%; font-family: inherit; font-size: 15px; color: var(--text);
+  background: var(--bg2, #f8f6ff); border: 1.5px solid var(--border);
+  border-radius: 11px; padding: 12px 14px; outline: none; transition: all .18s;
+}
+.ob-field input:focus { border-color: var(--p-border); background: white; box-shadow: 0 0 0 3px rgba(124,58,237,.08); }
+.ob-step3-tip {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--p-light); border: 1px solid var(--p-border);
+  border-radius: 12px; padding: 14px; margin-bottom: 26px;
+}
+.ob-step3-tip-icon { font-size: 20px; flex-shrink: 0; }
+.ob-step3-tip-text { font-size: 13px; color: var(--text2); line-height: 1.65; }
+.ob-step3-tip-text strong { color: var(--purple); }
 </style>
 </head>
 <body>
@@ -1211,6 +1301,7 @@ body {
         }));
         renderHistory();
         renderListingsPanel();
+        obCheckAndShow();
       }
     } catch {}
   }
@@ -1508,7 +1599,155 @@ body {
   function setAlert(msg, type) { const el = document.getElementById('genAlert'); el.textContent = msg; el.className = `alert ${type}`; }
   function clearAlert() { const el = document.getElementById('genAlert'); el.className = 'alert hidden'; }
   function logout() { localStorage.removeItem('propia_token'); localStorage.removeItem('propia_user'); window.location.href = '/'; }
+
+  // ══════════════════════════════
+  //  ONBOARDING
+  // ══════════════════════════════
+  var obCurrentStep = 1;
+
+  function obCheckAndShow() {
+    // No mostrar si ya completó el onboarding
+    if (localStorage.getItem('propia_onboarded')) return;
+    // No mostrar si ya tiene listings
+    if (historyData && historyData.length > 0) {
+      localStorage.setItem('propia_onboarded', 'true');
+      return;
+    }
+    // Personalizar título con el nombre del usuario
+    var first = (user.name || '').split(' ')[0] || '';
+    var title = first ? '¡Bienvenido, ' + first + '!' : '¡Bienvenido a PropIA!';
+    document.getElementById('obWelcomeTitle').textContent = title;
+    // Pre-llenar campos del paso 2
+    document.getElementById('obName').value      = user.name      || '';
+    document.getElementById('obBrokerage').value = user.brokerage || '';
+    // Mostrar modal en paso 1
+    obGoTo(1);
+    document.getElementById('obOverlay').classList.add('visible');
+  }
+
+  function obGoTo(step) {
+    obCurrentStep = step;
+    // Mostrar/ocultar pasos
+    [1,2,3].forEach(function(n) {
+      document.getElementById('obStep' + n).classList.toggle('active', n === step);
+      var dot = document.getElementById('obDot' + n);
+      dot.classList.toggle('done', n <= step);
+    });
+  }
+
+  function obNext(step) { obGoTo(step); }
+
+  async function obSaveProfile() {
+    var name = document.getElementById('obName').value.trim();
+    var brok = document.getElementById('obBrokerage').value.trim();
+    // Guardar si hay nombre y es diferente al actual
+    if (name && (name !== user.name || brok !== (user.brokerage || ''))) {
+      try {
+        await fetch('/api/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ action: 'updateProfile', name: name, brokerage: brok })
+        });
+        user.name = name;
+        user.brokerage = brok;
+        localStorage.setItem('propia_user', JSON.stringify(user));
+        setUserUI();
+      } catch(e) { /* continuar aunque falle */ }
+    }
+    obGoTo(3);
+  }
+
+  function obFinish() {
+    localStorage.setItem('propia_onboarded', 'true');
+    document.getElementById('obOverlay').classList.remove('visible');
+    // Navegar al generador
+    showPanel('generator', document.querySelectorAll('.nav-item')[1]);
+  }
+
+  function obSkip() {
+    localStorage.setItem('propia_onboarded', 'true');
+    document.getElementById('obOverlay').classList.remove('visible');
+  }
 </script>
+
+<!-- ═══ ONBOARDING MODAL ═══ -->
+<div class="ob-overlay" id="obOverlay">
+  <div class="ob-card">
+
+    <!-- Barra de progreso -->
+    <div class="ob-progress">
+      <div class="ob-dot done" id="obDot1"></div>
+      <div class="ob-dot" id="obDot2"></div>
+      <div class="ob-dot" id="obDot3"></div>
+    </div>
+
+    <div class="ob-body">
+
+      <!-- PASO 1 — Bienvenida -->
+      <div class="ob-step active" id="obStep1">
+        <div class="ob-emoji">👋</div>
+        <div class="ob-title" id="obWelcomeTitle">¡Bienvenido a PropIA!</div>
+        <div class="ob-sub">La IA que genera todo el contenido de tus listings en segundos — en español, para agentes latinos en USA.</div>
+        <div class="ob-features">
+          <div class="ob-feat">
+            <div class="ob-feat-icon p">📝</div>
+            <div><div class="ob-feat-name">Descripción MLS profesional</div><div class="ob-feat-desc">Lista tu propiedad en segundos con texto optimizado</div></div>
+          </div>
+          <div class="ob-feat">
+            <div class="ob-feat-icon t">📱</div>
+            <div><div class="ob-feat-name">3 Posts para redes sociales</div><div class="ob-feat-desc">Instagram, Facebook y LinkedIn listos para publicar</div></div>
+          </div>
+          <div class="ob-feat">
+            <div class="ob-feat-icon a">🎬</div>
+            <div><div class="ob-feat-name">Email + Script de video</div><div class="ob-feat-desc">Campañas y guiones para tus videos de propiedad</div></div>
+          </div>
+        </div>
+        <div class="ob-actions">
+          <button class="btn-ob-primary" onclick="obNext(2)">Empezar →</button>
+          <button class="btn-ob-skip" onclick="obSkip()">Omitir</button>
+        </div>
+      </div>
+
+      <!-- PASO 2 — Confirmar perfil -->
+      <div class="ob-step" id="obStep2">
+        <div class="ob-emoji">✏️</div>
+        <div class="ob-title">Confirma tu perfil</div>
+        <div class="ob-sub">Así te identificarás dentro de PropIA. Puedes cambiarlo después en Configuración.</div>
+        <div class="ob-field">
+          <label>Tu nombre completo</label>
+          <input type="text" id="obName" placeholder="María González"/>
+        </div>
+        <div class="ob-field">
+          <label>Brokerage <span style="font-weight:400;color:var(--muted2)">(opcional)</span></label>
+          <input type="text" id="obBrokerage" placeholder="Century 21, Keller Williams..."/>
+        </div>
+        <div class="ob-actions">
+          <button class="btn-ob-primary" onclick="obSaveProfile()">Continuar →</button>
+          <button class="btn-ob-skip" onclick="obSkip()">Omitir</button>
+        </div>
+      </div>
+
+      <!-- PASO 3 — Generar primer listing -->
+      <div class="ob-step" id="obStep3">
+        <div class="ob-emoji">✨</div>
+        <div class="ob-title">¡Genera tu primer listing!</div>
+        <div class="ob-sub">Tienes <strong>5 listings gratis</strong> este mes. Solo necesitas la dirección y el precio — la IA hace el resto.</div>
+        <div class="ob-step3-tip">
+          <div class="ob-step3-tip-icon">💡</div>
+          <div class="ob-step3-tip-text">
+            <strong>Tip:</strong> Entre más detalles ingreses (recámaras, baños, características especiales), mejor será el contenido que genere la IA.
+          </div>
+        </div>
+        <div class="ob-actions">
+          <button class="btn-ob-primary" onclick="obFinish()">✦ Generar mi primer listing</button>
+          <button class="btn-ob-skip" onclick="obSkip()">Ahora no</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
 
