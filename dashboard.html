@@ -330,6 +330,46 @@ body {
 .lei-sub{font-size:14px;line-height:1.65;margin-bottom:22px}
 @media(max-width:860px){.lst-grid{grid-template-columns:1fr}}
 
+/* ══ PANEL: SETTINGS ══ */
+.cfg-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:860px){.cfg-layout{grid-template-columns:1fr}}
+.cfg-card{background:white;border-radius:18px;border:1.5px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.05);padding:28px}
+.cfg-card-title{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.3px;margin-bottom:4px;display:flex;align-items:center;gap:9px}
+.cfg-card-title .cti{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.cti-p{background:var(--p-light)}
+.cti-g{background:rgba(16,185,129,.10)}
+.cti-r{background:rgba(239,68,68,.08)}
+.cfg-card-sub{font-size:13px;color:var(--muted);margin-bottom:22px;margin-left:43px}
+.cfg-sep{height:1px;background:var(--border);margin:20px 0}
+.cfg-field{margin-bottom:16px}
+.cfg-field label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px}
+.cfg-field input{width:100%;font-family:inherit;font-size:14px;color:var(--text);background:var(--bg,#f8f6ff);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;outline:none;transition:all .18s}
+.cfg-field input:focus{border-color:var(--p-border);background:white;box-shadow:0 0 0 3px rgba(124,58,237,.08)}
+.cfg-field input::placeholder{color:var(--muted2)}
+.cfg-field input:disabled{opacity:.55;cursor:not-allowed}
+.btn-cfg-save{font-family:inherit;font-size:14px;font-weight:700;color:white;background:var(--purple);border:none;border-radius:10px;padding:11px 24px;cursor:pointer;transition:all .18s;box-shadow:0 3px 12px rgba(124,58,237,.28)}
+.btn-cfg-save:hover{background:#6d28d9;transform:translateY(-1px)}
+.btn-cfg-save:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-cfg-save.is-loading .lbl{display:none}
+.btn-cfg-save.is-loading .spin-wrap{display:flex}
+.spin-wrap{display:none;align-items:center;gap:7px}
+.cfg-alert{border-radius:10px;padding:11px 14px;font-size:13px;font-weight:500;display:none;margin-bottom:14px}
+.cfg-alert.ok{background:rgba(16,185,129,.08);border:1.5px solid rgba(16,185,129,.25);color:#059669;display:block}
+.cfg-alert.er{background:rgba(239,68,68,.07);border:1.5px solid rgba(239,68,68,.20);color:#ef4444;display:block}
+.plan-info-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.plan-info-row:last-child{border-bottom:none}
+.pir-label{font-size:13px;color:var(--muted);font-weight:500}
+.pir-val{font-size:14px;font-weight:700;color:var(--text)}
+.pir-badge{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:3px 10px;border-radius:20px;background:var(--p-light);color:var(--purple);border:1px solid var(--p-border)}
+.btn-upgrade-cfg{width:100%;font-family:inherit;font-size:14px;font-weight:700;color:white;background:linear-gradient(135deg,var(--purple),#6d28d9);border:none;border-radius:10px;padding:12px;cursor:pointer;margin-top:16px;transition:all .18s;box-shadow:0 4px 14px rgba(124,58,237,.30)}
+.btn-upgrade-cfg:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,58,237,.40)}
+.btn-danger{width:100%;font-family:inherit;font-size:14px;font-weight:700;color:#ef4444;background:rgba(239,68,68,.06);border:1.5px solid rgba(239,68,68,.15);border-radius:10px;padding:11px;cursor:pointer;transition:all .18s;margin-top:10px}
+.btn-danger:hover{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.30)}
+.cfg-avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.cfg-avatar{width:60px;height:60px;border-radius:16px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:white;letter-spacing:-.5px;flex-shrink:0}
+.cfg-avatar-info{font-size:13px;color:var(--muted);line-height:1.6}
+.cfg-avatar-name{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.3px;margin-bottom:2px}
+
 /* ═══════════════════════════════════════════
    QUICK ACTION CARD
 ═══════════════════════════════════════════ */
@@ -688,7 +728,7 @@ body {
   </div>
 
   <div class="s-settings">
-    <button class="s-settings-item" onclick="logout()"><span class="nav-icon">⚙️</span>Configuración</button>
+    <button class="s-settings-item" onclick="showPanel('settings',document.querySelectorAll('.nav-item')[0]);closeSidebar()"><span class="nav-icon">⚙️</span>Configuración</button>
     <button class="s-settings-item" onclick="logout()" style="color:#ef4444;"><span class="nav-icon">↩</span>Cerrar sesión</button>
   </div>
 </div>
@@ -1001,6 +1041,110 @@ body {
   </div><!-- /content -->
 </div><!-- /main -->
 
+    <!-- ═══ SETTINGS ═══ -->
+    <div class="panel" id="panel-settings">
+
+      <!-- Page header -->
+      <div class="lst-page-header">
+        <div>
+          <div class="lst-page-title">⚙️ Configuración</div>
+          <div class="lst-page-sub">Administra tu perfil, seguridad y plan</div>
+        </div>
+      </div>
+
+      <div class="cfg-layout">
+
+        <!-- ── Col izquierda ── -->
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <!-- Perfil -->
+          <div class="cfg-card">
+            <div class="cfg-card-title"><div class="cti cti-p">👤</div>Información del perfil</div>
+            <div class="cfg-card-sub">Tu nombre visible y brokerage</div>
+
+            <div class="cfg-avatar-row">
+              <div class="cfg-avatar" id="cfgAvatar">?</div>
+              <div>
+                <div class="cfg-avatar-name" id="cfgAvatarName">—</div>
+                <div class="cfg-avatar-info" id="cfgAvatarEmail">—</div>
+              </div>
+            </div>
+
+            <div class="cfg-alert" id="profileAlert"></div>
+            <div class="cfg-field"><label>Nombre completo</label><input type="text" id="cfgName" placeholder="María González"/></div>
+            <div class="cfg-field"><label>Brokerage <span style="font-weight:400;color:var(--muted2)">(opcional)</span></label><input type="text" id="cfgBrokerage" placeholder="Century 21, Keller Williams..."/></div>
+            <div class="cfg-field"><label>Correo electrónico</label><input type="email" id="cfgEmail" disabled/></div>
+
+            <button class="btn-cfg-save" id="profileBtn" onclick="saveProfile()">
+              <span class="lbl">Guardar cambios</span>
+              <span class="spin-wrap"><span class="spinner"></span>Guardando...</span>
+            </button>
+          </div>
+
+          <!-- Cambiar contraseña -->
+          <div class="cfg-card">
+            <div class="cfg-card-title"><div class="cti cti-g">🔒</div>Cambiar contraseña</div>
+            <div class="cfg-card-sub">Elige una contraseña segura</div>
+
+            <div class="cfg-alert" id="pwAlert"></div>
+            <div class="cfg-field"><label>Contraseña actual</label><input type="password" id="cfgPwCurrent" placeholder="••••••••"/></div>
+            <div class="cfg-field"><label>Nueva contraseña</label><input type="password" id="cfgPwNew" placeholder="Mínimo 8 caracteres" oninput="cfgStrength(this.value)"/>
+              <div class="strength-bar" style="height:3px;border-radius:4px;background:#e5e7eb;margin-top:7px;overflow:hidden"><div class="strength-fill" id="cfgStrFill" style="height:100%;width:0%;border-radius:4px;transition:width .3s,background .3s"></div></div>
+              <div id="cfgStrLabel" style="font-size:11px;font-weight:600;color:var(--muted2);margin-top:4px;">— Nueva contraseña</div>
+            </div>
+            <div class="cfg-field"><label>Confirmar nueva contraseña</label><input type="password" id="cfgPwConfirm" placeholder="Repite la contraseña"/></div>
+
+            <button class="btn-cfg-save" id="pwBtn" onclick="savePassword()">
+              <span class="lbl">Actualizar contraseña</span>
+              <span class="spin-wrap"><span class="spinner"></span>Actualizando...</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ── Col derecha ── -->
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <!-- Plan actual -->
+          <div class="cfg-card">
+            <div class="cfg-card-title"><div class="cti cti-p">💎</div>Tu plan actual</div>
+            <div class="cfg-card-sub">Uso y límites del mes en curso</div>
+
+            <div class="plan-info-row">
+              <div class="pir-label">Plan</div>
+              <div class="pir-badge" id="cfgPlanBadge">Gratis</div>
+            </div>
+            <div class="plan-info-row">
+              <div class="pir-label">Listings usados</div>
+              <div class="pir-val"><span id="cfgUsed">0</span> / <span id="cfgLimit">5</span></div>
+            </div>
+            <div class="plan-info-row">
+              <div class="pir-label">Renovación</div>
+              <div class="pir-val">Mensual</div>
+            </div>
+            <div class="plan-info-row">
+              <div class="pir-label">Miembro desde</div>
+              <div class="pir-val" id="cfgMemberSince">—</div>
+            </div>
+
+            <button class="btn-upgrade-cfg" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">⬆ Mejorar plan</button>
+          </div>
+
+          <!-- Zona de peligro -->
+          <div class="cfg-card">
+            <div class="cfg-card-title"><div class="cti cti-r">⚠️</div>Zona de peligro</div>
+            <div class="cfg-card-sub">Acciones irreversibles para tu cuenta</div>
+
+            <div style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;">
+              Al cerrar sesión se eliminará tu sesión local. Tus datos y listings están seguros en la nube.
+            </div>
+            <button class="btn-danger" onclick="logout()">↩ Cerrar sesión</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
 <!-- MOBILE NAV -->
 <div class="mobile-nav">
   <div class="mobile-nav-inner">
@@ -1108,6 +1252,7 @@ body {
     if (btn) btn.classList.add('active');
     closeSidebar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (name === 'settings') loadSettingsPanel();
   }
 
   function setMNav(id) { document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
@@ -1205,6 +1350,101 @@ body {
     selectedTone = 'lujoso';
     clearAlert();
   }
+
+  // ══════════════════════════════
+  //  SETTINGS
+  // ══════════════════════════════
+  function loadSettingsPanel() {
+    // Rellenar campos con datos actuales del usuario
+    const name      = user.name      || '';
+    const brokerage = user.brokerage || '';
+    const email     = user.email     || '';
+    document.getElementById('cfgName').value      = name;
+    document.getElementById('cfgBrokerage').value = brokerage;
+    document.getElementById('cfgEmail').value     = email;
+    // Avatar
+    document.getElementById('cfgAvatar').textContent    = name ? name.charAt(0).toUpperCase() : '?';
+    document.getElementById('cfgAvatarName').textContent = name || '—';
+    document.getElementById('cfgAvatarEmail').textContent = email;
+    // Plan
+    document.getElementById('cfgPlanBadge').textContent  = (usageData.planLabel || 'Gratis');
+    document.getElementById('cfgUsed').textContent       = usageData.listings?.used  || 0;
+    document.getElementById('cfgLimit').textContent      = usageData.listings?.limit || 5;
+    // Miembro desde
+    const raw = user.created_at || user.createdAt;
+    if (raw) {
+      document.getElementById('cfgMemberSince').textContent = new Date(raw).toLocaleDateString('es-MX', { month:'long', year:'numeric' });
+    }
+    // Limpiar alertas y campos de contraseña
+    ['profileAlert','pwAlert'].forEach(function(id){ const el=document.getElementById(id); if(el){el.className='cfg-alert';el.textContent='';} });
+    ['cfgPwCurrent','cfgPwNew','cfgPwConfirm'].forEach(function(id){ const el=document.getElementById(id); if(el) el.value=''; });
+    document.getElementById('cfgStrFill').style.width='0%';
+    document.getElementById('cfgStrLabel').textContent='— Nueva contraseña';
+    document.getElementById('cfgStrLabel').style.color='var(--muted2)';
+  }
+
+  async function saveProfile() {
+    const btn  = document.getElementById('profileBtn');
+    const al   = document.getElementById('profileAlert');
+    const name = document.getElementById('cfgName').value.trim();
+    const brok = document.getElementById('cfgBrokerage').value.trim();
+    cfgHide(al);
+    if (!name) { cfgShow(al,'El nombre es requerido.','er'); return; }
+    cfgSetLoading(btn, true);
+    try {
+      const res  = await fetch('/api/auth', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}, body: JSON.stringify({ action:'updateProfile', name, brokerage: brok }) });
+      const data = await res.json();
+      if (!res.ok || !data.success) { cfgShow(al, data.error||'Error al guardar.','er'); return; }
+      // Actualizar localStorage y variables locales
+      user.name = name; user.brokerage = brok;
+      localStorage.setItem('propia_user', JSON.stringify(user));
+      setUserUI();
+      loadSettingsPanel();
+      cfgShow(al, '✅ Perfil actualizado correctamente.','ok');
+    } catch { cfgShow(al,'Error de conexión. Intenta de nuevo.','er'); }
+    finally  { cfgSetLoading(btn, false); }
+  }
+
+  async function savePassword() {
+    const btn  = document.getElementById('pwBtn');
+    const al   = document.getElementById('pwAlert');
+    const cur  = document.getElementById('cfgPwCurrent').value;
+    const nw   = document.getElementById('cfgPwNew').value;
+    const conf = document.getElementById('cfgPwConfirm').value;
+    cfgHide(al);
+    if (!cur || !nw || !conf)  { cfgShow(al,'Todos los campos son requeridos.','er'); return; }
+    if (nw.length < 8)         { cfgShow(al,'La nueva contraseña debe tener al menos 8 caracteres.','er'); return; }
+    if (nw !== conf)           { cfgShow(al,'Las contraseñas nuevas no coinciden.','er'); return; }
+    cfgSetLoading(btn, true);
+    try {
+      const res  = await fetch('/api/auth', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}, body: JSON.stringify({ action:'changePassword', currentPassword: cur, newPassword: nw }) });
+      const data = await res.json();
+      if (!res.ok || !data.success) { cfgShow(al, data.error||'Error al actualizar.','er'); return; }
+      cfgShow(al,'✅ Contraseña actualizada. Tu sesión sigue activa.','ok');
+      ['cfgPwCurrent','cfgPwNew','cfgPwConfirm'].forEach(function(id){ document.getElementById(id).value=''; });
+      document.getElementById('cfgStrFill').style.width='0%';
+      document.getElementById('cfgStrLabel').textContent='— Nueva contraseña';
+    } catch { cfgShow(al,'Error de conexión. Intenta de nuevo.','er'); }
+    finally  { cfgSetLoading(btn, false); }
+  }
+
+  function cfgStrength(val) {
+    var fill=document.getElementById('cfgStrFill'), label=document.getElementById('cfgStrLabel');
+    if (!val) { fill.style.width='0%'; label.textContent='— Nueva contraseña'; label.style.color='var(--muted2)'; return; }
+    var score=0;
+    if(val.length>=8)  score++;
+    if(val.length>=12) score++;
+    if(/[A-Z]/.test(val)) score++;
+    if(/[0-9]/.test(val)) score++;
+    if(/[^A-Za-z0-9]/.test(val)) score++;
+    var levels=[{p:'20%',c:'#ef4444',t:'Muy débil'},{p:'40%',c:'#f97316',t:'Débil'},{p:'60%',c:'#eab308',t:'Regular'},{p:'80%',c:'#22c55e',t:'Fuerte'},{p:'100%',c:'#16a34a',t:'Muy fuerte ✓'}];
+    var l=levels[Math.min(score,4)];
+    fill.style.width=l.p; fill.style.background=l.c; label.textContent=l.t; label.style.color=l.c;
+  }
+
+  function cfgSetLoading(btn,v){ btn.disabled=v; btn.classList.toggle('is-loading',v); }
+  function cfgShow(el,msg,type){ el.textContent=msg; el.className='cfg-alert '+type; }
+  function cfgHide(el){ el.className='cfg-alert'; el.textContent=''; }
 
   function renderListingsPanel(filter) {
     var body = document.getElementById('listingsBody');
