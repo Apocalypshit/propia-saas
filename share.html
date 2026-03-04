@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Listing — PropIA</title>
+<meta property="og:type" content="website"/>
+<meta property="og:title" id="ogTitle" content="Listing — PropIA"/>
+<meta property="og:description" id="ogDesc" content="Propiedad disponible"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      #ede9fb;
+  --purple:  #7c3aed;
+  --p2:      #6d28d9;
+  --p-light: #ede9fb;
+  --p-border:rgba(124,58,237,0.18);
+  --teal:    #0d9488;
+  --teal2:   #14b8a6;
+  --t-light: rgba(20,184,166,0.10);
+  --t-border:rgba(20,184,166,0.20);
+  --text:    #0f0a1e;
+  --text2:   #374151;
+  --muted:   #6b7280;
+  --muted2:  #9ca3af;
+  --border:  rgba(124,58,237,0.10);
+  --surface: #f8f6ff;
+  --green:   #10b981;
+  --amber:   #f59e0b;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at 10% 10%, rgba(124,58,237,.10) 0%, transparent 55%),
+              radial-gradient(ellipse at 90% 90%, rgba(20,184,166,.08) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--p-border);
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.topbar-logo { display: flex; align-items: center; gap: 9px; }
+.topbar-mark {
+  width: 34px; height: 34px; border-radius: 9px;
+  background: var(--purple); display: flex; align-items: center;
+  justify-content: center; font-size: 17px;
+  box-shadow: 0 3px 10px rgba(124,58,237,.30);
+}
+.topbar-name { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -.5px; }
+.topbar-name span { color: var(--purple); }
+.btn-contact-top {
+  font-family: inherit; font-size: 14px; font-weight: 700;
+  color: white; background: var(--purple); border: none;
+  border-radius: 10px; padding: 10px 20px; cursor: pointer;
+  box-shadow: 0 3px 12px rgba(124,58,237,.30); transition: all .18s;
+}
+.btn-contact-top:hover { background: var(--p2); transform: translateY(-1px); }
+
+/* ── MAIN CONTENT ── */
+.page { max-width: 780px; margin: 0 auto; padding: 32px 20px 60px; position: relative; z-index: 1; }
+
+/* ── HERO CARD ── */
+.hero-card {
+  background: white;
+  border-radius: 22px;
+  padding: 32px 28px;
+  border: 1px solid var(--p-border);
+  box-shadow: 0 4px 24px rgba(124,58,237,.10);
+  margin-bottom: 20px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .6px; color: var(--teal);
+  background: var(--t-light); border: 1px solid var(--t-border);
+  border-radius: 20px; padding: 5px 12px; margin-bottom: 18px;
+}
+.hero-badge::before { content:''; width:7px;height:7px;border-radius:50%;background:var(--teal2); }
+.hero-address { font-size: 26px; font-weight: 900; color: var(--text); letter-spacing: -.8px; line-height: 1.2; margin-bottom: 10px; }
+@media(max-width:480px){ .hero-address { font-size: 22px; } }
+.hero-price { font-size: 36px; font-weight: 900; color: var(--purple); letter-spacing: -1.5px; margin-bottom: 18px; }
+@media(max-width:480px){ .hero-price { font-size: 28px; } }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+.hero-meta-tag {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--text2);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 5px 13px;
+}
+.btn-contact-hero {
+  width: 100%; font-family: inherit; font-size: 16px; font-weight: 700;
+  color: white; background: var(--purple); border: none;
+  border-radius: 13px; padding: 15px; cursor: pointer;
+  box-shadow: 0 5px 18px rgba(124,58,237,.35); transition: all .18s;
+}
+.btn-contact-hero:hover { background: var(--p2); transform: translateY(-1px); }
+
+/* ── AGENT CARD ── */
+.agent-card {
+  background: white; border-radius: 18px; padding: 20px 22px;
+  border: 1px solid var(--p-border); box-shadow: 0 2px 10px rgba(124,58,237,.08);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.agent-av {
+  width: 48px; height: 48px; border-radius: 13px; background: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.agent-name { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+.agent-brok { font-size: 13px; color: var(--muted); }
+.agent-ai-tag {
+  margin-left: auto; font-size: 11px; font-weight: 700; color: var(--purple);
+  background: var(--p-light); border: 1px solid var(--p-border);
+  border-radius: 20px; padding: 4px 11px; white-space: nowrap; flex-shrink: 0;
+}
+
+/* ── CONTENT SECTIONS ── */
+.section {
+  background: white; border-radius: 18px; padding: 24px 22px;
+  border: 1px solid var(--p-border); box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  margin-bottom: 16px;
+}
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px; cursor: pointer; user-select: none;
+}
+.section-title {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 15px; font-weight: 800; color: var(--text); letter-spacing: -.2px;
+}
+.section-icon {
+  width: 32px; height: 32px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.si-p { background: var(--p-light); }
+.si-t { background: var(--t-light); }
+.si-a { background: rgba(245,158,11,.10); }
+.si-g { background: rgba(16,185,129,.10); }
+.section-chevron { font-size: 13px; color: var(--muted); transition: transform .2s; }
+.section-chevron.open { transform: rotate(180deg); }
+.section-body { display: none; }
+.section-body.open { display: block; }
+.section-text {
+  font-size: 14px; color: var(--text2); line-height: 1.85;
+  white-space: pre-wrap; word-break: break-word;
+}
+
+/* Copy button */
+.btn-copy {
+  font-family: inherit; font-size: 12px; font-weight: 700;
+  color: var(--purple); background: var(--p-light);
+  border: 1.5px solid var(--p-border); border-radius: 8px;
+  padding: 6px 14px; cursor: pointer; transition: all .15s;
+  margin-top: 14px; display: inline-block;
+}
+.btn-copy:hover { background: var(--purple); color: white; border-color: transparent; }
+.btn-copy.copied { background: var(--green); color: white; border-color: transparent; }
+
+/* Social tabs */
+.social-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.stab {
+  font-family: inherit; font-size: 12px; font-weight: 700;
+  color: var(--muted); background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 6px 14px; cursor: pointer; transition: all .15s;
+}
+.stab.active { background: var(--purple); color: white; border-color: transparent; }
+
+/* ── LOADING / ERROR ── */
+.state-loading { text-align: center; padding: 80px 20px; }
+.state-loading .spin { width: 40px; height: 40px; border: 3px solid var(--p-border); border-top-color: var(--purple); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.state-error { text-align: center; padding: 80px 20px; }
+.state-error .err-icon { font-size: 52px; margin-bottom: 16px; }
+.state-error .err-title { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+.state-error .err-sub { font-size: 15px; color: var(--muted); }
+
+/* ── FOOTER ── */
+.share-footer { text-align: center; padding: 28px 20px; font-size: 13px; color: var(--muted2); }
+.share-footer a { color: var(--purple); font-weight: 700; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="topbar-mark">🏠</div>
+    <div class="topbar-name">Prop<span>IA</span></div>
+  </div>
+  <button class="btn-contact-top" id="btnContactTop" onclick="scrollToContact()" style="display:none">📞 Contactar agente</button>
+</div>
+
+<!-- LOADING -->
+<div class="page" id="stateLoading">
+  <div class="state-loading">
+    <div class="spin"></div>
+    <div style="font-size:15px;color:var(--muted);font-weight:600">Cargando listing...</div>
+  </div>
+</div>
+
+<!-- ERROR -->
+<div class="page" id="stateError" style="display:none">
+  <div class="state-error">
+    <div class="err-icon">🏚️</div>
+    <div class="err-title">Listing no encontrado</div>
+    <div class="err-sub">Este enlace puede haber expirado o no es válido.</div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="page" id="stateContent" style="display:none">
+
+  <!-- Hero -->
+  <div class="hero-card">
+    <div class="hero-badge">🏠 Propiedad disponible</div>
+    <div class="hero-address" id="heroAddress">—</div>
+    <div class="hero-price" id="heroPrice">—</div>
+    <div class="hero-meta" id="heroMeta"></div>
+    <button class="btn-contact-hero" onclick="scrollToContact()">📞 Contactar al agente →</button>
+  </div>
+
+  <!-- Agent -->
+  <div class="agent-card">
+    <div class="agent-av" id="agentAv">?</div>
+    <div>
+      <div class="agent-name" id="agentName">—</div>
+      <div class="agent-brok" id="agentBrok">Agente de Bienes Raíces</div>
+    </div>
+    <div class="agent-ai-tag">✨ PropIA</div>
+  </div>
+
+  <!-- Descripción MLS -->
+  <div class="section" id="secMLS">
+    <div class="section-header" onclick="toggleSection('secMLS')">
+      <div class="section-title"><div class="section-icon si-p">📝</div>Descripción MLS</div>
+      <div class="section-chevron open" id="chevMLS">▼</div>
+    </div>
+    <div class="section-body open" id="bodyMLS">
+      <div class="section-text" id="textMLS">—</div>
+      <button class="btn-copy" onclick="copyText('textMLS',this)">📋 Copiar descripción</button>
+    </div>
+  </div>
+
+  <!-- Redes sociales -->
+  <div class="section" id="secSocial">
+    <div class="section-header" onclick="toggleSection('secSocial')">
+      <div class="section-title"><div class="section-icon si-t">📱</div>Posts para Redes Sociales</div>
+      <div class="section-chevron" id="chevSocial">▼</div>
+    </div>
+    <div class="section-body" id="bodySocial">
+      <div class="social-tabs">
+        <button class="stab active" onclick="showSocial(this,'instagram')">Instagram</button>
+        <button class="stab" onclick="showSocial(this,'facebook')">Facebook</button>
+        <button class="stab" onclick="showSocial(this,'linkedin')">LinkedIn</button>
+      </div>
+      <div class="section-text" id="textSocial">—</div>
+      <button class="btn-copy" onclick="copyText('textSocial',this)">📋 Copiar post</button>
+    </div>
+  </div>
+
+  <!-- Email de marketing -->
+  <div class="section" id="secEmail">
+    <div class="section-header" onclick="toggleSection('secEmail')">
+      <div class="section-title"><div class="section-icon si-a">📧</div>Email de Marketing</div>
+      <div class="section-chevron" id="chevEmail">▼</div>
+    </div>
+    <div class="section-body" id="bodyEmail">
+      <div class="section-text" id="textEmail">—</div>
+      <button class="btn-copy" onclick="copyText('textEmail',this)">📋 Copiar email</button>
+    </div>
+  </div>
+
+  <!-- Script de video -->
+  <div class="section" id="secVideo">
+    <div class="section-header" onclick="toggleSection('secVideo')">
+      <div class="section-title"><div class="section-icon si-g">🎬</div>Script de Video</div>
+      <div class="section-chevron" id="chevVideo">▼</div>
+    </div>
+    <div class="section-body" id="bodyVideo">
+      <div class="section-text" id="textVideo">—</div>
+      <button class="btn-copy" onclick="copyText('textVideo',this)">📋 Copiar script</button>
+    </div>
+  </div>
+
+  <!-- Contactar agente -->
+  <div class="section" id="secContact" style="border-color:var(--p-border);background:linear-gradient(135deg,#faf8ff,white)">
+    <div class="section-header" style="cursor:default;margin-bottom:0">
+      <div class="section-title"><div class="section-icon si-p">🤝</div>¿Te interesa esta propiedad?</div>
+    </div>
+    <div style="margin-top:16px">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.65">
+        Contacta directamente al agente o completa tu perfil para que la IA analice tu situación y te dé opciones personalizadas.
+      </div>
+      <button class="btn-contact-hero" id="btnLeadForm" onclick="goToLeadForm()">✦ Quiero información de esta propiedad</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="share-footer">Generado con <a href="https://propia-saas.vercel.app">PropIA</a> · IA para Agentes Latinos en USA</div>
+
+<script>
+  var listingData = null;
+  var agentId     = null;
+  var socialContent = { instagram:'', facebook:'', linkedin:'' };
+
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get('id');
+    if (!id) { showState('stateError'); return; }
+    loadListing(id);
+  })();
+
+  async function loadListing(id) {
+    try {
+      var res  = await fetch('/api/share?id=' + id);
+      var data = await res.json();
+      if (!res.ok || !data.success) { showState('stateError'); return; }
+      listingData = data.listing;
+      agentId     = data.listing.user_id || null;
+      renderListing(data.listing, data.agent);
+      showState('stateContent');
+      document.getElementById('btnContactTop').style.display = 'block';
+    } catch(e) { showState('stateError'); }
+  }
+
+  function renderListing(listing, agent) {
+    var c = listing.content || {};
+
+    // Update page title
+    document.title = (listing.address || 'Listing') + ' — PropIA';
+
+    // Hero
+    document.getElementById('heroAddress').textContent = listing.address || '—';
+    document.getElementById('heroPrice').textContent   = listing.price   || '—';
+
+    // Meta tags
+    var meta = c._meta || {};
+    var tags = [];
+    if (meta.beds)  tags.push('🛏️ ' + meta.beds  + ' Rec.');
+    if (meta.baths) tags.push('🚿 ' + meta.baths + ' Baños');
+    if (meta.sqft)  tags.push('📐 ' + meta.sqft  + ' ft²');
+    if (listing.type || meta.type) tags.push('🏠 ' + (listing.type || meta.type));
+    if (listing.tone) tags.push('✨ ' + listing.tone.charAt(0).toUpperCase() + listing.tone.slice(1));
+    var metaEl = document.getElementById('heroMeta');
+    metaEl.innerHTML = tags.map(function(t){ return '<div class="hero-meta-tag">' + t + '</div>'; }).join('');
+
+    // Agent
+    document.getElementById('agentAv').textContent   = (agent.name||'A').charAt(0).toUpperCase();
+    document.getElementById('agentName').textContent  = agent.name || 'Agente PropIA';
+    document.getElementById('agentBrok').textContent  = agent.brokerage || 'Agente de Bienes Raíces';
+
+    // MLS
+    document.getElementById('textMLS').textContent = c.mls || c.descripcion_mls || 'Descripción no disponible.';
+
+    // Social
+    socialContent.instagram = c.instagram || c.post_instagram || '';
+    socialContent.facebook  = c.facebook  || c.post_facebook  || '';
+    socialContent.linkedin  = c.linkedin  || c.post_linkedin  || '';
+    document.getElementById('textSocial').textContent = socialContent.instagram || 'Post no disponible.';
+
+    // Email
+    document.getElementById('textEmail').textContent = c.email || c.email_marketing || 'Email no disponible.';
+
+    // Video
+    document.getElementById('textVideo').textContent = c.video || c.script_video || 'Script no disponible.';
+  }
+
+  function showState(id) {
+    ['stateLoading','stateError','stateContent'].forEach(function(s){
+      document.getElementById(s).style.display = s === id ? 'block' : 'none';
+    });
+  }
+
+  function toggleSection(secId) {
+    var body   = document.getElementById('body'   + secId.replace('sec',''));
+    var chev   = document.getElementById('chev'   + secId.replace('sec',''));
+    var isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    chev.classList.toggle('open', !isOpen);
+  }
+
+  function showSocial(btn, network) {
+    document.querySelectorAll('.stab').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('textSocial').textContent = socialContent[network] || 'Post no disponible.';
+  }
+
+  function copyText(elId, btn) {
+    var text = document.getElementById(elId).textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      var orig = btn.textContent;
+      btn.textContent = '✅ Copiado';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+    }).catch(function() {});
+  }
+
+  function scrollToContact() {
+    document.getElementById('secContact').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function goToLeadForm() {
+    if (agentId) {
+      window.location.href = '/lead?agent=' + agentId;
+    }
+  }
+</script>
+</body>
+</html>

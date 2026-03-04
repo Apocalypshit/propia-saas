@@ -12,6 +12,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/share",      "destination": "/share.html" },
     { "source": "/lead",       "destination": "/lead.html" },
     { "source": "/reset",      "destination": "/reset.html" },
     { "source": "/dashboard",  "destination": "/dashboard.html" },
