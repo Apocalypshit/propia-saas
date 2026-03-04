@@ -1520,7 +1520,9 @@ body {
     const { listings, plan, planLabel } = usageData;
     const pct = Math.min((listings.used / listings.limit) * 100, 100);
     document.getElementById('statUsed').textContent = listings.used;
-    document.getElementById('statLimit').textContent = `de ${listings.limit} disponibles este mes`;
+    document.getElementById('statLimit').textContent = plan === 'free'
+      ? `de ${listings.limit} totales (plan gratuito)`
+      : `de ${listings.limit} disponibles este mes`;
     document.getElementById('statProgress').style.width = pct + '%';
     document.getElementById('statPlan').textContent = planLabel;
     document.getElementById('statAssets').textContent = listings.used * 4;
