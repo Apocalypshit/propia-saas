@@ -326,6 +326,43 @@ body {
 .lst-btn-edit:hover{background:var(--purple);color:white;border-color:transparent}
 .lst-btn-share{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:var(--teal);background:var(--t-light);border:1.5px solid var(--t-border);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
 .lst-btn-share:hover{background:var(--teal);color:white;border-color:transparent}
+.lst-btn-photos{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:#b45309;background:rgba(245,158,11,.10);border:1.5px solid rgba(245,158,11,.25);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
+.lst-btn-photos:hover{background:#f59e0b;color:white;border-color:transparent}
+
+/* ═══ PHOTOS MODAL ═══ */
+.photos-ov{display:none;position:fixed;inset:0;z-index:9500;background:rgba(15,10,30,.55);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px}
+.photos-ov.visible{display:flex}
+.photos-modal{background:white;border-radius:22px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;padding:28px;box-shadow:0 24px 64px rgba(0,0,0,.18);animation:fadeUp .2s ease}
+.pm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.pm-title{font-size:18px;font-weight:900;color:var(--text);letter-spacing:-.4px}
+.pm-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);line-height:1;padding:4px}
+
+/* Drop zone */
+.pm-dropzone{border:2.5px dashed var(--p-border);border-radius:14px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface);position:relative;margin-bottom:18px}
+.pm-dropzone:hover,.pm-dropzone.drag{border-color:var(--purple);background:var(--p-light)}
+.pm-dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.pm-dz-icon{font-size:36px;margin-bottom:10px}
+.pm-dz-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px}
+.pm-dz-sub{font-size:12px;color:var(--muted)}
+
+/* Upload progress */
+.pm-progress{display:none;background:var(--p-light);border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--purple)}
+.pm-progress .pbar-outer{background:var(--p-border);border-radius:20px;height:5px;margin-top:8px}
+.pm-progress .pbar-inner{background:var(--purple);border-radius:20px;height:5px;transition:width .3s;width:0%}
+
+/* Image grid */
+.pm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:16px}
+.pm-img-wrap{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#eee;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.pm-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.pm-img-wrap video{width:100%;height:100%;object-fit:cover}
+.pm-img-del{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.65);border:none;color:white;font-size:13px;width:24px;height:24px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.pm-img-del:hover{background:rgba(239,68,68,.85)}
+.pm-img-num{position:absolute;bottom:5px;left:6px;background:rgba(0,0,0,.55);color:white;font-size:10px;font-weight:700;border-radius:10px;padding:2px 7px}
+.pm-empty{text-align:center;padding:24px;color:var(--muted);font-size:14px}
+.pm-alert{border-radius:10px;padding:10px 13px;font-size:13px;font-weight:500;margin-bottom:12px;display:none}
+.pm-alert.er{background:rgba(239,68,68,.07);border:1.5px solid rgba(239,68,68,.20);color:#ef4444;display:block}
+.pm-alert.ok{background:rgba(16,185,129,.07);border:1.5px solid rgba(16,185,129,.20);color:#059669;display:block}
+.pm-note{font-size:12px;color:var(--muted2);text-align:center}
 .lst-empty-full{text-align:center;padding:60px 24px;color:var(--muted)}
 .lei-icon{font-size:48px;margin-bottom:14px}
 .lei-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:8px;letter-spacing:-.3px}
@@ -1739,9 +1776,10 @@ body {
         + '<span class="lst-badge lb-n">📅 ' + formatDate(h.date) + '</span>'
         + '</div>'
         + '<div class="lst-card-actions">'
+        + '<button class="lst-btn-photos" onclick="openPhotos(&#39;' + h.id + '&#39;, event)">📸 Fotos</button>'
         + '<button class="lst-btn-edit" onclick="shareListingLink(&#39;' + h.id + '&#39;, event)">🔗 Compartir</button>'
         + '<button class="lst-btn-edit" onclick="loadForEdit(&#39;' + h.id + '&#39;)">✏️ Editar</button>'
-        + '</div></div>';
+        + '</div></div>;'
  
     }).join('');
     body.innerHTML = '<div class="lst-grid">' + cards + '</div>';
@@ -1948,6 +1986,170 @@ body {
     var ldo = document.getElementById('leadDetailOverlay');
     if (nlo) nlo.addEventListener('click', function(e){ if(e.target===this) closeNewLead(); });
     if (ldo) ldo.addEventListener('click', function(e){ if(e.target===this) closeLeadDetail(); });
+  });
+
+  // ══════════════════════════════
+  //  PHOTOS UPLOAD
+  // ══════════════════════════════
+  var photosListingId  = null;
+  var photosCurrentImages = [];
+
+  function openPhotos(id, event) {
+    if (event) event.stopPropagation();
+    photosListingId = id;
+    // Load current images from historyData
+    var listing = historyData.find(function(h){ return h.id === id; });
+    photosCurrentImages = (listing && listing.content && listing.content.images) ? listing.content.images.slice() : [];
+    renderPmGrid();
+    pmAlertHide();
+    document.getElementById('photosOv').classList.add('visible');
+  }
+
+  function closePhotos() {
+    document.getElementById('photosOv').classList.remove('visible');
+    photosListingId = null;
+    document.getElementById('pmFileInput').value = '';
+  }
+
+  function renderPmGrid() {
+    var grid  = document.getElementById('pmGrid');
+    var empty = document.getElementById('pmEmpty');
+    if (!photosCurrentImages.length) {
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    grid.innerHTML = photosCurrentImages.map(function(url, i) {
+      var isVideo = url.match(/\.(mp4|webm|mov|ogg)(\?|$)/i);
+      var media   = isVideo
+        ? '<video src="' + url + '" muted playsinline style="width:100%;height:100%;object-fit:cover"></video>'
+        : '<img src="' + url + '" loading="lazy" alt="foto ' + (i+1) + '"/>';
+      return '<div class="pm-img-wrap">'
+        + media
+        + '<div class="pm-img-num">' + (i+1) + '</div>'
+        + '<button class="pm-img-del" onclick="deletePhoto(\'' + url.replace(/'/g,"\\'") + '\')" title="Eliminar">✕</button>'
+        + '</div>';
+    }).join('');
+  }
+
+  async function handleFiles(files) {
+    if (!photosListingId) return;
+    if (!files || !files.length) return;
+
+    var arr = Array.from(files);
+    var remaining = 10 - photosCurrentImages.length;
+    if (remaining <= 0) { pmAlertShow('Ya tienes 10 fotos (máximo).', 'er'); return; }
+    arr = arr.slice(0, remaining);
+
+    pmAlertHide();
+    var prog    = document.getElementById('pmProgress');
+    var progTxt = document.getElementById('pmProgressTxt');
+    var pbar    = document.getElementById('pmPbar');
+    prog.style.display = 'block';
+
+    for (var i = 0; i < arr.length; i++) {
+      var file = arr[i];
+      progTxt.textContent = 'Subiendo ' + (i+1) + ' de ' + arr.length + ': ' + file.name;
+      pbar.style.width    = Math.round(((i) / arr.length) * 100) + '%';
+
+      if (file.size > 8 * 1024 * 1024) {
+        pmAlertShow(file.name + ' supera 8MB — omitido.', 'er');
+        continue;
+      }
+
+      try {
+        // Read as base64
+        var b64 = await new Promise(function(resolve, reject) {
+          var reader = new FileReader();
+          reader.onload  = function(e) { resolve(e.target.result); };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        var res  = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({
+            listingId: photosListingId,
+            fileName:  file.name,
+            fileType:  file.type,
+            fileData:  b64
+          })
+        });
+        var data = await res.json();
+        if (!res.ok || !data.success) {
+          pmAlertShow(data.error || 'Error subiendo ' + file.name, 'er');
+        } else {
+          photosCurrentImages = data.images || photosCurrentImages;
+          // Update historyData in memory
+          var idx = historyData.findIndex(function(h){ return h.id === photosListingId; });
+          if (idx !== -1) {
+            if (!historyData[idx].content) historyData[idx].content = {};
+            historyData[idx].content.images = photosCurrentImages.slice();
+          }
+        }
+      } catch(e) {
+        pmAlertShow('Error de conexión subiendo ' + file.name, 'er');
+      }
+    }
+
+    pbar.style.width = '100%';
+    setTimeout(function() { prog.style.display = 'none'; pbar.style.width = '0%'; }, 800);
+    renderPmGrid();
+    // Reset file input so same files can be re-selected
+    document.getElementById('pmFileInput').value = '';
+  }
+
+  async function deletePhoto(url) {
+    if (!photosListingId) return;
+    try {
+      var res  = await fetch('/api/upload', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ listingId: photosListingId, imageUrl: url })
+      });
+      var data = await res.json();
+      if (res.ok && data.success) {
+        photosCurrentImages = photosCurrentImages.filter(function(u){ return u !== url; });
+        var idx = historyData.findIndex(function(h){ return h.id === photosListingId; });
+        if (idx !== -1) {
+          if (!historyData[idx].content) historyData[idx].content = {};
+          historyData[idx].content.images = photosCurrentImages.slice();
+        }
+        renderPmGrid();
+      } else {
+        pmAlertShow(data.error || 'Error eliminando la foto.', 'er');
+      }
+    } catch(e) {
+      pmAlertShow('Error de conexión.', 'er');
+    }
+  }
+
+  function pmAlertShow(msg, type) {
+    var el = document.getElementById('pmAlert');
+    el.textContent = msg; el.className = 'pm-alert ' + (type || 'er');
+  }
+  function pmAlertHide() {
+    var el = document.getElementById('pmAlert');
+    el.className = 'pm-alert'; el.textContent = '';
+  }
+
+  // Drag and drop
+  (function() {
+    var dz = document.getElementById('pmDrop');
+    if (!dz) return;
+    dz.addEventListener('dragover',  function(e){ e.preventDefault(); dz.classList.add('drag'); });
+    dz.addEventListener('dragleave', function()  { dz.classList.remove('drag'); });
+    dz.addEventListener('drop',      function(e){
+      e.preventDefault(); dz.classList.remove('drag');
+      handleFiles(e.dataTransfer.files);
+    });
+  })();
+
+  // Close on overlay click
+  document.getElementById('photosOv').addEventListener('click', function(e){
+    if (e.target === this) closePhotos();
   });
 
   function obReset() {
@@ -2186,6 +2388,36 @@ body {
       <button class="ldet-copy-btn" onclick="copyEmail()">📋 Copiar email</button>
     </div>
 
+  </div>
+</div>
+
+<!-- ═══ PHOTOS MODAL ═══ -->
+<div class="photos-ov" id="photosOv">
+  <div class="photos-modal">
+    <div class="pm-header">
+      <div class="pm-title">📸 Fotos de la propiedad</div>
+      <button class="pm-close" onclick="closePhotos()">✕</button>
+    </div>
+    <div class="pm-alert" id="pmAlert"></div>
+
+    <!-- Drop zone -->
+    <div class="pm-dropzone" id="pmDrop">
+      <input type="file" id="pmFileInput" accept="image/*,video/*" multiple onchange="handleFiles(this.files)"/>
+      <div class="pm-dz-icon">📷</div>
+      <div class="pm-dz-title">Arrastra fotos aquí o haz clic para seleccionar</div>
+      <div class="pm-dz-sub">JPG, PNG, WebP, MP4 · Máx. 8MB por archivo · Hasta 10 archivos</div>
+    </div>
+
+    <!-- Upload progress -->
+    <div class="pm-progress" id="pmProgress">
+      <span id="pmProgressTxt">Subiendo foto 1 de 1...</span>
+      <div class="pbar-outer"><div class="pbar-inner" id="pmPbar"></div></div>
+    </div>
+
+    <!-- Image grid -->
+    <div class="pm-grid" id="pmGrid"></div>
+    <div class="pm-empty" id="pmEmpty">Sin fotos todavía. Sube imágenes para que aparezcan en la página pública.</div>
+    <div class="pm-note">Las fotos aparecen automáticamente en tu página de listing compartida 🔗</div>
   </div>
 </div>
 

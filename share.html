@@ -3,197 +3,114 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Listing — PropIA</title>
+<title>Propiedad — PropIA</title>
 <meta property="og:type" content="website"/>
-<meta property="og:title" id="ogTitle" content="Listing — PropIA"/>
-<meta property="og:description" id="ogDesc" content="Propiedad disponible"/>
+<meta id="ogTitle" property="og:title" content="Propiedad en venta"/>
+<meta id="ogImage" property="og:image" content=""/>
+<meta id="ogDesc"  property="og:description" content="Propiedad disponible"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg:      #ede9fb;
-  --purple:  #7c3aed;
-  --p2:      #6d28d9;
-  --p-light: #ede9fb;
-  --p-border:rgba(124,58,237,0.18);
-  --teal:    #0d9488;
-  --teal2:   #14b8a6;
-  --t-light: rgba(20,184,166,0.10);
-  --t-border:rgba(20,184,166,0.20);
-  --text:    #0f0a1e;
-  --text2:   #374151;
-  --muted:   #6b7280;
-  --muted2:  #9ca3af;
-  --border:  rgba(124,58,237,0.10);
-  --surface: #f8f6ff;
-  --green:   #10b981;
-  --amber:   #f59e0b;
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#7c3aed;--p2:#6d28d9;--p-light:#ede9fb;--p-border:rgba(124,58,237,.18);
+  --teal:#0d9488;--teal2:#14b8a6;--t-light:rgba(20,184,166,.10);--t-border:rgba(20,184,166,.20);
+  --text:#0f0a1e;--text2:#374151;--muted:#6b7280;--muted2:#9ca3af;
+  --border:rgba(124,58,237,.10);--surface:#f8f6ff;--bg:#ede9fb;
 }
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 0;
-  background: radial-gradient(ellipse at 10% 10%, rgba(124,58,237,.10) 0%, transparent 55%),
-              radial-gradient(ellipse at 90% 90%, rgba(20,184,166,.08) 0%, transparent 55%);
-  pointer-events: none;
-}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--p-border);padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.topbar-logo{display:flex;align-items:center;gap:9px}
+.topbar-mark{width:32px;height:32px;border-radius:8px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 3px 10px rgba(124,58,237,.30)}
+.topbar-name{font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.5px}
+.topbar-name span{color:var(--purple)}
+.btn-cta-top{font-family:inherit;font-size:13px;font-weight:700;color:white;background:var(--purple);border:none;border-radius:9px;padding:9px 18px;cursor:pointer;box-shadow:0 3px 10px rgba(124,58,237,.28);transition:all .18s;white-space:nowrap}
+.btn-cta-top:hover{background:var(--p2);transform:translateY(-1px)}
+.page{max-width:820px;margin:0 auto;padding:28px 18px 72px}
 
-/* ── TOP BAR ── */
-.topbar {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--p-border);
-  padding: 14px 24px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.topbar-logo { display: flex; align-items: center; gap: 9px; }
-.topbar-mark {
-  width: 34px; height: 34px; border-radius: 9px;
-  background: var(--purple); display: flex; align-items: center;
-  justify-content: center; font-size: 17px;
-  box-shadow: 0 3px 10px rgba(124,58,237,.30);
-}
-.topbar-name { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -.5px; }
-.topbar-name span { color: var(--purple); }
-.btn-contact-top {
-  font-family: inherit; font-size: 14px; font-weight: 700;
-  color: white; background: var(--purple); border: none;
-  border-radius: 10px; padding: 10px 20px; cursor: pointer;
-  box-shadow: 0 3px 12px rgba(124,58,237,.30); transition: all .18s;
-}
-.btn-contact-top:hover { background: var(--p2); transform: translateY(-1px); }
+/* HERO */
+.hero-wrap{border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#e0d9f8,#c7bff5);aspect-ratio:16/9;position:relative;cursor:pointer;box-shadow:0 8px 32px rgba(0,0,0,.14);margin-bottom:14px}
+.hero-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.hero-wrap:hover img{transform:scale(1.02)}
+.hero-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:rgba(124,58,237,.45)}
+.hero-ph .phi{font-size:56px}
+.hero-ph .pht{font-size:14px;font-weight:600}
+.count-badge{position:absolute;bottom:14px;right:14px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:white;font-size:12px;font-weight:700;border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:6px}
 
-/* ── MAIN CONTENT ── */
-.page { max-width: 780px; margin: 0 auto; padding: 32px 20px 60px; position: relative; z-index: 1; }
+/* THUMBS */
+.thumbs{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.thumbs::-webkit-scrollbar{height:4px}
+.thumbs::-webkit-scrollbar-thumb{background:var(--p-border);border-radius:4px}
+.thumb{width:76px;height:56px;border-radius:10px;flex-shrink:0;overflow:hidden;cursor:pointer;border:2.5px solid transparent;transition:all .18s;background:#ddd}
+.thumb:hover{border-color:var(--purple)}
+.thumb.active{border-color:var(--purple)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb-video{width:100%;height:100%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:20px}
 
-/* ── HERO CARD ── */
-.hero-card {
-  background: white;
-  border-radius: 22px;
-  padding: 32px 28px;
-  border: 1px solid var(--p-border);
-  box-shadow: 0 4px 24px rgba(124,58,237,.10);
-  margin-bottom: 20px;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 12px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .6px; color: var(--teal);
-  background: var(--t-light); border: 1px solid var(--t-border);
-  border-radius: 20px; padding: 5px 12px; margin-bottom: 18px;
-}
-.hero-badge::before { content:''; width:7px;height:7px;border-radius:50%;background:var(--teal2); }
-.hero-address { font-size: 26px; font-weight: 900; color: var(--text); letter-spacing: -.8px; line-height: 1.2; margin-bottom: 10px; }
-@media(max-width:480px){ .hero-address { font-size: 22px; } }
-.hero-price { font-size: 36px; font-weight: 900; color: var(--purple); letter-spacing: -1.5px; margin-bottom: 18px; }
-@media(max-width:480px){ .hero-price { font-size: 28px; } }
-.hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
-.hero-meta-tag {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 13px; font-weight: 600; color: var(--text2);
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px; padding: 5px 13px;
-}
-.btn-contact-hero {
-  width: 100%; font-family: inherit; font-size: 16px; font-weight: 700;
-  color: white; background: var(--purple); border: none;
-  border-radius: 13px; padding: 15px; cursor: pointer;
-  box-shadow: 0 5px 18px rgba(124,58,237,.35); transition: all .18s;
-}
-.btn-contact-hero:hover { background: var(--p2); transform: translateY(-1px); }
+/* INFO CARD */
+.info-card{background:white;border-radius:20px;padding:24px 22px;border:1px solid var(--p-border);box-shadow:0 2px 12px rgba(124,58,237,.08);margin-bottom:14px}
+.avail-badge{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--teal);background:var(--t-light);border:1px solid var(--t-border);border-radius:20px;padding:4px 12px;margin-bottom:14px}
+.avail-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal2);animation:pdot 2s infinite}
+@keyframes pdot{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+.info-addr{font-size:24px;font-weight:900;color:var(--text);letter-spacing:-.7px;line-height:1.2;margin-bottom:8px}
+.info-price{font-size:34px;font-weight:900;color:var(--purple);letter-spacing:-1.2px;margin-bottom:18px}
+.info-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.itag{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text2);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 13px}
+.btn-main{width:100%;font-family:inherit;font-size:16px;font-weight:700;color:white;background:var(--purple);border:none;border-radius:13px;padding:15px;cursor:pointer;box-shadow:0 5px 18px rgba(124,58,237,.35);transition:all .18s}
+.btn-main:hover{background:var(--p2);transform:translateY(-1px)}
+@media(max-width:480px){.info-addr{font-size:20px}.info-price{font-size:26px}}
 
-/* ── AGENT CARD ── */
-.agent-card {
-  background: white; border-radius: 18px; padding: 20px 22px;
-  border: 1px solid var(--p-border); box-shadow: 0 2px 10px rgba(124,58,237,.08);
-  margin-bottom: 20px;
-  display: flex; align-items: center; gap: 14px;
-}
-.agent-av {
-  width: 48px; height: 48px; border-radius: 13px; background: var(--purple);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; font-weight: 800; color: white; flex-shrink: 0;
-}
-.agent-name { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
-.agent-brok { font-size: 13px; color: var(--muted); }
-.agent-ai-tag {
-  margin-left: auto; font-size: 11px; font-weight: 700; color: var(--purple);
-  background: var(--p-light); border: 1px solid var(--p-border);
-  border-radius: 20px; padding: 4px 11px; white-space: nowrap; flex-shrink: 0;
-}
+/* DESC */
+.desc-card{background:white;border-radius:18px;padding:22px;border:1px solid var(--p-border);box-shadow:0 2px 8px rgba(0,0,0,.04);margin-bottom:14px}
+.desc-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:12px}
+.desc-text{font-size:14px;color:var(--text2);line-height:1.85}
+.desc-text.clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.btn-more{font-family:inherit;font-size:13px;font-weight:700;color:var(--purple);background:none;border:none;cursor:pointer;padding:8px 0 0;display:block}
 
-/* ── CONTENT SECTIONS ── */
-.section {
-  background: white; border-radius: 18px; padding: 24px 22px;
-  border: 1px solid var(--p-border); box-shadow: 0 2px 8px rgba(0,0,0,.04);
-  margin-bottom: 16px;
-}
-.section-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 16px; cursor: pointer; user-select: none;
-}
-.section-title {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 15px; font-weight: 800; color: var(--text); letter-spacing: -.2px;
-}
-.section-icon {
-  width: 32px; height: 32px; border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; flex-shrink: 0;
-}
-.si-p { background: var(--p-light); }
-.si-t { background: var(--t-light); }
-.si-a { background: rgba(245,158,11,.10); }
-.si-g { background: rgba(16,185,129,.10); }
-.section-chevron { font-size: 13px; color: var(--muted); transition: transform .2s; }
-.section-chevron.open { transform: rotate(180deg); }
-.section-body { display: none; }
-.section-body.open { display: block; }
-.section-text {
-  font-size: 14px; color: var(--text2); line-height: 1.85;
-  white-space: pre-wrap; word-break: break-word;
-}
+/* AGENT */
+.agent-card{background:white;border-radius:18px;padding:20px 22px;border:1px solid var(--p-border);box-shadow:0 2px 8px rgba(124,58,237,.08);margin-bottom:14px;display:flex;align-items:center;gap:14px}
+.agent-av{width:48px;height:48px;border-radius:13px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:white;flex-shrink:0}
+.agent-name{font-size:16px;font-weight:800;color:var(--text);margin-bottom:2px}
+.agent-brok{font-size:13px;color:var(--muted)}
+.agent-ai{margin-left:auto;font-size:11px;font-weight:700;color:var(--purple);background:var(--p-light);border:1px solid var(--p-border);border-radius:20px;padding:4px 11px;white-space:nowrap;flex-shrink:0}
 
-/* Copy button */
-.btn-copy {
-  font-family: inherit; font-size: 12px; font-weight: 700;
-  color: var(--purple); background: var(--p-light);
-  border: 1.5px solid var(--p-border); border-radius: 8px;
-  padding: 6px 14px; cursor: pointer; transition: all .15s;
-  margin-top: 14px; display: inline-block;
-}
-.btn-copy:hover { background: var(--purple); color: white; border-color: transparent; }
-.btn-copy.copied { background: var(--green); color: white; border-color: transparent; }
+/* CTA */
+.cta-card{background:linear-gradient(135deg,var(--purple),var(--p2));border-radius:20px;padding:28px 24px;text-align:center;box-shadow:0 8px 28px rgba(124,58,237,.35);margin-bottom:14px}
+.cta-title{font-size:20px;font-weight:900;color:white;letter-spacing:-.5px;margin-bottom:8px}
+.cta-sub{font-size:14px;color:rgba(255,255,255,.80);line-height:1.65;margin-bottom:22px}
+.btn-white{font-family:inherit;font-size:16px;font-weight:700;color:var(--purple);background:white;border:none;border-radius:13px;padding:15px 32px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.15);transition:all .18s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.20)}
 
-/* Social tabs */
-.social-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
-.stab {
-  font-family: inherit; font-size: 12px; font-weight: 700;
-  color: var(--muted); background: var(--surface);
-  border: 1.5px solid var(--border); border-radius: 8px;
-  padding: 6px 14px; cursor: pointer; transition: all .15s;
-}
-.stab.active { background: var(--purple); color: white; border-color: transparent; }
+/* STATES */
+.state-center{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:40px 20px}
+.spin{width:40px;height:40px;border:3px solid var(--p-border);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── LOADING / ERROR ── */
-.state-loading { text-align: center; padding: 80px 20px; }
-.state-loading .spin { width: 40px; height: 40px; border: 3px solid var(--p-border); border-top-color: var(--purple); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 16px; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.state-error { text-align: center; padding: 80px 20px; }
-.state-error .err-icon { font-size: 52px; margin-bottom: 16px; }
-.state-error .err-title { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
-.state-error .err-sub { font-size: 15px; color: var(--muted); }
+/* CAROUSEL */
+.car-ov{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.96);flex-direction:column;align-items:center;justify-content:center}
+.car-ov.open{display:flex}
+.car-close{position:absolute;top:18px;right:20px;background:rgba(255,255,255,.12);border:none;color:white;font-size:20px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .15s}
+.car-close:hover{background:rgba(255,255,255,.25)}
+.car-ctr{position:absolute;top:22px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:13px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+.car-main{width:100%;max-width:920px;display:flex;align-items:center;justify-content:center;position:relative;padding:0 58px;flex:1;min-height:0}
+.car-img{max-width:100%;max-height:calc(100vh - 180px);border-radius:12px;object-fit:contain;display:block;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.car-vid{max-width:100%;max-height:calc(100vh - 180px);border-radius:12px;outline:none}
+.car-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:none;color:white;font-size:26px;width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:10;line-height:1}
+.car-nav:hover{background:rgba(255,255,255,.25)}
+.car-nav.prev{left:6px}
+.car-nav.next{right:6px}
+.car-nav:disabled{opacity:.25;cursor:default}
+.car-thumbs{display:flex;gap:8px;padding:14px 20px;overflow-x:auto;max-width:920px;width:100%;scrollbar-width:thin;justify-content:center;flex-shrink:0}
+.car-thumbs::-webkit-scrollbar{height:4px}
+.car-thumbs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:4px}
+.ct{width:62px;height:46px;border-radius:8px;flex-shrink:0;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all .18s;opacity:.55}
+.ct.active{border-color:white;opacity:1}
+.ct:hover{opacity:.9}
+.ct img{width:100%;height:100%;object-fit:cover}
+.ct-vid{width:100%;height:100%;background:#222;display:flex;align-items:center;justify-content:center;font-size:18px}
 
-/* ── FOOTER ── */
-.share-footer { text-align: center; padding: 28px 20px; font-size: 13px; color: var(--muted2); }
-.share-footer a { color: var(--purple); font-weight: 700; text-decoration: none; }
+.share-footer{text-align:center;padding:24px 20px;font-size:12px;color:var(--muted2)}
+.share-footer a{color:var(--purple);font-weight:700;text-decoration:none}
 </style>
 </head>
 <body>
@@ -203,224 +120,188 @@ body::before {
     <div class="topbar-mark">🏠</div>
     <div class="topbar-name">Prop<span>IA</span></div>
   </div>
-  <button class="btn-contact-top" id="btnContactTop" onclick="scrollToContact()" style="display:none">📞 Contactar agente</button>
+  <button class="btn-cta-top" id="btnTop" onclick="scrollCTA()" style="display:none">📞 Contactar agente</button>
 </div>
 
-<!-- LOADING -->
-<div class="page" id="stateLoading">
-  <div class="state-loading">
-    <div class="spin"></div>
-    <div style="font-size:15px;color:var(--muted);font-weight:600">Cargando listing...</div>
+<div id="sLoad" class="page"><div class="state-center"><div class="spin"></div><div style="font-size:15px;color:var(--muted);font-weight:600">Cargando propiedad...</div></div></div>
+<div id="sErr"  class="page" style="display:none"><div class="state-center"><div style="font-size:52px;margin-bottom:14px">🏚️</div><div style="font-size:22px;font-weight:900;margin-bottom:8px">Propiedad no encontrada</div><div style="font-size:15px;color:var(--muted)">Este enlace puede haber expirado o no es válido.</div></div></div>
+
+<div id="sContent" class="page" style="display:none">
+  <div class="hero-wrap" id="heroWrap" onclick="openCar(0)">
+    <div class="hero-ph" id="heroPH"><div class="phi">🏠</div><div class="pht">Imágenes próximamente</div></div>
+    <img id="heroImg" src="" alt="" style="display:none"/>
+    <div class="count-badge" id="heroCnt" style="display:none">📷 <span id="heroCntN">0</span> fotos</div>
   </div>
-</div>
+  <div class="thumbs" id="thumbRow" style="display:none"></div>
 
-<!-- ERROR -->
-<div class="page" id="stateError" style="display:none">
-  <div class="state-error">
-    <div class="err-icon">🏚️</div>
-    <div class="err-title">Listing no encontrado</div>
-    <div class="err-sub">Este enlace puede haber expirado o no es válido.</div>
-  </div>
-</div>
-
-<!-- CONTENT -->
-<div class="page" id="stateContent" style="display:none">
-
-  <!-- Hero -->
-  <div class="hero-card">
-    <div class="hero-badge">🏠 Propiedad disponible</div>
-    <div class="hero-address" id="heroAddress">—</div>
-    <div class="hero-price" id="heroPrice">—</div>
-    <div class="hero-meta" id="heroMeta"></div>
-    <button class="btn-contact-hero" onclick="scrollToContact()">📞 Contactar al agente →</button>
+  <div class="info-card">
+    <div class="avail-badge">🏠 Propiedad disponible</div>
+    <div class="info-addr"  id="infoAddr">—</div>
+    <div class="info-price" id="infoPrc">—</div>
+    <div class="info-tags"  id="infoTags"></div>
+    <button class="btn-main" onclick="scrollCTA()">📞 Quiero información de esta propiedad</button>
   </div>
 
-  <!-- Agent -->
+  <div class="desc-card" id="descCard" style="display:none">
+    <div class="desc-title">📝 Descripción</div>
+    <div class="desc-text clamped" id="descTxt"></div>
+    <button class="btn-more" id="btnMore" onclick="toggleDesc()">Ver más ▼</button>
+  </div>
+
   <div class="agent-card">
-    <div class="agent-av" id="agentAv">?</div>
-    <div>
-      <div class="agent-name" id="agentName">—</div>
-      <div class="agent-brok" id="agentBrok">Agente de Bienes Raíces</div>
-    </div>
-    <div class="agent-ai-tag">✨ PropIA</div>
+    <div class="agent-av" id="agAv">?</div>
+    <div><div class="agent-name" id="agName">—</div><div class="agent-brok" id="agBrok">Agente de Bienes Raíces</div></div>
+    <div class="agent-ai">✨ PropIA</div>
   </div>
 
-  <!-- Descripción MLS -->
-  <div class="section" id="secMLS">
-    <div class="section-header" onclick="toggleSection('secMLS')">
-      <div class="section-title"><div class="section-icon si-p">📝</div>Descripción MLS</div>
-      <div class="section-chevron open" id="chevMLS">▼</div>
-    </div>
-    <div class="section-body open" id="bodyMLS">
-      <div class="section-text" id="textMLS">—</div>
-      <button class="btn-copy" onclick="copyText('textMLS',this)">📋 Copiar descripción</button>
-    </div>
+  <div class="cta-card" id="ctaSec">
+    <div class="cta-title">¿Te interesa esta propiedad?</div>
+    <div class="cta-sub">Contáctanos hoy. Te orientamos sobre ITIN Loans, FHA, y programas de asistencia para compradores latinos en USA.</div>
+    <button class="btn-white" onclick="goContact()">✦ Quiero más información</button>
   </div>
+</div>
 
-  <!-- Redes sociales -->
-  <div class="section" id="secSocial">
-    <div class="section-header" onclick="toggleSection('secSocial')">
-      <div class="section-title"><div class="section-icon si-t">📱</div>Posts para Redes Sociales</div>
-      <div class="section-chevron" id="chevSocial">▼</div>
-    </div>
-    <div class="section-body" id="bodySocial">
-      <div class="social-tabs">
-        <button class="stab active" onclick="showSocial(this,'instagram')">Instagram</button>
-        <button class="stab" onclick="showSocial(this,'facebook')">Facebook</button>
-        <button class="stab" onclick="showSocial(this,'linkedin')">LinkedIn</button>
-      </div>
-      <div class="section-text" id="textSocial">—</div>
-      <button class="btn-copy" onclick="copyText('textSocial',this)">📋 Copiar post</button>
-    </div>
+<!-- CAROUSEL -->
+<div class="car-ov" id="carOv">
+  <button class="car-close" onclick="closeCar()">✕</button>
+  <div class="car-ctr" id="carCtr">1 / 1</div>
+  <div class="car-main">
+    <button class="car-nav prev" id="carPrev" onclick="carNav(-1)">&#8249;</button>
+    <img   class="car-img" id="carImg" src="" alt=""/>
+    <video class="car-vid" id="carVid" controls style="display:none"></video>
+    <button class="car-nav next" id="carNext" onclick="carNav(1)">&#8250;</button>
   </div>
-
-  <!-- Email de marketing -->
-  <div class="section" id="secEmail">
-    <div class="section-header" onclick="toggleSection('secEmail')">
-      <div class="section-title"><div class="section-icon si-a">📧</div>Email de Marketing</div>
-      <div class="section-chevron" id="chevEmail">▼</div>
-    </div>
-    <div class="section-body" id="bodyEmail">
-      <div class="section-text" id="textEmail">—</div>
-      <button class="btn-copy" onclick="copyText('textEmail',this)">📋 Copiar email</button>
-    </div>
-  </div>
-
-  <!-- Script de video -->
-  <div class="section" id="secVideo">
-    <div class="section-header" onclick="toggleSection('secVideo')">
-      <div class="section-title"><div class="section-icon si-g">🎬</div>Script de Video</div>
-      <div class="section-chevron" id="chevVideo">▼</div>
-    </div>
-    <div class="section-body" id="bodyVideo">
-      <div class="section-text" id="textVideo">—</div>
-      <button class="btn-copy" onclick="copyText('textVideo',this)">📋 Copiar script</button>
-    </div>
-  </div>
-
-  <!-- Contactar agente -->
-  <div class="section" id="secContact" style="border-color:var(--p-border);background:linear-gradient(135deg,#faf8ff,white)">
-    <div class="section-header" style="cursor:default;margin-bottom:0">
-      <div class="section-title"><div class="section-icon si-p">🤝</div>¿Te interesa esta propiedad?</div>
-    </div>
-    <div style="margin-top:16px">
-      <div style="font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.65">
-        Contacta directamente al agente o completa tu perfil para que la IA analice tu situación y te dé opciones personalizadas.
-      </div>
-      <button class="btn-contact-hero" id="btnLeadForm" onclick="goToLeadForm()">✦ Quiero información de esta propiedad</button>
-    </div>
-  </div>
-
+  <div class="car-thumbs" id="carThumbs"></div>
 </div>
 
 <div class="share-footer">Generado con <a href="https://propia-saas.vercel.app">PropIA</a> · IA para Agentes Latinos en USA</div>
 
 <script>
-  var listingData = null;
-  var agentId     = null;
-  var socialContent = { instagram:'', facebook:'', linkedin:'' };
+var media=[],carIdx=0,agentId=null,descOpen=false;
 
-  (function() {
-    var params = new URLSearchParams(window.location.search);
-    var id = params.get('id');
-    if (!id) { showState('stateError'); return; }
-    loadListing(id);
-  })();
+(function(){
+  var id=new URLSearchParams(window.location.search).get('id');
+  if(!id){ss('sErr');return;}
+  fetch('/api/share?id='+id).then(function(r){return r.json();}).then(function(d){
+    if(!d.success){ss('sErr');return;}
+    agentId=d.listing.user_id||null;
+    render(d.listing,d.agent);
+    ss('sContent');
+    document.getElementById('btnTop').style.display='block';
+  }).catch(function(){ss('sErr');});
+  document.addEventListener('keydown',function(e){
+    if(!document.getElementById('carOv').classList.contains('open'))return;
+    if(e.key==='ArrowRight')carNav(1);
+    if(e.key==='ArrowLeft')carNav(-1);
+    if(e.key==='Escape')closeCar();
+  });
+})();
 
-  async function loadListing(id) {
-    try {
-      var res  = await fetch('/api/share?id=' + id);
-      var data = await res.json();
-      if (!res.ok || !data.success) { showState('stateError'); return; }
-      listingData = data.listing;
-      agentId     = data.listing.user_id || null;
-      renderListing(data.listing, data.agent);
-      showState('stateContent');
-      document.getElementById('btnContactTop').style.display = 'block';
-    } catch(e) { showState('stateError'); }
+function render(l,agent){
+  var c=l.content||{},meta=c._meta||{};
+  document.title=(l.address||'Propiedad')+' — PropIA';
+  document.getElementById('ogTitle').content=(l.address||'Propiedad')+' · '+(l.price||'');
+  document.getElementById('infoAddr').textContent=l.address||'—';
+  document.getElementById('infoPrc').textContent=l.price||'—';
+  // Tags
+  var tags=[];
+  if(meta.beds)  tags.push('🛏️ '+meta.beds+' Rec.');
+  if(meta.baths) tags.push('🚿 '+meta.baths+' Baños');
+  if(meta.sqft)  tags.push('📐 '+meta.sqft+' ft²');
+  if(l.type||meta.type) tags.push('🏠 '+(l.type||meta.type));
+  if(meta.year_built)   tags.push('📅 '+meta.year_built);
+  document.getElementById('infoTags').innerHTML=tags.map(function(t){return'<div class="itag">'+t+'</div>';}).join('');
+  // Desc
+  var mls=c.mls||c.descripcion_mls||'';
+  if(mls){
+    document.getElementById('descTxt').textContent=mls;
+    document.getElementById('descCard').style.display='block';
+    if(mls.length<280){document.getElementById('descTxt').classList.remove('clamped');document.getElementById('btnMore').style.display='none';}
   }
-
-  function renderListing(listing, agent) {
-    var c = listing.content || {};
-
-    // Update page title
-    document.title = (listing.address || 'Listing') + ' — PropIA';
-
-    // Hero
-    document.getElementById('heroAddress').textContent = listing.address || '—';
-    document.getElementById('heroPrice').textContent   = listing.price   || '—';
-
-    // Meta tags
-    var meta = c._meta || {};
-    var tags = [];
-    if (meta.beds)  tags.push('🛏️ ' + meta.beds  + ' Rec.');
-    if (meta.baths) tags.push('🚿 ' + meta.baths + ' Baños');
-    if (meta.sqft)  tags.push('📐 ' + meta.sqft  + ' ft²');
-    if (listing.type || meta.type) tags.push('🏠 ' + (listing.type || meta.type));
-    if (listing.tone) tags.push('✨ ' + listing.tone.charAt(0).toUpperCase() + listing.tone.slice(1));
-    var metaEl = document.getElementById('heroMeta');
-    metaEl.innerHTML = tags.map(function(t){ return '<div class="hero-meta-tag">' + t + '</div>'; }).join('');
-
-    // Agent
-    document.getElementById('agentAv').textContent   = (agent.name||'A').charAt(0).toUpperCase();
-    document.getElementById('agentName').textContent  = agent.name || 'Agente PropIA';
-    document.getElementById('agentBrok').textContent  = agent.brokerage || 'Agente de Bienes Raíces';
-
-    // MLS
-    document.getElementById('textMLS').textContent = c.mls || c.descripcion_mls || 'Descripción no disponible.';
-
-    // Social
-    socialContent.instagram = c.instagram || c.post_instagram || '';
-    socialContent.facebook  = c.facebook  || c.post_facebook  || '';
-    socialContent.linkedin  = c.linkedin  || c.post_linkedin  || '';
-    document.getElementById('textSocial').textContent = socialContent.instagram || 'Post no disponible.';
-
-    // Email
-    document.getElementById('textEmail').textContent = c.email || c.email_marketing || 'Email no disponible.';
-
-    // Video
-    document.getElementById('textVideo').textContent = c.video || c.script_video || 'Script no disponible.';
-  }
-
-  function showState(id) {
-    ['stateLoading','stateError','stateContent'].forEach(function(s){
-      document.getElementById(s).style.display = s === id ? 'block' : 'none';
-    });
-  }
-
-  function toggleSection(secId) {
-    var body   = document.getElementById('body'   + secId.replace('sec',''));
-    var chev   = document.getElementById('chev'   + secId.replace('sec',''));
-    var isOpen = body.classList.contains('open');
-    body.classList.toggle('open', !isOpen);
-    chev.classList.toggle('open', !isOpen);
-  }
-
-  function showSocial(btn, network) {
-    document.querySelectorAll('.stab').forEach(function(b){ b.classList.remove('active'); });
-    btn.classList.add('active');
-    document.getElementById('textSocial').textContent = socialContent[network] || 'Post no disponible.';
-  }
-
-  function copyText(elId, btn) {
-    var text = document.getElementById(elId).textContent;
-    navigator.clipboard.writeText(text).then(function() {
-      var orig = btn.textContent;
-      btn.textContent = '✅ Copiado';
-      btn.classList.add('copied');
-      setTimeout(function(){ btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
-    }).catch(function() {});
-  }
-
-  function scrollToContact() {
-    document.getElementById('secContact').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-
-  function goToLeadForm() {
-    if (agentId) {
-      window.location.href = '/lead?agent=' + agentId;
+  // Agent
+  document.getElementById('agAv').textContent=(agent.name||'A').charAt(0).toUpperCase();
+  document.getElementById('agName').textContent=agent.name||'Agente PropIA';
+  document.getElementById('agBrok').textContent=agent.brokerage||'Agente de Bienes Raíces';
+  // Media
+  media=[];
+  (c.images||[]).forEach(function(u){media.push({type:'image',url:u});});
+  (c.videos||[]).forEach(function(u){media.push({type:'video',url:u});});
+  if(media.length>0){
+    document.getElementById('heroPH').style.display='none';
+    if(media[0].type==='image'){
+      var hi=document.getElementById('heroImg');hi.src=media[0].url;hi.style.display='block';
+      document.getElementById('ogImage').content=media[0].url;
     }
+    var cb=document.getElementById('heroCnt');cb.style.display='flex';
+    document.getElementById('heroCntN').textContent=media.length;
+    buildThumbs();
   }
+}
+
+function buildThumbs(){
+  if(media.length<2)return;
+  var row=document.getElementById('thumbRow');row.style.display='flex';
+  row.innerHTML=media.map(function(m,i){
+    if(m.type==='video')return'<div class="thumb'+(i===0?' active':'')+'" onclick="setHero('+i+')"><div class="thumb-video">▶️</div></div>';
+    return'<div class="thumb'+(i===0?' active':'')+'" onclick="setHero('+i+')"><img src="'+m.url+'" loading="lazy"/></div>';
+  }).join('');
+}
+
+function setHero(i){
+  var m=media[i];if(!m)return;
+  document.getElementById('heroPH').style.display='none';
+  var hi=document.getElementById('heroImg');
+  if(m.type==='image'){hi.src=m.url;hi.style.display='block';}
+  else{hi.style.display='none';}
+  document.querySelectorAll('.thumb').forEach(function(t,j){t.classList.toggle('active',j===i);});
+}
+
+function toggleDesc(){
+  descOpen=!descOpen;
+  document.getElementById('descTxt').classList.toggle('clamped',!descOpen);
+  document.getElementById('btnMore').textContent=descOpen?'Ver menos ▲':'Ver más ▼';
+}
+
+function scrollCTA(){document.getElementById('ctaSec').scrollIntoView({behavior:'smooth',block:'center'});}
+function goContact(){if(agentId)window.location.href='/lead?agent='+agentId;}
+
+function openCar(idx){
+  if(!media.length)return;
+  carIdx=idx||0;
+  var row=document.getElementById('carThumbs');
+  row.innerHTML=media.map(function(m,i){
+    if(m.type==='video')return'<div class="ct" onclick="showCar('+i+')"><div class="ct-vid">▶️</div></div>';
+    return'<div class="ct" onclick="showCar('+i+')"><img src="'+m.url+'" loading="lazy"/></div>';
+  }).join('');
+  showCar(carIdx);
+  document.getElementById('carOv').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeCar(){
+  document.getElementById('carOv').classList.remove('open');
+  document.body.style.overflow='';
+  var v=document.getElementById('carVid');v.pause();v.src='';
+}
+
+function showCar(idx){
+  if(idx<0||idx>=media.length)return;
+  carIdx=idx;
+  var m=media[idx],img=document.getElementById('carImg'),vid=document.getElementById('carVid');
+  vid.pause();
+  if(m.type==='video'){img.style.display='none';vid.style.display='block';vid.src=m.url;}
+  else{vid.style.display='none';vid.src='';img.style.display='block';img.src=m.url;}
+  document.getElementById('carCtr').textContent=(idx+1)+' / '+media.length;
+  document.getElementById('carPrev').disabled=idx===0;
+  document.getElementById('carNext').disabled=idx===media.length-1;
+  document.querySelectorAll('.ct').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  var cts=document.querySelectorAll('.ct');
+  if(cts[idx])cts[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+function carNav(d){showCar(carIdx+d);}
+document.getElementById('carOv').addEventListener('click',function(e){if(e.target===this)closeCar();});
+function ss(id){['sLoad','sErr','sContent'].forEach(function(s){document.getElementById(s).style.display=s===id?'block':'none';});}
 </script>
 </body>
 </html>
