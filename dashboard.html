@@ -775,6 +775,84 @@ body {
 .ob-step3-tip-icon { font-size: 20px; flex-shrink: 0; }
 .ob-step3-tip-text { font-size: 13px; color: var(--text2); line-height: 1.65; }
 .ob-step3-tip-text strong { color: var(--purple); }
+
+/* ══ PANEL: LEADS ══ */
+.leads-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.leads-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-lead-new{font-family:inherit;font-size:14px;font-weight:700;color:white;background:var(--purple);border:none;border-radius:11px;padding:10px 20px;cursor:pointer;box-shadow:0 3px 12px rgba(124,58,237,.28);transition:all .18s}
+.btn-lead-new:hover{background:#6d28d9;transform:translateY(-1px)}
+.btn-lead-link{font-family:inherit;font-size:14px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:11px;padding:10px 20px;cursor:pointer;transition:all .18s}
+.btn-lead-link:hover{background:var(--purple);color:white;border-color:transparent}
+.leads-count{font-size:12px;font-weight:700;color:var(--purple);background:var(--p-light);border:1px solid var(--p-border);border-radius:20px;padding:3px 11px;margin-left:10px;vertical-align:middle}
+
+/* Pipeline kanban */
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px}
+@media(max-width:1100px){.pipeline{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.pipeline{grid-template-columns:1fr 1fr}}
+.pipe-col{background:var(--bg2,#f3f0ff);border-radius:14px;padding:12px}
+.pipe-col-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.pipe-col-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--text2)}
+.pipe-col-count{font-size:11px;font-weight:700;background:white;border-radius:20px;padding:2px 8px;color:var(--muted)}
+.pipe-cards{display:flex;flex-direction:column;gap:8px;min-height:60px}
+.pipe-card{background:white;border-radius:11px;padding:12px;cursor:pointer;transition:all .18s;border:1.5px solid transparent;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.pipe-card:hover{border-color:var(--p-border);box-shadow:0 4px 14px rgba(124,58,237,.10);transform:translateY(-1px)}
+.pipe-card-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.pipe-card-meta{font-size:11px;color:var(--muted)}
+.pipe-card-score{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;border-radius:20px;padding:2px 8px;margin-top:6px}
+.score-hot{background:rgba(16,185,129,.10);color:#059669}
+.score-warm{background:rgba(245,158,11,.10);color:#b45309}
+.score-cold{background:rgba(107,114,128,.10);color:#4b5563}
+.score-ready{background:rgba(124,58,237,.10);color:var(--purple)}
+
+/* Nuevo lead modal / drawer */
+.lead-drawer-overlay{display:none;position:fixed;inset:0;z-index:9000;background:rgba(15,10,30,.50);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+.lead-drawer-overlay.visible{display:flex}
+.lead-drawer{background:white;border-radius:22px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:32px 28px;box-shadow:0 24px 64px rgba(0,0,0,.18);animation:fadeUp .2s ease}
+.ld-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.ld-title{font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.5px}
+.ld-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:4px;line-height:1}
+.ld-field{margin-bottom:14px}
+.ld-field label{display:block;font-size:13px;font-weight:600;color:var(--text2);margin-bottom:5px}
+.ld-field input,.ld-field select,.ld-field textarea{width:100%;font-family:inherit;font-size:14px;color:var(--text);background:var(--surface,#f8f6ff);border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;outline:none;transition:all .18s}
+.ld-field textarea{resize:vertical;min-height:80px}
+.ld-field input:focus,.ld-field select:focus,.ld-field textarea:focus{border-color:var(--p-border);background:white;box-shadow:0 0 0 3px rgba(124,58,237,.08)}
+.ld-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.ld-row{grid-template-columns:1fr}}
+.ld-alert{border-radius:10px;padding:10px 13px;font-size:13px;font-weight:500;display:none;margin-bottom:12px}
+.ld-alert.er{background:rgba(239,68,68,.07);border:1.5px solid rgba(239,68,68,.20);color:#ef4444;display:block}
+.btn-ld-submit{width:100%;font-family:inherit;font-size:15px;font-weight:700;color:white;background:var(--purple);border:none;border-radius:11px;padding:13px;cursor:pointer;box-shadow:0 4px 14px rgba(124,58,237,.30);transition:all .18s}
+.btn-ld-submit:hover{background:#6d28d9;transform:translateY(-1px)}
+.btn-ld-submit:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-ld-submit.is-loading .lbl{display:none}
+.btn-ld-submit.is-loading .spin-wrap{display:flex}
+
+/* Lead detail modal */
+.lead-detail-overlay{display:none;position:fixed;inset:0;z-index:9100;background:rgba(15,10,30,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+.lead-detail-overlay.visible{display:flex}
+.lead-detail{background:white;border-radius:22px;width:100%;max-width:620px;max-height:92vh;overflow-y:auto;padding:32px 28px;box-shadow:0 24px 64px rgba(0,0,0,.20);animation:fadeUp .2s ease}
+.ldet-score-bar{display:flex;align-items:center;gap:14px;background:var(--bg2,#f3f0ff);border-radius:14px;padding:16px 20px;margin-bottom:22px}
+.ldet-score-num{font-size:36px;font-weight:900;letter-spacing:-1px}
+.ldet-score-label{font-size:14px;font-weight:700}
+.ldet-score-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.ldet-section{margin-bottom:20px}
+.ldet-section-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px}
+.ldet-analysis{font-size:14px;color:var(--text2);line-height:1.7;background:var(--surface);border-radius:11px;padding:14px}
+.ldet-steps{display:flex;flex-direction:column;gap:8px}
+.ldet-step{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text2);background:var(--surface);border-radius:10px;padding:11px 13px}
+.ldet-step-num{width:22px;height:22px;border-radius:50%;background:var(--purple);color:white;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ldet-email-box{background:var(--surface);border-radius:11px;padding:16px;font-size:13px;color:var(--text2);line-height:1.8;white-space:pre-wrap;max-height:200px;overflow-y:auto}
+.ldet-copy-btn{font-family:inherit;font-size:13px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:9px;padding:8px 18px;cursor:pointer;transition:all .18s;margin-top:10px}
+.ldet-copy-btn:hover{background:var(--purple);color:white;border-color:transparent}
+.status-select{font-family:inherit;font-size:13px;font-weight:600;color:var(--text);background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;outline:none;cursor:pointer;transition:all .18s}
+.status-select:focus{border-color:var(--p-border)}
+.leads-empty{text-align:center;padding:56px 24px;color:var(--muted)}
+.leads-empty .lei-icon{font-size:48px;margin-bottom:14px}
+.leads-empty .lei-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:8px;letter-spacing:-.3px}
+.leads-empty .lei-sub{font-size:14px;line-height:1.65;margin-bottom:22px}
+.link-share-box{background:var(--p-light);border:1.5px solid var(--p-border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.link-share-url{flex:1;font-size:13px;color:var(--text2);font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.btn-copy-link{font-family:inherit;font-size:13px;font-weight:700;color:white;background:var(--purple);border:none;border-radius:9px;padding:8px 16px;cursor:pointer;white-space:nowrap;transition:all .18s;flex-shrink:0}
+.btn-copy-link:hover{background:#6d28d9}
 </style>
 </head>
 <body>
@@ -796,7 +874,7 @@ body {
     <button class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon">🏠</span>Inicio</button>
     <button class="nav-item" onclick="showPanel('generator',this)"><span class="nav-icon">✨</span>PropIA</button>
     <button class="nav-item" onclick="showPanel('listings',this)"><span class="nav-icon">📋</span>Mis listings</button>
-    <button class="nav-item" onclick="showPanel('overview',this)"><span class="nav-icon">📥</span>Leads</button>
+    <button class="nav-item" onclick="showPanel('leads',this)"><span class="nav-icon">📥</span>Leads</button>
     <button class="nav-item" onclick="showPanel('overview',this)"><span class="nav-icon">📅</span>Calendario</button>
     <button class="nav-item" onclick="showPanel('overview',this)"><span class="nav-icon">📊</span>Reportes</button>
   </nav>
@@ -891,7 +969,7 @@ body {
                 <div class="quick-icon qi-purple">✨</div>
                 <div><div class="quick-label">Generar Listing</div><div class="quick-sub">MLS + redes + email</div></div>
               </div>
-              <div class="quick-item">
+              <div class="quick-item" onclick="showPanel('leads',document.querySelectorAll('.nav-item')[3])">
                 <div class="quick-icon qi-teal">🤖</div>
                 <div><div class="quick-label">Calificar Leads</div><div class="quick-sub">IA califica automático</div></div>
               </div>
@@ -1129,6 +1207,64 @@ body {
     </div>
 
 
+    <!-- ═══ LEADS ═══ -->
+    <div class="panel" id="panel-leads">
+
+      <div class="leads-top">
+        <div>
+          <div class="lst-page-title">📥 Leads <span class="leads-count" id="leadsCount">0</span></div>
+          <div class="lst-page-sub">Pipeline de clientes calificados por IA — de nuevo contacto a cierre</div>
+        </div>
+        <div class="leads-actions">
+          <button class="btn-lead-link" onclick="copyLeadLink()">🔗 Copiar mi enlace</button>
+          <button class="btn-lead-new" onclick="openNewLead()">+ Agregar lead</button>
+        </div>
+      </div>
+
+      <!-- Link compartible -->
+      <div class="link-share-box" id="linkShareBox">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--purple);margin-bottom:3px;">🔗 Tu formulario público de leads</div>
+          <div class="link-share-url" id="linkShareUrl">Cargando...</div>
+        </div>
+        <button class="btn-copy-link" onclick="copyLeadLink()">Copiar</button>
+      </div>
+
+      <!-- Pipeline kanban -->
+      <div class="pipeline" id="leadsPipeline">
+        <div class="pipe-col">
+          <div class="pipe-col-header"><div class="pipe-col-title">🆕 Nuevo</div><div class="pipe-col-count" id="cnt-nuevo">0</div></div>
+          <div class="pipe-cards" id="pipe-nuevo"></div>
+        </div>
+        <div class="pipe-col">
+          <div class="pipe-col-header"><div class="pipe-col-title">📞 Contactado</div><div class="pipe-col-count" id="cnt-contactado">0</div></div>
+          <div class="pipe-cards" id="pipe-contactado"></div>
+        </div>
+        <div class="pipe-col">
+          <div class="pipe-col-header"><div class="pipe-col-title">✅ Calificado</div><div class="pipe-col-count" id="cnt-calificado">0</div></div>
+          <div class="pipe-cards" id="pipe-calificado"></div>
+        </div>
+        <div class="pipe-col">
+          <div class="pipe-col-header"><div class="pipe-col-title">🤝 Negociando</div><div class="pipe-col-count" id="cnt-negociando">0</div></div>
+          <div class="pipe-cards" id="pipe-negociando"></div>
+        </div>
+        <div class="pipe-col">
+          <div class="pipe-col-header"><div class="pipe-col-title">🏆 Cerrado</div><div class="pipe-col-count" id="cnt-cerrado">0</div></div>
+          <div class="pipe-cards" id="pipe-cerrado"></div>
+        </div>
+      </div>
+
+      <div id="leadsEmptyState" style="display:none">
+        <div class="leads-empty">
+          <div class="lei-icon">🤖</div>
+          <div class="lei-title">Aún no tienes leads</div>
+          <div class="lei-sub">Agrega tu primer lead manualmente o comparte tu enlace público para que los clientes se registren solos.</div>
+          <button class="btn-lead-new" onclick="openNewLead()">+ Agregar mi primer lead</button>
+        </div>
+      </div>
+
+    </div>
+
     <!-- ═══ SETTINGS ═══ -->
     <div class="panel" id="panel-settings">
 
@@ -1262,6 +1398,7 @@ body {
     setDate();
     loadUsage();
     loadHistory();
+    loadLeads();
   });
 
   function setDate() {
@@ -1346,6 +1483,7 @@ body {
     closeSidebar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (name === 'settings') loadSettingsPanel();
+    if (name === 'leads')    renderPipeline();
   }
 
   function setMNav(id) { document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
@@ -1609,6 +1747,178 @@ body {
   // ══════════════════════════════
   var obCurrentStep = 1;
 
+  // ══════════════════════════════
+  //  LEADS CRM
+  // ══════════════════════════════
+  var leadsData   = [];
+  var currentLead = null;
+
+  async function loadLeads() {
+    try {
+      const res  = await fetch('/api/leads', { headers: { 'Authorization': 'Bearer ' + token } });
+      if (res.status === 401) { logout(); return; }
+      const data = await res.json();
+      if (data.success) {
+        leadsData = data.leads || [];
+        renderPipeline();
+      }
+    } catch(e) { console.error('loadLeads error:', e); }
+  }
+
+  function renderPipeline() {
+    const statuses = ['nuevo','contactado','calificado','negociando','cerrado'];
+    const countEl  = document.getElementById('leadsCount');
+    if (countEl) countEl.textContent = leadsData.length;
+
+    // Set share link
+    const linkEl = document.getElementById('linkShareUrl');
+    if (linkEl) linkEl.textContent = 'https://propia-saas.vercel.app/lead?agent=' + (user.id || '');
+
+    // Empty state
+    const empty = document.getElementById('leadsEmptyState');
+    const pipe  = document.getElementById('leadsPipeline');
+    if (leadsData.length === 0) {
+      if (empty) empty.style.display = 'block';
+      if (pipe)  pipe.style.display  = 'none';
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+    if (pipe)  pipe.style.display  = 'grid';
+
+    // Clear columns
+    statuses.forEach(function(s) {
+      const col = document.getElementById('pipe-' + s);
+      const cnt = document.getElementById('cnt-' + s);
+      if (col) col.innerHTML = '';
+      if (cnt) cnt.textContent = '0';
+    });
+
+    // Fill columns
+    leadsData.forEach(function(lead) {
+      const col = document.getElementById('pipe-' + (lead.status || 'nuevo'));
+      const cnt = document.getElementById('cnt-' + (lead.status || 'nuevo'));
+      if (!col) return;
+      if (cnt) cnt.textContent = parseInt(cnt.textContent || 0) + 1;
+
+      var score    = lead.score || 5;
+      var scoreClass = score >= 8 ? 'score-ready' : score >= 6 ? 'score-hot' : score >= 4 ? 'score-warm' : 'score-cold';
+      var card = document.createElement('div');
+      card.className = 'pipe-card';
+      card.innerHTML = '<div class="pipe-card-name">' + (lead.name||'Sin nombre') + '</div>'
+        + '<div class="pipe-card-meta">' + (lead.phone || lead.email || 'Sin contacto') + '</div>'
+        + (lead.interest ? '<div class="pipe-card-meta">' + lead.interest + '</div>' : '')
+        + '<div class="pipe-card-score ' + scoreClass + '">' + score + '/10 · ' + (lead.level||'Tibio') + '</div>';
+      card.onclick = function() { openLeadDetail(lead); };
+      col.appendChild(card);
+    });
+  }
+
+  function openNewLead() {
+    ['ldName','ldPhone','ldEmail','ldBudget','ldMessage'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+    document.getElementById('ldInterest').value = '';
+    var al = document.getElementById('ldAlert'); if(al) { al.className='ld-alert'; al.textContent=''; }
+    document.getElementById('newLeadOverlay').classList.add('visible');
+  }
+  function closeNewLead() { document.getElementById('newLeadOverlay').classList.remove('visible'); }
+
+  async function submitNewLead() {
+    var btn  = document.getElementById('ldSubmitBtn');
+    var al   = document.getElementById('ldAlert');
+    var name = document.getElementById('ldName').value.trim();
+    al.className = 'ld-alert'; al.textContent = '';
+    if (!name) { al.textContent='El nombre es requerido.'; al.className='ld-alert er'; return; }
+    btn.disabled = true; btn.classList.add('is-loading');
+    try {
+      var res  = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({
+          name,
+          phone:    document.getElementById('ldPhone').value.trim()    || null,
+          email:    document.getElementById('ldEmail').value.trim()    || null,
+          interest: document.getElementById('ldInterest').value        || null,
+          budget:   document.getElementById('ldBudget').value.trim()   || null,
+          message:  document.getElementById('ldMessage').value.trim()  || null,
+          source:   'manual'
+        })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.success) { al.textContent = data.error||'Error al guardar.'; al.className='ld-alert er'; return; }
+      closeNewLead();
+      await loadLeads();
+      // Auto-abrir el detalle del lead recién creado
+      if (data.lead) openLeadDetail(data.lead);
+    } catch(e) { al.textContent='Error de conexión.'; al.className='ld-alert er'; }
+    finally { btn.disabled=false; btn.classList.remove('is-loading'); }
+  }
+
+  function openLeadDetail(lead) {
+    currentLead = lead;
+    document.getElementById('ldetName').textContent    = lead.name || 'Sin nombre';
+    document.getElementById('ldetContact').textContent = [lead.phone, lead.email].filter(Boolean).join(' · ') || 'Sin contacto';
+    var score = lead.score || 5;
+    var scoreEl = document.getElementById('ldetScoreNum');
+    scoreEl.textContent = score;
+    scoreEl.style.color = score >= 8 ? 'var(--purple)' : score >= 6 ? '#059669' : score >= 4 ? '#b45309' : '#6b7280';
+    document.getElementById('ldetLevel').textContent   = lead.level    || 'Tibio';
+    document.getElementById('ldetInterest').textContent= lead.interest || (lead.budget ? 'Presupuesto: ' + lead.budget : 'Sin detalles');
+    document.getElementById('ldetAnalysis').textContent= lead.ai_analysis || 'Análisis no disponible.';
+    document.getElementById('ldetStatusSelect').value  = lead.status || 'nuevo';
+    document.getElementById('ldetEmailSubject').textContent = lead.ai_email_subject || '—';
+    document.getElementById('ldetEmailBody').textContent    = lead.ai_email_body    || 'Email no generado.';
+
+    // Steps
+    var stepsEl = document.getElementById('ldetSteps');
+    stepsEl.innerHTML = '';
+    var steps = [];
+    try { steps = JSON.parse(lead.ai_steps || '[]'); } catch(e) { steps = []; }
+    if (steps.length) {
+      steps.forEach(function(s, i) {
+        stepsEl.innerHTML += '<div class="ldet-step"><div class="ldet-step-num">' + (i+1) + '</div><div>' + s + '</div></div>';
+      });
+    } else {
+      stepsEl.innerHTML = '<div class="ldet-step"><div class="ldet-step-num">1</div><div>Contactar al lead en las próximas 5 minutos</div></div>';
+    }
+
+    document.getElementById('leadDetailOverlay').classList.add('visible');
+  }
+  function closeLeadDetail() { document.getElementById('leadDetailOverlay').classList.remove('visible'); currentLead = null; }
+
+  async function updateLeadStatus() {
+    if (!currentLead) return;
+    var newStatus = document.getElementById('ldetStatusSelect').value;
+    try {
+      await fetch('/api/leads', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ id: currentLead.id, status: newStatus })
+      });
+      currentLead.status = newStatus;
+      leadsData = leadsData.map(function(l){ return l.id === currentLead.id ? Object.assign({}, l, {status: newStatus}) : l; });
+      renderPipeline();
+    } catch(e) { console.error('updateLeadStatus error:', e); }
+  }
+
+  function copyLeadLink() {
+    var url = 'https://propia-saas.vercel.app/lead?agent=' + (user.id || '');
+    navigator.clipboard.writeText(url).then(function() {
+      var btn = document.querySelector('.btn-copy-link');
+      if (btn) { btn.textContent = '✅ Copiado'; setTimeout(function(){ btn.textContent = 'Copiar'; }, 2000); }
+    }).catch(function() { alert('Link: ' + url); });
+  }
+
+  function copyEmail() {
+    var body = document.getElementById('ldetEmailBody').textContent;
+    navigator.clipboard.writeText(body).then(function() {
+      var btn = document.querySelector('.ldet-copy-btn');
+      if (btn) { btn.textContent = '✅ Copiado'; setTimeout(function(){ btn.textContent = '📋 Copiar email'; }, 2000); }
+    }).catch(function() {});
+  }
+
+  // Close modals on overlay click
+  document.getElementById('newLeadOverlay').addEventListener('click', function(e){ if(e.target===this) closeNewLead(); });
+  document.getElementById('leadDetailOverlay').addEventListener('click', function(e){ if(e.target===this) closeLeadDetail(); });
+
   function obReset() {
     localStorage.removeItem('propia_onboarded');
     // Pre-llenar y mostrar desde paso 1
@@ -1754,6 +2064,97 @@ body {
       </div>
 
     </div>
+  </div>
+</div>
+
+<!-- ═══ NUEVO LEAD DRAWER ═══ -->
+<div class="lead-drawer-overlay" id="newLeadOverlay">
+  <div class="lead-drawer">
+    <div class="ld-header">
+      <div class="ld-title">➕ Nuevo Lead</div>
+      <button class="ld-close" onclick="closeNewLead()">✕</button>
+    </div>
+    <div class="ld-alert" id="ldAlert"></div>
+    <div class="ld-row">
+      <div class="ld-field"><label>Nombre completo *</label><input type="text" id="ldName" placeholder="María González"/></div>
+      <div class="ld-field"><label>Teléfono</label><input type="tel" id="ldPhone" placeholder="(555) 123-4567"/></div>
+    </div>
+    <div class="ld-field"><label>Email</label><input type="email" id="ldEmail" placeholder="tu@email.com"/></div>
+    <div class="ld-row">
+      <div class="ld-field">
+        <label>Tipo de propiedad</label>
+        <select id="ldInterest">
+          <option value="">Selecciona...</option>
+          <option>Casa unifamiliar</option>
+          <option>Condominio / Townhouse</option>
+          <option>Casa para rentar</option>
+          <option>Propiedad de inversión</option>
+          <option>Terreno</option>
+        </select>
+      </div>
+      <div class="ld-field"><label>Presupuesto</label><input type="text" id="ldBudget" placeholder="$250,000"/></div>
+    </div>
+    <div class="ld-field"><label>Notas / Mensaje del lead</label><textarea id="ldMessage" placeholder="ITIN loan, busca cerca de escuelas, urgencia media..."></textarea></div>
+    <button class="btn-ld-submit" id="ldSubmitBtn" onclick="submitNewLead()">
+      <span class="lbl">🤖 Guardar y calificar con IA</span>
+      <span class="spin-wrap"><span class="spinner"></span>Analizando con IA...</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══ LEAD DETAIL MODAL ═══ -->
+<div class="lead-detail-overlay" id="leadDetailOverlay">
+  <div class="lead-detail">
+    <div class="ld-header" style="margin-bottom:20px">
+      <div>
+        <div class="ld-title" id="ldetName">—</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:3px" id="ldetContact">—</div>
+      </div>
+      <button class="ld-close" onclick="closeLeadDetail()">✕</button>
+    </div>
+
+    <!-- Score bar -->
+    <div class="ldet-score-bar">
+      <div>
+        <div class="ldet-score-num" id="ldetScoreNum">—</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:600">/ 10</div>
+      </div>
+      <div>
+        <div class="ldet-score-label" id="ldetLevel">—</div>
+        <div class="ldet-score-sub" id="ldetInterest">—</div>
+      </div>
+      <div style="margin-left:auto;display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        <div style="font-size:12px;font-weight:600;color:var(--muted)">Mover a:</div>
+        <select class="status-select" id="ldetStatusSelect" onchange="updateLeadStatus()">
+          <option value="nuevo">🆕 Nuevo</option>
+          <option value="contactado">📞 Contactado</option>
+          <option value="calificado">✅ Calificado</option>
+          <option value="negociando">🤝 Negociando</option>
+          <option value="cerrado">🏆 Cerrado</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Análisis -->
+    <div class="ldet-section">
+      <div class="ldet-section-title">Análisis IA</div>
+      <div class="ldet-analysis" id="ldetAnalysis">—</div>
+    </div>
+
+    <!-- Próximos pasos -->
+    <div class="ldet-section">
+      <div class="ldet-section-title">Próximos pasos recomendados</div>
+      <div class="ldet-steps" id="ldetSteps"></div>
+    </div>
+
+    <!-- Email de seguimiento -->
+    <div class="ldet-section">
+      <div class="ldet-section-title">Email de seguimiento listo para enviar</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Asunto: <span id="ldetEmailSubject" style="color:var(--purple)">—</span></div>
+      <div class="ldet-email-box" id="ldetEmailBody">—</div>
+      <button class="ldet-copy-btn" onclick="copyEmail()">📋 Copiar email</button>
+    </div>
+
   </div>
 </div>
 

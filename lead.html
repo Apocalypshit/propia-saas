@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contacta a tu Agente — PropIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      #ede9fb;
+  --purple:  #7c3aed;
+  --p2:      #6d28d9;
+  --p-light: #ede9fb;
+  --p-border:rgba(124,58,237,0.18);
+  --teal:    #0d9488;
+  --teal2:   #14b8a6;
+  --t-light: rgba(20,184,166,0.10);
+  --text:    #0f0a1e;
+  --text2:   #374151;
+  --muted:   #6b7280;
+  --muted2:  #9ca3af;
+  --border:  rgba(124,58,237,0.10);
+  --surface: #f8f6ff;
+  --error:   #ef4444;
+  --green:   #10b981;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(20,184,166,0.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+.wrap {
+  width: 100%; max-width: 540px;
+  position: relative; z-index: 1;
+}
+.agent-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.10);
+  border: 1px solid var(--p-border);
+  display: flex; align-items: center; gap: 16px;
+}
+.agent-av {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 800; color: white;
+  flex-shrink: 0;
+}
+.agent-name { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+.agent-tag {
+  font-size: 12px; font-weight: 700; color: var(--teal);
+  background: var(--t-light); border-radius: 20px; padding: 3px 10px;
+  display: inline-block;
+}
+.ai-badge {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; color: var(--purple);
+  background: var(--p-light); border: 1px solid var(--p-border);
+  border-radius: 20px; padding: 4px 12px; margin-left: auto; white-space: nowrap;
+}
+.ai-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal2); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.7} }
+
+.form-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow: 0 4px 24px rgba(124,58,237,0.10);
+  border: 1px solid var(--p-border);
+}
+@media(max-width:480px) { .form-card { padding: 24px 18px; } }
+
+.form-title { font-size: 24px; font-weight: 900; color: var(--text); letter-spacing: -.7px; margin-bottom: 6px; }
+.form-sub { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 26px; }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.field input, .field select, .field textarea {
+  width: 100%; font-family: inherit; font-size: 15px; color: var(--text);
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 11px; padding: 12px 14px; outline: none; transition: all .18s;
+}
+.field textarea { resize: vertical; min-height: 90px; }
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--p-border); background: white; box-shadow: 0 0 0 3px rgba(124,58,237,.08);
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--muted2); }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media(max-width:480px) { .form-row { grid-template-columns: 1fr; } }
+
+.budget-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.bp {
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--muted); background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: 20px;
+  padding: 6px 14px; cursor: pointer; transition: all .15s;
+}
+.bp.active, .bp:hover { background: var(--p-light); color: var(--purple); border-color: var(--p-border); }
+
+.btn-submit {
+  width: 100%; font-family: inherit; font-size: 16px; font-weight: 700;
+  color: white; background: var(--purple); border: none; border-radius: 12px;
+  padding: 15px; cursor: pointer; margin-top: 8px;
+  box-shadow: 0 6px 20px rgba(124,58,237,.35); transition: all .18s;
+}
+.btn-submit:hover { background: var(--p2); transform: translateY(-1px); }
+.btn-submit:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-submit .loading { display: none; align-items: center; justify-content: center; gap: 8px; }
+.btn-submit.is-loading .lbl { display: none; }
+.btn-submit.is-loading .loading { display: flex; }
+.spinner { width: 17px; height: 17px; border: 2px solid rgba(255,255,255,.3); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.alert { border-radius: 11px; padding: 12px 15px; font-size: 14px; font-weight: 500; display: none; margin-bottom: 14px; line-height: 1.5; }
+.alert.er { background: rgba(239,68,68,.07); border: 1.5px solid rgba(239,68,68,.20); color: var(--error); display: block; }
+
+/* Success state */
+#stateSuccess { display: none; text-align: center; padding: 16px 0; }
+#stateForm    { display: block; }
+.success-icon { font-size: 56px; margin-bottom: 18px; }
+.success-title { font-size: 26px; font-weight: 900; color: var(--text); letter-spacing: -.7px; margin-bottom: 10px; }
+.success-sub { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+.privacy-note { font-size: 12px; color: var(--muted2); text-align: center; margin-top: 16px; line-height: 1.6; }
+.footer-brand { text-align: center; margin-top: 20px; font-size: 12px; color: var(--muted2); }
+.footer-brand a { color: var(--purple); font-weight: 700; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Agent card -->
+  <div class="agent-card" id="agentCard" style="display:none">
+    <div class="agent-av" id="agentAv">?</div>
+    <div>
+      <div class="agent-name" id="agentName">Agente PropIA</div>
+      <div class="agent-tag">🏠 Agente de Bienes Raíces</div>
+    </div>
+    <div class="ai-badge"><div class="ai-dot"></div>IA activa</div>
+  </div>
+
+  <div class="form-card">
+
+    <!-- Form -->
+    <div id="stateForm">
+      <div class="form-title">¿Listo para encontrar tu hogar? 🏠</div>
+      <div class="form-sub">Cuéntanos qué estás buscando. La IA analiza tu perfil y tu agente te contactará con las mejores opciones.</div>
+
+      <div class="alert" id="formAlert"></div>
+
+      <div class="form-row">
+        <div class="field"><label>Tu nombre completo *</label><input type="text" id="fName" placeholder="María González"/></div>
+        <div class="field"><label>Teléfono *</label><input type="tel" id="fPhone" placeholder="(555) 123-4567"/></div>
+      </div>
+      <div class="field"><label>Email <span style="font-weight:400;color:var(--muted2)">(opcional)</span></label><input type="email" id="fEmail" placeholder="tu@email.com"/></div>
+
+      <div class="field">
+        <label>¿Qué tipo de propiedad buscas?</label>
+        <select id="fInterest">
+          <option value="">Selecciona una opción</option>
+          <option value="Casa unifamiliar">Casa unifamiliar</option>
+          <option value="Condominio / Townhouse">Condominio / Townhouse</option>
+          <option value="Casa para rentar">Casa para rentar</option>
+          <option value="Propiedad de inversión">Propiedad de inversión</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Comercial">Comercial</option>
+          <option value="No estoy seguro">No estoy seguro aún</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Presupuesto aproximado</label>
+        <div class="budget-pills">
+          <button class="bp" onclick="setBudget(this,'Menos de $150,000')">Menos de $150k</button>
+          <button class="bp" onclick="setBudget(this,'$150,000 - $300,000')">$150k - $300k</button>
+          <button class="bp" onclick="setBudget(this,'$300,000 - $500,000')">$300k - $500k</button>
+          <button class="bp" onclick="setBudget(this,'$500,000 - $800,000')">$500k - $800k</button>
+          <button class="bp" onclick="setBudget(this,'Más de $800,000')">Más de $800k</button>
+        </div>
+        <input type="hidden" id="fBudget"/>
+      </div>
+
+      <div class="field">
+        <label>Cuéntame más <span style="font-weight:400;color:var(--muted2)">(opcional)</span></label>
+        <textarea id="fMessage" placeholder="Ej: Busco algo cerca de escuelas buenas, tengo ITIN, necesito financiamiento FHA, quiero mudarnos en 3 meses..."></textarea>
+      </div>
+
+      <button class="btn-submit" id="submitBtn" onclick="submitLead()">
+        <span class="lbl">✦ Enviar y recibir análisis</span>
+        <span class="loading"><span class="spinner"></span>Analizando tu perfil...</span>
+      </button>
+
+      <div class="privacy-note">🔒 Tu información es privada y solo será vista por tu agente. No spam, nunca.</div>
+    </div>
+
+    <!-- Success -->
+    <div id="stateSuccess">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">¡Perfil enviado!</div>
+      <div class="success-sub">
+        Tu agente <strong id="successAgentName">—</strong> recibió tu información y la IA ya analizó tu perfil.<br><br>
+        Te contactarán muy pronto. Mientras tanto, <strong>revisa tu email</strong> — te enviamos información sobre el proceso de compra en USA.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-brand">Powered by <a href="https://propia-saas.vercel.app">PropIA</a> · IA para Agentes Latinos</div>
+</div>
+
+<script>
+  var agentId = null;
+  var selectedBudget = '';
+
+  // Read agent ID from URL: /lead?agent=UUID
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    agentId = params.get('agent');
+    if (!agentId) {
+      document.querySelector('.form-title').textContent = 'Enlace inválido';
+      document.querySelector('.form-sub').textContent   = 'Este enlace no tiene un agente asociado. Pide a tu agente que te envíe el enlace correcto.';
+      document.getElementById('submitBtn').disabled = true;
+      return;
+    }
+    // Fetch agent info
+    fetch('/api/lead-form?agent=' + agentId)
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.agent_name) {
+          var card = document.getElementById('agentCard');
+          card.style.display = 'flex';
+          document.getElementById('agentName').textContent = d.agent_name;
+          document.getElementById('agentAv').textContent   = d.agent_name.charAt(0).toUpperCase();
+          document.getElementById('successAgentName').textContent = d.agent_name;
+        }
+      }).catch(function(){});
+  })();
+
+  function setBudget(btn, val) {
+    document.querySelectorAll('.bp').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    selectedBudget = val;
+    document.getElementById('fBudget').value = val;
+  }
+
+  async function submitLead() {
+    var btn  = document.getElementById('submitBtn');
+    var al   = document.getElementById('formAlert');
+    var name = document.getElementById('fName').value.trim();
+    var phone= document.getElementById('fPhone').value.trim();
+    var email= document.getElementById('fEmail').value.trim();
+
+    al.className = 'alert';
+    if (!name)         { show(al,'Por favor ingresa tu nombre completo.'); return; }
+    if (!phone&&!email){ show(al,'Por favor ingresa tu teléfono o email para que el agente te contacte.'); return; }
+
+    btn.disabled = true; btn.classList.add('is-loading');
+    try {
+      var res = await fetch('/api/lead-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          agent_id: agentId,
+          name,
+          email:    email   || null,
+          phone:    phone   || null,
+          interest: document.getElementById('fInterest').value || null,
+          budget:   selectedBudget || null,
+          message:  document.getElementById('fMessage').value.trim() || null
+        })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.success) { show(al, data.error || 'Error al enviar. Intenta de nuevo.'); return; }
+      document.getElementById('stateForm').style.display    = 'none';
+      document.getElementById('stateSuccess').style.display = 'block';
+    } catch { show(al, 'Error de conexión. Intenta de nuevo.'); }
+    finally { btn.disabled = false; btn.classList.remove('is-loading'); }
+  }
+
+  function show(el, msg) { el.textContent = msg; el.className = 'alert er'; }
+</script>
+</body>
+</html>
