@@ -332,6 +332,12 @@ body {
 .lst-btn-pdf:hover{background:#10b981;color:white;border-color:transparent}
 .lst-btn-pdf:disabled{opacity:.5;cursor:not-allowed}
 
+/* ═══ GENERATOR PHOTOS SECTION ═══ */
+.output-photos-section{background:white;border-radius:16px;border:1.5px solid var(--p-border);padding:20px;margin-top:14px;box-shadow:0 2px 8px rgba(124,58,237,.06)}
+.output-photos-header{margin-bottom:14px}
+.oph-title{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.3px;margin-bottom:3px}
+.oph-sub{font-size:12px;color:var(--muted)}
+
 /* ═══ PHOTOS MODAL ═══ */
 .photos-ov{display:none;position:fixed;inset:0;z-index:9500;background:rgba(15,10,30,.55);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px}
 .photos-ov.visible{display:flex}
@@ -1151,6 +1157,27 @@ body {
           </div>
         </div>
 
+        <!-- ── FOTOS DEL LISTING ── -->
+        <div class="output-photos-section" id="genPhotosSection" style="display:none">
+          <div class="output-photos-header">
+            <div class="oph-title">📸 Fotos de la propiedad</div>
+            <div class="oph-sub">Sube fotos para que aparezcan en tu página pública al compartir</div>
+          </div>
+          <div class="pm-dropzone" id="genDrop" style="margin-bottom:12px">
+            <input type="file" id="genFileInput" accept="image/*,video/*" multiple onchange="genHandleFiles(this.files)"/>
+            <div class="pm-dz-icon">📷</div>
+            <div class="pm-dz-title">Arrastra fotos o haz clic para seleccionar</div>
+            <div class="pm-dz-sub">JPG, PNG, WebP, MP4 · Máx. 8MB · Hasta 10 archivos</div>
+          </div>
+          <div class="pm-progress" id="genProgress">
+            <span id="genProgressTxt">Subiendo...</span>
+            <div class="pbar-outer"><div class="pbar-inner" id="genPbar"></div></div>
+          </div>
+          <div class="pm-alert" id="genPhotoAlert"></div>
+          <div class="pm-grid" id="genPhotoGrid"></div>
+          <div class="pm-empty" id="genPhotoEmpty" style="padding:16px;font-size:13px;color:var(--muted);text-align:center">Sin fotos aún. Las fotos son opcionales.</div>
+        </div>
+
         <div class="info-card">
           <div class="info-title">🚀 Qué genera la IA</div>
           <div class="info-feat"><div class="info-feat-icon ifi-p">📝</div><div><div class="info-feat-name">Descripción MLS</div><div class="info-feat-sub">150-200 palabras profesionales listas para publicar</div></div></div>
@@ -1573,7 +1600,10 @@ body {
     document.getElementById('outVideo').textContent = content.video || '';
     const container = document.getElementById('postsContainer'); container.innerHTML = '';
     const labels = ['Post 1 — Presentación','Post 2 — Características','Post 3 — Llamada a la Acción'];
-    (content.posts || []).forEach((p, i) => { container.innerHTML += `<div class="post-item"><div class="post-num">${labels[i] || 'Post '+(i+1)}</div><div class="post-text">${p}</div><button class="post-copy" onclick="copyPostItem(this,${i})">📋</button></div>`; });
+    (content.posts || []).forEach((p, idx) => { container.innerHTML += '<div class="post-item"><div class="post-num">' + (labels[idx] || 'Post '+(idx+1)) + '</div><div class="post-text">' + p + '</div><button class="post-copy" onclick="copyPostItem(this,' + idx + ')">📋</button></div>'; });
+    // Show photos section
+    var genPhotos = document.getElementById('genPhotosSection');
+    if (genPhotos) { genPhotos.style.display = 'block'; genPhotoImages = []; renderGenPhotoGrid(); document.getElementById('genFileInput').value = ''; }
     const wrap = document.getElementById('outputWrap'); wrap.classList.add('visible');
     showOTab('mls', document.querySelector('.otab'));
     wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1611,6 +1641,10 @@ body {
       document.querySelector('#genBtn .label').textContent = '🔄 Regenerar listing';
       showPanel('generator', document.querySelectorAll('.nav-item')[1]);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Load existing photos for this listing
+      genPhotoImages = (l.content && l.content.images) ? l.content.images.slice() : [];
+      var genPhotos = document.getElementById('genPhotosSection');
+      if (genPhotos) { genPhotos.style.display = 'block'; renderGenPhotoGrid(); }
     } catch(e) { console.error(e); setAlert('Error al cargar el listing.', 'error'); }
   }
 
@@ -2384,6 +2418,74 @@ body {
       if (btn) { btn.textContent = origText; btn.disabled = false; }
     }
   }
+
+  // ── Generator inline photos ──────────────────────────────────
+  var genPhotoImages = [];
+
+  function renderGenPhotoGrid() {
+    var grid  = document.getElementById('genPhotoGrid');
+    var empty = document.getElementById('genPhotoEmpty');
+    if (!genPhotoImages.length) { grid.innerHTML = ''; if(empty) empty.style.display='block'; return; }
+    if(empty) empty.style.display = 'none';
+    grid.innerHTML = genPhotoImages.map(function(url, i) {
+      var isVid = url.match(/\.(mp4|webm|mov)(\?|$)/i);
+      var media = isVid
+        ? '<div style="width:100%;height:100%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:22px">▶️</div>'
+        : '<img src="' + url + '" loading="lazy" alt="foto ' + (i+1) + '" style="width:100%;height:100%;object-fit:cover"/>';
+      return '<div class="pm-img-wrap">' + media
+        + '<div class="pm-img-num">' + (i+1) + '</div>'
+        + '<button class="pm-img-del" onclick="genDeletePhoto(\'' + url.replace(/'/g,"\\'") + '\')">✕</button>'
+        + '</div>';
+    }).join('');
+  }
+
+  async function genHandleFiles(files) {
+    if (!editingListingId) { document.getElementById('genPhotoAlert').textContent='Guarda el listing primero para subir fotos.'; document.getElementById('genPhotoAlert').className='pm-alert er'; return; }
+    if (!files || !files.length) return;
+    var arr = Array.from(files).slice(0, 10 - genPhotoImages.length);
+    var al  = document.getElementById('genPhotoAlert');
+    al.className = 'pm-alert'; al.textContent = '';
+    var prog = document.getElementById('genProgress');
+    var progTxt = document.getElementById('genProgressTxt');
+    var pbar    = document.getElementById('genPbar');
+    prog.style.display = 'block';
+    for (var i = 0; i < arr.length; i++) {
+      var file = arr[i];
+      progTxt.textContent = 'Subiendo ' + (i+1) + ' de ' + arr.length;
+      pbar.style.width = Math.round((i / arr.length) * 100) + '%';
+      if (file.size > 8*1024*1024) { al.textContent = file.name + ' supera 8MB.'; al.className='pm-alert er'; continue; }
+      try {
+        var b64 = await new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(e){res(e.target.result);}; r.onerror=rej; r.readAsDataURL(file); });
+        var resp = await fetch('/api/upload', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}, body: JSON.stringify({ listingId: editingListingId, fileName: file.name, fileType: file.type, fileData: b64 }) });
+        var data = await resp.json();
+        if (resp.ok && data.success) { genPhotoImages = data.images || genPhotoImages; }
+        else { al.textContent = data.error || 'Error subiendo ' + file.name; al.className='pm-alert er'; }
+      } catch(e) { al.textContent = 'Error de conexión.'; al.className='pm-alert er'; }
+    }
+    pbar.style.width = '100%';
+    setTimeout(function(){ prog.style.display='none'; pbar.style.width='0%'; }, 700);
+    renderGenPhotoGrid();
+    document.getElementById('genFileInput').value = '';
+  }
+
+  async function genDeletePhoto(url) {
+    if (!editingListingId) return;
+    try {
+      var res = await fetch('/api/upload', { method:'DELETE', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}, body: JSON.stringify({ listingId: editingListingId, imageUrl: url }) });
+      var data = await res.json();
+      if (res.ok && data.success) { genPhotoImages = genPhotoImages.filter(function(u){ return u !== url; }); renderGenPhotoGrid(); }
+    } catch(e) {}
+  }
+
+  // Drag and drop for generator photos
+  document.addEventListener('DOMContentLoaded', function() {
+    var gdz = document.getElementById('genDrop');
+    if (gdz) {
+      gdz.addEventListener('dragover',  function(e){ e.preventDefault(); gdz.classList.add('drag'); });
+      gdz.addEventListener('dragleave', function()  { gdz.classList.remove('drag'); });
+      gdz.addEventListener('drop',      function(e){ e.preventDefault(); gdz.classList.remove('drag'); genHandleFiles(e.dataTransfer.files); });
+    }
+  });
 
   function obReset() {
     localStorage.removeItem('propia_onboarded');
