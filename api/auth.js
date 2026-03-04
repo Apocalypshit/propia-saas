@@ -13,7 +13,7 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido' });
 
-  const { action, email, password, name, brokerage } = req.body;
+  const { action, email, password, name, brokerage, phone } = req.body;
 
   try {
     // REGISTRO
@@ -34,6 +34,7 @@ module.exports = async function handler(req, res) {
           email,
           name,
           brokerage: brokerage || null,
+          phone: phone || null,
           plan: 'free',
           listings_used_this_month: 0,
           leads_used_this_month: 0,
