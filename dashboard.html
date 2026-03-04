@@ -1941,9 +1941,13 @@ body {
     }).catch(function() {});
   }
 
-  // Close modals on overlay click
-  document.getElementById('newLeadOverlay').addEventListener('click', function(e){ if(e.target===this) closeNewLead(); });
-  document.getElementById('leadDetailOverlay').addEventListener('click', function(e){ if(e.target===this) closeLeadDetail(); });
+  // Close modals on overlay click — dentro de DOMContentLoaded para que los elementos existan
+  document.addEventListener('DOMContentLoaded', function() {
+    var nlo = document.getElementById('newLeadOverlay');
+    var ldo = document.getElementById('leadDetailOverlay');
+    if (nlo) nlo.addEventListener('click', function(e){ if(e.target===this) closeNewLead(); });
+    if (ldo) ldo.addEventListener('click', function(e){ if(e.target===this) closeLeadDetail(); });
+  });
 
   function obReset() {
     localStorage.removeItem('propia_onboarded');
