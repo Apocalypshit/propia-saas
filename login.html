@@ -350,7 +350,13 @@ body::before {
         <div class="form-subtitle">Ingresa a tu cuenta de PropIA</div>
       </div>
       <div class="field"><label>Correo electrónico</label><input type="email" id="loginEmail" placeholder="tu@email.com" required/></div>
-      <div class="field"><label>Contraseña</label><input type="password" id="loginPassword" placeholder="••••••••" required/></div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required/>
+        <div style="text-align:right;margin-top:7px;">
+          <a onclick="openForgot()" style="font-size:13px;color:var(--purple);font-weight:600;cursor:pointer;text-decoration:none;">¿Olvidaste tu contraseña?</a>
+        </div>
+      </div>
       <div class="alert" id="loginAlert"></div>
       <button type="submit" class="btn-submit" id="loginBtn">
         <span class="label">Entrar a PropIA</span>
@@ -379,21 +385,106 @@ body::before {
   </div>
 </div>
 
+<!-- ═══ MODAL: RECUPERAR CONTRASEÑA ═══ -->
+<div id="forgotOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(15,10,30,0.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div style="background:white;border-radius:20px;padding:36px 32px;width:100%;max-width:420px;margin:16px;box-shadow:0 24px 64px rgba(0,0,0,0.18);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+      <div>
+        <div style="font-size:22px;font-weight:900;color:#0f0a1e;letter-spacing:-.6px;margin-bottom:3px;">Recuperar contrasena</div>
+        <div style="font-size:14px;color:#6b7280;">Te enviamos un enlace a tu correo</div>
+      </div>
+      <button onclick="closeForgot()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af;line-height:1;padding:4px;">x</button>
+    </div>
+    <div class="field" style="margin-bottom:18px;">
+      <label>Correo electronico</label>
+      <input type="email" id="forgotEmail" placeholder="tu@email.com"/>
+    </div>
+    <div class="alert" id="forgotAlert" style="margin-bottom:14px;"></div>
+    <button onclick="handleForgot()" id="forgotBtn" class="btn-submit">
+      <span class="label">Enviar enlace de recuperacion</span>
+      <span class="loading"><span class="spinner"></span>Enviando...</span>
+    </button>
+  </div>
+</div>
+
 <script>
   const session = localStorage.getItem('propia_token');
-  if (session) window.location.href = '/dashboard';
 
-  // Auto-switch to register tab if URL has ?tab=register
+  (function() {
+    const hash = window.location.hash;
+    if (hash && hash.includes('type=signup')) {
+      const al = document.getElementById('loginAlert');
+      if (al) { al.textContent = 'Email confirmado. Ya puedes iniciar sesion.'; al.className = 'alert success visible'; }
+    } else if (session) {
+      window.location.href = '/dashboard';
+    }
+  })();
+
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('tab') === 'register') {
     const registerBtn = document.querySelectorAll('.auth-tab')[1];
     if (registerBtn) switchTab('register', registerBtn);
   }
+
   function switchTab(tab,btn){document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(tab==='login'){document.getElementById('loginForm').classList.remove('hidden');document.getElementById('registerForm').classList.add('hidden');}else{document.getElementById('loginForm').classList.add('hidden');document.getElementById('registerForm').classList.remove('hidden');}}
-  async function handleLogin(e){e.preventDefault();const btn=document.getElementById('loginBtn');const al=document.getElementById('loginAlert');setLoading(btn,true);hide(al);try{const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',email:document.getElementById('loginEmail').value.trim(),password:document.getElementById('loginPassword').value})});const data=await res.json();if(!res.ok||!data.success){show(al,data.error||'Error al iniciar sesión.','error');return;}localStorage.setItem('propia_token',data.token);localStorage.setItem('propia_user',JSON.stringify(data.user));window.location.href='/dashboard';}catch{show(al,'Error de conexión. Intenta de nuevo.','error');}finally{setLoading(btn,false);}}
-  async function handleRegister(e){e.preventDefault();const btn=document.getElementById('registerBtn');const al=document.getElementById('registerAlert');setLoading(btn,true);hide(al);try{const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'register',name:document.getElementById('regName').value.trim(),brokerage:document.getElementById('regBrokerage').value.trim(),email:document.getElementById('regEmail').value.trim(),password:document.getElementById('regPassword').value})});const data=await res.json();if(!res.ok||!data.success){show(al,data.error||'Error al crear la cuenta.','error');return;}show(al,'✅ Cuenta creada. Ahora inicia sesión.','success');document.getElementById('registerForm').reset();}catch{show(al,'Error de conexión. Intenta de nuevo.','error');}finally{setLoading(btn,false);}}
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    const btn=document.getElementById('loginBtn'), al=document.getElementById('loginAlert');
+    setLoading(btn,true); hide(al);
+    try {
+      const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',email:document.getElementById('loginEmail').value.trim(),password:document.getElementById('loginPassword').value})});
+      const data=await res.json();
+      if(!res.ok||!data.success){
+        const msg=(data.error||'Error al iniciar sesion.');
+        show(al,msg,'error'); return;
+      }
+      localStorage.setItem('propia_token',data.token);
+      localStorage.setItem('propia_user',JSON.stringify(data.user));
+      window.location.href='/dashboard';
+    } catch { show(al,'Error de conexion. Intenta de nuevo.','error'); }
+    finally { setLoading(btn,false); }
+  }
+
+  async function handleRegister(e) {
+    e.preventDefault();
+    const btn=document.getElementById('registerBtn'), al=document.getElementById('registerAlert');
+    setLoading(btn,true); hide(al);
+    try {
+      const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'register',name:document.getElementById('regName').value.trim(),brokerage:document.getElementById('regBrokerage').value.trim(),email:document.getElementById('regEmail').value.trim(),password:document.getElementById('regPassword').value})});
+      const data=await res.json();
+      if(!res.ok||!data.success){show(al,data.error||'Error al crear la cuenta.','error');return;}
+      show(al,'Cuenta creada. Revisa tu correo para confirmar tu cuenta antes de iniciar sesion.','success');
+      document.getElementById('registerForm').reset();
+    } catch { show(al,'Error de conexion. Intenta de nuevo.','error'); }
+    finally { setLoading(btn,false); }
+  }
+
+  function openForgot() {
+    document.getElementById('forgotOverlay').style.display='flex';
+    document.getElementById('forgotEmail').value=document.getElementById('loginEmail').value||'';
+    hide(document.getElementById('forgotAlert'));
+  }
+  function closeForgot() { document.getElementById('forgotOverlay').style.display='none'; }
+  document.getElementById('forgotOverlay').addEventListener('click',function(e){if(e.target===this)closeForgot();});
+
+  async function handleForgot() {
+    const btn=document.getElementById('forgotBtn'), al=document.getElementById('forgotAlert');
+    const email=document.getElementById('forgotEmail').value.trim();
+    if(!email){show(al,'Ingresa tu correo electronico.','error');return;}
+    setLoading(btn,true); hide(al);
+    try {
+      const res=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'forgot',email})});
+      const data=await res.json();
+      if(!res.ok){show(al,data.error||'Error al enviar.','error');setLoading(btn,false);return;}
+      show(al,'Revisa tu correo. El enlace expira en 1 hora.','success');
+      setLoading(btn,false);
+      setTimeout(closeForgot,3000);
+    } catch { show(al,'Error de conexion. Intenta de nuevo.','error'); setLoading(btn,false); }
+  }
+
   function setLoading(btn,v){btn.disabled=v;btn.classList.toggle('is-loading',v);}
-  function show(el,msg,type){el.textContent=msg;el.className=`alert ${type} visible`;}
+  function show(el,msg,type){el.textContent=msg;el.className='alert '+type+' visible';}
   function hide(el){el.className='alert';}
 </script>
 </body>
