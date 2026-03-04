@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Restablecer contraseña — PropIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:       #ede9fb;
+  --purple:   #7c3aed;
+  --purple2:  #6d28d9;
+  --p-light:  #ede9fb;
+  --p-border: rgba(124,58,237,0.15);
+  --text:     #0f0a1e;
+  --text2:    #374151;
+  --muted:    #6b7280;
+  --muted2:   #9ca3af;
+  --border:   rgba(124,58,237,0.10);
+  --surface:  #f8f6ff;
+  --error:    #ef4444;
+  --green:    #10b981;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+.card {
+  background: white;
+  border-radius: 24px;
+  padding: 44px 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 4px 32px rgba(124,58,237,0.12), 0 1px 4px rgba(0,0,0,0.06);
+  border: 1px solid var(--p-border);
+}
+@media(max-width:480px) { .card { padding: 32px 24px; } }
+.logo {
+  display: flex; align-items: center; gap: 11px;
+  margin-bottom: 32px;
+}
+.logo-mark {
+  width: 42px; height: 42px;
+  background: var(--purple);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.35);
+}
+.logo-name { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -.7px; }
+.logo-name span { color: var(--purple); }
+
+.card-title { font-size: 28px; font-weight: 900; color: var(--text); letter-spacing: -1px; margin-bottom: 6px; }
+.card-sub { font-size: 15px; color: var(--muted); line-height: 1.55; margin-bottom: 28px; }
+
+.field { margin-bottom: 18px; }
+.field label { display:block; font-size:13px; font-weight:600; color:var(--text2); margin-bottom:7px; }
+.field input {
+  width: 100%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px; padding: 14px 16px; outline: none;
+  transition: all 0.2s;
+}
+.field input:focus { border-color: var(--purple); background: white; box-shadow: 0 0 0 4px rgba(124,58,237,0.08); }
+.field input::placeholder { color: var(--muted2); }
+
+.strength-bar { height: 4px; border-radius: 4px; background: #e5e7eb; margin-top: 8px; overflow: hidden; }
+.strength-fill { height: 100%; border-radius: 4px; width: 0%; transition: width .3s, background .3s; }
+.strength-label { font-size: 11px; font-weight: 600; margin-top: 5px; }
+
+.btn-submit {
+  width: 100%;
+  background: var(--purple);
+  border: none; border-radius: 13px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px; font-weight: 700;
+  padding: 16px; cursor: pointer;
+  transition: all 0.22s; margin-top: 6px;
+  box-shadow: 0 6px 22px rgba(124,58,237,0.35);
+}
+.btn-submit:hover { background: var(--purple2); transform: translateY(-1px); }
+.btn-submit:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-submit .loading { display: none; align-items: center; justify-content: center; gap: 9px; }
+.btn-submit.is-loading .label { display: none; }
+.btn-submit.is-loading .loading { display: flex; }
+.spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.35); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.alert { border-radius: 12px; padding: 13px 16px; font-size: 14px; line-height: 1.5; font-weight: 500; display: none; margin-bottom: 16px; }
+.alert.success { background: rgba(16,185,129,0.08); border: 1.5px solid rgba(16,185,129,0.25); color: #059669; display: block; }
+.alert.error   { background: rgba(239,68,68,0.07);  border: 1.5px solid rgba(239,68,68,0.20);  color: var(--error); display: block; }
+
+.back-link { display: block; text-align: center; margin-top: 20px; font-size: 14px; color: var(--muted); }
+.back-link a { color: var(--purple); font-weight: 600; text-decoration: none; cursor: pointer; }
+
+/* Estado: token inválido o faltante */
+#stateInvalid  { display: none; }
+#stateForm     { display: none; }
+#stateSuccess  { display: none; }
+#stateLoading  { display: block; text-align: center; padding: 20px 0; color: var(--muted); font-size: 15px; }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="logo">
+    <div class="logo-mark">🏠</div>
+    <div class="logo-name">Prop<span>IA</span></div>
+  </div>
+
+  <!-- Estado: verificando token -->
+  <div id="stateLoading">
+    <div style="font-size:28px;margin-bottom:12px;">⏳</div>
+    <div style="font-weight:700;color:var(--text);margin-bottom:6px;">Verificando enlace...</div>
+    <div style="font-size:14px;">Un momento por favor.</div>
+  </div>
+
+  <!-- Estado: token inválido -->
+  <div id="stateInvalid">
+    <div class="card-title">Enlace inválido</div>
+    <div class="card-sub">Este enlace expiró o ya fue utilizado. Los enlaces de recuperación son válidos por <strong>1 hora</strong>.</div>
+    <button class="btn-submit" onclick="window.location.href='/'">
+      <span class="label">Solicitar nuevo enlace</span>
+    </button>
+    <div class="back-link"><a onclick="window.location.href='/'">← Volver al inicio</a></div>
+  </div>
+
+  <!-- Estado: formulario de nueva contraseña -->
+  <div id="stateForm">
+    <div class="card-title">Nueva contraseña</div>
+    <div class="card-sub">Elige una contraseña segura para tu cuenta de PropIA.</div>
+    <div class="alert" id="resetAlert"></div>
+    <div class="field">
+      <label>Nueva contraseña</label>
+      <input type="password" id="newPassword" placeholder="Mínimo 8 caracteres" minlength="8" oninput="checkStrength(this.value)"/>
+      <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+      <div class="strength-label" id="strengthLabel" style="color:var(--muted2);">— Ingresa tu nueva contraseña</div>
+    </div>
+    <div class="field">
+      <label>Confirmar contraseña</label>
+      <input type="password" id="confirmPassword" placeholder="Repite la contraseña"/>
+    </div>
+    <button class="btn-submit" id="resetBtn" onclick="handleReset()">
+      <span class="label">🔒 Guardar nueva contraseña</span>
+      <span class="loading"><span class="spinner"></span>Guardando...</span>
+    </button>
+  </div>
+
+  <!-- Estado: éxito -->
+  <div id="stateSuccess">
+    <div style="text-align:center;padding:8px 0 24px;">
+      <div style="font-size:52px;margin-bottom:16px;">✅</div>
+      <div class="card-title" style="margin-bottom:8px;">¡Contraseña actualizada!</div>
+      <div class="card-sub" style="margin-bottom:28px;">Tu contraseña fue cambiada exitosamente. Ya puedes iniciar sesión.</div>
+      <button class="btn-submit" onclick="window.location.href='/'">
+        <span class="label">Iniciar sesión</span>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var recoveryToken = null;
+
+  // ── Leer token del hash de la URL ──
+  // Supabase envía: /reset#access_token=xxx&type=recovery
+  (function() {
+    var hash = window.location.hash.substring(1);
+    var params = {};
+    hash.split('&').forEach(function(pair) {
+      var parts = pair.split('=');
+      if (parts.length === 2) params[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+    });
+
+    if (params.access_token && params.type === 'recovery') {
+      recoveryToken = params.access_token;
+      // Limpiar el hash de la URL (seguridad — no exponer el token)
+      history.replaceState(null, '', window.location.pathname);
+      showState('stateForm');
+    } else {
+      showState('stateInvalid');
+    }
+  })();
+
+  function showState(id) {
+    ['stateLoading','stateInvalid','stateForm','stateSuccess'].forEach(function(s) {
+      document.getElementById(s).style.display = (s === id) ? 'block' : 'none';
+    });
+  }
+
+  function checkStrength(val) {
+    var fill  = document.getElementById('strengthFill');
+    var label = document.getElementById('strengthLabel');
+    if (!val) { fill.style.width='0%'; label.textContent='— Ingresa tu nueva contraseña'; label.style.color='var(--muted2)'; return; }
+    var score = 0;
+    if (val.length >= 8)  score++;
+    if (val.length >= 12) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    var levels = [
+      { pct:'20%', color:'#ef4444', text:'Muy débil' },
+      { pct:'40%', color:'#f97316', text:'Débil' },
+      { pct:'60%', color:'#eab308', text:'Regular' },
+      { pct:'80%', color:'#22c55e', text:'Fuerte' },
+      { pct:'100%',color:'#16a34a', text:'Muy fuerte ✓' },
+    ];
+    var l = levels[Math.min(score, 4)];
+    fill.style.width = l.pct;
+    fill.style.background = l.color;
+    label.textContent = l.text;
+    label.style.color = l.color;
+  }
+
+  async function handleReset() {
+    var btn  = document.getElementById('resetBtn');
+    var al   = document.getElementById('resetAlert');
+    var pass = document.getElementById('newPassword').value;
+    var conf = document.getElementById('confirmPassword').value;
+
+    al.className = 'alert';
+
+    if (!pass || pass.length < 8) {
+      show(al, 'La contraseña debe tener al menos 8 caracteres.', 'error'); return;
+    }
+    if (pass !== conf) {
+      show(al, 'Las contraseñas no coinciden.', 'error'); return;
+    }
+    if (!recoveryToken) {
+      show(al, 'Token inválido. Solicita un nuevo enlace.', 'error'); return;
+    }
+
+    setLoading(btn, true);
+    try {
+      var res  = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'reset', token: recoveryToken, newPassword: pass })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.success) {
+        show(al, data.error || 'Error al actualizar la contraseña.', 'error');
+        setLoading(btn, false); return;
+      }
+      showState('stateSuccess');
+    } catch {
+      show(al, 'Error de conexión. Intenta de nuevo.', 'error');
+      setLoading(btn, false);
+    }
+  }
+
+  function setLoading(btn, v) { btn.disabled = v; btn.classList.toggle('is-loading', v); }
+  function show(el, msg, type) { el.textContent = msg; el.className = 'alert ' + type; }
+</script>
+</body>
+</html>
