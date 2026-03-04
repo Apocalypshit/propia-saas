@@ -326,8 +326,9 @@ body {
 .lst-btn-edit:hover{background:var(--purple);color:white;border-color:transparent}
 .lst-btn-share{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:var(--teal);background:var(--t-light);border:1.5px solid var(--t-border);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
 .lst-btn-share:hover{background:var(--teal);color:white;border-color:transparent}
-.lst-btn-photos{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:#b45309;background:rgba(245,158,11,.10);border:1.5px solid rgba(245,158,11,.25);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
-.lst-btn-photos:hover{background:#f59e0b;color:white;border-color:transparent}
+.lst-btn-pdf{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:#059669;background:rgba(16,185,129,.10);border:1.5px solid rgba(16,185,129,.25);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
+.lst-btn-pdf:hover{background:#10b981;color:white;border-color:transparent}
+.lst-btn-pdf:disabled{opacity:.5;cursor:not-allowed}
 
 /* ═══ PHOTOS MODAL ═══ */
 .photos-ov{display:none;position:fixed;inset:0;z-index:9500;background:rgba(15,10,30,.55);backdrop-filter:blur(5px);align-items:center;justify-content:center;padding:20px}
@@ -1777,6 +1778,7 @@ body {
         + '</div>'
         + '<div class="lst-card-actions">'
         + '<button class="lst-btn-photos" onclick="openPhotos(&#39;' + h.id + '&#39;, event)">📸 Fotos</button>'
+        + '<button class="lst-btn-pdf" onclick="downloadPDF(&#39;' + h.id + '&#39;, event)">⬇️ PDF</button>'
         + '<button class="lst-btn-edit" onclick="shareListingLink(&#39;' + h.id + '&#39;, event)">🔗 Compartir</button>'
         + '<button class="lst-btn-edit" onclick="loadForEdit(&#39;' + h.id + '&#39;)">✏️ Editar</button>'
         + '</div></div>';
@@ -2152,6 +2154,235 @@ body {
     if (e.target === this) closePhotos();
   });
 
+  // ══════════════════════════════
+  //  PDF EXPORT
+  // ══════════════════════════════
+  async function downloadPDF(id, event) {
+    if (event) event.stopPropagation();
+
+    // Find button and show loading state
+    var btn = event && event.target;
+    var origText = btn ? btn.textContent : '';
+    if (btn) { btn.textContent = '⏳ Generando...'; btn.disabled = true; }
+
+    try {
+      // Fetch full listing content
+      var res  = await fetch('/api/history?id=' + id, { headers: { 'Authorization': 'Bearer ' + token } });
+      var data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || 'Error cargando listing.');
+
+      var listing = data.listing;
+      var c       = listing.content || {};
+      var meta    = c._meta || {};
+
+      var { jsPDF } = window.jspdf;
+      var doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+
+      var W      = 215.9;  // letter width mm
+      var margin = 18;
+      var contentW = W - margin * 2;
+      var y      = 0;
+
+      // ── Helpers ──────────────────────────────────────────────
+      function addPage() {
+        doc.addPage();
+        y = margin;
+        drawHeaderBar();
+      }
+
+      function checkSpace(needed) {
+        if (y + needed > 270) addPage();
+      }
+
+      function wrapText(text, maxW, fontSize) {
+        doc.setFontSize(fontSize);
+        return doc.splitTextToSize(String(text || ''), maxW);
+      }
+
+      function drawHeaderBar() {
+        // Purple top bar
+        doc.setFillColor(124, 58, 237);
+        doc.rect(0, 0, W, 12, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.text('PropIA · IA para Agentes Latinos en USA', margin, 8);
+        // Agent name right side
+        doc.setFontSize(8);
+        doc.text(user.name || 'Agente PropIA', W - margin, 8, { align: 'right' });
+        doc.setTextColor(15, 10, 30);
+      }
+
+      function sectionTitle(title, iconChar) {
+        checkSpace(14);
+        doc.setFillColor(237, 233, 251);
+        doc.roundedRect(margin, y, contentW, 9, 2, 2, 'F');
+        doc.setTextColor(124, 58, 237);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text((iconChar ? iconChar + '  ' : '') + title.toUpperCase(), margin + 4, y + 6.2);
+        doc.setTextColor(15, 10, 30);
+        y += 13;
+      }
+
+      function bodyText(text, fontSize) {
+        fontSize = fontSize || 10;
+        var lines = wrapText(text, contentW, fontSize);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(fontSize);
+        doc.setTextColor(55, 65, 81);
+        var lineH = fontSize * 0.45;
+        for (var i = 0; i < lines.length; i++) {
+          checkSpace(lineH + 1);
+          doc.text(lines[i], margin, y);
+          y += lineH + 1;
+        }
+        y += 3;
+      }
+
+      function divider() {
+        checkSpace(6);
+        doc.setDrawColor(237, 233, 251);
+        doc.setLineWidth(0.4);
+        doc.line(margin, y, W - margin, y);
+        y += 5;
+      }
+
+      // ── PAGE 1 — Hero ────────────────────────────────────────
+      drawHeaderBar();
+      y = 20;
+
+      // Address + price hero block
+      doc.setFillColor(248, 246, 255);
+      doc.roundedRect(margin, y, contentW, 38, 4, 4, 'F');
+      doc.setDrawColor(124, 58, 237);
+      doc.setLineWidth(0.8);
+      doc.line(margin, y, margin, y + 38);
+
+      // Address
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(17);
+      doc.setTextColor(15, 10, 30);
+      var addrLines = doc.splitTextToSize(listing.address || 'Dirección no disponible', contentW - 8);
+      doc.text(addrLines, margin + 6, y + 10);
+      var addrH = addrLines.length * 7;
+
+      // Price
+      doc.setFontSize(22);
+      doc.setTextColor(124, 58, 237);
+      doc.text(listing.price || '', margin + 6, y + 10 + addrH + 4);
+
+      y += 44;
+
+      // Tags row
+      var tagItems = [];
+      if (meta.beds)        tagItems.push('Rec: ' + meta.beds);
+      if (meta.baths)       tagItems.push('Banos: ' + meta.baths);
+      if (meta.sqft)        tagItems.push(meta.sqft + ' ft2');
+      if (listing.type)     tagItems.push(listing.type);
+      if (listing.tone)     tagItems.push('Tono: ' + listing.tone);
+
+      if (tagItems.length) {
+        var tx = margin;
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        tagItems.forEach(function(tag) {
+          var tw = doc.getTextWidth(tag) + 8;
+          if (tx + tw > W - margin) { tx = margin; y += 8; }
+          doc.setFillColor(237, 233, 251);
+          doc.roundedRect(tx, y, tw, 6.5, 1.5, 1.5, 'F');
+          doc.setTextColor(124, 58, 237);
+          doc.text(tag, tx + 4, y + 4.7);
+          tx += tw + 4;
+        });
+        y += 12;
+      }
+
+      // Agent info row
+      doc.setFillColor(240, 253, 250);
+      doc.roundedRect(margin, y, contentW, 10, 2, 2, 'F');
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(13, 148, 136);
+      doc.text('Agente: ' + (user.name || 'Agente PropIA') + (user.brokerage ? '  |  ' + user.brokerage : ''), margin + 4, y + 6.8);
+      doc.setTextColor(15, 10, 30);
+      y += 15;
+
+      // ── MLS Description ──────────────────────────────────────
+      var mls = c.mls || c.descripcion_mls || '';
+      if (mls) {
+        sectionTitle('Descripcion MLS', '');
+        bodyText(mls, 10);
+        divider();
+      }
+
+      // ── Social Posts ─────────────────────────────────────────
+      var ig = c.instagram || c.post_instagram || '';
+      var fb = c.facebook  || c.post_facebook  || '';
+      var li = c.linkedin  || c.post_linkedin  || '';
+
+      if (ig || fb || li) {
+        sectionTitle('Posts para Redes Sociales', '');
+        if (ig) {
+          doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(124,58,237);
+          doc.text('Instagram:', margin, y); y += 5;
+          bodyText(ig, 9);
+        }
+        if (fb) {
+          doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(124,58,237);
+          doc.text('Facebook:', margin, y); y += 5;
+          bodyText(fb, 9);
+        }
+        if (li) {
+          doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(124,58,237);
+          doc.text('LinkedIn:', margin, y); y += 5;
+          bodyText(li, 9);
+        }
+        divider();
+      }
+
+      // ── Email ─────────────────────────────────────────────────
+      var email = c.email || c.email_marketing || '';
+      if (email) {
+        sectionTitle('Email de Marketing', '');
+        bodyText(email, 9);
+        divider();
+      }
+
+      // ── Video Script ─────────────────────────────────────────
+      var video = c.video || c.script_video || '';
+      if (video) {
+        sectionTitle('Script de Video', '');
+        bodyText(video, 9);
+      }
+
+      // ── Footer on last page ───────────────────────────────────
+      var totalPages = doc.getNumberOfPages();
+      for (var p = 1; p <= totalPages; p++) {
+        doc.setPage(p);
+        // Bottom footer
+        doc.setFillColor(124, 58, 237);
+        doc.rect(0, 279, W, 8, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(7.5);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Generado con PropIA · propia-saas.vercel.app', margin, 284.5);
+        doc.text('Pagina ' + p + ' de ' + totalPages, W - margin, 284.5, { align: 'right' });
+        doc.setTextColor(15, 10, 30);
+      }
+
+      // ── Save ─────────────────────────────────────────────────
+      var filename = 'PropIA_' + (listing.address || 'listing').replace(/[^a-zA-Z0-9\s]/g,'').trim().replace(/\s+/g,'_').substring(0,40) + '.pdf';
+      doc.save(filename);
+
+    } catch(err) {
+      console.error('PDF error:', err);
+      alert('Error generando PDF: ' + err.message);
+    } finally {
+      if (btn) { btn.textContent = origText; btn.disabled = false; }
+    }
+  }
+
   function obReset() {
     localStorage.removeItem('propia_onboarded');
     // Pre-llenar y mostrar desde paso 1
@@ -2390,6 +2621,9 @@ body {
 
   </div>
 </div>
+
+<!-- jsPDF for PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <!-- ═══ PHOTOS MODAL ═══ -->
 <div class="photos-ov" id="photosOv">
