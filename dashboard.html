@@ -1227,6 +1227,7 @@ body {
               Al cerrar sesión se eliminará tu sesión local. Tus datos y listings están seguros en la nube.
             </div>
             <button class="btn-danger" onclick="logout()">↩ Cerrar sesión</button>
+            <button class="btn-danger" style="margin-top:8px;color:var(--purple);background:var(--p-light);border-color:var(--p-border);" onclick="obReset()">🎓 Ver guía de bienvenida</button>
           </div>
 
         </div>
@@ -1301,9 +1302,9 @@ body {
         }));
         renderHistory();
         renderListingsPanel();
-        obCheckAndShow();
       }
     } catch {}
+    obCheckAndShow();
   }
 
   function updateUsageUI() {
@@ -1605,22 +1606,27 @@ body {
   // ══════════════════════════════
   var obCurrentStep = 1;
 
+  function obReset() {
+    localStorage.removeItem('propia_onboarded');
+    // Pre-llenar y mostrar desde paso 1
+    var first = (user.name || '').split(' ')[0] || '';
+    document.getElementById('obWelcomeTitle').textContent = first ? '¡Bienvenido, ' + first + '!' : '¡Bienvenido a PropIA!';
+    document.getElementById('obName').value      = user.name      || '';
+    document.getElementById('obBrokerage').value = user.brokerage || '';
+    obGoTo(1);
+    document.getElementById('obOverlay').classList.add('visible');
+  }
+
   function obCheckAndShow() {
-    // No mostrar si ya completó el onboarding
     if (localStorage.getItem('propia_onboarded')) return;
-    // No mostrar si ya tiene listings
     if (historyData && historyData.length > 0) {
       localStorage.setItem('propia_onboarded', 'true');
       return;
     }
-    // Personalizar título con el nombre del usuario
     var first = (user.name || '').split(' ')[0] || '';
-    var title = first ? '¡Bienvenido, ' + first + '!' : '¡Bienvenido a PropIA!';
-    document.getElementById('obWelcomeTitle').textContent = title;
-    // Pre-llenar campos del paso 2
+    document.getElementById('obWelcomeTitle').textContent = first ? '¡Bienvenido, ' + first + '!' : '¡Bienvenido a PropIA!';
     document.getElementById('obName').value      = user.name      || '';
     document.getElementById('obBrokerage').value = user.brokerage || '';
-    // Mostrar modal en paso 1
     obGoTo(1);
     document.getElementById('obOverlay').classList.add('visible');
   }
