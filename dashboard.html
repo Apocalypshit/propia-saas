@@ -1739,9 +1739,10 @@ body {
         + '<span class="lst-badge lb-n">📅 ' + formatDate(h.date) + '</span>'
         + '</div>'
         + '<div class="lst-card-actions">'
-        + '<button class="lst-btn-edit" onclick="shareListingLink(\\'" + h.id + "\\', event)">🔗 Compartir</button>'
-        + '<button class="lst-btn-edit" onclick="loadForEdit(\\'" + h.id + "\\')">✏️ Editar</button>'
+        + '<button class="lst-btn-edit" onclick="shareListingLink(&#39;' + h.id + '&#39;, event)">🔗 Compartir</button>'
+        + '<button class="lst-btn-edit" onclick="loadForEdit(&#39;' + h.id + '&#39;)">✏️ Editar</button>'
         + '</div></div>';
+ 
     }).join('');
     body.innerHTML = '<div class="lst-grid">' + cards + '</div>';
   }
