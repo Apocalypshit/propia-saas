@@ -1042,7 +1042,7 @@ body {
             <div class="usage-bar-wrap">
               <div class="usage-bar-header">
                 <div class="usage-bar-label">Listings</div>
-                <div class="usage-bar-val" id="usagePillText">0 / 5</div>
+                <div class="usage-bar-val" id="usagePillText">0 / 2</div>
               </div>
               <div class="usage-track"><div class="usage-fill" id="usageFill" style="width:0%"></div></div>
               <div class="usage-bar-sub" id="usageSub">5 disponibles este mes</div>
@@ -1458,7 +1458,7 @@ body {
   let user = {}; try { user = JSON.parse(userRaw) || {}; } catch { user = {}; }
   let selectedTone = 'lujoso';
   let editingListingId = null;  // null = nuevo listing, uuid = editando existente
-  let usageData = { listings: { used: 0, limit: 5 }, plan: 'free', planLabel: 'Gratis' };
+  let usageData = { listings: { used: 0, limit: 2 }, plan: 'free', planLabel: 'Gratis' };
   let historyData = [];
   let agentTimer = null;
 
@@ -1676,7 +1676,7 @@ body {
     // Plan
     document.getElementById('cfgPlanBadge').textContent  = (usageData.planLabel || 'Gratis');
     document.getElementById('cfgUsed').textContent       = usageData.listings?.used  || 0;
-    document.getElementById('cfgLimit').textContent      = usageData.listings?.limit || 5;
+    document.getElementById('cfgLimit').textContent      = usageData.listings?.limit || 2;
     // Miembro desde
     const raw = user.created_at || user.createdAt;
     if (raw) {
