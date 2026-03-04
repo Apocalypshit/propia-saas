@@ -7,7 +7,7 @@ const supabase = createClient(
 );
 
 const PLAN_LIMITS = {
-  free:       { listings: 5 },
+  free:       { listings: 2 },  // 2 listings totales por cuenta
   basic:      { listings: 50 },
   pro:        { listings: 200 },
   enterprise: { listings: 99999 }
@@ -30,13 +30,23 @@ module.exports = async function handler(req, res) {
     const { data: profile } = await supabase
       .from('profiles').select('plan, listings_used_this_month').eq('id', user.id).single();
 
+    // For free plan: count total listings ever created (not monthly)
+    let totalListings = 0;
+    if ((profile?.plan || 'free') === 'free') {
+      const { count } = await supabase
+        .from('listings')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+      totalListings = count || 0;
+    }
+
     const plan = profile?.plan || 'free';
-    const limit = PLAN_LIMITS[plan]?.listings || 5;
-    const used = profile?.listings_used_this_month || 0;
+    const limit = PLAN_LIMITS[plan]?.listings || 2;
+    const used = plan === 'free' ? totalListings : (profile?.listings_used_this_month || 0);
 
     if (!listingId && used >= limit) {
       return res.status(429).json({
-        error: `Alcanzaste tu límite de ${limit} listings este mes.`,
+        error: `Alcanzaste tu límite de ${limit} listings en el plan gratuito.`,
         upgrade: true, plan, used, limit
       });
     }
