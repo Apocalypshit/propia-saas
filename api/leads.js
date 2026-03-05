@@ -81,9 +81,11 @@ module.exports = async function handler(req, res) {
     try {
       const { id, status, notes } = req.body;
       if (!id) return res.status(400).json({ error: 'ID requerido.' });
+      const { follow_up_date } = req.body;
       const updates = {};
-      if (status) updates.status = status;
-      if (notes  !== undefined) updates.notes = notes;
+      if (status)         updates.status       = status;
+      if (notes !== undefined) updates.notes   = notes;
+      if (follow_up_date !== undefined) updates.follow_up_date = follow_up_date || null;
       const { error } = await supabase
         .from('leads')
         .update(updates)
