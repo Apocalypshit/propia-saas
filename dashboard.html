@@ -338,64 +338,90 @@ body {
 .lst-btn-pdf:hover{background:#10b981;color:white;border-color:transparent}
 .lst-btn-pdf:disabled{opacity:.5;cursor:not-allowed}
 
-/* ═══ CALENDARIO ═══ */
-.cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.cal-nav-btn{font-family:inherit;font-size:16px;background:var(--p-light);border:1.5px solid var(--p-border);color:var(--purple);border-radius:9px;width:36px;height:36px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
-.cal-nav-btn:hover{background:var(--purple);color:white}
-.cal-month-label{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.3px;flex:1;text-align:center}
-.cal-today-btn{font-family:inherit;font-size:12px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:9px;padding:6px 14px;cursor:pointer;transition:all .15s}
-.cal-today-btn:hover{background:var(--purple);color:white}
-.cal-legend{display:flex;align-items:center;gap:16px;margin-bottom:12px;font-size:12px;color:var(--muted)}
-.cal-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
-.cal-dot-listing{background:var(--purple)}
-.cal-dot-lead{background:var(--teal)}
-.cal-grid-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
-.cal-grid-header div{text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px}
-.cal-day{background:white;border:1.5px solid rgba(124,58,237,.08);border-radius:10px;min-height:64px;padding:6px;cursor:pointer;transition:all .15s;position:relative}
-.cal-day:hover{border-color:var(--purple);box-shadow:0 2px 8px rgba(124,58,237,.12)}
-.cal-day.today{border-color:var(--purple);background:var(--p-light)}
-.cal-day.other-month{opacity:.35}
-.cal-day.selected{border-color:var(--purple);background:var(--p-light);box-shadow:0 0 0 2px rgba(124,58,237,.2)}
-.cal-day-num{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px}
-.cal-day.today .cal-day-num{color:var(--purple)}
-.cal-day-dots{display:flex;flex-wrap:wrap;gap:2px}
-.cal-event-dot{width:6px;height:6px;border-radius:50%}
-.cal-events-list{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);overflow:hidden}
-.cal-ev-header{padding:12px 16px;background:var(--surface);border-bottom:1px solid rgba(124,58,237,.08);font-size:12px;font-weight:700;color:var(--muted)}
-.cal-ev-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(124,58,237,.05)}
-.cal-ev-item:last-child{border-bottom:none}
-.cal-ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.cal-ev-main{flex:1;min-width:0}
-.cal-ev-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cal-ev-sub{font-size:11px;color:var(--muted);margin-top:1px}
-.cal-ev-date{font-size:11px;color:var(--muted);white-space:nowrap}
-.cal-empty{padding:20px;text-align:center;font-size:13px;color:var(--muted)}
+/* ═══ CALENDARIO CRM ═══ */
+.crm-week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:20px}
+.crm-week-day{background:white;border:1.5px solid rgba(124,58,237,.08);border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s}
+.crm-week-day:hover{border-color:var(--purple)}
+.crm-week-day.selected{border-color:var(--purple);background:var(--p-light);box-shadow:0 0 0 2px rgba(124,58,237,.15)}
+.crm-week-day.today .crm-wd-num{color:var(--purple);font-weight:900}
+.crm-wd-name{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.crm-wd-num{font-size:18px;font-weight:800;color:var(--text);line-height:1;margin-bottom:4px}
+.crm-wd-dots{display:flex;justify-content:center;gap:3px;min-height:8px}
+.crm-wd-dot{width:5px;height:5px;border-radius:50%;background:var(--purple)}
+.crm-section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.crm-section-title{font-size:13px;font-weight:800;color:var(--text)}
+.crm-add-btn{font-family:inherit;font-size:12px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:9px;padding:7px 14px;cursor:pointer;transition:all .15s}
+.crm-add-btn:hover{background:var(--purple);color:white}
+.crm-tasks-list{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);overflow:hidden;margin-bottom:4px}
+.crm-task{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(124,58,237,.05);transition:background .15s}
+.crm-task:last-child{border-bottom:none}
+.crm-task:hover{background:var(--surface)}
+.crm-task-score{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0}
+.crm-task-main{flex:1;min-width:0}
+.crm-task-name{font-size:13px;font-weight:700;color:var(--text)}
+.crm-task-sub{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crm-task-date{font-size:11px;color:var(--muted);white-space:nowrap;margin-right:8px}
+.crm-task-actions{display:flex;gap:6px;flex-shrink:0}
+.crm-ta-btn{font-family:inherit;font-size:11px;font-weight:600;border-radius:7px;padding:5px 10px;cursor:pointer;border:1.5px solid transparent;transition:all .15s;white-space:nowrap}
+.crm-ta-done{color:#059669;background:rgba(5,150,105,.08);border-color:rgba(5,150,105,.2)}
+.crm-ta-done:hover{background:#059669;color:white}
+.crm-ta-edit{color:var(--purple);background:var(--p-light);border-color:var(--p-border)}
+.crm-ta-edit:hover{background:var(--purple);color:white}
+.crm-empty{padding:20px;text-align:center;font-size:13px;color:var(--muted)}
+.crm-overdue .crm-task{border-left:3px solid var(--red-text,#ef4444)}
 
-/* ═══ REPORTES ═══ */
+/* ═══ REPORTES CRM ═══ */
 .rep-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
 @media(max-width:700px){.rep-kpi-row{grid-template-columns:repeat(2,1fr)}}
 .rep-kpi{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);padding:18px;text-align:center}
-.rep-kpi-val{font-size:32px;font-weight:900;color:var(--purple);letter-spacing:-1px;line-height:1}
+.rep-kpi-val{font-size:30px;font-weight:900;color:var(--purple);letter-spacing:-1px;line-height:1}
 .rep-kpi-label{font-size:11px;color:var(--muted);margin-top:6px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
-.rep-charts-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:700px){.rep-charts-row{grid-template-columns:1fr}}
-.rep-chart-card{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);padding:18px}
-.rep-chart-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px}
+.rep-kpi-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.rep-two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.rep-two-col{grid-template-columns:1fr}}
 .rep-card{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);padding:18px}
+.rep-chart-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:12px}
+.rep-funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.rep-funnel-label{font-size:12px;font-weight:700;color:var(--text);width:90px;flex-shrink:0}
+.rep-funnel-bar-wrap{flex:1;background:rgba(124,58,237,.07);border-radius:20px;height:22px;overflow:hidden;position:relative}
+.rep-funnel-bar{height:100%;border-radius:20px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;transition:width .6s ease}
+.rep-funnel-bar span{font-size:10px;font-weight:700;color:white}
+.rep-funnel-pct{font-size:11px;font-weight:700;color:var(--muted);width:36px;text-align:right}
+.rep-source-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.rep-source-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.rep-source-label{font-size:12px;color:var(--text);flex:1}
+.rep-source-count{font-size:12px;font-weight:700;color:var(--purple)}
 .rep-score-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .rep-score-label{font-size:12px;font-weight:700;color:var(--text);width:80px;flex-shrink:0}
-.rep-score-bar-wrap{flex:1;background:rgba(124,58,237,.08);border-radius:20px;height:10px;overflow:hidden}
+.rep-score-bar-wrap{flex:1;background:rgba(124,58,237,.07);border-radius:20px;height:10px;overflow:hidden}
 .rep-score-bar{height:100%;border-radius:20px;transition:width .6s ease}
 .rep-score-count{font-size:12px;font-weight:700;color:var(--muted);width:24px;text-align:right}
-.rep-listing-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(124,58,237,.06)}
-.rep-listing-row:last-child{border-bottom:none}
-.rep-listing-addr{font-size:13px;font-weight:600;color:var(--text)}
-.rep-listing-price{font-size:13px;font-weight:700;color:var(--purple)}
-.rep-listing-date{font-size:11px;color:var(--muted);margin-top:2px}
+.rep-proj-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(124,58,237,.06)}
+.rep-proj-row:last-child{border-bottom:none}
+.rep-proj-label{font-size:12px;color:var(--muted)}
+.rep-proj-val{font-size:15px;font-weight:800;color:var(--text)}
+.rep-proj-val.green{color:#059669}
+.rep-proj-val.purple{color:var(--purple)}
 .rep-empty{text-align:center;padding:20px;font-size:13px;color:var(--muted)}
 
-/* ═══ PWA INSTALL BANNER ═══ */
+/* ═══ FOLLOW UP MODAL ═══ */
+.crm-modal-ov{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+.crm-modal-ov.open{display:flex}
+.crm-modal{background:white;border-radius:20px;width:100%;max-width:440px;box-shadow:0 24px 60px rgba(124,58,237,.2);animation:slideUp .25s ease}
+.crm-modal-hd{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(124,58,237,.08)}
+.crm-modal-title{font-size:15px;font-weight:800;color:var(--text)}
+.crm-modal-close{background:none;border:1.5px solid rgba(124,58,237,.15);color:var(--muted);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.crm-modal-close:hover{color:var(--red-text,#ef4444);border-color:rgba(239,68,68,.3)}
+.crm-modal-body{padding:22px}
+.crm-modal-field{margin-bottom:16px}
+.crm-modal-label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.crm-modal-input{width:100%;font-family:inherit;font-size:13px;background:var(--surface);border:1.5px solid rgba(124,58,237,.12);border-radius:10px;padding:10px 14px;color:var(--text);outline:none;transition:border-color .2s;resize:vertical}
+.crm-modal-input:focus{border-color:var(--purple)}
+.crm-modal-save{width:100%;font-family:inherit;font-size:14px;font-weight:700;background:linear-gradient(135deg,var(--purple),#4c1d95);color:white;border:none;border-radius:12px;padding:13px;cursor:pointer;box-shadow:0 4px 16px rgba(124,58,237,.3);transition:all .18s}
+.crm-modal-save:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(124,58,237,.4)}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══ PWA INSTALL BANNER ═══ *//* ═══ PWA INSTALL BANNER ═══ */
 .pwa-banner{
   position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);
   z-index:9999;background:white;border-radius:18px;
@@ -1270,61 +1296,105 @@ body {
       </div>
     </div>
 
-<!-- ═══ CALENDARIO ═══ -->
+<!-- ═══ CALENDARIO CRM ═══ -->
     <div class="panel" id="panel-calendario">
       <div class="panel-header">
-        <div class="panel-title">📅 Calendario</div>
-        <div class="panel-sub">Listings y leads organizados por fecha</div>
+        <div class="panel-title">📅 Calendario de Seguimiento</div>
+        <div class="panel-sub">Programa y gestiona tus contactos con leads</div>
       </div>
-      <div class="cal-nav">
-        <button class="cal-nav-btn" onclick="calPrev()">←</button>
-        <div class="cal-month-label" id="calMonthLabel"></div>
-        <button class="cal-nav-btn" onclick="calNext()">→</button>
-        <button class="cal-today-btn" onclick="calGoToday()">Hoy</button>
+
+      <!-- Week strip -->
+      <div class="crm-week-strip" id="crmWeekStrip"></div>
+
+      <!-- Today's tasks -->
+      <div class="crm-section-hd">
+        <div class="crm-section-title" id="crmDayTitle">Hoy</div>
+        <button class="crm-add-btn" onclick="openFollowUpModal(null)">+ Programar seguimiento</button>
       </div>
-      <div class="cal-legend">
-        <span class="cal-dot cal-dot-listing"></span>Listing
-        <span class="cal-dot cal-dot-lead"></span>Lead
+      <div class="crm-tasks-list" id="crmDayTasks"></div>
+
+      <!-- Upcoming -->
+      <div class="crm-section-hd" style="margin-top:20px">
+        <div class="crm-section-title">📆 Próximos 7 días</div>
       </div>
-      <div class="cal-grid-header">
-        <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+      <div class="crm-tasks-list" id="crmUpcoming"></div>
+
+      <!-- Overdue -->
+      <div class="crm-section-hd" style="margin-top:20px">
+        <div class="crm-section-title" style="color:var(--red-text)">⚠️ Vencidos</div>
       </div>
-      <div class="cal-grid" id="calGrid"></div>
-      <div class="cal-events-list" id="calEventsList"></div>
+      <div class="crm-tasks-list" id="crmOverdue"></div>
     </div>
 
-    <!-- ═══ REPORTES ═══ -->
+    <!-- ═══ REPORTES CRM ═══ -->
     <div class="panel" id="panel-reportes">
       <div class="panel-header">
-        <div class="panel-title">📊 Reportes</div>
-        <div class="panel-sub">Métricas de tu actividad en PropIA</div>
+        <div class="panel-title">📊 Reportes CRM</div>
+        <div class="panel-sub">Métricas de conversión y rendimiento de tu pipeline</div>
       </div>
 
       <!-- KPI row -->
       <div class="rep-kpi-row" id="repKpiRow"></div>
 
-      <!-- Charts row -->
-      <div class="rep-charts-row">
-        <div class="rep-chart-card">
-          <div class="rep-chart-title">Listings por mes</div>
-          <canvas id="chartListings" height="180"></canvas>
+      <!-- Funnel -->
+      <div class="rep-two-col">
+        <div class="rep-card">
+          <div class="rep-chart-title">🎯 Embudo de conversión</div>
+          <div id="repFunnel"></div>
         </div>
-        <div class="rep-chart-card">
-          <div class="rep-chart-title">Leads por mes</div>
-          <canvas id="chartLeads" height="180"></canvas>
+        <div class="rep-card">
+          <div class="rep-chart-title">📡 Fuente de leads</div>
+          <div id="repSources"></div>
         </div>
       </div>
 
-      <!-- Lead score breakdown -->
-      <div class="rep-card" style="margin-top:14px">
-        <div class="rep-chart-title" style="margin-bottom:14px">Distribución de leads por nivel</div>
-        <div id="repScoreBreakdown"></div>
+      <!-- Listings + Leads charts -->
+      <div class="rep-two-col" style="margin-top:14px">
+        <div class="rep-card">
+          <div class="rep-chart-title">🏠 Listings por mes</div>
+          <canvas id="chartListings" height="160"></canvas>
+        </div>
+        <div class="rep-card">
+          <div class="rep-chart-title">📥 Leads por mes</div>
+          <canvas id="chartLeads" height="160"></canvas>
+        </div>
       </div>
 
-      <!-- Top listings -->
-      <div class="rep-card" style="margin-top:14px">
-        <div class="rep-chart-title" style="margin-bottom:14px">Tus listings más recientes</div>
-        <div id="repTopListings"></div>
+      <!-- Score dist + Projection -->
+      <div class="rep-two-col" style="margin-top:14px">
+        <div class="rep-card">
+          <div class="rep-chart-title">🌡️ Temperatura de leads</div>
+          <div id="repScoreBreakdown"></div>
+        </div>
+        <div class="rep-card">
+          <div class="rep-chart-title">💰 Proyección de negocio</div>
+          <div id="repProjection"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ FOLLOW UP MODAL ═══ -->
+    <div class="crm-modal-ov" id="followUpModal">
+      <div class="crm-modal">
+        <div class="crm-modal-hd">
+          <div class="crm-modal-title">📅 Programar seguimiento</div>
+          <button class="crm-modal-close" onclick="closeFollowUpModal()">✕</button>
+        </div>
+        <div class="crm-modal-body">
+          <div class="crm-modal-field">
+            <label class="crm-modal-label">Lead</label>
+            <select id="fuLeadSelect" class="crm-modal-input"></select>
+          </div>
+          <div class="crm-modal-field">
+            <label class="crm-modal-label">Fecha de seguimiento</label>
+            <input type="date" id="fuDate" class="crm-modal-input"/>
+          </div>
+          <div class="crm-modal-field">
+            <label class="crm-modal-label">Nota (opcional)</label>
+            <textarea id="fuNote" class="crm-modal-input" rows="3" placeholder="Ej: Llamar para confirmar visita..."></textarea>
+          </div>
+          <button class="crm-modal-save" onclick="saveFollowUp()">Guardar seguimiento</button>
+        </div>
       </div>
     </div>
 
@@ -2631,263 +2701,351 @@ body {
   });
 
   // ══════════════════════════════════════════════
-  //  CALENDARIO
+  //  CALENDARIO CRM
   // ══════════════════════════════════════════════
-  var calYear  = new Date().getFullYear();
-  var calMonth = new Date().getMonth();
-  var calSelectedDay = null;
+  var calSelectedDate = new Date();
+  var followUpTarget  = null;
 
-  function calInit() { renderCal(); }
-
-  function calPrev() { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCal(); }
-  function calNext() { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCal(); }
-  function calGoToday() { calYear=new Date().getFullYear(); calMonth=new Date().getMonth(); calSelectedDay=null; renderCal(); }
-
-  function getCalEvents() {
-    var events = [];
-    // Listings
-    (historyData||[]).forEach(function(h) {
-      var d = new Date(h.date || h.created_at);
-      if (!isNaN(d)) events.push({ date:d, type:'listing', label: h.address || 'Listing', sub: h.price || '' });
-    });
-    // Leads
-    (leadsData||[]).forEach(function(l) {
-      var d = new Date(l.created_at);
-      if (!isNaN(d)) events.push({ date:d, type:'lead', label: l.name || 'Lead', sub: 'Score: '+(l.score||'—')+'/10' });
-    });
-    return events;
+  function calInit() {
+    renderWeekStrip();
+    renderCrmTasks();
   }
 
-  function renderCal() {
-    var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-    document.getElementById('calMonthLabel').textContent = months[calMonth] + ' ' + calYear;
-
-    var events  = getCalEvents();
+  function renderWeekStrip() {
+    var strip   = document.getElementById('crmWeekStrip');
+    var days    = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
     var today   = new Date();
-    var first   = new Date(calYear, calMonth, 1);
-    var last    = new Date(calYear, calMonth+1, 0);
-    var startDow= first.getDay();
-    var grid    = document.getElementById('calGrid');
-    grid.innerHTML = '';
+    var html    = '';
+    for (var i = 0; i < 7; i++) {
+      var d   = new Date(today);
+      d.setDate(today.getDate() - today.getDay() + i);
+      var ds  = d.toDateString();
+      var isSel   = ds === calSelectedDate.toDateString();
+      var isToday = ds === today.toDateString();
+      var dayLeads = (leadsData||[]).filter(function(l){
+        return l.follow_up_date && new Date(l.follow_up_date).toDateString() === ds;
+      }).length;
+      html += '<div class="crm-week-day' + (isSel?' selected':'') + (isToday?' today':'') + '" onclick="calSelectDay('+d.getTime()+')">'
+        + '<div class="crm-wd-name">'+days[d.getDay()]+'</div>'
+        + '<div class="crm-wd-num">'+d.getDate()+'</div>'
+        + '<div class="crm-wd-dots">'+(dayLeads?'<div class="crm-wd-dot"></div>':'')+'</div>'
+        + '</div>';
+    }
+    strip.innerHTML = html;
 
-    // Prev month padding
-    for (var p = 0; p < startDow; p++) {
-      var pd = new Date(calYear, calMonth, -(startDow-1-p));
-      grid.appendChild(makeDayCell(pd, events, true));
-    }
-    // Current month days
-    for (var d = 1; d <= last.getDate(); d++) {
-      var dd = new Date(calYear, calMonth, d);
-      grid.appendChild(makeDayCell(dd, events, false));
-    }
-    // Next month padding
-    var remaining = 42 - (startDow + last.getDate());
-    for (var n = 1; n <= remaining; n++) {
-      var nd = new Date(calYear, calMonth+1, n);
-      grid.appendChild(makeDayCell(nd, events, true));
-    }
-
-    // Events list for selected day or all month
-    renderCalEventsList(events);
+    // Update day title
+    var months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    var today2 = new Date();
+    var title = calSelectedDate.toDateString() === today2.toDateString()
+      ? 'Hoy — ' + calSelectedDate.getDate() + ' de ' + months[calSelectedDate.getMonth()]
+      : calSelectedDate.getDate() + ' de ' + months[calSelectedDate.getMonth()];
+    document.getElementById('crmDayTitle').textContent = title;
   }
 
-  function makeDayCell(date, events, otherMonth) {
-    var cell = document.createElement('div');
-    cell.className = 'cal-day' + (otherMonth ? ' other-month' : '');
-    var today = new Date();
-    if (date.toDateString() === today.toDateString()) cell.classList.add('today');
-    if (calSelectedDay && date.toDateString() === calSelectedDay.toDateString()) cell.classList.add('selected');
+  function calSelectDay(ts) {
+    calSelectedDate = new Date(ts);
+    renderWeekStrip();
+    renderCrmTasks();
+  }
 
-    var dayEvents = events.filter(function(e) { return e.date.toDateString() === date.toDateString(); });
+  function renderCrmTasks() {
+    var leads    = leadsData || [];
+    var today    = new Date(); today.setHours(0,0,0,0);
+    var selDate  = new Date(calSelectedDate); selDate.setHours(0,0,0,0);
 
-    cell.innerHTML = '<div class="cal-day-num">' + date.getDate() + '</div>'
-      + '<div class="cal-day-dots">'
-      + dayEvents.slice(0,6).map(function(e) {
-          return '<div class="cal-event-dot" style="background:'+(e.type==='listing'?'var(--purple)':'var(--teal)')+'"></div>';
-        }).join('')
+    // Today / selected day tasks
+    var dayTasks = leads.filter(function(l) {
+      if (!l.follow_up_date) return false;
+      var fd = new Date(l.follow_up_date); fd.setHours(0,0,0,0);
+      return fd.getTime() === selDate.getTime();
+    });
+    document.getElementById('crmDayTasks').innerHTML = dayTasks.length
+      ? dayTasks.map(crmTaskHtml).join('')
+      : '<div class="crm-empty">Sin seguimientos programados para este día.</div>';
+
+    // Upcoming 7 days (excluding today)
+    var upcoming = leads.filter(function(l) {
+      if (!l.follow_up_date) return false;
+      var fd = new Date(l.follow_up_date); fd.setHours(0,0,0,0);
+      var diff = (fd - today) / 86400000;
+      return diff > 0 && diff <= 7;
+    }).sort(function(a,b){ return new Date(a.follow_up_date)-new Date(b.follow_up_date); });
+    document.getElementById('crmUpcoming').innerHTML = upcoming.length
+      ? upcoming.map(crmTaskHtml).join('')
+      : '<div class="crm-empty">Sin seguimientos en los próximos 7 días.</div>';
+
+    // Overdue
+    var overdue = leads.filter(function(l) {
+      if (!l.follow_up_date || l.status === 'cerrado') return false;
+      var fd = new Date(l.follow_up_date); fd.setHours(0,0,0,0);
+      return fd < today;
+    }).sort(function(a,b){ return new Date(a.follow_up_date)-new Date(b.follow_up_date); });
+    var overdueEl = document.getElementById('crmOverdue');
+    overdueEl.className = 'crm-tasks-list' + (overdue.length ? ' crm-overdue' : '');
+    overdueEl.innerHTML = overdue.length
+      ? overdue.map(crmTaskHtml).join('')
+      : '<div class="crm-empty">Sin seguimientos vencidos. ¡Bien hecho! ✅</div>';
+  }
+
+  function crmTaskHtml(l) {
+    var sc    = l.score || 5;
+    var bg    = sc>=8 ? 'rgba(124,58,237,.12)' : sc>=5 ? 'rgba(45,212,191,.12)' : 'rgba(107,114,128,.10)';
+    var color = sc>=8 ? '#7c3aed' : sc>=5 ? '#0d9488' : '#6b7280';
+    var fd    = l.follow_up_date ? new Date(l.follow_up_date).toLocaleDateString('es-MX',{day:'2-digit',month:'short'}) : '';
+    return '<div class="crm-task">'
+      + '<div class="crm-task-score" style="background:'+bg+';color:'+color+'">'+sc+'</div>'
+      + '<div class="crm-task-main">'
+        + '<div class="crm-task-name">'+esc(l.name||'Lead')+'</div>'
+        + '<div class="crm-task-sub">'+(l.notes||l.interest||l.level||'')+'</div>'
+      + '</div>'
+      + '<div class="crm-task-date">'+fd+'</div>'
+      + '<div class="crm-task-actions">'
+        + '<button class="crm-ta-btn crm-ta-edit" onclick="openFollowUpModal(&quot;'+l.id+'&quot;)">✏️ Editar</button>'
+        + (l.status!=='cerrado' ? '<button class="crm-ta-btn crm-ta-done" onclick="markLeadDone(&quot;'+l.id+'&quot;)">✓ Cerrar</button>' : '')
+      + '</div>'
       + '</div>';
-
-    var captured = new Date(date);
-    cell.onclick = function() {
-      calSelectedDay = captured;
-      renderCal();
-    };
-    return cell;
   }
 
-  function renderCalEventsList(events) {
-    var list = document.getElementById('calEventsList');
-    var filtered = calSelectedDay
-      ? events.filter(function(e){ return e.date.toDateString() === calSelectedDay.toDateString(); })
-      : events.filter(function(e){ return e.date.getMonth()===calMonth && e.date.getFullYear()===calYear; })
-              .sort(function(a,b){ return b.date-a.date; });
+  function openFollowUpModal(leadId) {
+    followUpTarget = leadId;
+    var modal = document.getElementById('followUpModal');
+    var sel   = document.getElementById('fuLeadSelect');
+    // Populate lead select
+    sel.innerHTML = (leadsData||[])
+      .filter(function(l){ return l.status !== 'cerrado'; })
+      .map(function(l){
+        return '<option value="'+l.id+'"'+(l.id===leadId?' selected':'')+'>'+esc(l.name||'Lead')+' ('+esc(l.level||'')+')</option>';
+      }).join('');
 
-    var headerTxt = calSelectedDay
-      ? 'Eventos del ' + calSelectedDay.toLocaleDateString('es-MX',{day:'numeric',month:'long'})
-      : 'Todos los eventos de este mes (' + filtered.length + ')';
-
-    if (!filtered.length) {
-      list.innerHTML = '<div class="cal-ev-header">'+headerTxt+'</div><div class="cal-empty">Sin eventos este '+(calSelectedDay?'día':'mes')+'.</div>';
-      return;
+    // Pre-fill date
+    if (leadId) {
+      var lead = (leadsData||[]).find(function(l){ return l.id===leadId; });
+      if (lead && lead.follow_up_date) {
+        document.getElementById('fuDate').value = lead.follow_up_date.split('T')[0];
+        document.getElementById('fuNote').value = lead.notes || '';
+      } else {
+        document.getElementById('fuDate').value = '';
+        document.getElementById('fuNote').value = '';
+      }
+    } else {
+      // Default to selected calendar day
+      var d = calSelectedDate;
+      document.getElementById('fuDate').value = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      document.getElementById('fuNote').value = '';
     }
-    list.innerHTML = '<div class="cal-ev-header">'+headerTxt+'</div>'
-      + filtered.map(function(e) {
-          return '<div class="cal-ev-item">'
-            + '<div class="cal-ev-dot" style="background:'+(e.type==='listing'?'var(--purple)':'var(--teal)')+'"></div>'
-            + '<div class="cal-ev-main">'
-              + '<div class="cal-ev-name">'+(e.type==='listing'?'🏠':'👤')+' '+esc(e.label)+'</div>'
-              + '<div class="cal-ev-sub">'+esc(e.sub)+'</div>'
-            + '</div>'
-            + '<div class="cal-ev-date">'+e.date.toLocaleDateString('es-MX',{day:'2-digit',month:'short'})+'</div>'
-            + '</div>';
-        }).join('');
+    modal.classList.add('open');
   }
+
+  function closeFollowUpModal() {
+    document.getElementById('followUpModal').classList.remove('open');
+    followUpTarget = null;
+  }
+
+  async function saveFollowUp() {
+    var leadId = document.getElementById('fuLeadSelect').value;
+    var date   = document.getElementById('fuDate').value;
+    var note   = document.getElementById('fuNote').value.trim();
+    if (!leadId || !date) { alert('Selecciona un lead y una fecha.'); return; }
+    try {
+      var token = localStorage.getItem('propia_token');
+      await fetch('/api/leads', {
+        method: 'PATCH',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
+        body: JSON.stringify({ id: leadId, follow_up_date: date, notes: note || undefined })
+      });
+      // Update local data
+      var lead = leadsData.find(function(l){ return l.id===leadId; });
+      if (lead) { lead.follow_up_date = date; if(note) lead.notes = note; }
+      closeFollowUpModal();
+      renderWeekStrip();
+      renderCrmTasks();
+    } catch(e) { alert('Error guardando. Intenta de nuevo.'); }
+  }
+
+  async function markLeadDone(leadId) {
+    if (!confirm('¿Marcar este lead como cerrado?')) return;
+    var token = localStorage.getItem('propia_token');
+    await fetch('/api/leads', {
+      method: 'PATCH',
+      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
+      body: JSON.stringify({ id: leadId, status: 'cerrado' })
+    });
+    var lead = leadsData.find(function(l){ return l.id===leadId; });
+    if (lead) lead.status = 'cerrado';
+    renderCrmTasks();
+  }
+
+  // Close modal on overlay click
+  document.getElementById('followUpModal').addEventListener('click', function(e){
+    if (e.target === this) closeFollowUpModal();
+  });
 
   // ══════════════════════════════════════════════
-  //  REPORTES
+  //  REPORTES CRM
   // ══════════════════════════════════════════════
   var repChartsBuilt = false;
 
   function renderReportes() {
     var listings = historyData || [];
     var leads    = leadsData   || [];
+    var today    = new Date();
 
     // ── KPIs ─────────────────────────────────
-    var avgScore = leads.length
-      ? Math.round(leads.reduce(function(s,l){ return s+(l.score||0); },0) / leads.length * 10)/10
-      : 0;
-    var hotLeads = leads.filter(function(l){ return (l.score||0) >= 8; }).length;
-    var thisMonth = new Date().getMonth();
-    var thisYear  = new Date().getFullYear();
-    var lstThisMonth = listings.filter(function(h){
-      var d = new Date(h.date||h.created_at);
-      return d.getMonth()===thisMonth && d.getFullYear()===thisYear;
-    }).length;
+    var closed    = leads.filter(function(l){ return l.status==='cerrado'; }).length;
+    var hotLeads  = leads.filter(function(l){ return (l.score||0)>=8; }).length;
+    var convRate  = leads.length ? Math.round((closed/leads.length)*100) : 0;
+    var avgScore  = leads.length ? (leads.reduce(function(s,l){ return s+(l.score||0); },0)/leads.length).toFixed(1) : 0;
+    var withFollowUp = leads.filter(function(l){ return l.follow_up_date && l.status!=='cerrado'; }).length;
 
     document.getElementById('repKpiRow').innerHTML = [
-      { val: listings.length, label: 'Listings totales' },
-      { val: leads.length,    label: 'Leads totales' },
-      { val: avgScore + '/10', label: 'Score promedio' },
-      { val: hotLeads,        label: '🔥 Leads calientes' }
-    ].map(function(k) {
-      return '<div class="rep-kpi"><div class="rep-kpi-val">'+k.val+'</div><div class="rep-kpi-label">'+k.label+'</div></div>';
+      { val: leads.length,    label: 'Total leads',       sub: hotLeads+' calientes 🔥' },
+      { val: closed,          label: 'Cerrados',          sub: convRate+'% conversión' },
+      { val: avgScore+'/10',  label: 'Score promedio',    sub: 'Calificación IA' },
+      { val: withFollowUp,    label: 'Con seguimiento',   sub: 'programado 📅' }
+    ].map(function(k){
+      return '<div class="rep-kpi">'
+        + '<div class="rep-kpi-val">'+k.val+'</div>'
+        + '<div class="rep-kpi-label">'+k.label+'</div>'
+        + '<div class="rep-kpi-sub">'+k.sub+'</div>'
+        + '</div>';
     }).join('');
+
+    // ── Funnel ────────────────────────────────
+    var stages = [
+      { key:'nuevo',           label:'Nuevos',      color:'#7c3aed' },
+      { key:'contactado',      label:'Contactados', color:'#6366f1' },
+      { key:'calificado',      label:'Calificados', color:'#2dd4bf' },
+      { key:'no_calificado',   label:'No calif.',   color:'#e5e7eb' },
+      { key:'cerrado',         label:'Cerrados',    color:'#059669' }
+    ];
+    var maxStage = Math.max.apply(null, stages.map(function(st){ return leads.filter(function(l){ return l.status===st.key; }).length; })) || 1;
+    document.getElementById('repFunnel').innerHTML = stages.map(function(st) {
+      var count = leads.filter(function(l){ return l.status===st.key; }).length;
+      var pct   = Math.round((count/maxStage)*100);
+      var pctTotal = leads.length ? Math.round((count/leads.length)*100) : 0;
+      return '<div class="rep-funnel-row">'
+        + '<div class="rep-funnel-label">'+st.label+'</div>'
+        + '<div class="rep-funnel-bar-wrap">'
+          + '<div class="rep-funnel-bar" style="width:'+pct+'%;background:'+st.color+'">'
+            + (count>0?'<span>'+count+'</span>':'')
+          + '</div>'
+        + '</div>'
+        + '<div class="rep-funnel-pct">'+pctTotal+'%</div>'
+        + '</div>';
+    }).join('') || '<div class="rep-empty">Sin leads aún.</div>';
+
+    // ── Sources ───────────────────────────────
+    var sourceCounts = {};
+    leads.forEach(function(l){ var src=l.source||'Manual'; sourceCounts[src]=(sourceCounts[src]||0)+1; });
+    var srcColors = ['#7c3aed','#2dd4bf','#f59e0b','#ef4444','#6366f1','#10b981'];
+    document.getElementById('repSources').innerHTML = Object.entries(sourceCounts).length
+      ? Object.entries(sourceCounts).sort(function(a,b){ return b[1]-a[1]; }).map(function(e,i){
+          var pct = leads.length ? Math.round(e[1]/leads.length*100) : 0;
+          return '<div class="rep-source-row">'
+            + '<div class="rep-source-dot" style="background:'+srcColors[i%srcColors.length]+'"></div>'
+            + '<div class="rep-source-label">'+esc(e[0])+'</div>'
+            + '<div class="rep-source-count">'+e[1]+' ('+pct+'%)</div>'
+            + '</div>';
+        }).join('')
+      : '<div class="rep-empty">Sin datos de fuente.</div>';
 
     // ── Charts ────────────────────────────────
     if (!repChartsBuilt) {
       repChartsBuilt = true;
-      buildBarChart('chartListings', getMonthlyData(listings, 'date'), 'rgba(124,58,237,', '#7c3aed');
-      buildBarChart('chartLeads',    getMonthlyData(leads,    'created_at'), 'rgba(45,212,191,', '#2dd4bf');
+      buildBarChart('chartListings', getMonthlyData(listings,'date'), 'rgba(124,58,237,','#7c3aed');
+      buildBarChart('chartLeads',    getMonthlyData(leads,'created_at'), 'rgba(45,212,191,','#2dd4bf');
     }
 
     // ── Score breakdown ───────────────────────
-    var levels = { 'Caliente 🔥 (8-10)': 0, 'Tibio ⚡ (5-7)': 0, 'Frío ❄️ (1-4)': 0 };
-    leads.forEach(function(l) {
-      var sc = l.score || 0;
-      if (sc >= 8) levels['Caliente 🔥 (8-10)']++;
-      else if (sc >= 5) levels['Tibio ⚡ (5-7)']++;
-      else levels['Frío ❄️ (1-4)']++;
-    });
-    var colors = { 'Caliente 🔥 (8-10)':'#7c3aed', 'Tibio ⚡ (5-7)':'#2dd4bf', 'Frío ❄️ (1-4)':'#e5e7eb' };
-    var maxLevel = Math.max.apply(null, Object.values(levels)) || 1;
-    document.getElementById('repScoreBreakdown').innerHTML = Object.entries(levels).map(function(e) {
-      var pct = Math.round((e[1]/maxLevel)*100);
+    var levels = [
+      { label:'Caliente 🔥', min:8, max:10, color:'#7c3aed' },
+      { label:'Tibio ⚡',    min:5, max:7,  color:'#2dd4bf' },
+      { label:'Frío ❄️',    min:0, max:4,  color:'#e5e7eb' }
+    ];
+    var maxLvl = Math.max.apply(null, levels.map(function(lv){
+      return leads.filter(function(l){ var sc=l.score||0; return sc>=lv.min&&sc<=lv.max; }).length;
+    })) || 1;
+    document.getElementById('repScoreBreakdown').innerHTML = levels.map(function(lv) {
+      var count = leads.filter(function(l){ var sc=l.score||0; return sc>=lv.min&&sc<=lv.max; }).length;
+      var pct   = Math.round((count/maxLvl)*100);
       return '<div class="rep-score-row">'
-        + '<div class="rep-score-label">'+e[0].split('(')[0].trim()+'</div>'
-        + '<div class="rep-score-bar-wrap"><div class="rep-score-bar" style="width:'+pct+'%;background:'+colors[e[0]]+'"></div></div>'
-        + '<div class="rep-score-count">'+e[1]+'</div>'
+        + '<div class="rep-score-label">'+lv.label+'</div>'
+        + '<div class="rep-score-bar-wrap"><div class="rep-score-bar" style="width:'+pct+'%;background:'+lv.color+'"></div></div>'
+        + '<div class="rep-score-count">'+count+'</div>'
         + '</div>';
-    }).join('') || '<div class="rep-empty">Sin leads aún.</div>';
+    }).join('') || '<div class="rep-empty">Sin leads.</div>';
 
-    // ── Top listings ──────────────────────────
-    var recent = listings.slice(0, 8);
-    document.getElementById('repTopListings').innerHTML = recent.length
-      ? recent.map(function(h) {
-          return '<div class="rep-listing-row">'
-            + '<div><div class="rep-listing-addr">🏠 '+esc(h.address||'—')+'</div>'
-            + '<div class="rep-listing-date">'+formatDate(h.date||h.created_at)+'</div></div>'
-            + '<div class="rep-listing-price">'+esc(h.price||'—')+'</div>'
-            + '</div>';
-        }).join('')
-      : '<div class="rep-empty">Sin listings aún.</div>';
+    // ── Projection ────────────────────────────
+    var avgCommission = 8000; // USD promedio comisión en USA
+    var potential  = hotLeads * avgCommission;
+    var projected  = Math.round(potential * 0.25); // 25% conversión esperada
+    var thisMonthLeads = leads.filter(function(l){
+      var d=new Date(l.created_at);
+      return d.getMonth()===today.getMonth()&&d.getFullYear()===today.getFullYear();
+    }).length;
+    document.getElementById('repProjection').innerHTML = [
+      { label:'Leads calientes activos',    val: hotLeads,                    cls:'' },
+      { label:'Comisión promedio estimada', val: '$'+avgCommission.toLocaleString(), cls:'' },
+      { label:'Potencial bruto pipeline',   val: '$'+potential.toLocaleString(),  cls:'purple' },
+      { label:'Proyección realista (25%)',  val: '$'+projected.toLocaleString(),  cls:'green' },
+      { label:'Leads nuevos este mes',      val: thisMonthLeads,              cls:'' }
+    ].map(function(r){
+      return '<div class="rep-proj-row">'
+        + '<div class="rep-proj-label">'+r.label+'</div>'
+        + '<div class="rep-proj-val '+r.cls+'">'+r.val+'</div>'
+        + '</div>';
+    }).join('');
   }
 
   function getMonthlyData(items, dateField) {
     var now    = new Date();
-    var labels = [];
-    var counts = [];
+    var labels = [], counts = [];
     var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
     for (var i = 5; i >= 0; i--) {
       var d = new Date(now.getFullYear(), now.getMonth()-i, 1);
       labels.push(months[d.getMonth()]);
-      var count = items.filter(function(item) {
-        var id = new Date(item[dateField]);
+      counts.push(items.filter(function(item){
+        var id = new Date(item[dateField]||item.created_at);
         return id.getMonth()===d.getMonth() && id.getFullYear()===d.getFullYear();
-      }).length;
-      counts.push(count);
+      }).length);
     }
-    return { labels: labels, counts: counts };
+    return { labels:labels, counts:counts };
   }
 
   function buildBarChart(canvasId, data, colorBase, borderColor) {
     var canvas = document.getElementById(canvasId);
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
-    var W = canvas.offsetWidth || 300;
-    var H = 180;
-    canvas.width  = W;
-    canvas.height = H;
-
-    var max    = Math.max.apply(null, data.counts) || 1;
-    var n      = data.counts.length;
-    var padL   = 30, padB = 24, padT = 10, padR = 10;
-    var chartW = W - padL - padR;
-    var chartH = H - padB - padT;
-    var barW   = Math.floor(chartW / n * 0.55);
-    var gap    = chartW / n;
-
-    ctx.clearRect(0, 0, W, H);
-
-    // Grid lines
-    for (var g = 0; g <= 4; g++) {
-      var gy = padT + chartH - (g/4)*chartH;
-      ctx.strokeStyle = 'rgba(124,58,237,.07)';
-      ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(W-padR, gy); ctx.stroke();
-      ctx.fillStyle = '#9ca3af';
-      ctx.font = '10px Inter,sans-serif';
-      ctx.textAlign = 'right';
-      ctx.fillText(Math.round(max*g/4), padL-4, gy+3);
+    var W = canvas.offsetWidth || 300; var H = 160;
+    canvas.width=W; canvas.height=H;
+    var max=Math.max.apply(null,data.counts)||1;
+    var n=data.counts.length;
+    var padL=28,padB=22,padT=10,padR=8;
+    var chartW=W-padL-padR, chartH=H-padB-padT;
+    var barW=Math.floor(chartW/n*0.55), gap=chartW/n;
+    ctx.clearRect(0,0,W,H);
+    for(var g=0;g<=4;g++){
+      var gy=padT+chartH-(g/4)*chartH;
+      ctx.strokeStyle='rgba(124,58,237,.06)'; ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(padL,gy);ctx.lineTo(W-padR,gy);ctx.stroke();
+      ctx.fillStyle='#9ca3af';ctx.font='9px Inter,sans-serif';ctx.textAlign='right';
+      ctx.fillText(Math.round(max*g/4),padL-3,gy+3);
     }
-
-    // Bars
-    data.counts.forEach(function(v, i) {
-      var bH  = (v/max) * chartH;
-      var bX  = padL + gap*i + (gap-barW)/2;
-      var bY  = padT + chartH - bH;
-      var grad = ctx.createLinearGradient(0, bY, 0, bY+bH);
-      grad.addColorStop(0, colorBase+'0.9)');
-      grad.addColorStop(1, colorBase+'0.4)');
-      ctx.fillStyle = grad;
+    data.counts.forEach(function(v,i){
+      var bH=(v/max)*chartH, bX=padL+gap*i+(gap-barW)/2, bY=padT+chartH-bH;
+      var grad=ctx.createLinearGradient(0,bY,0,bY+bH);
+      grad.addColorStop(0,colorBase+'0.85)'); grad.addColorStop(1,colorBase+'0.35)');
+      ctx.fillStyle=grad;
       ctx.beginPath();
-      ctx.roundRect ? ctx.roundRect(bX, bY, barW, bH, 4) : ctx.rect(bX, bY, barW, bH);
+      if(ctx.roundRect){ctx.roundRect(bX,bY,barW,Math.max(bH,2),3);}else{ctx.rect(bX,bY,barW,Math.max(bH,2));}
       ctx.fill();
-      // Value label
-      if (v > 0) {
-        ctx.fillStyle = borderColor;
-        ctx.font = 'bold 10px Inter,sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(v, bX+barW/2, bY-3);
-      }
-      // Month label
-      ctx.fillStyle = '#6b7280';
-      ctx.font = '10px Inter,sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(data.labels[i], bX+barW/2, H-6);
+      if(v>0){ctx.fillStyle=borderColor;ctx.font='bold 9px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(v,bX+barW/2,bY-3);}
+      ctx.fillStyle='#6b7280';ctx.font='9px Inter,sans-serif';ctx.textAlign='center';
+      ctx.fillText(data.labels[i],bX+barW/2,H-5);
     });
   }
 
-  function obReset() {
+    function obReset() {
     localStorage.removeItem('propia_onboarded');
     // Pre-llenar y mostrar desde paso 1
     var first = (user.name || '').split(' ')[0] || '';
