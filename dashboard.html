@@ -338,6 +338,63 @@ body {
 .lst-btn-pdf:hover{background:#10b981;color:white;border-color:transparent}
 .lst-btn-pdf:disabled{opacity:.5;cursor:not-allowed}
 
+/* ═══ CALENDARIO ═══ */
+.cal-nav{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cal-nav-btn{font-family:inherit;font-size:16px;background:var(--p-light);border:1.5px solid var(--p-border);color:var(--purple);border-radius:9px;width:36px;height:36px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.cal-nav-btn:hover{background:var(--purple);color:white}
+.cal-month-label{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.3px;flex:1;text-align:center}
+.cal-today-btn{font-family:inherit;font-size:12px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:9px;padding:6px 14px;cursor:pointer;transition:all .15s}
+.cal-today-btn:hover{background:var(--purple);color:white}
+.cal-legend{display:flex;align-items:center;gap:16px;margin-bottom:12px;font-size:12px;color:var(--muted)}
+.cal-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}
+.cal-dot-listing{background:var(--purple)}
+.cal-dot-lead{background:var(--teal)}
+.cal-grid-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.cal-grid-header div{text-align:center;font-size:11px;font-weight:700;color:var(--muted);padding:4px 0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:16px}
+.cal-day{background:white;border:1.5px solid rgba(124,58,237,.08);border-radius:10px;min-height:64px;padding:6px;cursor:pointer;transition:all .15s;position:relative}
+.cal-day:hover{border-color:var(--purple);box-shadow:0 2px 8px rgba(124,58,237,.12)}
+.cal-day.today{border-color:var(--purple);background:var(--p-light)}
+.cal-day.other-month{opacity:.35}
+.cal-day.selected{border-color:var(--purple);background:var(--p-light);box-shadow:0 0 0 2px rgba(124,58,237,.2)}
+.cal-day-num{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px}
+.cal-day.today .cal-day-num{color:var(--purple)}
+.cal-day-dots{display:flex;flex-wrap:wrap;gap:2px}
+.cal-event-dot{width:6px;height:6px;border-radius:50%}
+.cal-events-list{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);overflow:hidden}
+.cal-ev-header{padding:12px 16px;background:var(--surface);border-bottom:1px solid rgba(124,58,237,.08);font-size:12px;font-weight:700;color:var(--muted)}
+.cal-ev-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(124,58,237,.05)}
+.cal-ev-item:last-child{border-bottom:none}
+.cal-ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cal-ev-main{flex:1;min-width:0}
+.cal-ev-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-ev-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.cal-ev-date{font-size:11px;color:var(--muted);white-space:nowrap}
+.cal-empty{padding:20px;text-align:center;font-size:13px;color:var(--muted)}
+
+/* ═══ REPORTES ═══ */
+.rep-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+@media(max-width:700px){.rep-kpi-row{grid-template-columns:repeat(2,1fr)}}
+.rep-kpi{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);padding:18px;text-align:center}
+.rep-kpi-val{font-size:32px;font-weight:900;color:var(--purple);letter-spacing:-1px;line-height:1}
+.rep-kpi-label{font-size:11px;color:var(--muted);margin-top:6px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.rep-charts-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.rep-charts-row{grid-template-columns:1fr}}
+.rep-chart-card{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);padding:18px}
+.rep-chart-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px}
+.rep-card{background:white;border-radius:14px;border:1.5px solid rgba(124,58,237,.08);padding:18px}
+.rep-score-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rep-score-label{font-size:12px;font-weight:700;color:var(--text);width:80px;flex-shrink:0}
+.rep-score-bar-wrap{flex:1;background:rgba(124,58,237,.08);border-radius:20px;height:10px;overflow:hidden}
+.rep-score-bar{height:100%;border-radius:20px;transition:width .6s ease}
+.rep-score-count{font-size:12px;font-weight:700;color:var(--muted);width:24px;text-align:right}
+.rep-listing-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(124,58,237,.06)}
+.rep-listing-row:last-child{border-bottom:none}
+.rep-listing-addr{font-size:13px;font-weight:600;color:var(--text)}
+.rep-listing-price{font-size:13px;font-weight:700;color:var(--purple)}
+.rep-listing-date{font-size:11px;color:var(--muted);margin-top:2px}
+.rep-empty{text-align:center;padding:20px;font-size:13px;color:var(--muted)}
+
 /* ═══ PWA INSTALL BANNER ═══ */
 .pwa-banner{
   position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);
@@ -947,8 +1004,8 @@ body {
     <button class="nav-item" onclick="showPanel('generator',this)"><span class="nav-icon">✨</span>PropIA</button>
     <button class="nav-item" onclick="showPanel('listings',this)"><span class="nav-icon">📋</span>Mis listings</button>
     <button class="nav-item" onclick="showPanel('leads',this)"><span class="nav-icon">📥</span>Leads</button>
-    <button class="nav-item" onclick="showPanel('overview',this)"><span class="nav-icon">📅</span>Calendario</button>
-    <button class="nav-item" onclick="showPanel('overview',this)"><span class="nav-icon">📊</span>Reportes</button>
+    <button class="nav-item" onclick="showPanel('calendario',this)"><span class="nav-icon">📅</span>Calendario</button>
+    <button class="nav-item" onclick="showPanel('reportes',this)"><span class="nav-icon">📊</span>Reportes</button>
   </nav>
 
   <div class="s-projects">
@@ -1210,6 +1267,64 @@ body {
           <div class="info-feat"><div class="info-feat-icon ifi-a">🎬</div><div><div class="info-feat-name">Script para Video</div><div class="info-feat-sub">60-90 segundos para Reels o YouTube</div></div></div>
           <div class="info-tip">💡 <strong>Consejo:</strong> Entre más detalles ingreses, mejor será el resultado de la IA.</div>
         </div>
+      </div>
+    </div>
+
+<!-- ═══ CALENDARIO ═══ -->
+    <div class="panel" id="panel-calendario">
+      <div class="panel-header">
+        <div class="panel-title">📅 Calendario</div>
+        <div class="panel-sub">Listings y leads organizados por fecha</div>
+      </div>
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="calPrev()">←</button>
+        <div class="cal-month-label" id="calMonthLabel"></div>
+        <button class="cal-nav-btn" onclick="calNext()">→</button>
+        <button class="cal-today-btn" onclick="calGoToday()">Hoy</button>
+      </div>
+      <div class="cal-legend">
+        <span class="cal-dot cal-dot-listing"></span>Listing
+        <span class="cal-dot cal-dot-lead"></span>Lead
+      </div>
+      <div class="cal-grid-header">
+        <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-events-list" id="calEventsList"></div>
+    </div>
+
+    <!-- ═══ REPORTES ═══ -->
+    <div class="panel" id="panel-reportes">
+      <div class="panel-header">
+        <div class="panel-title">📊 Reportes</div>
+        <div class="panel-sub">Métricas de tu actividad en PropIA</div>
+      </div>
+
+      <!-- KPI row -->
+      <div class="rep-kpi-row" id="repKpiRow"></div>
+
+      <!-- Charts row -->
+      <div class="rep-charts-row">
+        <div class="rep-chart-card">
+          <div class="rep-chart-title">Listings por mes</div>
+          <canvas id="chartListings" height="180"></canvas>
+        </div>
+        <div class="rep-chart-card">
+          <div class="rep-chart-title">Leads por mes</div>
+          <canvas id="chartLeads" height="180"></canvas>
+        </div>
+      </div>
+
+      <!-- Lead score breakdown -->
+      <div class="rep-card" style="margin-top:14px">
+        <div class="rep-chart-title" style="margin-bottom:14px">Distribución de leads por nivel</div>
+        <div id="repScoreBreakdown"></div>
+      </div>
+
+      <!-- Top listings -->
+      <div class="rep-card" style="margin-top:14px">
+        <div class="rep-chart-title" style="margin-bottom:14px">Tus listings más recientes</div>
+        <div id="repTopListings"></div>
       </div>
     </div>
 
@@ -1579,6 +1694,8 @@ body {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (name === 'settings') loadSettingsPanel();
     if (name === 'leads')    renderPipeline();
+    if (name === 'calendario') calInit();
+    if (name === 'reportes')   renderReportes();
   }
 
   function setMNav(id) { document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
@@ -2512,6 +2629,263 @@ body {
       gdz.addEventListener('drop',      function(e){ e.preventDefault(); gdz.classList.remove('drag'); genHandleFiles(e.dataTransfer.files); });
     }
   });
+
+  // ══════════════════════════════════════════════
+  //  CALENDARIO
+  // ══════════════════════════════════════════════
+  var calYear  = new Date().getFullYear();
+  var calMonth = new Date().getMonth();
+  var calSelectedDay = null;
+
+  function calInit() { renderCal(); }
+
+  function calPrev() { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCal(); }
+  function calNext() { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCal(); }
+  function calGoToday() { calYear=new Date().getFullYear(); calMonth=new Date().getMonth(); calSelectedDay=null; renderCal(); }
+
+  function getCalEvents() {
+    var events = [];
+    // Listings
+    (historyData||[]).forEach(function(h) {
+      var d = new Date(h.date || h.created_at);
+      if (!isNaN(d)) events.push({ date:d, type:'listing', label: h.address || 'Listing', sub: h.price || '' });
+    });
+    // Leads
+    (leadsData||[]).forEach(function(l) {
+      var d = new Date(l.created_at);
+      if (!isNaN(d)) events.push({ date:d, type:'lead', label: l.name || 'Lead', sub: 'Score: '+(l.score||'—')+'/10' });
+    });
+    return events;
+  }
+
+  function renderCal() {
+    var months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    document.getElementById('calMonthLabel').textContent = months[calMonth] + ' ' + calYear;
+
+    var events  = getCalEvents();
+    var today   = new Date();
+    var first   = new Date(calYear, calMonth, 1);
+    var last    = new Date(calYear, calMonth+1, 0);
+    var startDow= first.getDay();
+    var grid    = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    // Prev month padding
+    for (var p = 0; p < startDow; p++) {
+      var pd = new Date(calYear, calMonth, -(startDow-1-p));
+      grid.appendChild(makeDayCell(pd, events, true));
+    }
+    // Current month days
+    for (var d = 1; d <= last.getDate(); d++) {
+      var dd = new Date(calYear, calMonth, d);
+      grid.appendChild(makeDayCell(dd, events, false));
+    }
+    // Next month padding
+    var remaining = 42 - (startDow + last.getDate());
+    for (var n = 1; n <= remaining; n++) {
+      var nd = new Date(calYear, calMonth+1, n);
+      grid.appendChild(makeDayCell(nd, events, true));
+    }
+
+    // Events list for selected day or all month
+    renderCalEventsList(events);
+  }
+
+  function makeDayCell(date, events, otherMonth) {
+    var cell = document.createElement('div');
+    cell.className = 'cal-day' + (otherMonth ? ' other-month' : '');
+    var today = new Date();
+    if (date.toDateString() === today.toDateString()) cell.classList.add('today');
+    if (calSelectedDay && date.toDateString() === calSelectedDay.toDateString()) cell.classList.add('selected');
+
+    var dayEvents = events.filter(function(e) { return e.date.toDateString() === date.toDateString(); });
+
+    cell.innerHTML = '<div class="cal-day-num">' + date.getDate() + '</div>'
+      + '<div class="cal-day-dots">'
+      + dayEvents.slice(0,6).map(function(e) {
+          return '<div class="cal-event-dot" style="background:'+(e.type==='listing'?'var(--purple)':'var(--teal)')+'"></div>';
+        }).join('')
+      + '</div>';
+
+    var captured = new Date(date);
+    cell.onclick = function() {
+      calSelectedDay = captured;
+      renderCal();
+    };
+    return cell;
+  }
+
+  function renderCalEventsList(events) {
+    var list = document.getElementById('calEventsList');
+    var filtered = calSelectedDay
+      ? events.filter(function(e){ return e.date.toDateString() === calSelectedDay.toDateString(); })
+      : events.filter(function(e){ return e.date.getMonth()===calMonth && e.date.getFullYear()===calYear; })
+              .sort(function(a,b){ return b.date-a.date; });
+
+    var headerTxt = calSelectedDay
+      ? 'Eventos del ' + calSelectedDay.toLocaleDateString('es-MX',{day:'numeric',month:'long'})
+      : 'Todos los eventos de este mes (' + filtered.length + ')';
+
+    if (!filtered.length) {
+      list.innerHTML = '<div class="cal-ev-header">'+headerTxt+'</div><div class="cal-empty">Sin eventos este '+(calSelectedDay?'día':'mes')+'.</div>';
+      return;
+    }
+    list.innerHTML = '<div class="cal-ev-header">'+headerTxt+'</div>'
+      + filtered.map(function(e) {
+          return '<div class="cal-ev-item">'
+            + '<div class="cal-ev-dot" style="background:'+(e.type==='listing'?'var(--purple)':'var(--teal)')+'"></div>'
+            + '<div class="cal-ev-main">'
+              + '<div class="cal-ev-name">'+(e.type==='listing'?'🏠':'👤')+' '+esc(e.label)+'</div>'
+              + '<div class="cal-ev-sub">'+esc(e.sub)+'</div>'
+            + '</div>'
+            + '<div class="cal-ev-date">'+e.date.toLocaleDateString('es-MX',{day:'2-digit',month:'short'})+'</div>'
+            + '</div>';
+        }).join('');
+  }
+
+  // ══════════════════════════════════════════════
+  //  REPORTES
+  // ══════════════════════════════════════════════
+  var repChartsBuilt = false;
+
+  function renderReportes() {
+    var listings = historyData || [];
+    var leads    = leadsData   || [];
+
+    // ── KPIs ─────────────────────────────────
+    var avgScore = leads.length
+      ? Math.round(leads.reduce(function(s,l){ return s+(l.score||0); },0) / leads.length * 10)/10
+      : 0;
+    var hotLeads = leads.filter(function(l){ return (l.score||0) >= 8; }).length;
+    var thisMonth = new Date().getMonth();
+    var thisYear  = new Date().getFullYear();
+    var lstThisMonth = listings.filter(function(h){
+      var d = new Date(h.date||h.created_at);
+      return d.getMonth()===thisMonth && d.getFullYear()===thisYear;
+    }).length;
+
+    document.getElementById('repKpiRow').innerHTML = [
+      { val: listings.length, label: 'Listings totales' },
+      { val: leads.length,    label: 'Leads totales' },
+      { val: avgScore + '/10', label: 'Score promedio' },
+      { val: hotLeads,        label: '🔥 Leads calientes' }
+    ].map(function(k) {
+      return '<div class="rep-kpi"><div class="rep-kpi-val">'+k.val+'</div><div class="rep-kpi-label">'+k.label+'</div></div>';
+    }).join('');
+
+    // ── Charts ────────────────────────────────
+    if (!repChartsBuilt) {
+      repChartsBuilt = true;
+      buildBarChart('chartListings', getMonthlyData(listings, 'date'), 'rgba(124,58,237,', '#7c3aed');
+      buildBarChart('chartLeads',    getMonthlyData(leads,    'created_at'), 'rgba(45,212,191,', '#2dd4bf');
+    }
+
+    // ── Score breakdown ───────────────────────
+    var levels = { 'Caliente 🔥 (8-10)': 0, 'Tibio ⚡ (5-7)': 0, 'Frío ❄️ (1-4)': 0 };
+    leads.forEach(function(l) {
+      var sc = l.score || 0;
+      if (sc >= 8) levels['Caliente 🔥 (8-10)']++;
+      else if (sc >= 5) levels['Tibio ⚡ (5-7)']++;
+      else levels['Frío ❄️ (1-4)']++;
+    });
+    var colors = { 'Caliente 🔥 (8-10)':'#7c3aed', 'Tibio ⚡ (5-7)':'#2dd4bf', 'Frío ❄️ (1-4)':'#e5e7eb' };
+    var maxLevel = Math.max.apply(null, Object.values(levels)) || 1;
+    document.getElementById('repScoreBreakdown').innerHTML = Object.entries(levels).map(function(e) {
+      var pct = Math.round((e[1]/maxLevel)*100);
+      return '<div class="rep-score-row">'
+        + '<div class="rep-score-label">'+e[0].split('(')[0].trim()+'</div>'
+        + '<div class="rep-score-bar-wrap"><div class="rep-score-bar" style="width:'+pct+'%;background:'+colors[e[0]]+'"></div></div>'
+        + '<div class="rep-score-count">'+e[1]+'</div>'
+        + '</div>';
+    }).join('') || '<div class="rep-empty">Sin leads aún.</div>';
+
+    // ── Top listings ──────────────────────────
+    var recent = listings.slice(0, 8);
+    document.getElementById('repTopListings').innerHTML = recent.length
+      ? recent.map(function(h) {
+          return '<div class="rep-listing-row">'
+            + '<div><div class="rep-listing-addr">🏠 '+esc(h.address||'—')+'</div>'
+            + '<div class="rep-listing-date">'+formatDate(h.date||h.created_at)+'</div></div>'
+            + '<div class="rep-listing-price">'+esc(h.price||'—')+'</div>'
+            + '</div>';
+        }).join('')
+      : '<div class="rep-empty">Sin listings aún.</div>';
+  }
+
+  function getMonthlyData(items, dateField) {
+    var now    = new Date();
+    var labels = [];
+    var counts = [];
+    var months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    for (var i = 5; i >= 0; i--) {
+      var d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+      labels.push(months[d.getMonth()]);
+      var count = items.filter(function(item) {
+        var id = new Date(item[dateField]);
+        return id.getMonth()===d.getMonth() && id.getFullYear()===d.getFullYear();
+      }).length;
+      counts.push(count);
+    }
+    return { labels: labels, counts: counts };
+  }
+
+  function buildBarChart(canvasId, data, colorBase, borderColor) {
+    var canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.offsetWidth || 300;
+    var H = 180;
+    canvas.width  = W;
+    canvas.height = H;
+
+    var max    = Math.max.apply(null, data.counts) || 1;
+    var n      = data.counts.length;
+    var padL   = 30, padB = 24, padT = 10, padR = 10;
+    var chartW = W - padL - padR;
+    var chartH = H - padB - padT;
+    var barW   = Math.floor(chartW / n * 0.55);
+    var gap    = chartW / n;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid lines
+    for (var g = 0; g <= 4; g++) {
+      var gy = padT + chartH - (g/4)*chartH;
+      ctx.strokeStyle = 'rgba(124,58,237,.07)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(W-padR, gy); ctx.stroke();
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '10px Inter,sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(Math.round(max*g/4), padL-4, gy+3);
+    }
+
+    // Bars
+    data.counts.forEach(function(v, i) {
+      var bH  = (v/max) * chartH;
+      var bX  = padL + gap*i + (gap-barW)/2;
+      var bY  = padT + chartH - bH;
+      var grad = ctx.createLinearGradient(0, bY, 0, bY+bH);
+      grad.addColorStop(0, colorBase+'0.9)');
+      grad.addColorStop(1, colorBase+'0.4)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(bX, bY, barW, bH, 4) : ctx.rect(bX, bY, barW, bH);
+      ctx.fill();
+      // Value label
+      if (v > 0) {
+        ctx.fillStyle = borderColor;
+        ctx.font = 'bold 10px Inter,sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(v, bX+barW/2, bY-3);
+      }
+      // Month label
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '10px Inter,sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(data.labels[i], bX+barW/2, H-6);
+    });
+  }
 
   function obReset() {
     localStorage.removeItem('propia_onboarded');
