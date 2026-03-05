@@ -62,10 +62,17 @@ module.exports = async function handler(req, res) {
         password
       });
 
+      console.log('[register] linkData keys:', linkData ? Object.keys(linkData) : 'null');
+      console.log('[register] linkData.properties:', JSON.stringify(linkData?.properties || {}));
+      console.log('[register] linkError:', linkError?.message || 'none');
+      console.log('[register] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
+      console.log('[register] FROM_EMAIL:', process.env.FROM_EMAIL || 'not set');
+
       if (linkError) {
         console.error('[register] generateLink error:', linkError.message);
       } else {
         const confirmUrl = linkData?.properties?.action_link;
+        console.log('[register] confirmUrl:', confirmUrl ? confirmUrl.substring(0, 60) + '...' : 'MISSING');
         if (confirmUrl && process.env.RESEND_API_KEY) {
           const html = `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"/></head>
@@ -106,7 +113,7 @@ module.exports = async function handler(req, res) {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              from: process.env.FROM_EMAIL || 'PropIA <noreply@resend.dev>',
+              from: process.env.FROM_EMAIL || 'PropIA <onboarding@resend.dev>',
               to: [email],
               subject: '✅ Confirma tu cuenta en PropIA',
               html

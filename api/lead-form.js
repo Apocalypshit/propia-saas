@@ -141,7 +141,7 @@ JSON requerido:
           method: 'POST',
           headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: process.env.FROM_EMAIL || 'PropIA <noreply@resend.dev>',
+            from: process.env.FROM_EMAIL || 'PropIA <onboarding@resend.dev>',
             to: [agent.email],
             subject: `📥 Nuevo lead desde tu formulario: ${name} · Score ${ai.score}/10`,
             html: emailHtml

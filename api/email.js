@@ -7,7 +7,7 @@ const supabase = createClient(
 );
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const FROM_EMAIL     = process.env.FROM_EMAIL || 'PropIA <noreply@resend.dev>';
+const FROM_EMAIL     = process.env.FROM_EMAIL || 'PropIA <onboarding@resend.dev>';
 const APP_URL        = process.env.APP_URL    || 'https://propia-saas.vercel.app';
 
 // ── Send email via Resend ─────────────────────────────────────────

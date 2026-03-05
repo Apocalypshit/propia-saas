@@ -193,7 +193,7 @@ Criterios de scoring:
             method: 'POST',
             headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              from: process.env.FROM_EMAIL || 'PropIA <noreply@resend.dev>',
+              from: process.env.FROM_EMAIL || 'PropIA <onboarding@resend.dev>',
               to: [agentProfile.email],
               subject: `📥 Nuevo lead: ${lead.name} · Score ${lead.score}/10`,
               html: emailHtml
