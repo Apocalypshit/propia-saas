@@ -102,6 +102,54 @@ JSON requerido:
     });
     if (error) throw error;
 
+    // Notify agent by email (non-blocking)
+    try {
+      if (agent.email && process.env.RESEND_API_KEY) {
+        const sc = ai.score || 5;
+        const scColor = sc >= 8 ? '#7c3aed' : sc >= 6 ? '#10b981' : sc >= 4 ? '#f59e0b' : '#6b7280';
+        const emailHtml = `<html><body style="margin:0;padding:24px;background:#ede9fb;font-family:Arial,sans-serif;">
+<div style="max-width:560px;margin:0 auto;background:white;border-radius:18px;overflow:hidden;">
+  <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);padding:24px 28px;">
+    <div style="font-size:20px;font-weight:900;color:white;">🏠 PropIA — Lead desde tu formulario</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.75);margin-top:3px;">Hola ${agent.name || 'Agente'}, alguien llenó tu formulario público.</div>
+  </div>
+  <div style="padding:28px;">
+    <div style="background:#f8f6ff;border-radius:12px;padding:18px;margin-bottom:18px;">
+      <div style="font-size:17px;font-weight:800;color:#0f0a1e;margin-bottom:6px;">${name}</div>
+      ${phone  ? `<div style="font-size:13px;color:#374151;margin-bottom:2px;">📞 ${phone}</div>` : ''}
+      ${email  ? `<div style="font-size:13px;color:#374151;margin-bottom:2px;">✉️ ${email}</div>` : ''}
+      ${interest ? `<div style="font-size:13px;color:#374151;margin-bottom:2px;">🏠 ${interest}</div>` : ''}
+      ${budget ? `<div style="font-size:13px;color:#374151;">💰 ${budget}</div>` : ''}
+    </div>
+    <div style="display:flex;gap:12px;margin-bottom:18px;">
+      <div style="flex:1;background:#f8f6ff;border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:30px;font-weight:900;color:${scColor};">${sc}<span style="font-size:14px;color:#9ca3af;">/10</span></div>
+        <div style="font-size:10px;color:#6b7280;font-weight:700;text-transform:uppercase;">Score IA</div>
+      </div>
+      <div style="flex:1;background:#f8f6ff;border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:18px;font-weight:900;color:${scColor};">${ai.level || 'Tibio'}</div>
+        <div style="font-size:10px;color:#6b7280;font-weight:700;text-transform:uppercase;">Nivel</div>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <a href="${process.env.APP_URL || 'https://propia-saas.vercel.app'}/dashboard" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;font-size:14px;font-weight:700;padding:13px 28px;border-radius:11px;text-decoration:none;">Ver en dashboard →</a>
+    </div>
+    <div style="font-size:11px;color:#9ca3af;text-align:center;margin-top:16px;">⚡ Responde en menos de 5 minutos para maximizar la conversión.</div>
+  </div>
+</div></body></html>`;
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: process.env.FROM_EMAIL || 'PropIA <noreply@resend.dev>',
+            to: [agent.email],
+            subject: `📥 Nuevo lead desde tu formulario: ${name} · Score ${ai.score}/10`,
+            html: emailHtml
+          })
+        }).catch(e => console.error('Email error:', e.message));
+      }
+    } catch(e) { console.error('Email notify error:', e.message); }
+
     return res.status(200).json({
       success: true,
       message: '¡Gracias! El agente te contactará pronto.',

@@ -6,6 +6,48 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY
 );
 
+// ── Inline email template for lead notifications ─────────────────
+function buildLeadEmailHtml({ agentName, lead, ai, appUrl }) {
+  const sc = lead.score || 5;
+  const color = sc >= 8 ? '#7c3aed' : sc >= 6 ? '#10b981' : sc >= 4 ? '#f59e0b' : '#6b7280';
+  return `<html><body style="margin:0;padding:24px;background:#ede9fb;font-family:Arial,sans-serif;">
+  <div style="max-width:560px;margin:0 auto;background:white;border-radius:18px;overflow:hidden;box-shadow:0 4px 24px rgba(124,58,237,.12);">
+    <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);padding:24px 28px;">
+      <div style="font-size:20px;font-weight:900;color:white;">🏠 PropIA — Nuevo Lead</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.75);margin-top:3px;">Hola ${agentName}, tienes un lead nuevo esperándote.</div>
+    </div>
+    <div style="padding:28px;">
+      <div style="background:#f8f6ff;border-radius:12px;padding:18px;margin-bottom:18px;">
+        <div style="font-size:17px;font-weight:800;color:#0f0a1e;margin-bottom:6px;">${lead.name}</div>
+        ${lead.phone  ? `<div style="font-size:13px;color:#374151;margin-bottom:2px;">📞 ${lead.phone}</div>` : ''}
+        ${lead.email  ? `<div style="font-size:13px;color:#374151;margin-bottom:2px;">✉️ ${lead.email}</div>` : ''}
+        ${lead.interest ? `<div style="font-size:13px;color:#374151;margin-bottom:2px;">🏠 ${lead.interest}</div>` : ''}
+        ${lead.budget ? `<div style="font-size:13px;color:#374151;">💰 ${lead.budget}</div>` : ''}
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:18px;">
+        <div style="flex:1;background:#f8f6ff;border-radius:10px;padding:14px;text-align:center;">
+          <div style="font-size:30px;font-weight:900;color:${color};">${sc}<span style="font-size:14px;color:#9ca3af;">/10</span></div>
+          <div style="font-size:10px;color:#6b7280;font-weight:700;text-transform:uppercase;">Score IA</div>
+        </div>
+        <div style="flex:1;background:#f8f6ff;border-radius:10px;padding:14px;text-align:center;">
+          <div style="font-size:18px;font-weight:900;color:${color};">${lead.level || 'Tibio'}</div>
+          <div style="font-size:10px;color:#6b7280;font-weight:700;text-transform:uppercase;">Nivel</div>
+        </div>
+      </div>
+      ${ai?.analysis ? `<div style="background:#fff7ed;border:1.5px solid rgba(245,158,11,.25);border-radius:10px;padding:14px;margin-bottom:18px;font-size:13px;color:#374151;line-height:1.7;">${ai.analysis}</div>` : ''}
+      <div style="text-align:center;">
+        <a href="${appUrl}/dashboard" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;font-size:14px;font-weight:700;padding:13px 28px;border-radius:11px;text-decoration:none;">Ver lead en dashboard →</a>
+      </div>
+      <div style="font-size:11px;color:#9ca3af;text-align:center;margin-top:16px;">⚡ Responde en menos de 5 minutos para maximizar la conversión.</div>
+    </div>
+    <div style="background:#f8f6ff;padding:16px 28px;text-align:center;border-top:1px solid rgba(124,58,237,.10);">
+      <div style="font-size:11px;color:#9ca3af;">PropIA · <a href="${appUrl}" style="color:#7c3aed;text-decoration:none;">propia-saas.vercel.app</a></div>
+    </div>
+  </div>
+</body></html>`;
+}
+
+
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, OPTIONS');
@@ -136,6 +178,29 @@ Criterios de scoring:
         .single();
 
       if (insertErr) throw insertErr;
+
+      // Fire email notification (non-blocking)
+      try {
+        const { data: agentProfile } = await supabase
+          .from('profiles').select('email, name').eq('id', user.id).single();
+        if (agentProfile?.email && process.env.RESEND_API_KEY) {
+          const emailHtml = buildLeadEmailHtml({
+            agentName: agentProfile.name || 'Agente',
+            lead, ai,
+            appUrl: process.env.APP_URL || 'https://propia-saas.vercel.app'
+          });
+          fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              from: process.env.FROM_EMAIL || 'PropIA <noreply@resend.dev>',
+              to: [agentProfile.email],
+              subject: `📥 Nuevo lead: ${lead.name} · Score ${lead.score}/10`,
+              html: emailHtml
+            })
+          }).catch(e => console.error('Email error:', e.message));
+        }
+      } catch(e) { console.error('Email notify error:', e.message); }
 
       return res.status(200).json({ success: true, lead, ai });
 
