@@ -28,29 +28,48 @@ module.exports = async function handler(req, res) {
       if (!email || !password || !name) {
         return res.status(400).json({ error: 'Nombre, email y contraseña son requeridos.' });
       }
-      const { data, error } = await supabaseAnon.auth.signUp({ email, password });
+
+      // admin.createUser con email_confirm:false → Supabase envía email de verificación
+      const { data, error } = await supabase.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: false
+      });
+
+      console.log('[register] createUser id:', data?.user?.id || 'null');
+      console.log('[register] createUser error:', error?.message || 'none');
+
       if (error) {
-        if (error.message.includes('already registered')) {
+        if (error.message.includes('already registered') || error.message.includes('already exists')) {
           return res.status(400).json({ error: 'Este email ya está registrado. Por favor inicia sesión.' });
         }
         return res.status(400).json({ error: error.message });
       }
-      if (data.user) {
-        const profileData = {
-          id: data.user.id,
-          email,
-          name,
-          brokerage: brokerage || null,
-          plan: 'free',
-          listings_used_this_month: 0,
-          leads_used_this_month: 0,
-          billing_period_start: new Date().toISOString(),
-          created_at: new Date().toISOString()
-        };
-        if (phone) profileData.phone = phone;
-        const { error: profileError } = await supabase.from('profiles').insert(profileData);
-        if (profileError) console.error('Profile insert error:', profileError.message);
+
+      if (!data?.user) {
+        return res.status(400).json({ error: 'No se pudo crear la cuenta. Intenta de nuevo.' });
       }
+
+      const profileData = {
+        id: data.user.id,
+        email,
+        name,
+        brokerage: brokerage || null,
+        plan: 'free',
+        listings_used_this_month: 0,
+        leads_used_this_month: 0,
+        billing_period_start: new Date().toISOString(),
+        created_at: new Date().toISOString()
+      };
+      if (phone) profileData.phone = phone;
+
+      const { error: profileError } = await supabase.from('profiles').insert(profileData);
+      if (profileError) {
+        console.error('[register] Profile insert error:', profileError.message);
+      } else {
+        console.log('[register] Profile created OK for:', data.user.id);
+      }
+
       return res.status(200).json({
         success: true,
         message: 'Cuenta creada. Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.'
