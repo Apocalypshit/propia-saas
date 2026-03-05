@@ -4,6 +4,12 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PropIA — Dashboard</title>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#7c3aed"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="PropIA"/>
+<meta name="mobile-web-app-capable" content="yes"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -332,7 +338,25 @@ body {
 .lst-btn-pdf:hover{background:#10b981;color:white;border-color:transparent}
 .lst-btn-pdf:disabled{opacity:.5;cursor:not-allowed}
 
-/* ═══ GENERATOR PHOTOS SECTION ═══ */
+/* ═══ PWA INSTALL BANNER ═══ */
+.pwa-banner{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);
+  z-index:9999;background:white;border-radius:18px;
+  box-shadow:0 8px 40px rgba(124,58,237,.25),0 2px 12px rgba(0,0,0,.12);
+  padding:16px 20px;display:flex;align-items:center;gap:14px;
+  min-width:300px;max-width:380px;width:calc(100vw - 40px);
+  border:1.5px solid rgba(124,58,237,.15);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.pwa-banner.show{transform:translateX(-50%) translateY(0)}
+.pwa-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#4c1d95);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.pwa-text{flex:1;min-width:0}
+.pwa-title{font-size:14px;font-weight:800;color:var(--text);letter-spacing:-.2px}
+.pwa-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.pwa-btn{font-family:inherit;font-size:12px;font-weight:700;color:white;background:linear-gradient(135deg,var(--purple),#4c1d95);border:none;border-radius:10px;padding:9px 16px;cursor:pointer;white-space:nowrap;box-shadow:0 3px 12px rgba(124,58,237,.3);transition:all .18s}
+.pwa-btn:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(124,58,237,.4)}
+.pwa-dismiss{background:none;border:none;font-size:16px;color:var(--muted);cursor:pointer;padding:4px;line-height:1;flex-shrink:0;transition:color .15s}
+.pwa-dismiss:hover{color:var(--text)}
 .output-photos-section{background:white;border-radius:16px;border:1.5px solid var(--p-border);padding:20px;margin-top:14px;box-shadow:0 2px 8px rgba(124,58,237,.06)}
 .output-photos-header{margin-bottom:14px}
 .oph-title{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.3px;margin-bottom:3px}
@@ -2760,6 +2784,77 @@ body {
     <div class="pm-note">Las fotos aparecen automáticamente en tu página de listing compartida 🔗</div>
   </div>
 </div>
+
+<!-- ═══ PWA INSTALL BANNER ═══ -->
+<div class="pwa-banner" id="pwaBanner">
+  <div class="pwa-icon">🏠</div>
+  <div class="pwa-text">
+    <div class="pwa-title">Instalar PropIA</div>
+    <div class="pwa-sub">Accede más rápido desde tu pantalla de inicio</div>
+  </div>
+  <button class="pwa-btn" id="pwaInstallBtn">Instalar</button>
+  <button class="pwa-dismiss" onclick="dismissPWA()" title="Cerrar">✕</button>
+</div>
+
+<script>
+// ── Service Worker ────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function(reg) { console.log('[SW] registered, scope:', reg.scope); })
+      .catch(function(e)  { console.warn('[SW] registration failed:', e); });
+  });
+}
+
+// ── PWA Install Banner ────────────────────────────────────────
+var pwaPrompt = null;
+var pwaDismissed = localStorage.getItem('pwaDismissed');
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  pwaPrompt = e;
+  if (!pwaDismissed) {
+    setTimeout(function() {
+      document.getElementById('pwaBanner').classList.add('show');
+    }, 3000); // Show after 3 seconds on dashboard
+  }
+});
+
+document.getElementById('pwaInstallBtn').addEventListener('click', function() {
+  if (!pwaPrompt) return;
+  pwaPrompt.prompt();
+  pwaPrompt.userChoice.then(function(result) {
+    if (result.outcome === 'accepted') {
+      document.getElementById('pwaBanner').classList.remove('show');
+    }
+    pwaPrompt = null;
+  });
+});
+
+function dismissPWA() {
+  document.getElementById('pwaBanner').classList.remove('show');
+  localStorage.setItem('pwaDismissed', '1');
+}
+
+// iOS Safari — show manual instructions since beforeinstallprompt not supported
+(function() {
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isInStandalone = window.navigator.standalone;
+  var dismissed = localStorage.getItem('iosPwaDismissed');
+  if (isIOS && !isInStandalone && !dismissed) {
+    setTimeout(function() {
+      var banner = document.getElementById('pwaBanner');
+      banner.querySelector('.pwa-sub').textContent = 'Toca ⎋ Compartir → "Agregar a pantalla de inicio"';
+      banner.querySelector('.pwa-btn').style.display = 'none';
+      banner.classList.add('show');
+      // Override dismiss for iOS
+      banner.querySelector('.pwa-dismiss').addEventListener('click', function() {
+        localStorage.setItem('iosPwaDismissed', '1');
+      }, { once: true });
+    }, 3000);
+  }
+})();
+</script>
 
 </body>
 </html>

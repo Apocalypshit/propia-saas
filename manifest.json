@@ -1,0 +1,44 @@
+{
+  "name": "PropIA — IA para Agentes Latinos",
+  "short_name": "PropIA",
+  "description": "Genera listings con IA, administra leads y comparte propiedades. La herramienta para agentes de bienes raíces latinos en USA.",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ede9fb",
+  "theme_color": "#7c3aed",
+  "categories": ["productivity", "business", "real estate"],
+  "lang": "es",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%237c3aed'/><text x='96' y='130' font-size='100' text-anchor='middle'>🏠</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%237c3aed'/><text x='256' y='340' font-size='260' text-anchor='middle'>🏠</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Nuevo listing",
+      "short_name": "Generar",
+      "description": "Genera un nuevo listing con IA",
+      "url": "/dashboard?tab=generator",
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='80' font-size='80'>✨</text></svg>", "sizes": "96x96" }]
+    },
+    {
+      "name": "Mis Leads",
+      "short_name": "Leads",
+      "description": "Ver pipeline de leads",
+      "url": "/dashboard?tab=leads",
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='80' font-size='80'>📥</text></svg>", "sizes": "96x96" }]
+    }
+  ]
+}

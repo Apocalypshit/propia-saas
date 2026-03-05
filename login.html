@@ -4,6 +4,12 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PropIA — IA para Agentes de Bienes Raíces Latinos</title>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#7c3aed"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="PropIA"/>
+<meta name="mobile-web-app-capable" content="yes"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -373,7 +379,7 @@ body::before {
       </div>
       <div class="field"><label>Tu nombre completo</label><input type="text" id="regName" placeholder="María González" required/></div>
       <div class="field"><label>Brokerage (opcional)</label><input type="text" id="regBrokerage" placeholder="Century 21, Keller Williams..."/></div>
-      <div class="field"><label>Teléfono <span style="font-weight:400;opacity:.7">(para verificar tu cuenta)</span></label><input type="tel" id="regPhone" placeholder="(555) 123-4567" required/></div>
+      <div class="field"><label>Teléfono <span style="font-weight:400;opacity:.7">(para verificar tu cuenta)</span></label><input type="tel" id="regPhone" placeholder="(555) 123-4567"/></div>
       <div class="field"><label>Correo electrónico</label><input type="email" id="regEmail" placeholder="tu@email.com" required/></div>
       <div class="field"><label>Contraseña</label><input type="password" id="regPassword" placeholder="Mínimo 8 caracteres" minlength="8" required/></div>
       <div class="alert" id="registerAlert"></div>
@@ -487,6 +493,13 @@ body::before {
   function setLoading(btn,v){btn.disabled=v;btn.classList.toggle('is-loading',v);}
   function show(el,msg,type){el.textContent=msg;el.className='alert '+type+' visible';}
   function hide(el){el.className='alert';}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(e) { console.warn('SW reg failed:', e); });
+  });
+}
 </script>
 </body>
 </html>
