@@ -12,6 +12,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/admin",      "destination": "/admin.html" },
     { "source": "/share",      "destination": "/share.html" },
     { "source": "/lead",       "destination": "/lead.html" },
     { "source": "/reset",      "destination": "/reset.html" },
