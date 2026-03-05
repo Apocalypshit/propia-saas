@@ -29,15 +29,10 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: 'Nombre, email y contraseña son requeridos.' });
       }
 
-      // admin.createUser con email_confirm:false → Supabase envía email de verificación
+      // 1. Crear usuario (confirmado=false)
       const { data, error } = await supabase.auth.admin.createUser({
-        email,
-        password,
-        email_confirm: false
+        email, password, email_confirm: false
       });
-
-      console.log('[register] createUser id:', data?.user?.id || 'null');
-      console.log('[register] createUser error:', error?.message || 'none');
 
       if (error) {
         if (error.message.includes('already registered') || error.message.includes('already exists')) {
@@ -45,15 +40,11 @@ module.exports = async function handler(req, res) {
         }
         return res.status(400).json({ error: error.message });
       }
+      if (!data?.user) return res.status(400).json({ error: 'No se pudo crear la cuenta.' });
 
-      if (!data?.user) {
-        return res.status(400).json({ error: 'No se pudo crear la cuenta. Intenta de nuevo.' });
-      }
-
+      // 2. Crear perfil
       const profileData = {
-        id: data.user.id,
-        email,
-        name,
+        id: data.user.id, email, name,
         brokerage: brokerage || null,
         plan: 'free',
         listings_used_this_month: 0,
@@ -61,13 +52,73 @@ module.exports = async function handler(req, res) {
         billing_period_start: new Date().toISOString(),
         created_at: new Date().toISOString()
       };
-      if (phone) profileData.phone = phone;
-
       const { error: profileError } = await supabase.from('profiles').insert(profileData);
-      if (profileError) {
-        console.error('[register] Profile insert error:', profileError.message);
+      if (profileError) console.error('[register] Profile error:', profileError.message);
+
+      // 3. Generar link de confirmación y enviarlo via Resend
+      const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
+        type: 'signup',
+        email,
+        password
+      });
+
+      if (linkError) {
+        console.error('[register] generateLink error:', linkError.message);
       } else {
-        console.log('[register] Profile created OK for:', data.user.id);
+        const confirmUrl = linkData?.properties?.action_link;
+        if (confirmUrl && process.env.RESEND_API_KEY) {
+          const html = `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"/></head>
+<body style="margin:0;padding:0;background:#ede9fb;font-family:Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 16px;background:#ede9fb;">
+<tr><td align="center">
+<table width="520" cellpadding="0" cellspacing="0" style="background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(124,58,237,.12);">
+  <tr><td style="background:linear-gradient(135deg,#7c3aed,#4c1d95);padding:28px 32px;text-align:center;">
+    <div style="font-size:26px;font-weight:900;color:white;letter-spacing:-1px;">🏠 PropIA</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.75);margin-top:4px;">IA para Agentes Latinos en USA</div>
+  </td></tr>
+  <tr><td style="padding:36px 32px;text-align:center;">
+    <div style="font-size:22px;font-weight:800;color:#0f0a1e;margin-bottom:10px;">Confirma tu cuenta</div>
+    <div style="font-size:15px;color:#6b7280;margin-bottom:28px;line-height:1.6;">
+      Hola <strong>${name}</strong>, haz clic en el botón para activar tu cuenta y empezar a generar listings con IA.
+    </div>
+    <a href="${confirmUrl}" style="display:inline-block;background:linear-gradient(135deg,#7c3aed,#4c1d95);color:white;font-size:16px;font-weight:700;padding:16px 36px;border-radius:14px;text-decoration:none;box-shadow:0 4px 20px rgba(124,58,237,.35);">
+      ✅ Confirmar mi cuenta
+    </a>
+    <div style="margin-top:24px;font-size:12px;color:#9ca3af;">
+      O copia este enlace en tu navegador:<br/>
+      <span style="color:#7c3aed;word-break:break-all;">${confirmUrl}</span>
+    </div>
+    <div style="margin-top:20px;font-size:11px;color:#d1d5db;">Este enlace expira en 24 horas.</div>
+  </td></tr>
+  <tr><td style="background:#f8f6ff;padding:18px 32px;text-align:center;border-top:1px solid rgba(124,58,237,.08);">
+    <div style="font-size:11px;color:#9ca3af;">PropIA · propia-saas.vercel.app</div>
+  </td></tr>
+</table>
+</td></tr>
+</table>
+</body></html>`;
+
+          await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              from: process.env.FROM_EMAIL || 'PropIA <noreply@resend.dev>',
+              to: [email],
+              subject: '✅ Confirma tu cuenta en PropIA',
+              html
+            })
+          }).then(r => r.json()).then(d => {
+            console.log('[register] Resend result:', d.id || d.message || JSON.stringify(d));
+          }).catch(e => {
+            console.error('[register] Resend error:', e.message);
+          });
+        } else {
+          console.warn('[register] No confirmUrl or no RESEND_API_KEY');
+        }
       }
 
       return res.status(200).json({
@@ -75,6 +126,7 @@ module.exports = async function handler(req, res) {
         message: 'Cuenta creada. Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.'
       });
     }
+
 
     // LOGIN
     if (action === 'login') {
