@@ -450,6 +450,15 @@ body {
 .int-inst-cap-label{font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px}
 .int-inst-cap-sub{font-size:11px;color:var(--muted)}
 
+.int-wa-box{display:flex;flex-direction:column;gap:12px;margin-bottom:4px}
+.int-wa-row{display:flex;align-items:flex-start;gap:12px}
+.int-wa-badge{
+  font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;
+  white-space:nowrap;flex-shrink:0;margin-top:2px;text-transform:uppercase;letter-spacing:.4px;
+}
+.int-wa-badge--now{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.25)}
+.int-wa-badge--soon{background:var(--a-light);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
+
 /* ═══ CALENDARIO CRM ═══ */
 .cal-week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:28px}
 .cal-week-day{
@@ -1539,7 +1548,7 @@ body {
           </div>
         </div>
 
-        <div class="int-inst-caps-title">Lo que PropIA publica automáticamente</div>
+        <div class="int-inst-caps-title">Lo que PropIA publica automáticamente al generar un listing</div>
         <div class="int-inst-caps">
           <div class="int-inst-cap int-inst-cap--ok">
             <div class="int-inst-cap-icon">✅</div>
@@ -1567,6 +1576,37 @@ body {
             <div>
               <div class="int-inst-cap-label">Stories</div>
               <div class="int-inst-cap-sub">Próximamente</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp section -->
+        <div class="int-inst-caps-title" style="margin-top:16px">💬 WhatsApp</div>
+        <div class="int-wa-box">
+          <div class="int-wa-row">
+            <div class="int-wa-badge int-wa-badge--now">Ahora</div>
+            <div>
+              <div class="int-inst-label">Botón "WhatsApp" en cada listing</div>
+              <div class="int-inst-sub">PropIA genera el mensaje con IA. Tú haces clic en el botón 💬 WhatsApp del listing y se abre WhatsApp listo para enviar con un solo toque — a cualquier contacto, cliente o lead.</div>
+            </div>
+          </div>
+          <div class="int-wa-row">
+            <div class="int-wa-badge int-wa-badge--soon">Pronto</div>
+            <div>
+              <div class="int-inst-label">Envío automático a leads</div>
+              <div class="int-inst-sub">Cuando Meta apruebe la verificación del negocio, PropIA enviará el mensaje de WhatsApp automáticamente a todos tus leads activos al generar un listing — sin que hagas nada.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email section -->
+        <div class="int-inst-caps-title" style="margin-top:16px">📧 Email automático</div>
+        <div class="int-wa-box">
+          <div class="int-wa-row">
+            <div class="int-wa-badge int-wa-badge--now">Activo</div>
+            <div>
+              <div class="int-inst-label">Email a todos tus leads al generar un listing</div>
+              <div class="int-inst-sub">PropIA envía automáticamente un email profesional con la descripción de la propiedad, precio, dirección y botón para ver el listing completo — a cada lead activo en tu CRM. Sin hacer nada extra.</div>
             </div>
           </div>
         </div>
