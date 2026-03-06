@@ -2973,13 +2973,13 @@ body {
 
       // Save to backend
       var token = localStorage.getItem('propia_token');
-      fetch('/api/facebook-auth', {
+      fetch('/api/facebook', {
         method: 'POST',
         headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
         body: JSON.stringify({
+          action:     'connect',
           user_token: userToken,
           pages:      pages,
-          // Auto-select first page
           page_id:    pages.length > 0 ? pages[0].id : null,
           page_name:  pages.length > 0 ? pages[0].name : null,
           page_token: pages.length > 0 ? pages[0].access_token : null
@@ -3055,7 +3055,7 @@ body {
     if (!confirm('¿Desconectar Facebook?')) return;
     FB.logout(function() {});
     var token = localStorage.getItem('propia_token');
-    fetch('/api/facebook-auth', {
+    fetch('/api/facebook', {
       method: 'POST',
       headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
       body: JSON.stringify({ disconnect: true })
@@ -3078,7 +3078,7 @@ body {
   function saveFbPage() {
     var pageId = document.getElementById('fbPageDropdown').value;
     var token  = localStorage.getItem('propia_token');
-    fetch('/api/facebook-auth', {
+    fetch('/api/facebook', {
       method: 'POST',
       headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
       body: JSON.stringify({ set_page: pageId })
@@ -3096,7 +3096,7 @@ body {
     var btn   = document.getElementById('fbPostBtn_' + listingId);
     if (btn) { btn.disabled = true; btn.textContent = 'Publicando...'; }
     try {
-      var res  = await fetch('/api/facebook-post', {
+      var res  = await fetch('/api/facebook', {
         method: 'POST',
         headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
         body: JSON.stringify({ listingId })
