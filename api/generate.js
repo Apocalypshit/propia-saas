@@ -83,7 +83,8 @@ Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta, sin text
     "post 3 más urgente con hashtags en español"
   ],
   "email": "Asunto: titulo del email aqui\\n\\nHola [Nombre],\\n\\ncuerpo del email de 100 palabras\\n\\nSaludos,\\nTu Agente",
-  "video": "[HOOK 0:00] frase gancho de apertura\n[PROPIEDAD 0:05] presentar la propiedad\n[CARACTERISTICAS 0:15] mencionar 3 puntos clave de la propiedad\n[PRECIO Y ZONA 0:35] precio y ubicacion\n[CTA 0:45] como contactar al agente\n[CIERRE 0:55] frase final memorable"
+  "video": "[HOOK 0:00] frase gancho de apertura\n[PROPIEDAD 0:05] presentar la propiedad\n[CARACTERISTICAS 0:15] mencionar 3 puntos clave de la propiedad\n[PRECIO Y ZONA 0:35] precio y ubicacion\n[CTA 0:45] como contactar al agente\n[CIERRE 0:55] frase final memorable",
+  "whatsapp": "mensaje de WhatsApp de 3 lineas maximo, con emojis, directo y con call to action claro para ver la propiedad"
 }`;
 
     const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -221,9 +222,15 @@ async function autoPublish(userId, address, price, content) {
   }
 
   // 2. EMAIL TO ACTIVE LEADS
+  // 3. WHATSAPP — wa.me links logged for agent follow-up
+  // Full auto-send available after Meta Business Verification
+  const waMsg  = content.whatsapp || '';
+  const waText = waMsg + '\n\n📍 ' + address + (price ? '\n💰 ' + price : '');
+  console.log('[auto-publish] WhatsApp msg ready:', waText.substring(0, 60) + '...');
+
   if (!RESEND_KEY) return;
   const { data: leads } = await supabase
-    .from('leads').select('id, name, email')
+    .from('leads').select('id, name, email, phone')
     .eq('user_id', userId).neq('status', 'cerrado').not('email', 'is', null);
   if (!leads || leads.length === 0) return;
 
