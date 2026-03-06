@@ -1158,6 +1158,23 @@ body {
 .btn-copy-link{font-family:inherit;font-size:13px;font-weight:700;color:white;background:var(--purple);border:none;border-radius:9px;padding:8px 16px;cursor:pointer;white-space:nowrap;transition:all .18s;flex-shrink:0}
 .btn-copy-link:hover{background:#6d28d9}
 </style>
+
+  <!-- Facebook SDK — must load in <head> -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({ appId: '1444690334022406', cookie: true, xfbml: true, version: 'v22.0' });
+      FB.AppEvents.logPageView();
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          if (typeof fbHandleConnected === 'function') fbHandleConnected(response.authResponse);
+        }
+      });
+    };
+  </script>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/es_LA/sdk.js">
+  </script>
+
 </head>
 <body>
 
@@ -2932,25 +2949,6 @@ body {
   var FB_APP_ID    = '1444690334022406';
   var FB_CONFIG_ID = '2301684590341909';
   var fbConnected  = false;
-
-  // Load FB SDK asynchronously
-  window.fbAsyncInit = function() {
-    FB.init({ appId: FB_APP_ID, cookie: true, xfbml: true, version: 'v22.0' });
-    FB.AppEvents.logPageView();
-    // Check if already logged in
-    FB.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
-        fbHandleConnected(response.authResponse);
-      }
-    });
-  };
-  (function(d,s,id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/es_LA/sdk.js';
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document,'script','facebook-jssdk'));
 
   function connectFacebook() {
     if (typeof FB === 'undefined') {
