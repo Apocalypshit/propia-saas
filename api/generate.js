@@ -40,7 +40,41 @@ module.exports = async function handler(req, res) {
       totalListings = count || 0;
     }
 
-    const { address, price, type, beds, baths, sqft, year, features, tone, listingId } = req.body;
+    const { address, price, type, beds, baths, sqft, year, features, tone, listingId, eduMode, eduTopic, eduLabel, eduDesc } = req.body;
+
+    // ── EDUCATIONAL SCRIPT MODE ───────────────────────────────────
+    if (eduMode) {
+      const cityHint = address && address !== 'tu área' ? ` en ${address}` : ' en EE. UU.';
+      const eduPrompt = `Eres experto en bienes raíces para la comunidad latina en EE. UU. 
+Genera un script educativo en español para un video de YouTube o TikTok sobre el tema: "${eduLabel}" — ${eduDesc}${cityHint}.
+
+El agente que graba el video es un agente de bienes raíces latino.
+
+Devuelve ÚNICAMENTE un objeto JSON válido sin texto adicional, sin markdown:
+{
+  "edu_script": "Script completo con este formato exacto:\\n\\n[HOOK 0:00-0:05]\\nFrase gancho impactante que enganche en los primeros 5 segundos\\n\\n[INTRO 0:05-0:15]\\nPresentación del agente y de qué trata el video\\n\\n[PUNTO 1 0:15-0:45]\\nPrimer punto educativo clave\\n\\n[PUNTO 2 0:45-1:15]\\nSegundo punto educativo clave\\n\\n[PUNTO 3 1:15-1:45]\\nTercer punto educativo clave\\n\\n[CTA 1:45-2:00]\\nLlamada a la acción: seguir al agente, contactar, dejar comentario\\n\\n[DESCRIPCIÓN YOUTUBE]\\nDescripción optimizada para SEO con palabras clave en español\\n\\n[HASHTAGS]\\n10 hashtags relevantes"
+}`;
+
+      const groqEduRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.GROQ_API_KEY}` },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [{ role: 'user', content: eduPrompt }],
+          temperature: 0.8, max_tokens: 2000
+        })
+      });
+      const eduData = await groqEduRes.json();
+      const eduRaw  = eduData.choices?.[0]?.message?.content || '{}';
+      let eduParsed = {};
+      try {
+        const clean = eduRaw.replace(/```json|```/g,'').trim();
+        eduParsed = JSON.parse(clean);
+      } catch(e) {
+        eduParsed = { edu_script: eduRaw };
+      }
+      return res.status(200).json({ success: true, content: eduParsed });
+    }
 
     const plan = profile?.plan || 'free';
     const limit = PLAN_LIMITS[plan]?.listings || 2;
