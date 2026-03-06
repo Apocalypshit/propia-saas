@@ -338,6 +338,74 @@ body {
 .lst-btn-pdf:hover{background:#10b981;color:white;border-color:transparent}
 .lst-btn-pdf:disabled{opacity:.5;cursor:not-allowed}
 
+/* ═══ INTEGRACIONES ═══ */
+.int-card{
+  background:white;border:1.5px solid var(--border-p);
+  border-radius:16px;padding:20px;margin-bottom:12px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;transition:all .18s;
+}
+.int-card:hover{border-color:var(--purple);box-shadow:0 2px 12px rgba(124,58,237,.08)}
+.int-card.connected{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.03)}
+.int-card-left{display:flex;align-items:center;gap:14px}
+.int-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:900;flex-shrink:0;
+}
+.int-icon--fb{background:#1877f2;color:white;font-family:Georgia,serif}
+.int-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
+.int-sub{font-size:12px;color:var(--muted)}
+.int-card-right{display:flex;align-items:center;gap:12px}
+.int-status{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.int-status.ok{background:rgba(16,185,129,.1);color:var(--green)}
+.int-status.err{background:rgba(244,63,94,.1);color:var(--rose)}
+.int-btn{
+  font-family:inherit;font-size:13px;font-weight:700;
+  border-radius:10px;padding:9px 18px;cursor:pointer;
+  transition:all .18s;border:1.5px solid var(--purple);
+  color:var(--purple);background:var(--p-light);
+}
+.int-btn:hover{background:var(--purple);color:white}
+.int-btn.disconnect{color:var(--rose);border-color:rgba(244,63,94,.3);background:rgba(244,63,94,.06)}
+.int-btn.disconnect:hover{background:var(--rose);color:white}
+.int-page-select{
+  background:white;border:1.5px solid var(--border-p);
+  border-radius:16px;padding:18px 20px;margin-bottom:12px;
+}
+.int-settings-card{
+  background:white;border:1.5px solid var(--border-p);
+  border-radius:16px;padding:20px;margin-bottom:12px;
+}
+.int-settings-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:16px}
+.int-toggle-row{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer}
+.int-toggle-label{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.int-toggle-sub{font-size:12px;color:var(--muted)}
+.int-toggle-wrap{position:relative;flex-shrink:0}
+.int-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.int-toggle-slider{
+  width:44px;height:24px;background:var(--muted2);border-radius:12px;
+  cursor:pointer;transition:background .2s;position:relative;
+}
+.int-toggle-slider::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:18px;height:18px;background:white;border-radius:50%;
+  transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+.int-toggle-wrap input:checked + .int-toggle-slider{background:var(--purple)}
+.int-toggle-wrap input:checked + .int-toggle-slider::after{transform:translateX(20px)}
+.int-coming-soon{
+  background:var(--surface);border:1.5px dashed var(--border-p);
+  border-radius:16px;padding:20px;margin-top:8px;
+}
+.int-cs-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.int-cs-chips{display:flex;flex-wrap:wrap;gap:8px}
+.int-cs-chip{
+  font-size:13px;font-weight:600;color:var(--muted);
+  background:white;border:1.5px solid var(--border-p);
+  border-radius:20px;padding:6px 14px;
+}
+
 /* ═══ CALENDARIO CRM ═══ */
 .cal-week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:28px}
 .cal-week-day{
@@ -1128,6 +1196,7 @@ body {
 
   <div class="s-settings">
     <button class="s-settings-item" onclick="showPanel('settings',document.querySelectorAll('.nav-item')[0]);closeSidebar()"><span class="nav-icon">⚙️</span>Configuración</button>
+    <button class="s-settings-item" onclick="showPanel('integraciones',this);closeSidebar()"><span class="nav-icon">🔗</span>Integraciones</button>
     <button class="s-settings-item" onclick="logout()" style="color:#ef4444;"><span class="nav-icon">↩</span>Cerrar sesión</button>
   </div>
 </div>
@@ -1372,7 +1441,73 @@ body {
       </div>
     </div>
 
-<!-- ═══ CALENDARIO CRM ═══ -->
+<!-- ═══ INTEGRACIONES ═══ -->
+    <div class="panel" id="panel-integraciones">
+
+      <div class="leads-top">
+        <div>
+          <div class="lst-page-title">Integraciones</div>
+          <div class="lst-page-sub">Conecta tus redes sociales y publica automáticamente</div>
+        </div>
+      </div>
+
+      <!-- Facebook card -->
+      <div class="int-card" id="fbIntCard">
+        <div class="int-card-left">
+          <div class="int-icon int-icon--fb">f</div>
+          <div>
+            <div class="int-name">Facebook · Instagram</div>
+            <div class="int-sub" id="fbIntSub">No conectado</div>
+          </div>
+        </div>
+        <div class="int-card-right">
+          <div class="int-status" id="fbIntStatus"></div>
+          <div id="fbLoginBtnWrap">
+            <!-- FB SDK login button — uses Config ID -->
+            <fb:login-button
+              config_id="2301684590341909"
+              onlogin="fbOnLogin();">
+            </fb:login-button>
+          </div>
+          <button class="int-btn int-btn--disconnect" id="fbDisconnectBtn" style="display:none" onclick="disconnectFacebook()">Desconectar</button>
+        </div>
+      </div>
+
+      <!-- Page selector -->
+      <div class="int-section" id="fbPageSelect" style="display:none">
+        <label class="crm-modal-label">Página de Facebook donde publicar</label>
+        <select class="crm-modal-input" id="fbPageDropdown" onchange="saveFbPage()"></select>
+      </div>
+
+      <!-- Auto-post toggle -->
+      <div class="int-settings-card" id="fbAutoSettings" style="display:none">
+        <div class="int-settings-title">Publicación automática</div>
+        <label class="int-toggle-row">
+          <div>
+            <div class="int-toggle-label">Publicar al generar un listing</div>
+            <div class="int-toggle-sub">PropIA publicará en Facebook e Instagram automáticamente</div>
+          </div>
+          <div class="int-toggle-wrap">
+            <input type="checkbox" id="fbAutoPostToggle" onchange="saveFbSettings()"/>
+            <div class="int-toggle-slider"></div>
+          </div>
+        </label>
+      </div>
+
+      <!-- Coming soon -->
+      <div class="int-coming-soon">
+        <div class="int-cs-title">Próximamente</div>
+        <div class="int-cs-chips">
+          <div class="int-cs-chip">▶️ YouTube</div>
+          <div class="int-cs-chip">💼 LinkedIn</div>
+          <div class="int-cs-chip">🎵 TikTok</div>
+          <div class="int-cs-chip">💬 WhatsApp Business</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ CALENDARIO CRM ═══ -->
     <div class="panel" id="panel-calendario">
 
       <div class="leads-top">
@@ -1763,6 +1898,7 @@ body {
     loadUsage();
     loadHistory();
     loadLeads();
+    initIntegraciones();
   });
 
   function setDate() {
@@ -1848,10 +1984,11 @@ body {
     if (btn) btn.classList.add('active');
     closeSidebar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (name === 'settings') loadSettingsPanel();
-    if (name === 'leads')    renderPipeline();
-    if (name === 'calendario') calInit();
-    if (name === 'reportes')   renderReportes();
+    if (name === 'settings')      loadSettingsPanel();
+    if (name === 'leads')         renderPipeline();
+    if (name === 'calendario')    calInit();
+    if (name === 'reportes')      renderReportes();
+    if (name === 'integraciones') initIntegraciones();
   }
 
   function setMNav(id) { document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
@@ -2787,6 +2924,214 @@ body {
   });
 
   // ══════════════════════════════════════════════
+  //  INTEGRACIONES — FACEBOOK SDK
+  // ══════════════════════════════════════════════
+  var FB_APP_ID    = '1444690334022406';
+  var FB_CONFIG_ID = '2301684590341909';
+  var fbConnected  = false;
+
+  // Load FB SDK asynchronously
+  window.fbAsyncInit = function() {
+    FB.init({ appId: FB_APP_ID, cookie: true, xfbml: true, version: 'v22.0' });
+    FB.AppEvents.logPageView();
+    // Check if already logged in
+    FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        fbHandleConnected(response.authResponse);
+      }
+    });
+  };
+  (function(d,s,id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/es_LA/sdk.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document,'script','facebook-jssdk'));
+
+  function fbOnLogin() {
+    FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        fbHandleConnected(response.authResponse);
+      } else {
+        showGlobalToast('❌ No se pudo conectar con Facebook', 'err');
+      }
+    });
+  }
+
+  function fbHandleConnected(authResponse) {
+    var userToken = authResponse.accessToken;
+
+    // Get user's pages
+    FB.api('/me/accounts', function(pagesData) {
+      if (!pagesData || pagesData.error) {
+        showGlobalToast('❌ Error obteniendo páginas de Facebook', 'err');
+        return;
+      }
+
+      var pages = pagesData.data || [];
+
+      // Save to backend
+      var token = localStorage.getItem('propia_token');
+      fetch('/api/facebook-auth', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
+        body: JSON.stringify({
+          user_token: userToken,
+          pages:      pages,
+          // Auto-select first page
+          page_id:    pages.length > 0 ? pages[0].id : null,
+          page_name:  pages.length > 0 ? pages[0].name : null,
+          page_token: pages.length > 0 ? pages[0].access_token : null
+        })
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(data) {
+        if (data.success) {
+          fbConnected = true;
+          showGlobalToast('✅ Facebook conectado' + (pages.length > 0 ? ' — ' + pages[0].name : ''), 'ok');
+          updateFbUI(pages);
+        } else {
+          showGlobalToast('❌ ' + (data.error || 'Error guardando conexión'), 'err');
+        }
+      });
+    });
+  }
+
+  function updateFbUI(pages) {
+    var card    = document.getElementById('fbIntCard');
+    var sub     = document.getElementById('fbIntSub');
+    var status  = document.getElementById('fbIntStatus');
+    var loginWrap = document.getElementById('fbLoginBtnWrap');
+    var discBtn = document.getElementById('fbDisconnectBtn');
+    var pagesel = document.getElementById('fbPageSelect');
+    var autosec = document.getElementById('fbAutoSettings');
+
+    card.classList.add('connected');
+    sub.textContent    = pages && pages.length > 0 ? '📄 ' + pages[0].name : 'Conectado';
+    status.textContent = '● Activo';
+    status.className   = 'int-status ok';
+    loginWrap.style.display = 'none';
+    discBtn.style.display   = 'block';
+    autosec.style.display   = 'block';
+
+    // Restore toggle
+    document.getElementById('fbAutoPostToggle').checked = localStorage.getItem('fb_auto_post') === 'true';
+
+    // Page selector for multiple pages
+    if (pages && pages.length > 1) {
+      pagesel.style.display = 'block';
+      document.getElementById('fbPageDropdown').innerHTML = pages.map(function(p){
+        return '<option value="'+p.id+'">'+esc(p.name)+'</option>';
+      }).join('');
+    }
+  }
+
+  function initIntegraciones() {
+    // Load saved FB status from backend
+    var token = localStorage.getItem('propia_token');
+    fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
+      body: JSON.stringify({ action:'profile' })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data) {
+      var u = data.user || {};
+      if (u.fb_page_token || u.fb_user_token) {
+        try {
+          var pages = JSON.parse(u.fb_pages || '[]');
+          if (u.fb_page_name && pages.length === 0) {
+            pages = [{ id: u.fb_page_id, name: u.fb_page_name }];
+          }
+          updateFbUI(pages);
+        } catch(e) { updateFbUI([]); }
+      }
+    })
+    .catch(function(e){ console.error('initIntegraciones:', e); });
+  }
+
+  function disconnectFacebook() {
+    if (!confirm('¿Desconectar Facebook?')) return;
+    FB.logout(function() {});
+    var token = localStorage.getItem('propia_token');
+    fetch('/api/facebook-auth', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
+      body: JSON.stringify({ disconnect: true })
+    }).then(function(){
+      fbConnected = false;
+      var card = document.getElementById('fbIntCard');
+      card.classList.remove('connected');
+      document.getElementById('fbIntSub').textContent    = 'No conectado';
+      document.getElementById('fbIntStatus').textContent = '';
+      document.getElementById('fbIntStatus').className   = 'int-status';
+      document.getElementById('fbLoginBtnWrap').style.display = 'block';
+      document.getElementById('fbDisconnectBtn').style.display = 'none';
+      document.getElementById('fbPageSelect').style.display   = 'none';
+      document.getElementById('fbAutoSettings').style.display = 'none';
+      localStorage.removeItem('fb_auto_post');
+      showGlobalToast('Facebook desconectado', 'ok');
+    });
+  }
+
+  function saveFbPage() {
+    var pageId = document.getElementById('fbPageDropdown').value;
+    var token  = localStorage.getItem('propia_token');
+    fetch('/api/facebook-auth', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
+      body: JSON.stringify({ set_page: pageId })
+    });
+  }
+
+  function saveFbSettings() {
+    var checked = document.getElementById('fbAutoPostToggle').checked;
+    localStorage.setItem('fb_auto_post', checked ? 'true' : 'false');
+    showGlobalToast(checked ? '✅ Publicación automática activada' : 'Publicación automática desactivada', 'ok');
+  }
+
+  async function postToFacebook(listingId) {
+    var token = localStorage.getItem('propia_token');
+    var btn   = document.getElementById('fbPostBtn_' + listingId);
+    if (btn) { btn.disabled = true; btn.textContent = 'Publicando...'; }
+    try {
+      var res  = await fetch('/api/facebook-post', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
+        body: JSON.stringify({ listingId })
+      });
+      var data = await res.json();
+      if (data.success) {
+        showGlobalToast('✅ Publicado en ' + (data.page || 'Facebook'), 'ok');
+        if (btn) { btn.textContent = '✅ Publicado'; btn.style.background='var(--green)'; btn.style.color='white'; }
+      } else {
+        showGlobalToast('❌ ' + (data.error || 'Error publicando'), 'err');
+        if (btn) { btn.disabled = false; btn.textContent = '📘 Publicar'; }
+      }
+    } catch(e) {
+      showGlobalToast('❌ Error de conexión', 'err');
+      if (btn) { btn.disabled = false; btn.textContent = '📘 Publicar'; }
+    }
+  }
+
+  function showGlobalToast(msg, type) {
+    var el = document.getElementById('globalToast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'globalToast';
+      el.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:9999;padding:12px 22px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,.15);transition:opacity .3s;white-space:nowrap';
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.style.background = type==='ok' ? '#10b981' : '#f43f5e';
+    el.style.color  = 'white';
+    el.style.opacity = '1';
+    clearTimeout(el._t);
+    el._t = setTimeout(function(){ el.style.opacity='0'; }, 3000);
+  }
+
+    // ══════════════════════════════════════════════
   //  CALENDARIO CRM
   // ══════════════════════════════════════════════
   var calSelectedDate = new Date();
