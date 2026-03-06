@@ -3692,7 +3692,7 @@ body {
     el.innerHTML = '<div class="edu-topics-title">Elige un tema educativo para generar un script de YouTube o TikTok:</div>'
       + '<div class="edu-chips">'
       + eduTopicsList.map(function(t) {
-          return '<button class="edu-chip" id="eduChip_'+t.id+'" onclick="selectEduTopic(''+t.id+'')">'
+          return '<button class="edu-chip" id="eduChip_' + t.id + '" data-topic="' + t.id + '" onclick="selectEduTopic(this.dataset.topic)">'
             + t.emoji + ' ' + t.label
             + '</button>';
         }).join('')
