@@ -411,6 +411,41 @@ body {
   border-radius:20px;padding:6px 14px;
 }
 
+.int-instructivo{
+  background:white;border:1.5px solid var(--border-p);
+  border-radius:16px;padding:20px;margin-bottom:14px;
+}
+.int-inst-title{
+  font-size:13px;font-weight:700;color:var(--text);
+  margin-bottom:16px;
+}
+.int-inst-steps{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
+.int-inst-step{display:flex;align-items:flex-start;gap:12px}
+.int-inst-num{
+  width:26px;height:26px;border-radius:50%;
+  background:var(--p-light);border:1.5px solid var(--p-border);
+  color:var(--purple);font-size:12px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.int-inst-label{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.int-inst-sub{font-size:12px;color:var(--muted);line-height:1.5}
+.int-inst-caps-title{
+  font-size:11px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;
+  padding-top:16px;border-top:1.5px solid var(--border-p);
+}
+.int-inst-caps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:600px){.int-inst-caps{grid-template-columns:repeat(2,1fr)}}
+.int-inst-cap{
+  border-radius:12px;padding:12px;border:1.5px solid var(--border-p);
+  display:flex;align-items:flex-start;gap:8px;
+}
+.int-inst-cap--ok{background:rgba(16,185,129,.04);border-color:rgba(16,185,129,.2)}
+.int-inst-cap--warn{background:var(--a-light);border-color:rgba(245,158,11,.2)}
+.int-inst-cap-icon{font-size:16px;flex-shrink:0}
+.int-inst-cap-label{font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px}
+.int-inst-cap-sub{font-size:11px;color:var(--muted)}
+
 /* ═══ CALENDARIO CRM ═══ */
 .cal-week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:28px}
 .cal-week-day{
@@ -1470,6 +1505,66 @@ body {
         <div>
           <div class="lst-page-title">Integraciones</div>
           <div class="lst-page-sub">Conecta tus redes sociales y publica automáticamente</div>
+        </div>
+      </div>
+
+      <!-- Instructivo -->
+      <div class="int-instructivo">
+        <div class="int-inst-title">📋 Antes de conectar — lo que necesitas</div>
+        <div class="int-inst-steps">
+          <div class="int-inst-step">
+            <div class="int-inst-num">1</div>
+            <div>
+              <div class="int-inst-label">Una página de Facebook</div>
+              <div class="int-inst-sub">No un perfil personal. Ve a <strong>facebook.com/pages/create</strong> y crea una página con el nombre de tu agencia o negocio.</div>
+            </div>
+          </div>
+          <div class="int-inst-step">
+            <div class="int-inst-num">2</div>
+            <div>
+              <div class="int-inst-label">Una cuenta de Instagram Business o Creator</div>
+              <div class="int-inst-sub">No una cuenta personal. En Instagram → <strong>Configuración → Cuenta → Cambiar a cuenta profesional</strong>.</div>
+            </div>
+          </div>
+          <div class="int-inst-step">
+            <div class="int-inst-num">3</div>
+            <div>
+              <div class="int-inst-label">Vincula Instagram con tu página de Facebook</div>
+              <div class="int-inst-sub">En Instagram → <strong>Configuración → Cuenta → Cuenta vinculada → Facebook</strong> → selecciona tu página.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="int-inst-caps-title">Lo que PropIA publica automáticamente</div>
+        <div class="int-inst-caps">
+          <div class="int-inst-cap int-inst-cap--ok">
+            <div class="int-inst-cap-icon">✅</div>
+            <div>
+              <div class="int-inst-cap-label">Posts con imagen</div>
+              <div class="int-inst-cap-sub">Facebook e Instagram</div>
+            </div>
+          </div>
+          <div class="int-inst-cap int-inst-cap--ok">
+            <div class="int-inst-cap-icon">✅</div>
+            <div>
+              <div class="int-inst-cap-label">Carrusel de fotos</div>
+              <div class="int-inst-cap-sub">Perfecto para listings</div>
+            </div>
+          </div>
+          <div class="int-inst-cap int-inst-cap--ok">
+            <div class="int-inst-cap-icon">✅</div>
+            <div>
+              <div class="int-inst-cap-label">Reels / Video</div>
+              <div class="int-inst-cap-sub">Facebook e Instagram</div>
+            </div>
+          </div>
+          <div class="int-inst-cap int-inst-cap--warn">
+            <div class="int-inst-cap-icon">⚠️</div>
+            <div>
+              <div class="int-inst-cap-label">Stories</div>
+              <div class="int-inst-cap-sub">Próximamente</div>
+            </div>
+          </div>
         </div>
       </div>
 
