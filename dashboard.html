@@ -330,7 +330,11 @@ body {
 .lst-card-actions{display:flex;gap:8px;padding-top:12px;border-top:1px solid var(--border)}
 .lst-btn-edit{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
 .lst-btn-edit:hover{background:var(--purple);color:white;border-color:transparent}
-.lst-btn-photos{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:#b45309;background:rgba(245,158,11,.10);border:1.5px solid rgba(245,158,11,.25);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
+.lst-btn-wa{font-family:inherit;font-size:11px;font-weight:700;border-radius:8px;padding:6px 11px;cursor:pointer;border:1.5px solid rgba(37,211,102,.35);color:#25d166;background:rgba(37,211,102,.08);transition:all .15s}
+.lst-btn-wa:hover{background:#25d166;color:white;border-color:#25d166}
+.lst-btn-fb{font-family:inherit;font-size:11px;font-weight:700;border-radius:8px;padding:6px 11px;cursor:pointer;border:1.5px solid rgba(24,119,242,.3);color:#1877f2;background:rgba(24,119,242,.07);transition:all .15s}
+.lst-btn-fb:hover{background:#1877f2;color:white;border-color:#1877f2}
+.lst-btn-fb:disabled{opacity:.6;cursor:not-allowed}flex:1;font-family:inherit;font-size:13px;font-weight:700;color:#b45309;background:rgba(245,158,11,.10);border:1.5px solid rgba(245,158,11,.25);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
 .lst-btn-photos:hover{background:#f59e0b;color:white;border-color:transparent}
 .lst-btn-share{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:var(--teal);background:var(--t-light);border:1.5px solid var(--t-border);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
 .lst-btn-share:hover{background:var(--teal);color:white;border-color:transparent}
@@ -2368,6 +2372,8 @@ body {
         + '<button class="lst-btn-pdf" onclick="downloadPDF(&#39;' + h.id + '&#39;, event)">⬇️ PDF</button>'
         + '<button class="lst-btn-edit" onclick="shareListingLink(&#39;' + h.id + '&#39;, event)">🔗 Compartir</button>'
         + '<button class="lst-btn-edit" onclick="loadForEdit(&#39;' + h.id + '&#39;)">✏️ Editar</button>'
+        + '<button class="lst-btn-wa" onclick="sendWhatsApp(&#39;' + h.id + '&#39;, &#39;' + encodeURIComponent(h.address) + '&#39;, &#39;' + encodeURIComponent(h.price||'') + '&#39;)">💬 WhatsApp</button>'
+        + (fbConnected ? '<button class="lst-btn-fb" id="fbPostBtn_' + h.id + '" onclick="postToFacebook(&#39;' + h.id + '&#39;)">📘 Facebook</button>' : '')
         + '</div></div>';
  
     }).join('');
@@ -3203,6 +3209,32 @@ body {
     var checked = document.getElementById('fbAutoPostToggle').checked;
     localStorage.setItem('fb_auto_post', checked ? 'true' : 'false');
     showGlobalToast(checked ? '✅ Publicación automática activada' : 'Publicación automática desactivada', 'ok');
+  }
+
+  async function sendWhatsApp(listingId, address, price) {
+    // Get the listing content for the WA message
+    var token = localStorage.getItem('propia_token');
+    try {
+      var res  = await fetch('/api/history', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      var data = await res.json();
+      var listing = (data.listings || []).find(function(l) { return l.id === listingId; });
+      var waMsg = (listing && listing.content && listing.content.whatsapp)
+        ? listing.content.whatsapp
+        : '🏠 Nueva propiedad disponible';
+      var addrDecoded  = decodeURIComponent(address);
+      var priceDecoded = decodeURIComponent(price);
+      var fullMsg = waMsg
+        + '\n\n📍 ' + addrDecoded
+        + (priceDecoded ? '\n💰 ' + priceDecoded : '')
+        + '\n\n🔗 Ver más: https://propia-saas.vercel.app/share?agent=' + (JSON.parse(localStorage.getItem('propia_user')||'{}').id||'');
+      window.open('https://wa.me/?text=' + encodeURIComponent(fullMsg), '_blank');
+    } catch(e) {
+      // Fallback: open WA with basic message
+      var msg = '🏠 Nueva propiedad disponible\n📍 ' + decodeURIComponent(address) + (price ? '\n💰 ' + decodeURIComponent(price) : '');
+      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+    }
   }
 
   async function postToFacebook(listingId) {
