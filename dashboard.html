@@ -314,22 +314,44 @@ body {
 .lst-toolbar{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
 .lst-search{flex:1;min-width:180px;font-family:inherit;font-size:14px;color:var(--text);background:white;border:1.5px solid var(--border);border-radius:11px;padding:9px 14px;outline:none;transition:border-color .18s}
 .lst-search:focus{border-color:var(--p-border);box-shadow:0 0 0 3px rgba(124,58,237,.08)}
-.lst-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.lst-card{background:white;border-radius:16px;border:1.5px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06);padding:20px;display:flex;flex-direction:column;gap:14px;transition:all .20s}
-.lst-card:hover{border-color:var(--p-border);box-shadow:0 6px 24px rgba(124,58,237,.10);transform:translateY(-2px)}
-.lst-card-top{display:flex;align-items:flex-start;gap:13px}
-.lst-card-icon{width:44px;height:44px;border-radius:12px;background:var(--p-light);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.lst-card-addr{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.3px;margin-bottom:5px;line-height:1.3}
-.lst-card-price{font-size:17px;font-weight:800;color:var(--purple);letter-spacing:-.3px}
-.lst-card-badges{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.lst-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:3px 9px;border-radius:20px}
-.lb-p{background:var(--p-light);color:var(--purple)}
-.lb-g{background:rgba(16,185,129,.10);color:#059669}
-.lb-a{background:rgba(245,158,11,.10);color:#b45309}
-.lb-n{background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
-.lst-card-actions{display:flex;flex-wrap:wrap;gap:6px;padding-top:12px;border-top:1px solid var(--border)}
-.lst-btn-edit{flex:1;font-family:inherit;font-size:13px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:9px;padding:10px 0;cursor:pointer;transition:all .18s}
-.lst-btn-edit:hover{background:var(--purple);color:white;border-color:transparent}
+.lst-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.lst-card{background:#fff;border-radius:16px;border:1px solid #ebebf0;box-shadow:0 1px 2px rgba(0,0,0,.04);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .18s,transform .18s}
+.lst-card:hover{box-shadow:0 8px 28px rgba(124,58,237,.11);transform:translateY(-2px);border-color:#d4c8f7}
+.lst-card-header{padding:18px 18px 14px;display:flex;flex-direction:column;gap:4px}
+.lst-card-addr{font-size:13px;font-weight:600;color:#6b7280;letter-spacing:.1px;line-height:1.4}
+.lst-card-price{font-size:26px;font-weight:800;color:#0f0a1e;letter-spacing:-1px;line-height:1}
+.lst-card-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:10px 18px;border-top:1px solid #f0f0f4;border-bottom:1px solid #f0f0f4}
+.lst-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:5px}
+.lb-p{background:rgba(124,58,237,.08);color:var(--purple)}
+.lb-g{background:rgba(16,185,129,.08);color:#059669}
+.lb-a{background:rgba(245,158,11,.08);color:#b45309}
+.lb-n{background:#f4f4f6;color:#9ca3af}
+.lst-card-date{margin-left:auto;font-size:11px;font-weight:500;color:#c4c4cc}
+.lst-card-actions{padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px}
+.lst-act-btn{font-family:inherit;font-size:12px;font-weight:600;border-radius:8px;padding:7px 12px;cursor:pointer;border:1px solid transparent;transition:background .14s,color .14s,border-color .14s;white-space:nowrap;letter-spacing:.1px}
+.lst-act-btn.btn-ghost{background:#f5f5f8;color:#374151;border-color:#ebebf0}
+.lst-act-btn.btn-ghost:hover{background:#ebebf0;color:#111}
+.lst-act-btn.btn-primary{background:var(--p-light);color:var(--purple);border-color:rgba(124,58,237,.15)}
+.lst-act-btn.btn-primary:hover{background:var(--purple);color:#fff;border-color:transparent}
+.lst-act-btn.btn-green{background:#f0fdf4;color:#059669;border-color:rgba(16,185,129,.18)}
+.lst-act-btn.btn-green:hover{background:#059669;color:#fff;border-color:transparent}
+.lst-act-btn.btn-wa{background:#f0fdf4;color:#25d166;border-color:rgba(37,211,102,.2)}
+.lst-act-btn.btn-wa:hover{background:#25d166;color:#fff}
+.lst-act-btn.btn-fb{background:#eff6ff;color:#1877f2;border-color:rgba(24,119,242,.18)}
+.lst-act-btn.btn-fb:hover{background:#1877f2;color:#fff}
+.lst-act-btn:disabled{opacity:.45;cursor:not-allowed}
+.lst-btn-photos,.lst-btn-pdf,.lst-btn-wa,.lst-btn-fb,.lst-btn-edit{font-family:inherit;font-size:12px;font-weight:600;border-radius:8px;padding:7px 12px;cursor:pointer;transition:all .14s;white-space:nowrap}
+.lst-btn-photos{background:#fff8ed;color:#d97706;border:1px solid rgba(245,158,11,.2)}
+.lst-btn-photos:hover{background:#f59e0b;color:#fff;border-color:transparent}
+.lst-btn-pdf{background:#f0fdf4;color:#059669;border:1px solid rgba(16,185,129,.18)}
+.lst-btn-pdf:hover{background:#059669;color:#fff;border-color:transparent}
+.lst-btn-wa{background:#f0fdf4;color:#25d166;border:1px solid rgba(37,211,102,.2)}
+.lst-btn-wa:hover{background:#25d166;color:#fff;border-color:transparent}
+.lst-btn-fb{background:#eff6ff;color:#1877f2;border:1px solid rgba(24,119,242,.18)}
+.lst-btn-fb:hover{background:#1877f2;color:#fff;border-color:transparent}
+.lst-btn-fb:disabled{opacity:.45;cursor:not-allowed}
+.lst-btn-edit{background:var(--p-light);color:var(--purple);border:1px solid rgba(124,58,237,.15)}
+.lst-btn-edit:hover{background:var(--purple);color:#fff;border-color:transparent}
 .lst-btn-wa{font-family:inherit;font-size:12px;font-weight:700;border-radius:9px;padding:8px 12px;cursor:pointer;border:1.5px solid rgba(37,211,102,.35);color:#25d166;background:rgba(37,211,102,.08);transition:all .15s;white-space:nowrap}
 .lst-btn-wa:hover{background:#25d166;color:white;border-color:#25d166}
 .lst-btn-fb{font-family:inherit;font-size:12px;font-weight:700;border-radius:9px;padding:8px 12px;cursor:pointer;border:1.5px solid rgba(24,119,242,.3);color:#1877f2;background:rgba(24,119,242,.07);transition:all .15s;white-space:nowrap}
@@ -2433,26 +2455,9 @@ body {
       return;
     }
     var tC = { lujoso:'lb-p', inversionista:'lb-p', moderno:'lb-p', familiar:'lb-g', emocional:'lb-g', urgente:'lb-a' };
-    var tL = { lujoso:'✨ Lujoso', familiar:'Familiar', inversionista:'📈 Inversión', moderno:'🏙️ Moderno', urgente:'⚡ Urgente', emocional:'❤️ Emocional' };
+    var tL = { lujoso:'Lujoso', familiar:'Familiar', inversionista:'Inversión', moderno:'Moderno', urgente:'Urgente', emocional:'Emocional' };
     var cards = data.map(function(h) {
-      return '<div class="lst-card">'
-        + '<div class="lst-card-top"><div class="lst-card-icon">🏠</div>'
-        + '<div><div class="lst-card-addr">' + h.address + '</div>'
-        + '<div class="lst-card-price">' + h.price + '</div></div></div>'
-        + '<div class="lst-card-badges">'
-        + '<span class="lst-badge ' + (tC[h.tone]||'lb-p') + '">' + (tL[h.tone]||h.tone) + '</span>'
-        + (h.type ? '<span class="lst-badge lb-n">' + h.type + '</span>' : '')
-        + '<span class="lst-badge lb-n">📅 ' + formatDate(h.date) + '</span>'
-        + '</div>'
-        + '<div class="lst-card-actions">'
-        + '<button class="lst-btn-photos" onclick="openPhotos(&#39;' + h.id + '&#39;, event)">📸 Fotos</button>'
-        + '<button class="lst-btn-pdf" onclick="downloadPDF(&#39;' + h.id + '&#39;, event)">⬇️ PDF</button>'
-        + '<button class="lst-btn-edit" onclick="shareListingLink(&#39;' + h.id + '&#39;, event)">🔗 Compartir</button>'
-        + '<button class="lst-btn-edit" onclick="loadForEdit(&#39;' + h.id + '&#39;)">✏️ Editar</button>'
-        + '<button class="lst-btn-wa" onclick="sendWhatsApp(&#39;' + h.id + '&#39;, &#39;' + encodeURIComponent(h.address) + '&#39;, &#39;' + encodeURIComponent(h.price||'') + '&#39;)">💬 WhatsApp</button>'
-        + (fbConnected ? '<button class="lst-btn-fb" id="fbPostBtn_' + h.id + '" onclick="postToFacebook(&#39;' + h.id + '&#39;)">📘 Facebook</button>' : '')
-        + '</div></div>';
- 
+      return '<div class="lst-card">'        + '<div class="lst-card-header">'        + '<div class="lst-card-addr">' + (h.address||'') + '</div>'        + '<div class="lst-card-price">' + (h.price||'') + '</div>'        + '</div>'        + '<div class="lst-card-meta">'        + '<span class="lst-badge ' + (tC[h.tone]||'lb-p') + '">' + (tL[h.tone]||h.tone||'') + '</span>'        + (h.type ? '<span class="lst-badge lb-n">' + h.type + '</span>' : '')        + '<span class="lst-card-date">' + formatDate(h.date) + '</span>'        + '</div>'        + '<div class="lst-card-actions">'        + '<button class="lst-btn-photos" onclick="openPhotos(&#39;' + h.id + '&#39;, event)">Fotos</button>'        + '<button class="lst-btn-pdf" onclick="downloadPDF(&#39;' + h.id + '&#39;, event)">PDF</button>'        + '<button class="lst-btn-edit" onclick="shareListingLink(&#39;' + h.id + '&#39;, event)">Compartir</button>'        + '<button class="lst-btn-edit" onclick="loadForEdit(&#39;' + h.id + '&#39;)">Editar</button>'        + '<button class="lst-btn-wa" onclick="sendWhatsApp(&#39;' + h.id + '&#39;, &#39;' + encodeURIComponent(h.address||'') + '&#39;, &#39;' + encodeURIComponent(h.price||'') + '&#39;)">WhatsApp</button>'        + (fbConnected ? '<button class="lst-btn-fb" id="fbPostBtn_' + h.id + '" onclick="postToFacebook(&#39;' + h.id + '&#39;)">Facebook</button>' : '')        + '</div></div>';
     }).join('');
     body.innerHTML = '<div class="lst-grid">' + cards + '</div>';
   }
