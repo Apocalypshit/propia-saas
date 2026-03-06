@@ -66,7 +66,7 @@ module.exports = async function handler(req, res) {
       const { data, error } = await supabase
         .from('leads')
         .select('*')
-        .eq('agent_id', user.id)
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(200);
       if (error) throw error;
@@ -90,7 +90,7 @@ module.exports = async function handler(req, res) {
         .from('leads')
         .update(updates)
         .eq('id', id)
-        .eq('agent_id', user.id);
+        .eq('user_id', user.id);
       if (error) throw error;
       return res.status(200).json({ success: true });
     } catch (err) {
@@ -159,7 +159,7 @@ Criterios de scoring:
       const { data: lead, error: insertErr } = await supabase
         .from('leads')
         .insert({
-          agent_id:     user.id,
+          user_id:     user.id,
           name,
           email:        email  || null,
           phone:        phone  || null,
