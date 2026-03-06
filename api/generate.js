@@ -167,6 +167,14 @@ Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta, sin text
       });
     }
 
+    // ── AUTO-PUBLISH: Facebook + Email a leads ───────────────────
+    // Only on NEW listings (not edits), fire-and-forget (no await)
+    if (!listingId) {
+      autoPublish(user.id, address, price, parsed).catch(function(e){
+        console.error('[auto-publish] Error:', e.message);
+      });
+    }
+
     return res.status(200).json({
       success: true,
       content: parsed,
@@ -179,3 +187,91 @@ Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta, sin text
     return res.status(500).json({ error: err.message || 'Error interno del servidor.' });
   }
 };
+
+// ── AUTO-PUBLISH: Facebook + Email leads ─────────────────────────
+async function autoPublish(userId, address, price, content) {
+  const RESEND_KEY = process.env.RESEND_API_KEY;
+  const APP_URL   = process.env.APP_URL || 'https://propia-saas.vercel.app';
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('name, fb_page_token, fb_page_id, fb_page_name')
+    .eq('id', userId).single();
+
+  if (!profile) return;
+  const agentName = profile.name || 'Tu agente de bienes raíces';
+
+  // 1. POST TO FACEBOOK
+  if (profile.fb_page_token && profile.fb_page_id) {
+    try {
+      const fbPost  = content.facebook_post || content.description || '';
+      const postMsg = fbPost
+        + '\n\n📍 ' + address
+        + (price ? '\n💰 ' + price : '')
+        + '\n\n🏠 ' + agentName + ' | PropIA\n#bienesraices #realestate #casas';
+      const fbRes  = await fetch(`https://graph.facebook.com/v22.0/${profile.fb_page_id}/feed`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: postMsg, access_token: profile.fb_page_token })
+      });
+      const fbData = await fbRes.json();
+      if (fbData.error) console.error('[auto-publish] FB:', fbData.error.message);
+      else console.log('[auto-publish] FB published:', fbData.id);
+    } catch(e) { console.error('[auto-publish] FB exception:', e.message); }
+  }
+
+  // 2. EMAIL TO ACTIVE LEADS
+  if (!RESEND_KEY) return;
+  const { data: leads } = await supabase
+    .from('leads').select('id, name, email')
+    .eq('user_id', userId).neq('status', 'cerrado').not('email', 'is', null);
+  if (!leads || leads.length === 0) return;
+
+  const subject   = (content.email_subject || 'Nueva propiedad disponible') + ' — ' + address;
+  const emailBody = content.email_body || content.description || '';
+  const shareLink = APP_URL + '/share?agent=' + userId;
+
+  for (const lead of leads) {
+    if (!lead.email) continue;
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + RESEND_KEY },
+        body: JSON.stringify({
+          from: 'PropIA <onboarding@resend.dev>',
+          to:   lead.email,
+          subject,
+          html: buildLeadEmail({ leadName: lead.name || 'Estimado cliente', agentName, address, price, emailBody, shareLink })
+        })
+      });
+      console.log('[auto-publish] Email sent to lead:', lead.id);
+    } catch(e) { console.error('[auto-publish] Email error:', e.message); }
+  }
+}
+
+function buildLeadEmail({ leadName, agentName, address, price, emailBody, shareLink }) {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#eae5f8;font-family:'Segoe UI',Arial,sans-serif">
+<div style="max-width:560px;margin:32px auto;background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(124,58,237,.12)">
+  <div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);padding:28px 32px">
+    <div style="font-size:22px;font-weight:900;color:white">PropIA</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.75);margin-top:4px">Nueva propiedad disponible para ti</div>
+  </div>
+  <div style="padding:28px 32px">
+    <p style="font-size:15px;color:#374151;margin:0 0 16px">Hola <strong>${leadName}</strong>,</p>
+    <p style="font-size:14px;color:#6b7280;line-height:1.6;margin:0 0 20px">${emailBody}</p>
+    <div style="background:#f8f6ff;border:1.5px solid rgba(124,58,237,.12);border-radius:14px;padding:20px;margin-bottom:24px">
+      <div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Propiedad</div>
+      <div style="font-size:18px;font-weight:800;color:#0f0a1e;margin-bottom:6px">📍 ${address}</div>
+      ${price ? `<div style="font-size:22px;font-weight:900;color:#7c3aed">💰 ${price}</div>` : ''}
+    </div>
+    <a href="${shareLink}" style="display:block;background:#7c3aed;color:white;text-align:center;padding:14px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;margin-bottom:24px">Ver propiedad completa →</a>
+    <p style="font-size:13px;color:#9ca3af;margin:0">Con gusto, <strong style="color:#374151">${agentName}</strong><br>
+    <span style="font-size:12px">Enviado via PropIA — IA para Agentes Latinos</span></p>
+  </div>
+  <div style="background:#f8f6ff;padding:16px 32px;text-align:center">
+    <p style="font-size:11px;color:#9ca3af;margin:0">Recibiste este email porque estás en la lista de contactos de ${agentName}.</p>
+  </div>
+</div>
+</body></html>`;
+}
