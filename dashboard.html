@@ -342,6 +342,27 @@ body {
 .lst-btn-pdf:hover{background:#10b981;color:white;border-color:transparent}
 .lst-btn-pdf:disabled{opacity:.5;cursor:not-allowed}
 
+/* ═══ EDUCATIVO ═══ */
+.edu-topics-title{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.edu-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.edu-chip{
+  font-family:inherit;font-size:12px;font-weight:600;
+  border:1.5px solid var(--border-p);border-radius:20px;
+  padding:6px 13px;cursor:pointer;background:white;color:var(--text2);
+  transition:all .15s;
+}
+.edu-chip:hover{border-color:var(--purple);color:var(--purple);background:var(--p-light)}
+.edu-chip.active{border-color:var(--purple);background:var(--purple);color:white}
+.edu-gen-btn{
+  font-family:inherit;font-size:13px;font-weight:700;
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  color:white;border:none;border-radius:11px;padding:11px 22px;
+  cursor:pointer;box-shadow:0 3px 12px rgba(124,58,237,.28);
+  transition:all .18s;width:100%;margin-top:4px;
+}
+.edu-gen-btn:hover{opacity:.9;transform:translateY(-1px)}
+.edu-gen-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
 /* ═══ INTEGRACIONES ═══ */
 .int-card{
   background:white;border:1.5px solid var(--border-p);
@@ -1471,11 +1492,22 @@ body {
               <button class="otab" onclick="showOTab('posts',this)">📱 Redes</button>
               <button class="otab" onclick="showOTab('email',this)">📧 Email</button>
               <button class="otab" onclick="showOTab('video',this)">🎬 Video</button>
+              <button class="otab" onclick="showOTab('edu',this)">🎓 Educativo</button>
             </div>
             <div class="otab-content active" id="otab-mls"><div class="output-card"><div class="output-head"><div class="output-lbl">Descripción MLS</div><button class="btn-copy" onclick="copyOut('outMls',this)">📋 Copiar</button></div><div class="output-text" id="outMls"></div></div></div>
             <div class="otab-content" id="otab-posts"><div class="output-card"><div class="output-head"><div class="output-lbl">Posts para Redes Sociales</div><button class="btn-copy" onclick="copyAllPosts(this)">📋 Copiar todos</button></div><div id="postsContainer"></div></div></div>
             <div class="otab-content" id="otab-email"><div class="output-card"><div class="output-head"><div class="output-lbl">Email de Marketing</div><button class="btn-copy" onclick="copyOut('outEmail',this)">📋 Copiar</button></div><div class="output-text" id="outEmail"></div></div></div>
             <div class="otab-content" id="otab-video"><div class="output-card"><div class="output-head"><div class="output-lbl">Script para Video</div><button class="btn-copy" onclick="copyOut('outVideo',this)">📋 Copiar</button></div><div class="output-text" id="outVideo"></div></div></div>
+            <div class="otab-content" id="otab-edu">
+              <div class="output-card">
+                <div class="output-head">
+                  <div class="output-lbl">🎓 Script Educativo — YouTube / TikTok</div>
+                  <button class="btn-copy" onclick="copyOut('outEdu',this)">📋 Copiar</button>
+                </div>
+                <div class="edu-topics" id="eduTopics"></div>
+                <div class="output-text" id="outEdu" style="margin-top:12px"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2193,6 +2225,8 @@ body {
     document.getElementById('outMls').textContent = content.mls || '';
     document.getElementById('outEmail').textContent = content.email || '';
     document.getElementById('outVideo').textContent = content.video || '';
+    document.getElementById('outEdu').textContent   = '';
+    renderEduTopics(content, address);
     const container = document.getElementById('postsContainer'); container.innerHTML = '';
     const labels = ['Post 1 — Presentación','Post 2 — Características','Post 3 — Llamada a la Acción'];
     (content.posts || []).forEach((p, idx) => { container.innerHTML += '<div class="post-item"><div class="post-num">' + (labels[idx] || 'Post '+(idx+1)) + '</div><div class="post-text">' + p + '</div><button class="post-copy" onclick="copyPostItem(this,' + idx + ')">📋</button></div>'; });
@@ -3632,6 +3666,92 @@ body {
       ctx.fillStyle='#9ca3af';ctx.font='9px Inter,sans-serif';ctx.textAlign='center';
       ctx.fillText(data.labels[i],bX+barW/2,H-5);
     });
+  }
+
+  
+  // ══════════════════════════════════════════════
+  //  CONTENIDO EDUCATIVO — YouTube / TikTok
+  // ══════════════════════════════════════════════
+  var eduTopicsList = [
+    { id:'itin',      emoji:'🪪', label:'ITIN Loans',           desc:'Cómo comprar casa sin SSN' },
+    { id:'fha',       emoji:'🏦', label:'FHA Loans',            desc:'Préstamos con 3.5% de enganche' },
+    { id:'firsttime', emoji:'🔑', label:'Primer comprador',     desc:'Paso a paso para comprar tu primera casa' },
+    { id:'credito',   emoji:'📈', label:'Crédito para casa',    desc:'Cómo mejorar tu crédito para comprar' },
+    { id:'proceso',   emoji:'📋', label:'Proceso de compra',    desc:'De la oferta al cierre explicado' },
+    { id:'inversion', emoji:'💰', label:'Invertir en bienes raíces', desc:'Cómo empezar con poco dinero' },
+    { id:'rentar',    emoji:'🏠', label:'Rentar vs Comprar',    desc:'Qué conviene más en EE. UU.' },
+    { id:'impuestos', emoji:'📊', label:'Impuestos de propiedad', desc:'Lo que debes saber antes de comprar' },
+  ];
+
+  var currentEduTopic = null;
+  var currentAddress  = '';
+
+  function renderEduTopics(content, address) {
+    currentAddress = address || '';
+    var el = document.getElementById('eduTopics');
+    if (!el) return;
+    el.innerHTML = '<div class="edu-topics-title">Elige un tema educativo para generar un script de YouTube o TikTok:</div>'
+      + '<div class="edu-chips">'
+      + eduTopicsList.map(function(t) {
+          return '<button class="edu-chip" id="eduChip_'+t.id+'" onclick="selectEduTopic(''+t.id+'')">'
+            + t.emoji + ' ' + t.label
+            + '</button>';
+        }).join('')
+      + '</div>'
+      + '<button class="edu-gen-btn" id="eduGenBtn" onclick="generateEduScript()" style="display:none">✦ Generar script educativo</button>';
+  }
+
+  function selectEduTopic(id) {
+    currentEduTopic = id;
+    document.querySelectorAll('.edu-chip').forEach(function(c) { c.classList.remove('active'); });
+    var chip = document.getElementById('eduChip_' + id);
+    if (chip) chip.classList.add('active');
+    var btn = document.getElementById('eduGenBtn');
+    if (btn) btn.style.display = 'block';
+    document.getElementById('outEdu').textContent = '';
+  }
+
+  async function generateEduScript() {
+    if (!currentEduTopic) return;
+    var topic  = eduTopicsList.find(function(t) { return t.id === currentEduTopic; });
+    var btn    = document.getElementById('eduGenBtn');
+    var outEl  = document.getElementById('outEdu');
+    if (!topic || !outEl) return;
+
+    btn.disabled    = true;
+    btn.textContent = '✦ Generando...';
+    outEl.textContent = 'Generando script con IA...';
+
+    try {
+      var token = localStorage.getItem('propia_token');
+      var res   = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
+        body: JSON.stringify({
+          eduMode:    true,
+          eduTopic:   topic.id,
+          eduLabel:   topic.label,
+          eduDesc:    topic.desc,
+          address:    currentAddress || 'tu área',
+          price:      '',
+          type:       'educativo',
+          tone:       'familiar'
+        })
+      });
+      var data = await res.json();
+      if (data.error) {
+        outEl.textContent = '❌ ' + data.error;
+      } else {
+        var script = (data.content && data.content.edu_script) || (data.content && data.content.video) || '';
+        outEl.textContent = script;
+        showGlobalToast('✅ Script educativo generado', 'ok');
+      }
+    } catch(e) {
+      outEl.textContent = '❌ Error generando script. Intenta de nuevo.';
+    }
+
+    btn.disabled    = false;
+    btn.textContent = '✦ Generar script educativo';
   }
 
     function obReset() {
