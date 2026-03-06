@@ -17,7 +17,7 @@
 <!-- Google Fonts — safe simple URL format -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,9 +44,11 @@ html { scroll-behavior: smooth; }
   --border:  rgba(0,0,0,0.07);
   --shadow:  0 2px 8px rgba(0,0,0,0.07), 0 4px 20px rgba(124,58,237,0.06);
   --shadow-lg: 0 8px 40px rgba(124,58,237,0.14), 0 2px 10px rgba(0,0,0,0.06);
-  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font: 'DM Sans', -apple-system, sans-serif;
   --mono: 'DM Mono', 'Courier New', monospace;
 }
+h1,h2,h3,.hero-title,.section-title,.plan-name,.feat-title { font-family: 'Syne', sans-serif; }
+
 
 body {
   font-family: var(--font);
@@ -360,7 +362,7 @@ a { text-decoration: none; color: inherit; }
 <nav class="nav" id="mainNav">
   <div class="nav-inner">
     <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-      <div class="nav-logo-mark">🏠</div>
+      <div class="nav-logo-mark"></div>
       <div class="nav-logo-name">Prop<span>IA</span></div>
     </div>
     <div class="nav-links">
@@ -400,12 +402,12 @@ a { text-decoration: none; color: inherit; }
       <h1 class="hero-title">La IA que trabaja<br>para <span class="t-purple">agentes</span><br><span class="t-teal">como tú</span></h1>
       <p class="hero-sub">Genera <strong>listings MLS profesionales</strong>, posts para redes, emails y scripts de video en <strong>30 segundos</strong>. Todo en español. Diseñado para el agente latino en USA.</p>
       <div class="hero-cta">
-        <button class="btn-primary" onclick="window.location.href='/app?tab=register'">✦ Empezar Gratis</button>
+        <button class="btn-primary" onclick="window.location.href='/app?tab=register'">Empezar Gratis</button>
         <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">▶ Cómo funciona</button>
       </div>
       <div class="hero-proof">
         <div class="proof-avs">
-          <div class="proof-av">🧑</div><div class="proof-av">👩</div><div class="proof-av">🧑</div><div class="proof-av">👩</div><div class="proof-av">🧑</div>
+          <div class="proof-av"></div><div class="proof-av"></div><div class="proof-av"></div><div class="proof-av"></div><div class="proof-av"></div>
         </div>
         <div>
           <div class="proof-stars">★★★★★</div>
@@ -426,9 +428,9 @@ a { text-decoration: none; color: inherit; }
           <div class="m-greeting">Hola, María 👋</div>
           <div class="m-sub">¿En qué te ayuda la IA hoy?</div>
           <div class="m-pills">
-            <div class="m-pill m-pill-p">✦ Generar Listing</div>
-            <div class="m-pill m-pill-o">📊 Métricas</div>
-            <div class="m-pill m-pill-o">💎 Planes</div>
+            <div class="m-pill m-pill-p">Generar Listing</div>
+            <div class="m-pill m-pill-o">Métricas</div>
+            <div class="m-pill m-pill-o">Planes</div>
           </div>
           <div class="m-stats">
             <div class="m-stat"><div class="m-stat-l">Listings</div><div class="m-stat-v">12</div></div>
@@ -436,7 +438,7 @@ a { text-decoration: none; color: inherit; }
             <div class="m-stat"><div class="m-stat-l">Assets</div><div class="m-stat-v">48</div></div>
           </div>
           <div class="m-listing">
-            <div class="m-listing-ic">🏠</div>
+            <div class="m-listing-ic"></div>
             <div><div class="m-listing-addr">123 Oak St, Miami, FL</div><div class="m-listing-meta">4 rec · 3 baños · $450,000</div></div>
             <div class="m-listing-pill">✓ Listo</div>
           </div>
@@ -452,12 +454,12 @@ a { text-decoration: none; color: inherit; }
 <div class="logos-strip">
   <div class="logos-inner">
     <span class="logos-label">Usado por agentes en:</span>
-    <div class="logo-chip">🏢 Keller Williams</div>
-    <div class="logo-chip">🏠 RE/MAX</div>
-    <div class="logo-chip">🌟 Century 21</div>
-    <div class="logo-chip">🏡 Coldwell Banker</div>
-    <div class="logo-chip">✨ eXp Realty</div>
-    <div class="logo-chip">🔑 Compass</div>
+    <div class="logo-chip">Keller Williams</div>
+    <div class="logo-chip">RE/MAX</div>
+    <div class="logo-chip">Century 21</div>
+    <div class="logo-chip">Coldwell Banker</div>
+    <div class="logo-chip">eXp Realty</div>
+    <div class="logo-chip">Compass</div>
   </div>
 </div>
 
@@ -474,30 +476,30 @@ a { text-decoration: none; color: inherit; }
 <!-- FEATURES -->
 <section class="features" id="features">
   <div class="container">
-    <div class="section-eyebrow">✦ Funciones</div>
+    <div class="section-eyebrow">Funciones</div>
     <h2 class="section-title">Todo lo que necesitas<br>para vender más</h2>
     <p class="section-sub">Desde la descripción MLS hasta el script de video — PropIA lo genera todo en segundos, en español perfecto.</p>
     <div class="features-grid">
       <div class="feat-card">
-        <div class="feat-icon fi-p">📝</div>
+        <div class="feat-icon fi-p"></div>
         <div class="feat-title">Descripción MLS Profesional</div>
         <p class="feat-desc">150-200 palabras optimizadas para el mercado. Tono profesional, palabras clave correctas, lista para publicar en minutos.</p>
         <div class="feat-chips"><span class="feat-chip">MLS</span><span class="feat-chip">SEO inmobiliario</span><span class="feat-chip">Español neutro</span></div>
       </div>
       <div class="feat-card">
-        <div class="feat-icon fi-t">📱</div>
+        <div class="feat-icon fi-t"></div>
         <div class="feat-title">3 Posts para Redes Sociales</div>
         <p class="feat-desc">Instagram, Facebook y más. Tres variaciones con diferentes tonos — lujoso, emocional, urgente — con hashtags para el mercado latino.</p>
         <div class="feat-chips"><span class="feat-chip">Instagram</span><span class="feat-chip">Facebook</span><span class="feat-chip">Hashtags incluidos</span></div>
       </div>
       <div class="feat-card">
-        <div class="feat-icon fi-g">📧</div>
+        <div class="feat-icon fi-g"></div>
         <div class="feat-title">Email de Marketing Listo</div>
         <p class="feat-desc">Asunto + cuerpo completo. Personalizado para enviar a tu base de contactos. Tono conversacional que convierte lectores en clientes.</p>
         <div class="feat-chips"><span class="feat-chip">Asunto optimizado</span><span class="feat-chip">CTA incluido</span><span class="feat-chip">Alta apertura</span></div>
       </div>
       <div class="feat-card">
-        <div class="feat-icon fi-a">🎬</div>
+        <div class="feat-icon fi-a"></div>
         <div class="feat-title">Script para Video / Reels</div>
         <p class="feat-desc">60-90 segundos de guión listo para grabar. Estructura hook → presentación → características → llamada a la acción. Ideal para Reels y YouTube.</p>
         <div class="feat-chips"><span class="feat-chip">YouTube</span><span class="feat-chip">Reels</span><span class="feat-chip">TikTok</span></div>
@@ -509,7 +511,7 @@ a { text-decoration: none; color: inherit; }
 <!-- HOW -->
 <section class="how" id="how">
   <div class="container">
-    <div class="section-eyebrow">📋 Proceso</div>
+    <div class="section-eyebrow">Proceso</div>
     <h2 class="section-title">Tan fácil como<br>enviar un mensaje</h2>
     <p class="section-sub">No necesitas saber de tecnología. Si sabes usar WhatsApp, ya sabes usar PropIA.</p>
     <div class="how-grid">
@@ -535,20 +537,20 @@ a { text-decoration: none; color: inherit; }
 <!-- DEMO -->
 <section class="demo">
   <div class="container">
-    <div class="section-eyebrow">👀 Demo en vivo</div>
+    <div class="section-eyebrow">Demo en vivo</div>
     <h2 class="section-title">Mira el resultado<br>antes de registrarte</h2>
     <div style="height:40px"></div>
     <div class="demo-grid">
       <div>
         <div class="demo-tabs">
-          <button class="demo-tab active" onclick="switchDemo(this,'mls')">📝 MLS</button>
-          <button class="demo-tab" onclick="switchDemo(this,'post')">📱 Post</button>
-          <button class="demo-tab" onclick="switchDemo(this,'email')">📧 Email</button>
+          <button class="demo-tab active" onclick="switchDemo(this,'mls')">MLS</button>
+          <button class="demo-tab" onclick="switchDemo(this,'post')">Post</button>
+          <button class="demo-tab" onclick="switchDemo(this,'email')">Email</button>
         </div>
         <div class="demo-box">
           <div class="demo-box-head">
             <span class="demo-box-label" id="demoLabel">Descripción MLS</span>
-            <button class="demo-copy-btn" onclick="copyDemo()">📋 Copiar</button>
+            <button class="demo-copy-btn" onclick="copyDemo()">Copiar</button>
           </div>
           <div class="demo-text" id="demoText">Espectacular casa unifamiliar en una de las zonas más exclusivas de Miami, Florida. Esta residencia de 4 recámaras y 3 baños completos ofrece 2,200 pies cuadrados de lujosos espacios.
 
@@ -573,24 +575,24 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
   <div class="container">
-    <div class="section-eyebrow">💬 Testimonios</div>
+    <div class="section-eyebrow">Testimonios</div>
     <h2 class="section-title">Lo que dicen<br>nuestros agentes</h2>
     <p class="section-sub">Más de 1,200 agentes en USA confían en PropIA cada día.</p>
     <div class="testi-grid">
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Antes me tomaba 2 horas escribir el MLS, hacer los posts y el email. Con PropIA lo hago en 30 segundos. Literalmente cambió mi negocio."</p>
-        <div class="testi-author"><div class="testi-av av-p">MG</div><div><div class="testi-name">María González</div><div class="testi-role">Agente · Keller Williams</div><div class="testi-loc">📍 Miami, Florida</div></div></div>
+        <div class="testi-author"><div class="testi-av av-p">MG</div><div><div class="testi-name">María González</div><div class="testi-role">Agente · Keller Williams</div><div class="testi-loc">Miami, Florida</div></div></div>
       </div>
       <div class="testi-card featured">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Soy broker con 8 agentes en mi equipo. Todos usan PropIA y la producción subió un 40% en el primer mes. El plan Pro vale cada centavo."</p>
-        <div class="testi-author"><div class="testi-av av-t">CR</div><div><div class="testi-name">Carlos Ramírez</div><div class="testi-role">Broker Owner · RE/MAX Select</div><div class="testi-loc">📍 Orlando, Florida</div></div></div>
+        <div class="testi-author"><div class="testi-av av-t">CR</div><div><div class="testi-name">Carlos Ramírez</div><div class="testi-role">Broker Owner · RE/MAX Select</div><div class="testi-loc">Orlando, Florida</div></div></div>
       </div>
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Empecé con el plan gratis y en mi primera semana generé 4 listings. Los posts de Instagram me trajeron 2 clientes nuevos."</p>
-        <div class="testi-author"><div class="testi-av av-g">LD</div><div><div class="testi-name">Lucía Domínguez</div><div class="testi-role">Agente · Century 21</div><div class="testi-loc">📍 Houston, Texas</div></div></div>
+        <div class="testi-author"><div class="testi-av av-g">LD</div><div><div class="testi-name">Lucía Domínguez</div><div class="testi-role">Agente · Century 21</div><div class="testi-loc">Houston, Texas</div></div></div>
       </div>
     </div>
   </div>
@@ -599,7 +601,7 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
 <!-- PRICING -->
 <section class="pricing" id="pricing">
   <div class="container">
-    <div class="section-eyebrow">💎 Precios</div>
+    <div class="section-eyebrow">Precios</div>
     <h2 class="section-title">Empieza gratis,<br>crece cuando quieras</h2>
     <p class="section-sub">Sin contratos. Sin tarjeta de crédito. Cancela en cualquier momento.</p>
     <div class="pricing-grid">
@@ -669,14 +671,14 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
         <button class="btn-price btn-price-outline" onclick="window.location.href='mailto:ventas@propia.app'">Contactar Ventas</button>
       </div>
     </div>
-    <p class="price-footnote">¿Tienes preguntas? <a href="mailto:hola@propia.app">Escríbenos</a> — respondemos en menos de 24 horas.</p>
+    <p class="price-footnote">¿Tienes preguntas? <a href="/cdn-cgi/l/email-protection#355d5a59547545475a455c541b544545">Escríbenos</a> — respondemos en menos de 24 horas.</p>
   </div>
 </section>
 
 <!-- FAQ -->
 <section class="faq" id="faq">
   <div class="container">
-    <div class="section-eyebrow">❓ Preguntas frecuentes</div>
+    <div class="section-eyebrow">Preguntas frecuentes</div>
     <h2 class="section-title">Todo lo que<br>necesitas saber</h2>
     <div style="height:40px"></div>
     <div class="faq-grid">
@@ -695,12 +697,12 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
   <div class="cta-blob cta-blob1"></div>
   <div class="cta-blob cta-blob2"></div>
   <div class="cta-inner">
-    <div class="cta-eyebrow">🚀 Únete ahora</div>
+    <div class="cta-eyebrow">Únete ahora</div>
     <h2 class="cta-title">Tu competencia ya<br>usa IA. <span class="cta-teal">¿Y tú?</span></h2>
     <p class="cta-sub">Más de 1,200 agentes latinos en USA ya generan sus listings con PropIA. El plan gratis no tiene fecha de vencimiento.</p>
     <div class="cta-btns">
-      <button class="btn-cta-white" onclick="window.location.href='/app?tab=register'">✦ Empezar Gratis Ahora</button>
-      <button class="btn-cta-ghost" onclick="window.location.href='mailto:hola@propia.app'">💬 Hablar con el equipo</button>
+      <button class="btn-cta-white" onclick="window.location.href='/app?tab=register'">Empezar Gratis Ahora</button>
+      <button class="btn-cta-ghost" onclick="window.location.href='mailto:hola@propia.app'">Hablar con el equipo</button>
     </div>
     <p class="cta-note">Sin tarjeta de crédito · <strong>5 listings gratis</strong> · Cancela cuando quieras</p>
   </div>
@@ -711,7 +713,7 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
   <div class="footer-inner">
     <div class="footer-top">
       <div>
-        <div class="footer-logo"><div class="footer-logo-mark">🏠</div><div class="footer-logo-name">Prop<span>IA</span></div></div>
+        <div class="footer-logo"><div class="footer-logo-mark"></div><div class="footer-logo-name">Prop<span>IA</span></div></div>
         <p class="footer-tagline">La inteligencia artificial diseñada para el agente inmobiliario latino en Estados Unidos. Genera más, vende más.</p>
         <div class="footer-social">
           <div class="footer-social-btn">📷</div>
@@ -734,15 +736,15 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
         <div class="footer-links">
           <a href="#">Sobre nosotros</a>
           <a href="#">Blog</a>
-          <a href="mailto:hola@propia.app">Contacto</a>
+          <a href="/cdn-cgi/l/email-protection#b7dfd8dbd6f7c7c5d8c7ded699d6c7c7">Contacto</a>
         </div>
       </div>
       <div>
         <div class="footer-col-title">Soporte</div>
         <div class="footer-links">
           <a href="#faq">FAQ</a>
-          <a href="mailto:hola@propia.app">Centro de ayuda</a>
-          <a href="mailto:ventas@propia.app">Ventas</a>
+          <a href="/cdn-cgi/l/email-protection#a6cec9cac7e6d6d4c9d6cfc788c7d6d6">Centro de ayuda</a>
+          <a href="/cdn-cgi/l/email-protection#5224373c2633211222203d223b337c332222">Ventas</a>
         </div>
       </div>
     </div>
@@ -753,7 +755,7 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Navbar scroll effect
 window.addEventListener('scroll', function() {
   document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
@@ -789,11 +791,11 @@ var demoData = {
   },
   post: {
     label: 'Post para Instagram',
-    text: '🏠✨ ¡Nueva propiedad disponible en Miami!\n\n4 recámaras | 3 baños | Piscina privada | $450,000\n\nEsta joya en Miami combina elegancia y comodidad en cada rincón. Cocina renovada, techos altos y jardines que te harán sentir en el paraíso.\n\n¿Buscas tu hogar soñado? ¡Esta es tu oportunidad!\n\n📞 Llama ahora para agendar tu tour privado\n🔗 Link en bio para más fotos\n\n#CasasMiami #BienesRaices #Miami #PropiedadesLujo #AgentesLatinos #PropIA'
+    text: '🏠¡Nueva propiedad disponible en Miami!\n\n4 recámaras | 3 baños | Piscina privada | $450,000\n\nEsta joya en Miami combina elegancia y comodidad en cada rincón. Cocina renovada, techos altos y jardines que te harán sentir en el paraíso.\n\n¿Buscas tu hogar soñado? ¡Esta es tu oportunidad!\n\nLlama ahora para agendar tu tour privado\nLink en bio para más fotos\n\n#CasasMiami #BienesRaices #Miami #PropiedadesLujo #AgentesLatinos #PropIA'
   },
   email: {
     label: 'Email de Marketing',
-    text: 'Asunto: 🏠 La casa que estabas esperando — Miami, FL · $450,000\n\nHola [Nombre],\n\nSé que llevas tiempo buscando la propiedad perfecta en Miami. Hoy tengo algo que creo que te va a encantar.\n\nAcabo de listar una casa de 4 recámaras en una de las zonas más cotizadas. Tiene piscina, cocina moderna y jardín privado para tu familia.\n\nA solo 10 minutos de las mejores escuelas y 15 minutos de la playa.\n\nPrecio: $450,000\n\n¿Podemos agendar un tour esta semana?\n\nSaludos,\nMaría González\nAgente Inmobiliaria | Keller Williams'
+    text: 'Asunto: La casa que estabas esperando — Miami, FL · $450,000\n\nHola [Nombre],\n\nSé que llevas tiempo buscando la propiedad perfecta en Miami. Hoy tengo algo que creo que te va a encantar.\n\nAcabo de listar una casa de 4 recámaras en una de las zonas más cotizadas. Tiene piscina, cocina moderna y jardín privado para tu familia.\n\nA solo 10 minutos de las mejores escuelas y 15 minutos de la playa.\n\nPrecio: $450,000\n\n¿Podemos agendar un tour esta semana?\n\nSaludos,\nMaría González\nAgente Inmobiliaria | Keller Williams'
   }
 };
 
@@ -810,17 +812,8 @@ function copyDemo() {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(function() {
       btn.textContent = '✓ Copiado';
-      setTimeout(function() { btn.textContent = '📋 Copiar'; }, 2000);
+      setTimeout(function() { btn.textContent = 'Copiar'; }, 2000);
     });
   } else {
     var ta = document.createElement('textarea');
-    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta);
-    btn.textContent = '✓ Copiado';
-    setTimeout(function() { btn.textContent = '📋 Copiar'; }, 2000);
-  }
-}
-</script>
-</body>
-</html>
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacit

@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="PropIA"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
 <style>
 /* ═══════════════════════════════════════════
    RESET & ROOT
@@ -53,10 +53,12 @@
   --sw:        220px;
   --radius:    16px;
 }
+h1,h2,.lst-page-title,.ov-title,.leads-page-title { font-family: 'Syne', sans-serif; }
+
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: #f8f7fc;
   color: var(--text);
   min-height: 100vh;
   display: flex;
@@ -65,20 +67,12 @@ body {
 /* ═══════════════════════════════════════════
    SIDEBAR — pure white, like Prodify
 ═══════════════════════════════════════════ */
-.sidebar {
-  width: var(--sw);
-  background: var(--white);
-  border-right: 1px solid var(--border);
-  box-shadow: 2px 0 12px rgba(124,58,237,0.04);
-  display: flex; flex-direction: column;
-  position: fixed; top: 0; left: 0; bottom: 0; z-index: 300;
-  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
-}
+.sidebar { width: var(--sw); height: 100vh; background: #0f0a1e; border-right: none; position: fixed; left: 0; top: 0; z-index: 100; display: flex; flex-direction: column; overflow-y: auto; padding-bottom: 24px; }
 
 /* user block at top */
 .s-user {
   padding: 18px 16px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255,255,255,.07);
   display: flex; align-items: center; gap: 10px;
 }
 .s-av {
@@ -89,7 +83,7 @@ body {
   box-shadow: 0 2px 8px rgba(124,58,237,0.30);
 }
 .s-user-info { flex: 1; overflow: hidden; }
-.s-user-name { font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.s-user-name { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .s-user-status { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--green); font-weight: 500; }
 .s-user-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
 .s-chevron { color: var(--muted2); font-size: 12px; cursor: pointer; padding: 2px; }
@@ -101,19 +95,19 @@ body {
 .nav-item {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 12px; border-radius: 10px;
-  cursor: pointer; color: var(--muted);
-  font-size: 14px; font-weight: 500;
+  cursor: pointer; color: rgba(255,255,255,.45);
+  font-size: 13px; font-weight: 500;
   transition: all 0.15s; border: none; background: none;
   width: 100%; text-align: left;
 }
-.nav-item:hover { background: var(--bg2); color: var(--text2); }
+.nav-item:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.9); }
 .nav-item.active {
-  background: var(--p-light);
-  color: var(--purple); font-weight: 700;
+  background: rgba(124,58,237,.3);
+  color: #c4b5fd; font-weight: 700;
   border-radius: 10px;
 }
-.nav-item.active .nav-icon { color: var(--purple); }
-.nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-item.active .nav-icon { width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center; }
+.nav-icon { width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center; }
 
 /* projects section */
 .s-projects { padding: 4px 10px 12px; }
@@ -127,7 +121,7 @@ body {
   cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text2);
   transition: background 0.15s;
 }
-.proj-item:hover { background: var(--bg2); }
+.proj-item:hover { background: rgba(255,255,255,.06); }
 .proj-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
 /* bottom sidebar card — like Prodify's purple card */
@@ -143,7 +137,7 @@ body {
 .s-promo-text { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 12px; }
 .s-promo-btn {
   width: 100%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 8px; color: white; font-family: 'Inter',sans-serif;
+  border-radius: 8px; color: white; font-family: 'DM Sans', -apple-system, sans-serif;
   font-size: 13px; font-weight: 700; padding: 9px; cursor: pointer;
   transition: background 0.15s; text-align: center;
 }
@@ -157,8 +151,8 @@ body {
 .s-settings-item {
   display: flex; align-items: center; gap: 9px;
   padding: 9px 12px; border-radius: 9px;
-  cursor: pointer; color: var(--muted);
-  font-size: 14px; font-weight: 500;
+  cursor: pointer; color: rgba(255,255,255,.4);
+  font-size: 13px; font-weight: 500;
   transition: all 0.15s; border: none; background: none;
   width: 100%; text-align: left;
 }
@@ -167,7 +161,7 @@ body {
 /* ═══════════════════════════════════════════
    MAIN AREA
 ═══════════════════════════════════════════ */
-.main { margin-left: var(--sw); flex: 1; display: flex; flex-direction: column; min-height: 100vh; min-width: 0; overflow-x: hidden; }
+.main { background:#f8f7fc; margin-left: var(--sw); flex: 1; display: flex; flex-direction: column; min-height: 100vh; min-width: 0; overflow-x: hidden; }
 
 .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 22px; cursor: pointer; padding: 6px; line-height: 1; }
 
@@ -194,7 +188,7 @@ body {
 .ov-pill {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 9px 18px; border-radius: 30px;
-  font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 600;
+  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 600;
   cursor: pointer; transition: all 0.18s; border: none;
 }
 .ov-pill.primary {
@@ -817,7 +811,7 @@ body {
   width: 100%; margin-top: 14px;
   background: var(--purple); color: white;
   border: none; border-radius: 11px;
-  font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 700;
+  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 700;
   padding: 12px; cursor: pointer;
   transition: all 0.18s;
   box-shadow: 0 4px 14px rgba(124,58,237,0.28);
@@ -835,7 +829,7 @@ body {
 .gen-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start; }
 
 /* form card */
-.form-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); padding: 26px; }
+.form-card { background: #fff; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); padding: 26px; }
 .form-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 18px; display: flex; align-items: center; gap: 7px; }
 .form-section-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--purple); }
 
@@ -845,7 +839,7 @@ body {
   width: 100%; background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 11px; color: var(--text);
-  font-family: 'Inter',sans-serif; font-size: 15px; padding: 12px 14px; outline: none;
+  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 15px; padding: 12px 14px; outline: none;
   transition: all 0.2s;
 }
 .fg input:focus, .fg select:focus, .fg textarea:focus {
@@ -861,7 +855,7 @@ body {
 .tone-btn {
   padding: 7px 14px; border-radius: 30px;
   background: var(--surface); border: 1.5px solid var(--border);
-  color: var(--muted); font-family: 'Inter',sans-serif;
+  color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif;
   font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.18s;
 }
 .tone-btn:hover { border-color: var(--p-border); color: var(--purple); }
@@ -871,7 +865,7 @@ body {
 .btn-generate {
   width: 100%; background: var(--purple);
   border: none; border-radius: 13px; color: white;
-  font-family: 'Inter',sans-serif; font-size: 16px; font-weight: 700;
+  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 16px; font-weight: 700;
   padding: 15px; cursor: pointer; transition: all 0.22s; margin-top: 8px;
   box-shadow: 0 6px 20px rgba(124,58,237,0.30);
   position: relative; overflow: hidden;
@@ -906,7 +900,7 @@ body {
 .alert.hidden { display: none; }
 
 /* info sidebar card */
-.info-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.info-card { background: #fff; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm); padding: 22px; display: flex; flex-direction: column; gap: 14px; }
 .info-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 2px; }
 .info-feat { display: flex; gap: 11px; align-items: flex-start; }
 .info-feat-icon { width: 30px; height: 30px; flex-shrink: 0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
@@ -932,16 +926,16 @@ body {
 
 /* output tabs */
 .output-tabs { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px; gap: 3px; margin-bottom: 14px; width: fit-content; }
-.otab { background: none; border: none; border-radius: 8px; color: var(--muted); font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 500; padding: 9px 18px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.otab { background: none; border: none; border-radius: 8px; color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 500; padding: 9px 18px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .otab:hover { background: var(--bg2); color: var(--text2); }
 .otab.active { background: var(--purple); color: white; font-weight: 700; box-shadow: 0 2px 10px rgba(124,58,237,0.25); }
 .otab-content { display: none; }
 .otab-content.active { display: block; animation: fadeUp 0.18s ease; }
 
-.output-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 22px; }
+.output-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 22px; }
 .output-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 13px; border-bottom: 1px solid var(--border); }
 .output-lbl { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
-.btn-copy { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; color: var(--muted); font-family: 'Inter',sans-serif; font-size: 13px; font-weight: 600; padding: 6px 14px; cursor: pointer; transition: all 0.15s; }
+.btn-copy { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif; font-size: 13px; font-weight: 600; padding: 6px 14px; cursor: pointer; transition: all 0.15s; }
 .btn-copy:hover { border-color: var(--p-border); color: var(--purple); background: var(--p-light); }
 .btn-copy.copied { color: var(--green); border-color: rgba(16,185,129,0.30); background: var(--g-light); }
 .output-text { font-size: 15px; line-height: 1.85; color: var(--text2); white-space: pre-wrap; word-break: break-word; font-weight: 400; }
@@ -975,7 +969,7 @@ body {
 .pbt-amber { background: var(--amber); color: white; }
 .plan-name { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 5px; letter-spacing: -0.4px; }
 .plan-price { font-family: 'DM Mono',monospace; font-size: 32px; font-weight: 500; color: var(--purple); line-height: 1; margin-bottom: 4px; }
-.plan-price span { font-size: 14px; font-weight: 400; color: var(--muted); font-family: 'Inter',sans-serif; }
+.plan-price span { font-size: 14px; font-weight: 400; color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif; }
 .plan-desc { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
 .plan-feats { flex: 1; display: flex; flex-direction: column; gap: 9px; margin-bottom: 18px; }
 .plan-feat { font-size: 14px; display: flex; gap: 8px; align-items: flex-start; line-height: 1.4; color: var(--text2); }
@@ -984,7 +978,7 @@ body {
 .btn-plan {
   background: var(--surface); border: 1.5px solid var(--border);
   border-radius: 11px; color: var(--muted);
-  font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 700;
+  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 700;
   padding: 11px; cursor: pointer; transition: all 0.18s; text-align: center;
 }
 .btn-plan:hover { border-color: var(--purple); color: var(--purple); background: var(--p-light); }
@@ -997,7 +991,7 @@ body {
 ═══════════════════════════════════════════ */
 .mobile-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid var(--border); box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 200; padding: 8px 0 max(8px,env(safe-area-inset-bottom)); }
 .mobile-nav-inner { display: flex; justify-content: space-around; }
-.mob-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; color: var(--muted); font-family: 'Inter',sans-serif; font-size: 11px; font-weight: 500; padding: 4px 14px; transition: color 0.15s; }
+.mob-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif; font-size: 11px; font-weight: 500; padding: 4px 14px; transition: color 0.15s; }
 .mob-btn.active { color: var(--purple); font-weight: 700; }
 .mob-icon { font-size: 20px; line-height: 1; }
 
@@ -1285,12 +1279,12 @@ body {
   </div>
 
   <nav class="s-nav">
-    <button class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon">🏠</span>Inicio</button>
-    <button class="nav-item" onclick="showPanel('generator',this)"><span class="nav-icon">✨</span>PropIA</button>
-    <button class="nav-item" onclick="showPanel('listings',this)"><span class="nav-icon">📋</span>Mis listings</button>
-    <button class="nav-item" onclick="showPanel('leads',this)"><span class="nav-icon">📥</span>Leads</button>
-    <button class="nav-item" onclick="showPanel('calendario',this)"><span class="nav-icon">📅</span>Calendario</button>
-    <button class="nav-item" onclick="showPanel('reportes',this)"><span class="nav-icon">📊</span>Reportes</button>
+    <button class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>Inicio</button>
+    <button class="nav-item" onclick="showPanel('generator',this)"><span class="nav-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z"/></svg></span>PropIA</button>
+    <button class="nav-item" onclick="showPanel('listings',this)"><span class="nav-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 7h8M8 12h8M8 17h5"/></svg></span>Mis listings</button>
+    <button class="nav-item" onclick="showPanel('leads',this)"><span class="nav-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 17l4 4 4-4M12 12v9"/><path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"/></svg></span>Leads</button>
+    <button class="nav-item" onclick="showPanel('calendario',this)"><span class="nav-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>Calendario</button>
+    <button class="nav-item" onclick="showPanel('reportes',this)"><span class="nav-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span>Reportes</button>
   </nav>
 
   <div class="s-projects">
@@ -1311,7 +1305,7 @@ body {
 
   <div class="s-settings">
     <button class="s-settings-item" onclick="showPanel('settings',document.querySelectorAll('.nav-item')[0]);closeSidebar()"><span class="nav-icon">⚙️</span>Configuración</button>
-    <button class="s-settings-item" onclick="showPanel('integraciones',this);closeSidebar()"><span class="nav-icon">🔗</span>Integraciones</button>
+    <button class="s-settings-item" onclick="showPanel('integraciones',this);closeSidebar()"><span class="nav-icon"></span>Integraciones</button>
     <button class="s-settings-item" onclick="logout()" style="color:#ef4444;"><span class="nav-icon">↩</span>Cerrar sesión</button>
   </div>
 </div>
@@ -1333,27 +1327,27 @@ body {
     <!-- ═══ OVERVIEW ═══ -->
     <div class="panel active" id="panel-overview">
       <div class="ov-date" id="ovDate">Cargando...</div>
-      <div class="ov-greeting" id="ovGreeting">Hola 👋</div>
+      <div class="ov-greeting" id="ovGreeting">Hola </div>
       <div class="ov-sub">¿En qué te ayuda la IA hoy?</div>
 
       <div class="ov-actions">
-        <button class="ov-pill primary" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">✦ Generar Listing</button>
-        <button class="ov-pill outlined" onclick="showPanel('overview',this)">📊 Ver métricas</button>
-        <button class="ov-pill outlined" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">💎 Ver planes</button>
+        <button class="ov-pill primary" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">Generar Listing</button>
+        <button class="ov-pill outlined" onclick="showPanel('overview',this)">Ver métricas</button>
+        <button class="ov-pill outlined" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">Ver planes</button>
         <button class="ov-pill outlined">🤖 Calificar leads</button>
       </div>
 
       <!-- stats -->
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-label"><div class="stat-label-icon sl-purple">✨</div>Listings generados</div>
+          <div class="stat-label"><div class="stat-label-icon sl-purple"></div>Listings generados</div>
           <div class="stat-value purple" id="statUsed">0</div>
           <div class="stat-sub" id="statLimit">de 5 disponibles este mes</div>
           <div class="stat-progress"><div class="stat-track"><div class="stat-fill fill-purple" id="statProgress" style="width:0%"></div></div></div>
         </div>
         <div class="stat-card">
-          <div class="stat-label"><div class="stat-label-icon sl-teal">💎</div>Plan activo</div>
-          <div class="stat-value" style="font-size:26px;padding-top:8px;font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.8px;" id="statPlan">Gratis</div>
+          <div class="stat-label"><div class="stat-label-icon sl-teal"></div>Plan activo</div>
+          <div class="stat-value" style="font-size:26px;padding-top:8px;font-family: 'DM Sans', -apple-system, sans-serif;font-weight:900;letter-spacing:-0.8px;" id="statPlan">Gratis</div>
           <div class="stat-sub">Renueva mensualmente</div>
         </div>
         <div class="stat-card">
@@ -1368,7 +1362,7 @@ body {
           <!-- history card - compact preview only, full view in panel-listings -->
           <div class="card">
             <div class="card-header">
-              <div class="card-title"><span class="card-title-icon">📋</span>Últimos Listings</div>
+              <div class="card-title"><span class="card-title-icon"></span>Últimos Listings</div>
               <button class="card-action" onclick="showPanel('listings',document.querySelectorAll('.nav-item')[2])">Ver todos →</button>
             </div>
             <div id="historyBody">
@@ -1378,14 +1372,14 @@ body {
 
           <!-- quick actions card -->
           <div class="card">
-            <div class="card-header"><div class="card-title"><span class="card-title-icon">⚡</span>Acciones rápidas</div></div>
+            <div class="card-header"><div class="card-title"><span class="card-title-icon"></span>Acciones rápidas</div></div>
             <div class="quick-grid">
               <div class="quick-item" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">
-                <div class="quick-icon qi-purple">✨</div>
+                <div class="quick-icon qi-purple"></div>
                 <div><div class="quick-label">Generar Listing</div><div class="quick-sub">MLS + redes + email</div></div>
               </div>
               <div class="quick-item" onclick="showPanel('leads',document.querySelectorAll('.nav-item')[3])">
-                <div class="quick-icon qi-teal">🤖</div>
+                <div class="quick-icon qi-teal"></div>
                 <div><div class="quick-label">Calificar Leads</div><div class="quick-sub">IA califica automático</div></div>
               </div>
               <div class="quick-item">
@@ -1393,7 +1387,7 @@ body {
                 <div><div class="quick-label">Ver Reportes</div><div class="quick-sub">Métricas del mes</div></div>
               </div>
               <div class="quick-item" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">
-                <div class="quick-icon qi-green">💎</div>
+                <div class="quick-icon qi-green"></div>
                 <div><div class="quick-label">Mejorar Plan</div><div class="quick-sub">Más listings y leads</div></div>
               </div>
             </div>
@@ -1405,7 +1399,7 @@ body {
 
           <!-- usage / plan card -->
           <div class="card">
-            <div class="card-header"><div class="card-title"><span class="card-title-icon">📈</span>Uso del mes</div></div>
+            <div class="card-header"><div class="card-title"><span class="card-title-icon"></span>Uso del mes</div></div>
             <div class="usage-bar-wrap">
               <div class="usage-bar-header">
                 <div class="usage-bar-label">Listings</div>
@@ -1426,14 +1420,14 @@ body {
               <div class="plan-row-label">Renovación</div>
               <div class="plan-row-val">Mensual</div>
             </div>
-            <button class="btn-upgrade" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">⬆ Mejorar plan</button>
+            <button class="btn-upgrade" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">Mejorar plan</button>
           </div>
 
           <!-- promo card -->
           <div class="card" style="background:linear-gradient(135deg,var(--purple),#6d28d9);border-color:transparent;">
             <div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">🚀 Invita a tu equipo</div>
             <div style="font-size:13px;color:rgba(255,255,255,0.80);line-height:1.65;margin-bottom:14px;">Genera listings en equipo y multiplica tu producción como brokerage.</div>
-            <button style="width:100%;background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.25);border-radius:10px;color:white;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;padding:10px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">+ Invitar agentes</button>
+            <button style="width:100%;background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.25);border-radius:10px;color:white;font-family: 'DM Sans', -apple-system, sans-serif;font-size:13px;font-weight:700;padding:10px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">+ Invitar agentes</button>
           </div>
 
         </div>
@@ -1443,7 +1437,7 @@ body {
     <!-- ═══ GENERATOR ═══ -->
     <div class="panel" id="panel-generator">
       <div class="gen-header">
-        <h2>Generar Listing ✨</h2>
+        <h2>Generar Listing</h2>
         <p>La IA redacta todo por ti en segundos</p>
       </div>
 
@@ -1457,7 +1451,7 @@ body {
               <div class="edit-banner-text">✏️ Modo Edición</div>
               <div class="edit-banner-addr" id="editBannerAddr"></div>
             </div>
-            <button class="edit-banner-cancel" onclick="cancelEdit()">✕ Cancelar</button>
+            <button class="edit-banner-cancel" onclick="cancelEdit()">Cancelar</button>
           </div>
 
           <div class="fg"><label>Dirección completa</label><input type="text" id="gAddress" placeholder="123 Oak Street, Miami, FL 33101"/></div>
@@ -1478,17 +1472,17 @@ body {
           <div class="fg">
             <label>Tono del contenido</label>
             <div class="tone-row">
-              <button class="tone-btn active" onclick="setTone(this,'lujoso')">✨ Lujoso</button>
+              <button class="tone-btn active" onclick="setTone(this,'lujoso')">Lujoso</button>
               <button class="tone-btn" onclick="setTone(this,'familiar')">👨‍👩‍👧 Familiar</button>
-              <button class="tone-btn" onclick="setTone(this,'inversionista')">📈 Inversión</button>
+              <button class="tone-btn" onclick="setTone(this,'inversionista')">Inversión</button>
               <button class="tone-btn" onclick="setTone(this,'moderno')">🏙️ Moderno</button>
-              <button class="tone-btn" onclick="setTone(this,'urgente')">⚡ Urgente</button>
+              <button class="tone-btn" onclick="setTone(this,'urgente')"> Urgente</button>
               <button class="tone-btn" onclick="setTone(this,'emocional')">❤️ Emocional</button>
             </div>
           </div>
 
           <button class="btn-generate" id="genBtn" onclick="generateListing()">
-            <span class="label">✦ Generar con PropIA</span>
+            <span class="label">Generar con PropIA</span>
             <span class="loading"><span class="spinner"></span>La IA está trabajando...</span>
           </button>
 
@@ -1512,21 +1506,21 @@ body {
               <div class="osub" id="outputPropTitle"></div>
             </div>
             <div class="output-tabs">
-              <button class="otab active" onclick="showOTab('mls',this)">📝 MLS</button>
-              <button class="otab" onclick="showOTab('posts',this)">📱 Redes</button>
-              <button class="otab" onclick="showOTab('email',this)">📧 Email</button>
-              <button class="otab" onclick="showOTab('video',this)">🎬 Video</button>
-              <button class="otab" onclick="showOTab('edu',this)">🎓 Educativo</button>
+              <button class="otab active" onclick="showOTab('mls',this)">MLS</button>
+              <button class="otab" onclick="showOTab('posts',this)">Redes</button>
+              <button class="otab" onclick="showOTab('email',this)">Email</button>
+              <button class="otab" onclick="showOTab('video',this)">Video</button>
+              <button class="otab" onclick="showOTab('edu',this)">Educativo</button>
             </div>
-            <div class="otab-content active" id="otab-mls"><div class="output-card"><div class="output-head"><div class="output-lbl">Descripción MLS</div><button class="btn-copy" onclick="copyOut('outMls',this)">📋 Copiar</button></div><div class="output-text" id="outMls"></div></div></div>
-            <div class="otab-content" id="otab-posts"><div class="output-card"><div class="output-head"><div class="output-lbl">Posts para Redes Sociales</div><button class="btn-copy" onclick="copyAllPosts(this)">📋 Copiar todos</button></div><div id="postsContainer"></div></div></div>
-            <div class="otab-content" id="otab-email"><div class="output-card"><div class="output-head"><div class="output-lbl">Email de Marketing</div><button class="btn-copy" onclick="copyOut('outEmail',this)">📋 Copiar</button></div><div class="output-text" id="outEmail"></div></div></div>
-            <div class="otab-content" id="otab-video"><div class="output-card"><div class="output-head"><div class="output-lbl">Script para Video</div><button class="btn-copy" onclick="copyOut('outVideo',this)">📋 Copiar</button></div><div class="output-text" id="outVideo"></div></div></div>
+            <div class="otab-content active" id="otab-mls"><div class="output-card"><div class="output-head"><div class="output-lbl">Descripción MLS</div><button class="btn-copy" onclick="copyOut('outMls',this)">Copiar</button></div><div class="output-text" id="outMls"></div></div></div>
+            <div class="otab-content" id="otab-posts"><div class="output-card"><div class="output-head"><div class="output-lbl">Posts para Redes Sociales</div><button class="btn-copy" onclick="copyAllPosts(this)">Copiar todos</button></div><div id="postsContainer"></div></div></div>
+            <div class="otab-content" id="otab-email"><div class="output-card"><div class="output-head"><div class="output-lbl">Email de Marketing</div><button class="btn-copy" onclick="copyOut('outEmail',this)">Copiar</button></div><div class="output-text" id="outEmail"></div></div></div>
+            <div class="otab-content" id="otab-video"><div class="output-card"><div class="output-head"><div class="output-lbl">Script para Video</div><button class="btn-copy" onclick="copyOut('outVideo',this)">Copiar</button></div><div class="output-text" id="outVideo"></div></div></div>
             <div class="otab-content" id="otab-edu">
               <div class="output-card">
                 <div class="output-head">
                   <div class="output-lbl">🎓 Script Educativo — YouTube / TikTok</div>
-                  <button class="btn-copy" onclick="copyOut('outEdu',this)">📋 Copiar</button>
+                  <button class="btn-copy" onclick="copyOut('outEdu',this)">Copiar</button>
                 </div>
                 <div class="edu-topics" id="eduTopics"></div>
                 <div class="output-text" id="outEdu" style="margin-top:12px"></div>
@@ -1558,12 +1552,12 @@ body {
         </div>
 
         <div class="info-card">
-          <div class="info-title">🚀 Qué genera la IA</div>
-          <div class="info-feat"><div class="info-feat-icon ifi-p">📝</div><div><div class="info-feat-name">Descripción MLS</div><div class="info-feat-sub">150-200 palabras profesionales listas para publicar</div></div></div>
-          <div class="info-feat"><div class="info-feat-icon ifi-t">📱</div><div><div class="info-feat-name">3 Posts para Redes</div><div class="info-feat-sub">Instagram y Facebook con hashtags en español</div></div></div>
-          <div class="info-feat"><div class="info-feat-icon ifi-g">📧</div><div><div class="info-feat-name">Email de Marketing</div><div class="info-feat-sub">Asunto + cuerpo listos para tus clientes</div></div></div>
-          <div class="info-feat"><div class="info-feat-icon ifi-a">🎬</div><div><div class="info-feat-name">Script para Video</div><div class="info-feat-sub">60-90 segundos para Reels o YouTube</div></div></div>
-          <div class="info-tip">💡 <strong>Consejo:</strong> Entre más detalles ingreses, mejor será el resultado de la IA.</div>
+          <div class="info-title">Qué genera la IA</div>
+          <div class="info-feat"><div class="info-feat-icon ifi-p"></div><div><div class="info-feat-name">Descripción MLS</div><div class="info-feat-sub">150-200 palabras profesionales listas para publicar</div></div></div>
+          <div class="info-feat"><div class="info-feat-icon ifi-t"></div><div><div class="info-feat-name">3 Posts para Redes</div><div class="info-feat-sub">Instagram y Facebook con hashtags en español</div></div></div>
+          <div class="info-feat"><div class="info-feat-icon ifi-g"></div><div><div class="info-feat-name">Email de Marketing</div><div class="info-feat-sub">Asunto + cuerpo listos para tus clientes</div></div></div>
+          <div class="info-feat"><div class="info-feat-icon ifi-a"></div><div><div class="info-feat-name">Script para Video</div><div class="info-feat-sub">60-90 segundos para Reels o YouTube</div></div></div>
+          <div class="info-tip"><strong>Consejo:</strong> Entre más detalles ingreses, mejor será el resultado de la IA.</div>
         </div>
         </div>
       </div>
@@ -1581,7 +1575,7 @@ body {
 
       <!-- Instructivo -->
       <div class="int-instructivo">
-        <div class="int-inst-title">📋 Antes de conectar — lo que necesitas</div>
+        <div class="int-inst-title">Antes de conectar — lo que necesitas</div>
         <div class="int-inst-steps">
           <div class="int-inst-step">
             <div class="int-inst-num">1</div>
@@ -1639,7 +1633,7 @@ body {
         </div>
 
         <!-- WhatsApp section -->
-        <div class="int-inst-caps-title" style="margin-top:16px">💬 WhatsApp</div>
+        <div class="int-inst-caps-title" style="margin-top:16px">WhatsApp</div>
         <div class="int-wa-box">
           <div class="int-wa-row">
             <div class="int-wa-badge int-wa-badge--now">Ahora</div>
@@ -1658,7 +1652,7 @@ body {
         </div>
 
         <!-- Email section -->
-        <div class="int-inst-caps-title" style="margin-top:16px">📧 Email automático</div>
+        <div class="int-inst-caps-title" style="margin-top:16px">Email automático</div>
         <div class="int-wa-box">
           <div class="int-wa-row">
             <div class="int-wa-badge int-wa-badge--now">Activo</div>
@@ -1718,7 +1712,7 @@ body {
           <div class="int-cs-chip">▶️ YouTube</div>
           <div class="int-cs-chip">💼 LinkedIn</div>
           <div class="int-cs-chip">🎵 TikTok</div>
-          <div class="int-cs-chip">💬 WhatsApp Business</div>
+          <div class="int-cs-chip">WhatsApp Business</div>
         </div>
       </div>
 
@@ -1840,10 +1834,10 @@ body {
     <div class="panel" id="panel-listings">
       <div class="lst-page-header">
         <div>
-          <div class="lst-page-title">📋 Mis Listings <span class="lst-count" id="lstCount">0</span></div>
+          <div class="lst-page-title">Mis Listings <span class="lst-count" id="lstCount">0</span></div>
           <div class="lst-page-sub">Todos tus listings — edita y regenera cuando cambie el precio o las amenidades</div>
         </div>
-        <button class="btn-lst-new" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">✦ Generar nuevo</button>
+        <button class="btn-lst-new" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">Generar nuevo</button>
       </div>
       <div class="lst-toolbar">
         <input class="lst-search" type="text" id="lstSearch" placeholder="Buscar por dirección o precio..." oninput="renderListingsPanel(this.value)"/>
@@ -1853,7 +1847,7 @@ body {
           <div class="lei-icon">🏠</div>
           <div class="lei-title">Aún no has generado listings</div>
           <div class="lei-sub">Cada listing que generes con PropIA aparecerá aquí.<br>Podrás editarlo cuando cambie el precio o las amenidades.</div>
-          <button class="btn-lst-new" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">✦ Generar mi primer listing</button>
+          <button class="btn-lst-new" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">Generar mi primer listing</button>
         </div>
       </div>
     </div>
@@ -1861,7 +1855,7 @@ body {
     <!-- ═══ PLANS ═══ -->
     <div class="panel" id="panel-plans">
       <div class="plans-header">
-        <h2>Planes y Precios 💎</h2>
+        <h2>Planes y Precios</h2>
         <p>Empieza gratis. Mejora cuando estés listo.</p>
       </div>
       <div class="plans-grid">
@@ -1928,11 +1922,11 @@ body {
 
       <div class="leads-top">
         <div>
-          <div class="lst-page-title">📥 Leads <span class="leads-count" id="leadsCount">0</span></div>
+          <div class="lst-page-title">Leads <span class="leads-count" id="leadsCount">0</span></div>
           <div class="lst-page-sub">Pipeline de clientes calificados por IA — de nuevo contacto a cierre</div>
         </div>
         <div class="leads-actions">
-          <button class="btn-lead-link" onclick="copyLeadLink()">🔗 Copiar mi enlace</button>
+          <button class="btn-lead-link" onclick="copyLeadLink()">Copiar mi enlace</button>
           <button class="btn-lead-new" onclick="openNewLead()">+ Agregar lead</button>
         </div>
       </div>
@@ -1972,7 +1966,7 @@ body {
 
       <div id="leadsEmptyState" style="display:none">
         <div class="leads-empty">
-          <div class="lei-icon">🤖</div>
+          <div class="lei-icon"></div>
           <div class="lei-title">Aún no tienes leads</div>
           <div class="lei-sub">Agrega tu primer lead manualmente o comparte tu enlace público para que los clientes se registren solos.</div>
           <button class="btn-lead-new" onclick="openNewLead()">+ Agregar mi primer lead</button>
@@ -1987,7 +1981,7 @@ body {
       <!-- Page header -->
       <div class="lst-page-header">
         <div>
-          <div class="lst-page-title">⚙️ Configuración</div>
+          <div class="lst-page-title">Configuración</div>
           <div class="lst-page-sub">Administra tu perfil, seguridad y plan</div>
         </div>
       </div>
@@ -1999,7 +1993,7 @@ body {
 
           <!-- Perfil -->
           <div class="cfg-card">
-            <div class="cfg-card-title"><div class="cti cti-p">👤</div>Información del perfil</div>
+            <div class="cfg-card-title"><div class="cti cti-p"></div>Información del perfil</div>
             <div class="cfg-card-sub">Tu nombre visible y brokerage</div>
 
             <div class="cfg-avatar-row">
@@ -2023,7 +2017,7 @@ body {
 
           <!-- Cambiar contraseña -->
           <div class="cfg-card">
-            <div class="cfg-card-title"><div class="cti cti-g">🔒</div>Cambiar contraseña</div>
+            <div class="cfg-card-title"><div class="cti cti-g"></div>Cambiar contraseña</div>
             <div class="cfg-card-sub">Elige una contraseña segura</div>
 
             <div class="cfg-alert" id="pwAlert"></div>
@@ -2047,7 +2041,7 @@ body {
 
           <!-- Plan actual -->
           <div class="cfg-card">
-            <div class="cfg-card-title"><div class="cti cti-p">💎</div>Tu plan actual</div>
+            <div class="cfg-card-title"><div class="cti cti-p"></div>Tu plan actual</div>
             <div class="cfg-card-sub">Uso y límites del mes en curso</div>
 
             <div class="plan-info-row">
@@ -2067,19 +2061,19 @@ body {
               <div class="pir-val" id="cfgMemberSince">—</div>
             </div>
 
-            <button class="btn-upgrade-cfg" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">⬆ Mejorar plan</button>
+            <button class="btn-upgrade-cfg" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">Mejorar plan</button>
           </div>
 
           <!-- Zona de peligro -->
           <div class="cfg-card">
-            <div class="cfg-card-title"><div class="cti cti-r">⚠️</div>Zona de peligro</div>
+            <div class="cfg-card-title"><div class="cti cti-r"></div>Zona de peligro</div>
             <div class="cfg-card-sub">Acciones irreversibles para tu cuenta</div>
 
             <div style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;">
               Al cerrar sesión se eliminará tu sesión local. Tus datos y listings están seguros en la nube.
             </div>
-            <button class="btn-danger" onclick="logout()">↩ Cerrar sesión</button>
-            <button class="btn-danger" style="margin-top:8px;color:var(--purple);background:var(--p-light);border-color:var(--p-border);" onclick="obReset()">🎓 Ver guía de bienvenida</button>
+            <button class="btn-danger" onclick="logout()">Cerrar sesión</button>
+            <button class="btn-danger" style="margin-top:8px;color:var(--purple);background:var(--p-light);border-color:var(--p-border);" onclick="obReset()">Ver guía de bienvenida</button>
           </div>
 
         </div>
@@ -2092,9 +2086,9 @@ body {
 <!-- MOBILE NAV -->
 <div class="mobile-nav">
   <div class="mobile-nav-inner">
-    <button class="mob-btn active" id="mn1" onclick="showPanel('overview',document.querySelectorAll('.nav-item')[0]);setMNav('mn1')"><span class="mob-icon">🏠</span>Inicio</button>
-    <button class="mob-btn" id="mn2" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1]);setMNav('mn2')"><span class="mob-icon">✨</span>Generar</button>
-    <button class="mob-btn" id="mn3" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0]);setMNav('mn3')"><span class="mob-icon">💎</span>Planes</button>
+    <button class="mob-btn active" id="mn1" onclick="showPanel('overview',document.querySelectorAll('.nav-item')[0]);setMNav('mn1')"><span class="mob-icon"></span>Inicio</button>
+    <button class="mob-btn" id="mn2" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1]);setMNav('mn2')"><span class="mob-icon"></span>Generar</button>
+    <button class="mob-btn" id="mn3" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0]);setMNav('mn3')"><span class="mob-icon"></span>Planes</button>
   </div>
 </div>
 
@@ -2128,7 +2122,7 @@ body {
     const first = name.split(' ')[0];
     document.getElementById('userInitial').textContent = name.charAt(0).toUpperCase();
     document.getElementById('userName').textContent = name;
-    document.getElementById('ovGreeting').textContent = `Hola, ${first} 👋`;
+    document.getElementById('ovGreeting').textContent = `Hola, ${first} `;
   }
 
   async function loadUsage() {
@@ -2254,7 +2248,7 @@ body {
     renderEduTopics(content, address);
     const container = document.getElementById('postsContainer'); container.innerHTML = '';
     const labels = ['Post 1 — Presentación','Post 2 — Características','Post 3 — Llamada a la Acción'];
-    (content.posts || []).forEach((p, idx) => { container.innerHTML += '<div class="post-item"><div class="post-num">' + (labels[idx] || 'Post '+(idx+1)) + '</div><div class="post-text">' + p + '</div><button class="post-copy" onclick="copyPostItem(this,' + idx + ')">📋</button></div>'; });
+    (content.posts || []).forEach((p, idx) => { container.innerHTML += '<div class="post-item"><div class="post-num">' + (labels[idx] || 'Post '+(idx+1)) + '</div><div class="post-text">' + p + '</div><button class="post-copy" onclick="copyPostItem(this,' + idx + ')"></button></div>'; });
     // Show photos section
     var genPhotos = document.getElementById('genPhotosSection');
     if (genPhotos) { genPhotos.style.display = 'block'; genPhotoImages = []; renderGenPhotoGrid(); document.getElementById('genFileInput').value = ''; }
@@ -2267,7 +2261,7 @@ body {
     const body = document.getElementById('historyBody');
     if (!historyData.length) { body.innerHTML = '<div class="hist-empty">Aún no has generado ningún listing.<br><a onclick="showPanel(\'generator\',document.querySelectorAll(\'.nav-item\')[1])">Genera tu primer listing →</a></div>'; return; }
     const pillMap = { lujoso:'hp-prog', familiar:'hp-done', inversionista:'hp-prog', moderno:'hp-done', urgente:  'hp-soon', emocional:'hp-done' };
-    body.innerHTML = historyData.map(h => `<div class="hist-item"><div class="hist-item-icon">🏠</div><div class="hist-item-body"><div class="hist-item-addr">${h.address}</div><div class="hist-item-meta"><span>${h.price}</span><span>${formatDate(h.date)}</span></div></div><div class="hist-pill ${pillMap[h.tone]||'hp-prog'}">${h.tone}</div><button class="hist-item-edit" onclick="loadForEdit('${h.id}')">✏️ Editar</button></div>`).join('');
+    body.innerHTML = historyData.map(h => `<div class="hist-item"><div class="hist-item-icon">🏠</div><div class="hist-item-body"><div class="hist-item-addr">${h.address}</div><div class="hist-item-meta"><span>${h.price}</span><span>${formatDate(h.date)}</span></div></div><div class="hist-pill ${pillMap[h.tone]||'hp-prog'}">${h.tone}</div><button class="hist-item-edit" onclick="loadForEdit('${h.id}')">Editar</button></div>`).join('');
   }
 
   async function loadForEdit(id) {
@@ -2451,7 +2445,7 @@ body {
     if (!data.length) {
       body.innerHTML = historyData.length
         ? '<div class="lst-empty-full"><div class="lei-icon">🔍</div><div class="lei-title">Sin resultados</div><div class="lei-sub">No hay listings que coincidan con la búsqueda.</div></div>'
-        : '<div class="lst-empty-full"><div class="lei-icon">🏠</div><div class="lei-title">Aún no has generado listings</div><div class="lei-sub">Cada listing que generes aparecerá aquí.</div><button class="btn-lst-new" onclick="showPanel(\'generator\',document.querySelectorAll(\'.nav-item\')[1])">✦ Generar mi primer listing</button></div>';
+        : '<div class="lst-empty-full"><div class="lei-icon">🏠</div><div class="lei-title">Aún no has generado listings</div><div class="lei-sub">Cada listing que generes aparecerá aquí.</div><button class="btn-lst-new" onclick="showPanel(\'generator\',document.querySelectorAll(\'.nav-item\')[1])">Generar mi primer listing</button></div>';
       return;
     }
     var tC = { lujoso:'lb-p', inversionista:'lb-p', moderno:'lb-p', familiar:'lb-g', emocional:'lb-g', urgente:'lb-a' };
@@ -3596,7 +3590,7 @@ body {
     // Score breakdown
     var lvls=[
       {label:'Caliente 🔥',min:8,max:10,color:'var(--purple)'},
-      {label:'Tibio ⚡',min:5,max:7,color:'var(--teal)'},
+      {label:'Tibio ',min:5,max:7,color:'var(--teal)'},
       {label:'Frío ❄️',min:0,max:4,color:'var(--muted2)'}
     ];
     var maxLv=Math.max.apply(null,lvls.map(function(lv){
@@ -3686,7 +3680,7 @@ body {
     { id:'itin',      emoji:'🪪', label:'ITIN Loans',           desc:'Cómo comprar casa sin SSN' },
     { id:'fha',       emoji:'🏦', label:'FHA Loans',            desc:'Préstamos con 3.5% de enganche' },
     { id:'firsttime', emoji:'🔑', label:'Primer comprador',     desc:'Paso a paso para comprar tu primera casa' },
-    { id:'credito',   emoji:'📈', label:'Crédito para casa',    desc:'Cómo mejorar tu crédito para comprar' },
+    { id:'credito',   emoji:'', label:'Crédito para casa',    desc:'Cómo mejorar tu crédito para comprar' },
     { id:'proceso',   emoji:'📋', label:'Proceso de compra',    desc:'De la oferta al cierre explicado' },
     { id:'inversion', emoji:'💰', label:'Invertir en bienes raíces', desc:'Cómo empezar con poco dinero' },
     { id:'rentar',    emoji:'🏠', label:'Rentar vs Comprar',    desc:'Qué conviene más en EE. UU.' },
@@ -3849,7 +3843,7 @@ body {
 
       <!-- PASO 1 — Bienvenida -->
       <div class="ob-step active" id="obStep1">
-        <div class="ob-emoji">👋</div>
+        <div class="ob-emoji"></div>
         <div class="ob-title" id="obWelcomeTitle">¡Bienvenido a PropIA!</div>
         <div class="ob-sub">La IA que genera todo el contenido de tus listings en segundos — en español, para agentes latinos en USA.</div>
         <div class="ob-features">
@@ -3893,7 +3887,7 @@ body {
 
       <!-- PASO 3 — Generar primer listing -->
       <div class="ob-step" id="obStep3">
-        <div class="ob-emoji">✨</div>
+        <div class="ob-emoji"></div>
         <div class="ob-title">¡Genera tu primer listing!</div>
         <div class="ob-sub">Tienes <strong>5 listings gratis</strong> este mes. Solo necesitas la dirección y el precio — la IA hace el resto.</div>
         <div class="ob-step3-tip">
@@ -3903,7 +3897,7 @@ body {
           </div>
         </div>
         <div class="ob-actions">
-          <button class="btn-ob-primary" onclick="obFinish()">✦ Generar mi primer listing</button>
+          <button class="btn-ob-primary" onclick="obFinish()">Generar mi primer listing</button>
           <button class="btn-ob-skip" onclick="obSkip()">Ahora no</button>
         </div>
       </div>
@@ -3997,7 +3991,7 @@ body {
       <div class="ldet-section-title">Email de seguimiento listo para enviar</div>
       <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px">Asunto: <span id="ldetEmailSubject" style="color:var(--purple)">—</span></div>
       <div class="ldet-email-box" id="ldetEmailBody">—</div>
-      <button class="ldet-copy-btn" onclick="copyEmail()">📋 Copiar email</button>
+      <button class="ldet-copy-btn" onclick="copyEmail()">Copiar email</button>
     </div>
 
   </div>

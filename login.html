@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="PropIA"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet"/>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
@@ -42,9 +42,11 @@ html, body { height: 100%; }
   --shadow:    0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(124,58,237,0.06);
   --shadow-lg: 0 4px 24px rgba(124,58,237,0.10), 0 1px 6px rgba(0,0,0,0.05);
 }
+h1,h2,h3,.logo-name { font-family: 'Syne', sans-serif; }
+
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -221,7 +223,7 @@ body::before {
 .auth-tab {
   flex: 1; background: none; border: none;
   color: var(--muted);
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', -apple-system, sans-serif;
   font-size: 15px; font-weight: 500; padding: 11px;
   cursor: pointer; transition: all 0.2s; border-radius: 10px;
 }
@@ -242,7 +244,7 @@ body::before {
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 12px; color: var(--text);
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', -apple-system, sans-serif;
   font-size: 16px; padding: 14px 16px; outline: none;
   transition: all 0.2s;
 }
@@ -254,7 +256,7 @@ body::before {
   background: var(--purple);
   border: none; border-radius: 13px;
   color: white;
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', -apple-system, sans-serif;
   font-size: 17px; font-weight: 700;
   padding: 16px; cursor: pointer;
   transition: all 0.22s; margin-top: 4px;
@@ -292,40 +294,40 @@ body::before {
   <div class="blob1"></div><div class="blob2"></div>
 
   <div class="logo">
-    <div class="logo-mark">🏠</div>
-    <div class="logo-name">Prop<span>IA</span></div>
+    
+    <div class="logo-name" style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.5px">Prop<span style="color:#c4b5fd">IA</span></div>
   </div>
 
   <div class="left-body">
     <div class="ai-pill"><div class="ai-dot"></div>IA activa · Sistema en línea</div>
 
-    <h1 class="headline">Hola, agente 👋</h1>
+    <h1 class="headline">Hola, agente </h1>
     <div class="headline-teal">¿En qué te ayuda la IA hoy?</div>
 
     <p class="tagline">Genera listings profesionales, califica leads y retén clientes — todo en español, todo con inteligencia artificial.</p>
 
     <div class="action-pills">
-      <div class="action-pill primary"><span class="action-pill-icon">✨</span>Generar Listing</div>
-      <div class="action-pill"><span class="action-pill-icon">📊</span>Ver métricas</div>
-      <div class="action-pill"><span class="action-pill-icon">💎</span>Ver planes</div>
-      <div class="action-pill"><span class="action-pill-icon">🤖</span>Calificar leads</div>
+      <div class="action-pill primary"><span class="action-pill-icon"></span>Generar Listing</div>
+      <div class="action-pill"><span class="action-pill-icon"></span>Ver métricas</div>
+      <div class="action-pill"><span class="action-pill-icon"></span>Ver planes</div>
+      <div class="action-pill"><span class="action-pill-icon"></span>Calificar leads</div>
     </div>
 
     <!-- decorative floating card -->
     <div class="mock-card">
       <div class="mock-card-label">Actividad reciente</div>
       <div class="mock-row">
-        <div class="mock-row-icon purple">🏠</div>
+        <div class="mock-row-icon purple"></div>
         <div class="mock-row-text">123 Oak St, Miami FL</div>
         <div class="mock-pill done">Listo</div>
       </div>
       <div class="mock-row">
-        <div class="mock-row-icon teal">✨</div>
+        <div class="mock-row-icon teal"></div>
         <div class="mock-row-text">456 Palm Ave, Orlando</div>
         <div class="mock-pill prog">En progreso</div>
       </div>
       <div class="mock-row">
-        <div class="mock-row-icon orange">📋</div>
+        <div class="mock-row-icon orange"></div>
         <div class="mock-row-text">789 Beach Blvd, Tampa</div>
         <div class="mock-pill soon">Próximo</div>
       </div>
@@ -334,14 +336,14 @@ body::before {
 
   <div class="left-foot">
     <span>© 2025 PropIA · Comunidad latina en USA</span>
-    <div class="ssl">🔒 SSL Seguro</div>
+    <div class="ssl">SSL Seguro</div>
   </div>
 </div>
 
 <div class="right">
   <div class="auth-box">
     <div class="mobile-logo">
-      <div class="mobile-logo-mark">🏠</div>
+      <div class="mobile-logo-mark"></div>
       <div class="mobile-logo-name">Prop<span>IA</span></div>
     </div>
 
@@ -369,7 +371,7 @@ body::before {
         <span class="loading"><span class="spinner"></span>Verificando...</span>
       </button>
       <div class="divider">Plan Gratis disponible</div>
-      <div class="plan-badge">🎁 El plan <strong>Gratis</strong> incluye 5 listings y 20 leads al mes. Sin tarjeta de crédito.</div>
+      <div class="plan-badge">El plan <strong>Gratis</strong> incluye 5 listings y 20 leads al mes. Sin tarjeta de crédito.</div>
     </form>
 
     <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
@@ -386,7 +388,7 @@ body::before {
         <span class="label">Crear Cuenta Gratis</span>
         <span class="loading"><span class="spinner"></span>Creando cuenta...</span>
       </button>
-      <div class="plan-badge">🎁 Empiezas en el plan <strong>Gratis</strong> automáticamente. Mejora cuando quieras.</div>
+      <div class="plan-badge">Empiezas en el plan <strong>Gratis</strong> automáticamente. Mejora cuando quieras.</div>
     </form>
   </div>
 </div>
