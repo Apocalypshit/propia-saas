@@ -3723,18 +3723,13 @@ body {
 
     try {
       var token = localStorage.getItem('propia_token');
-      var res   = await fetch('/api/generate', {
+      var res   = await fetch('/api/edu', {
         method: 'POST',
         headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+token },
         body: JSON.stringify({
-          eduMode:    true,
-          eduTopic:   topic.id,
-          eduLabel:   topic.label,
-          eduDesc:    topic.desc,
-          address:    currentAddress || 'tu área',
-          price:      'N/A',
-          type:       'educativo',
-          tone:       'familiar'
+          eduLabel: topic.label,
+          eduDesc:  topic.desc,
+          city:     currentAddress || 'tu área'
         })
       });
       var text = await res.text();
