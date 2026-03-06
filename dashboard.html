@@ -367,8 +367,13 @@ body {
   color:var(--purple);background:var(--p-light);
 }
 .int-btn:hover{background:var(--purple);color:white}
-.int-btn.disconnect{color:var(--rose);border-color:rgba(244,63,94,.3);background:rgba(244,63,94,.06)}
-.int-btn.disconnect:hover{background:var(--rose);color:white}
+.int-btn--fb{
+  background:#1877f2;color:white;border-color:#1877f2;
+  font-size:13px;font-weight:700;padding:10px 18px;
+}
+.int-btn--fb:hover{background:#1464d8;border-color:#1464d8;color:white}
+.int-btn--disconnect{color:var(--rose);border-color:rgba(244,63,94,.3);background:rgba(244,63,94,.06)}
+.int-btn--disconnect:hover{background:var(--rose);color:white;border-color:var(--rose)}
 .int-page-select{
   background:white;border:1.5px solid var(--border-p);
   border-radius:16px;padding:18px 20px;margin-bottom:12px;
@@ -1463,11 +1468,9 @@ body {
         <div class="int-card-right">
           <div class="int-status" id="fbIntStatus"></div>
           <div id="fbLoginBtnWrap">
-            <!-- FB SDK login button — uses Config ID -->
-            <fb:login-button
-              config_id="2301684590341909"
-              onlogin="fbOnLogin();">
-            </fb:login-button>
+            <button class="int-btn int-btn--fb" id="fbLoginBtn" onclick="connectFacebook()">
+              <span style="font-weight:900;margin-right:6px">f</span> Conectar con Facebook
+            </button>
           </div>
           <button class="int-btn int-btn--disconnect" id="fbDisconnectBtn" style="display:none" onclick="disconnectFacebook()">Desconectar</button>
         </div>
@@ -2948,6 +2951,24 @@ body {
     js.src = 'https://connect.facebook.net/es_LA/sdk.js';
     fjs.parentNode.insertBefore(js, fjs);
   }(document,'script','facebook-jssdk'));
+
+  function connectFacebook() {
+    if (typeof FB === 'undefined') {
+      showGlobalToast('❌ SDK de Facebook no cargó. Recarga la página.', 'err');
+      return;
+    }
+    FB.login(function(response) {
+      if (response.authResponse) {
+        fbHandleConnected(response.authResponse);
+      } else {
+        showGlobalToast('❌ Login cancelado o fallido.', 'err');
+      }
+    }, {
+      config_id: '2301684590341909',
+      response_type: 'code',
+      override_default_response_type: true
+    });
+  }
 
   function fbOnLogin() {
     FB.getLoginStatus(function(response) {
