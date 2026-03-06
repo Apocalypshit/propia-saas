@@ -2816,7 +2816,8 @@ body {
   })();
 
   // Close on overlay click
-  document.getElementById('photosOv').addEventListener('click', function(e){
+  var photosOvEl = document.getElementById('photosOv');
+  if (photosOvEl) photosOvEl.addEventListener('click', function(e){
     if (e.target === this) closePhotos();
   });
 
@@ -3502,7 +3503,8 @@ body {
     renderCrmTasks();
   }
 
-  document.getElementById('followUpModal').addEventListener('click',function(e){
+  var followUpModalEl = document.getElementById('followUpModal');
+  if (followUpModalEl) followUpModalEl.addEventListener('click',function(e){
     if (e.target===this) closeFollowUpModal();
   });
 
@@ -4060,7 +4062,8 @@ window.addEventListener('beforeinstallprompt', function(e) {
   }
 });
 
-document.getElementById('pwaInstallBtn').addEventListener('click', function() {
+var pwaBtn = document.getElementById('pwaInstallBtn');
+  if (pwaBtn) pwaBtn.addEventListener('click', function() {
   if (!pwaPrompt) return;
   pwaPrompt.prompt();
   pwaPrompt.userChoice.then(function(result) {
