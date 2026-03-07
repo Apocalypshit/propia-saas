@@ -547,22 +547,22 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 }
 
 /* Apply to sections on scroll */
-.hero-badge        { animation:slideRight .6s cubic-bezier(.22,1,.36,1) .1s both; }
-h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
-.hero-sub          { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .35s both; }
-.hero-cta          { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .45s both; }
-.hero-proof        { animation:fadeUp .6s cubic-bezier(.22,1,.36,1) .55s both; }
-.hero-mockup       { animation:fadeIn .8s cubic-bezier(.22,1,.36,1) .3s both; }
+.hero-badge        { animation:slideRight .6s cubic-bezier(.22,1,.36,1) .1s forwards; }
+h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s forwards; }
+.hero-sub          { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .35s forwards; }
+.hero-cta          { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .45s forwards; }
+.hero-proof        { animation:fadeUp .6s cubic-bezier(.22,1,.36,1) .55s forwards; }
+.hero-mockup       { animation:fadeIn .8s cubic-bezier(.22,1,.36,1) .3s forwards; }
 .float-badge1      { animation:popIn .6s cubic-bezier(.22,1,.36,1) .9s both, floatY 3s ease-in-out 1.5s infinite; }
 .float-badge2      { animation:popIn .6s cubic-bezier(.22,1,.36,1) 1.1s both, floatY 3.5s ease-in-out 2s infinite; }
 
-/* Scroll-reveal utility */
-.reveal            { opacity:0; transform:translateY(32px); transition:opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1); }
-.reveal.visible    { opacity:1; transform:translateY(0); }
-.reveal-delay-1    { transition-delay:.1s; }
-.reveal-delay-2    { transition-delay:.2s; }
-.reveal-delay-3    { transition-delay:.3s; }
-.reveal-delay-4    { transition-delay:.4s; }
+/* Scroll-reveal utility — JS adds .will-reveal, observer adds .visible */
+.will-reveal            { opacity:0; transform:translateY(28px); transition:opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+.will-reveal.visible    { opacity:1; transform:translateY(0); }
+.will-reveal.d1         { transition-delay:.1s; }
+.will-reveal.d2         { transition-delay:.2s; }
+.will-reveal.d3         { transition-delay:.3s; }
+.will-reveal.d4         { transition-delay:.4s; }
 
 /* Hover lifts */
 .feat-card         { transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s, border-color .22s; }
@@ -577,7 +577,7 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
 .logo-chip:hover   { transform:translateY(-2px); background:var(--p-light); }
 
 /* Hero title gradient animation */
-.t-purple { background:linear-gradient(135deg,#7c3aed,#a855f7,#7c3aed);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradientShift 4s ease infinite; }
+/* t-purple gradient handled by original CSS */
 
 /* Stats counter */
 .stat-num { animation:counterUp .6s cubic-bezier(.22,1,.36,1) both; }
@@ -724,10 +724,10 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
 <!-- STATS -->
 <section class="stats-band">
   <div class="stats-band-inner">
-    <div class="stat-item reveal"><div class="stat-num">1,<span class="accent">2</span>00+</div><div class="stat-desc">Agentes usando PropIA</div></div>
-    <div class="stat-item reveal"><div class="stat-num"><span class="accent">30</span>s</div><div class="stat-desc">Para generar un listing completo</div></div>
-    <div class="stat-item reveal"><div class="stat-num">4<span class="accent">x</span></div><div class="stat-desc">Más listings por mes</div></div>
-    <div class="stat-item reveal"><div class="stat-num"><span class="accent">98</span>%</div><div class="stat-desc">Satisfacción reportada</div></div>
+    <div class="stat-item"><div class="stat-num">1,<span class="accent">2</span>00+</div><div class="stat-desc">Agentes usando PropIA</div></div>
+    <div class="stat-item"><div class="stat-num"><span class="accent">30</span>s</div><div class="stat-desc">Para generar un listing completo</div></div>
+    <div class="stat-item"><div class="stat-num">4<span class="accent">x</span></div><div class="stat-desc">Más listings por mes</div></div>
+    <div class="stat-item"><div class="stat-num"><span class="accent">98</span>%</div><div class="stat-desc">Satisfacción reportada</div></div>
   </div>
 </section>
 
@@ -738,25 +738,25 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
     <h2 class="section-title">Todo lo que necesitas<br>para vender más</h2>
     <p class="section-sub">Desde la descripción MLS hasta el script de video — PropIA lo genera todo en segundos, en español perfecto.</p>
     <div class="features-grid">
-      <div class="feat-card reveal reveal-delay-1">
+      <div class="feat-card">
         <div class="feat-icon fi-p"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></div>
         <div class="feat-title">Descripción MLS Profesional</div>
         <p class="feat-desc">150-200 palabras optimizadas para el mercado. Tono profesional, palabras clave correctas, lista para publicar en minutos.</p>
         <div class="feat-chips"><span class="feat-chip">MLS</span><span class="feat-chip">SEO inmobiliario</span><span class="feat-chip">Español neutro</span></div>
       </div>
-      <div class="feat-card reveal reveal-delay-2">
+      <div class="feat-card">
         <div class="feat-icon fi-t"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
         <div class="feat-title">3 Posts para Redes Sociales</div>
         <p class="feat-desc">Instagram, Facebook y más. Tres variaciones con diferentes tonos — lujoso, emocional, urgente — con hashtags para el mercado latino.</p>
         <div class="feat-chips"><span class="feat-chip">Instagram</span><span class="feat-chip">Facebook</span><span class="feat-chip">Hashtags incluidos</span></div>
       </div>
-      <div class="feat-card reveal reveal-delay-3">
+      <div class="feat-card">
         <div class="feat-icon fi-g"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
         <div class="feat-title">Email de Marketing Listo</div>
         <p class="feat-desc">Asunto + cuerpo completo. Personalizado para enviar a tu base de contactos. Tono conversacional que convierte lectores en clientes.</p>
         <div class="feat-chips"><span class="feat-chip">Asunto optimizado</span><span class="feat-chip">CTA incluido</span><span class="feat-chip">Alta apertura</span></div>
       </div>
-      <div class="feat-card reveal reveal-delay-4">
+      <div class="feat-card">
         <div class="feat-icon fi-a"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
         <div class="feat-title">Script para Video / Reels</div>
         <p class="feat-desc">60-90 segundos de guión listo para grabar. Estructura hook → presentación → características → llamada a la acción. Ideal para Reels y YouTube.</p>
@@ -773,17 +773,17 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
     <h2 class="section-title">Tan fácil como<br>enviar un mensaje</h2>
     <p class="section-sub">No necesitas saber de tecnología. Si sabes usar WhatsApp, ya sabes usar PropIA.</p>
     <div class="how-grid">
-      <div class="how-step reveal">
+      <div class="how-step">
         <div class="how-num">1</div>
         <h3 class="how-title">Ingresa los datos</h3>
         <p class="how-desc">Dirección, precio, recámaras, baños y características de la propiedad. Solo toma 2 minutos.</p>
       </div>
-      <div class="how-step reveal">
+      <div class="how-step">
         <div class="how-num">2</div>
         <h3 class="how-title">La IA genera todo</h3>
         <p class="how-desc">En menos de 30 segundos PropIA redacta el MLS, 3 posts, el email y el script de video. Todo al mismo tiempo.</p>
       </div>
-      <div class="how-step reveal">
+      <div class="how-step">
         <div class="how-num">3</div>
         <h3 class="how-title">Copia y publica</h3>
         <p class="how-desc">Un clic para copiar cada pieza. Pégala en tu MLS, redes o email y listo. Sin edición necesaria.</p>
@@ -914,17 +914,17 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
     <h2 class="section-title">Lo que dicen<br>nuestros agentes</h2>
     <p class="section-sub">Más de 1,200 agentes en USA confían en PropIA cada día.</p>
     <div class="testi-grid">
-      <div class="testi-card reveal">
+      <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Antes me tomaba 2 horas escribir el MLS, hacer los posts y el email. Con PropIA lo hago en 30 segundos. Literalmente cambió mi negocio."</p>
         <div class="testi-author"><div class="testi-av av-p">MG</div><div><div class="testi-name">María González</div><div class="testi-role">Agente · Keller Williams</div><div class="testi-loc">Miami, Florida</div></div></div>
       </div>
-      <div class="testi-card featured reveal">
+      <div class="testi-card featured">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Soy broker con 8 agentes en mi equipo. Todos usan PropIA y la producción subió un 40% en el primer mes. El plan Pro vale cada centavo."</p>
         <div class="testi-author"><div class="testi-av av-t">CR</div><div><div class="testi-name">Carlos Ramírez</div><div class="testi-role">Broker Owner · RE/MAX Select</div><div class="testi-loc">Orlando, Florida</div></div></div>
       </div>
-      <div class="testi-card reveal">
+      <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Empecé con el plan gratis y en mi primera semana generé 4 listings. Los posts de Instagram me trajeron 2 clientes nuevos."</p>
         <div class="testi-author"><div class="testi-av av-g">LD</div><div><div class="testi-name">Lucía Domínguez</div><div class="testi-role">Agente · Century 21</div><div class="testi-loc">Houston, Texas</div></div></div>
@@ -940,7 +940,7 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
     <h2 class="section-title">Empieza gratis,<br>crece cuando quieras</h2>
     <p class="section-sub">Sin contratos. Sin tarjeta de crédito. Cancela en cualquier momento.</p>
     <div class="pricing-grid">
-      <div class="price-card reveal">
+      <div class="price-card">
         <div class="price-name">Gratis</div>
         <div class="price-amount">$0</div>
         <div class="price-period">para siempre</div>
@@ -956,7 +956,7 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
         </div>
         <button class="btn-price btn-price-outline" onclick="window.location.href='/app?tab=register'">Empezar Gratis</button>
       </div>
-      <div class="price-card reveal">
+      <div class="price-card">
         <div class="price-name">Básico</div>
         <div class="price-amount">$49</div>
         <div class="price-period">/ mes</div>
@@ -972,7 +972,7 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
         </div>
         <button class="btn-price btn-price-outline" onclick="window.location.href='/app?tab=register'">Empezar con Básico</button>
       </div>
-      <div class="price-card featured reveal">
+      <div class="price-card featured">
         <div class="feat-badge">Más Popular</div>
         <div class="price-name">Pro</div>
         <div class="price-amount">$149</div>
@@ -989,7 +989,7 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
         </div>
         <button class="btn-price btn-price-white" onclick="window.location.href='/app?tab=register'">Empezar con Pro →</button>
       </div>
-      <div class="price-card reveal">
+      <div class="price-card">
         <div class="price-name">Empresarial</div>
         <div class="price-amount">$399</div>
         <div class="price-period">/ mes</div>
@@ -1017,12 +1017,12 @@ h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
     <h2 class="section-title">Todo lo que<br>necesitas saber</h2>
     <div style="height:40px"></div>
     <div class="faq-grid">
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">Todo el contenido se genera en español latinoamericano neutro, perfectamente comprensible para compradores de cualquier país hispanohablante. También puedes pedir inglés si lo necesitas.</div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Necesito saber de tecnología?<span class="faq-arrow">▼</span></button><div class="faq-a">Para nada. Si sabes usar WhatsApp o Facebook, puedes usar PropIA. Solo ingresa los datos de la propiedad, escoge el tono y haz clic en "Generar". En 30 segundos tienes todo listo.</div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Puedo cancelar cuando quiera?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí, cancela en cualquier momento desde tu cuenta. Sin penalizaciones ni cargos adicionales. No hay contratos anuales obligatorios.</div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Qué tan preciso es el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">El 98% de los usuarios reportan usar el contenido directamente sin edición. La IA usa los datos específicos que ingresas, por lo que el resultado siempre es relevante para esa propiedad.</div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Funciona para cualquier propiedad?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí. Casas unifamiliares, condominios, townhouses, multifamiliares, terrenos y propiedades comerciales. También funciona para rentas y propiedades de lujo.</div></div>
-      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Mis datos están seguros?<span class="faq-arrow">▼</span></button><div class="faq-a">Absolutamente. Usamos encriptación SSL, tus datos se almacenan en servidores seguros de Supabase y nunca vendemos ni compartimos tu información con terceros.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">Todo el contenido se genera en español latinoamericano neutro, perfectamente comprensible para compradores de cualquier país hispanohablante. También puedes pedir inglés si lo necesitas.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Necesito saber de tecnología?<span class="faq-arrow">▼</span></button><div class="faq-a">Para nada. Si sabes usar WhatsApp o Facebook, puedes usar PropIA. Solo ingresa los datos de la propiedad, escoge el tono y haz clic en "Generar". En 30 segundos tienes todo listo.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Puedo cancelar cuando quiera?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí, cancela en cualquier momento desde tu cuenta. Sin penalizaciones ni cargos adicionales. No hay contratos anuales obligatorios.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Qué tan preciso es el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">El 98% de los usuarios reportan usar el contenido directamente sin edición. La IA usa los datos específicos que ingresas, por lo que el resultado siempre es relevante para esa propiedad.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Funciona para cualquier propiedad?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí. Casas unifamiliares, condominios, townhouses, multifamiliares, terrenos y propiedades comerciales. También funciona para rentas y propiedades de lujo.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Mis datos están seguros?<span class="faq-arrow">▼</span></button><div class="faq-a">Absolutamente. Usamos encriptación SSL, tus datos se almacenan en servidores seguros de Supabase y nunca vendemos ni compartimos tu información con terceros.</div></div>
     </div>
   </div>
 </section>
@@ -1198,34 +1198,26 @@ function copyDemo() {
 
 <script>
 // ── SCROLL REVEAL ────────────────────────────────────
+// Scroll reveal — JS adds will-reveal class, then observer triggers visible
+var revealTargets = document.querySelectorAll('.feat-card,.how-step,.testi-card,.price-card,.faq-item,.stat-item');
 var revealObserver = new IntersectionObserver(function(entries){
   entries.forEach(function(e){
-    if(e.isIntersecting){ e.target.classList.add('visible'); }
-  });
-},{ threshold:0.12, rootMargin:'0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
-
-// ── COUNTER ANIMATION ────────────────────────────────
-function animateCounter(el, target, suffix){
-  var start=0, duration=1800, step=duration/60;
-  var timer = setInterval(function(){
-    start += target/60;
-    if(start >= target){ start=target; clearInterval(timer); }
-    el.innerHTML = Math.floor(start).toLocaleString() + (suffix||'');
-  }, step);
-}
-var statsObserver = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
     if(e.isIntersecting){
-      statsObserver.unobserve(e.target);
-      var nums = e.target.querySelectorAll('.stat-num');
-      var targets = [[1200,'+'],[30,'s'],[4,'x'],[98,'%']];
-      nums.forEach(function(n,i){ if(targets[i]) animateCounter(n, targets[i][0], targets[i][1]); });
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
     }
   });
-},{ threshold:0.3 });
-var band = document.querySelector('.stats-band');
-if(band) statsObserver.observe(band);
+},{ threshold:0.1, rootMargin:'0px 0px -30px 0px' });
+revealTargets.forEach(function(el,i){
+  el.classList.add('will-reveal');
+  if(i%4===1) el.classList.add('d1');
+  else if(i%4===2) el.classList.add('d2');
+  else if(i%4===3) el.classList.add('d3');
+  revealObserver.observe(el);
+});
+
+// ── COUNTER ANIMATION ────────────────────────────────
+// No stat counter animation — keep original text intact
 
 // ── INTERACTIVE MOCKUP AUTO-DEMO ─────────────────────
 var mockupRunning = false;
