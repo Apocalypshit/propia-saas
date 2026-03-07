@@ -63,7 +63,7 @@ nav,.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;transit
 .nav-cta{font-size:14px;font-weight:700;color:white;background:var(--purple);padding:8px 18px;border-radius:9px;border:none;transition:background .15s}
 .nav-cta:hover{background:var(--purple2)}
 .hamburger{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:6px;line-height:1}
-.mobile-menu{display:none;flex-direction:column;gap:4px;padding:12px 16px 16px;background:white;border-top:1px solid rgba(0,0,0,.07);position:relative;z-index:999}
+.mobile-menu{display:none;flex-direction:column;gap:4px;padding:16px 20px 20px;background:white;border-top:1px solid rgba(0,0,0,.08);position:absolute;top:64px;left:0;right:0;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.1)}
 .mobile-menu.open{display:flex}
 .m-nav-link{font-size:15px;font-weight:500;color:var(--text2);padding:10px 12px;border-radius:9px;border:none;background:none;text-align:left;cursor:pointer}
 .m-nav-link:hover{background:#f5f5f8}
@@ -500,6 +500,94 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
   .stats-band-inner{grid-template-columns:1fr 1fr !important}
   .logos-inner{gap:6px}
 }
+
+/* ── EXPRESSIVE ANIMATIONS ─────────────────────────── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(40px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(20px) scale(.97); }
+  to   { opacity:1; transform:translateY(0)    scale(1); }
+}
+@keyframes slideRight {
+  from { opacity:0; transform:translateX(-30px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+@keyframes popIn {
+  0%   { opacity:0; transform:scale(.7); }
+  70%  { transform:scale(1.06); }
+  100% { opacity:1; transform:scale(1); }
+}
+@keyframes floatY {
+  0%,100% { transform:translateY(0px); }
+  50%     { transform:translateY(-10px); }
+}
+@keyframes gradientShift {
+  0%,100% { background-position:0% 50%; }
+  50%     { background-position:100% 50%; }
+}
+@keyframes typewriter {
+  from { width:0; }
+  to   { width:100%; }
+}
+@keyframes counterUp {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position:-200% 0; }
+  100% { background-position:200% 0; }
+}
+@keyframes bounceIn {
+  0%   { opacity:0; transform:scale(.3) translateY(30px); }
+  50%  { transform:scale(1.05) translateY(-5px); }
+  70%  { transform:scale(.95); }
+  100% { opacity:1; transform:scale(1) translateY(0); }
+}
+
+/* Apply to sections on scroll */
+.hero-badge        { animation:slideRight .6s cubic-bezier(.22,1,.36,1) .1s both; }
+h1.hero-title      { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .2s both; }
+.hero-sub          { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .35s both; }
+.hero-cta          { animation:fadeUp .7s cubic-bezier(.22,1,.36,1) .45s both; }
+.hero-proof        { animation:fadeUp .6s cubic-bezier(.22,1,.36,1) .55s both; }
+.hero-mockup       { animation:fadeIn .8s cubic-bezier(.22,1,.36,1) .3s both; }
+.float-badge1      { animation:popIn .6s cubic-bezier(.22,1,.36,1) .9s both, floatY 3s ease-in-out 1.5s infinite; }
+.float-badge2      { animation:popIn .6s cubic-bezier(.22,1,.36,1) 1.1s both, floatY 3.5s ease-in-out 2s infinite; }
+
+/* Scroll-reveal utility */
+.reveal            { opacity:0; transform:translateY(32px); transition:opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1); }
+.reveal.visible    { opacity:1; transform:translateY(0); }
+.reveal-delay-1    { transition-delay:.1s; }
+.reveal-delay-2    { transition-delay:.2s; }
+.reveal-delay-3    { transition-delay:.3s; }
+.reveal-delay-4    { transition-delay:.4s; }
+
+/* Hover lifts */
+.feat-card         { transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s, border-color .22s; }
+.feat-card:hover   { transform:translateY(-6px) scale(1.01); box-shadow:0 16px 40px rgba(124,58,237,.16); border-color:var(--p-border); }
+.how-step          { transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s; }
+.how-step:hover    { transform:translateY(-5px); box-shadow:0 10px 30px rgba(124,58,237,.1); }
+.testi-card        { transition:transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s; }
+.testi-card:hover  { transform:translateY(-5px); box-shadow:0 12px 32px rgba(0,0,0,.1); }
+.price-card        { transition:transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s; }
+.price-card:hover:not(.featured) { transform:translateY(-5px); box-shadow:0 10px 30px rgba(124,58,237,.12); }
+.logo-chip         { transition:transform .18s, background .18s; cursor:default; }
+.logo-chip:hover   { transform:translateY(-2px); background:var(--p-light); }
+
+/* Hero title gradient animation */
+.t-purple { background:linear-gradient(135deg,#7c3aed,#a855f7,#7c3aed);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradientShift 4s ease infinite; }
+
+/* Stats counter */
+.stat-num { animation:counterUp .6s cubic-bezier(.22,1,.36,1) both; }
+
+/* Button pulse on primary CTA */
+.btn-primary { position:relative; overflow:hidden; }
+.btn-primary::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,0); border-radius:inherit; transition:background .2s; }
+.btn-primary:hover::after { background:rgba(255,255,255,.12); }
+.btn-primary:active { transform:scale(.97); }
+.btn-cta-white:active { transform:scale(.97); }
 </style>
 </head>
 <body>
@@ -524,8 +612,6 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
     </div>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
   </div>
-</nav>
-
 <div class="mobile-menu" id="mobileMenu">
   <a href="#features" onclick="toggleMenu()">Funciones</a>
   <a href="#how" onclick="toggleMenu()">Cómo funciona</a>
@@ -541,6 +627,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 <!-- HERO -->
 <section class="hero">
   <div class="hero-blob1"></div>
+</nav>
   <div class="hero-blob2"></div>
   <div class="hero-inner">
     <div>
@@ -637,10 +724,10 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 <!-- STATS -->
 <section class="stats-band">
   <div class="stats-band-inner">
-    <div class="stat-item"><div class="stat-num">1,<span class="accent">2</span>00+</div><div class="stat-desc">Agentes usando PropIA</div></div>
-    <div class="stat-item"><div class="stat-num"><span class="accent">30</span>s</div><div class="stat-desc">Para generar un listing completo</div></div>
-    <div class="stat-item"><div class="stat-num">4<span class="accent">x</span></div><div class="stat-desc">Más listings por mes</div></div>
-    <div class="stat-item"><div class="stat-num"><span class="accent">98</span>%</div><div class="stat-desc">Satisfacción reportada</div></div>
+    <div class="stat-item reveal"><div class="stat-num">1,<span class="accent">2</span>00+</div><div class="stat-desc">Agentes usando PropIA</div></div>
+    <div class="stat-item reveal"><div class="stat-num"><span class="accent">30</span>s</div><div class="stat-desc">Para generar un listing completo</div></div>
+    <div class="stat-item reveal"><div class="stat-num">4<span class="accent">x</span></div><div class="stat-desc">Más listings por mes</div></div>
+    <div class="stat-item reveal"><div class="stat-num"><span class="accent">98</span>%</div><div class="stat-desc">Satisfacción reportada</div></div>
   </div>
 </section>
 
@@ -651,25 +738,25 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
     <h2 class="section-title">Todo lo que necesitas<br>para vender más</h2>
     <p class="section-sub">Desde la descripción MLS hasta el script de video — PropIA lo genera todo en segundos, en español perfecto.</p>
     <div class="features-grid">
-      <div class="feat-card">
+      <div class="feat-card reveal reveal-delay-1">
         <div class="feat-icon fi-p"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></div>
         <div class="feat-title">Descripción MLS Profesional</div>
         <p class="feat-desc">150-200 palabras optimizadas para el mercado. Tono profesional, palabras clave correctas, lista para publicar en minutos.</p>
         <div class="feat-chips"><span class="feat-chip">MLS</span><span class="feat-chip">SEO inmobiliario</span><span class="feat-chip">Español neutro</span></div>
       </div>
-      <div class="feat-card">
+      <div class="feat-card reveal reveal-delay-2">
         <div class="feat-icon fi-t"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
         <div class="feat-title">3 Posts para Redes Sociales</div>
         <p class="feat-desc">Instagram, Facebook y más. Tres variaciones con diferentes tonos — lujoso, emocional, urgente — con hashtags para el mercado latino.</p>
         <div class="feat-chips"><span class="feat-chip">Instagram</span><span class="feat-chip">Facebook</span><span class="feat-chip">Hashtags incluidos</span></div>
       </div>
-      <div class="feat-card">
+      <div class="feat-card reveal reveal-delay-3">
         <div class="feat-icon fi-g"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
         <div class="feat-title">Email de Marketing Listo</div>
         <p class="feat-desc">Asunto + cuerpo completo. Personalizado para enviar a tu base de contactos. Tono conversacional que convierte lectores en clientes.</p>
         <div class="feat-chips"><span class="feat-chip">Asunto optimizado</span><span class="feat-chip">CTA incluido</span><span class="feat-chip">Alta apertura</span></div>
       </div>
-      <div class="feat-card">
+      <div class="feat-card reveal reveal-delay-4">
         <div class="feat-icon fi-a"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
         <div class="feat-title">Script para Video / Reels</div>
         <p class="feat-desc">60-90 segundos de guión listo para grabar. Estructura hook → presentación → características → llamada a la acción. Ideal para Reels y YouTube.</p>
@@ -686,17 +773,17 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
     <h2 class="section-title">Tan fácil como<br>enviar un mensaje</h2>
     <p class="section-sub">No necesitas saber de tecnología. Si sabes usar WhatsApp, ya sabes usar PropIA.</p>
     <div class="how-grid">
-      <div class="how-step">
+      <div class="how-step reveal">
         <div class="how-num">1</div>
         <h3 class="how-title">Ingresa los datos</h3>
         <p class="how-desc">Dirección, precio, recámaras, baños y características de la propiedad. Solo toma 2 minutos.</p>
       </div>
-      <div class="how-step">
+      <div class="how-step reveal">
         <div class="how-num">2</div>
         <h3 class="how-title">La IA genera todo</h3>
         <p class="how-desc">En menos de 30 segundos PropIA redacta el MLS, 3 posts, el email y el script de video. Todo al mismo tiempo.</p>
       </div>
-      <div class="how-step">
+      <div class="how-step reveal">
         <div class="how-num">3</div>
         <h3 class="how-title">Copia y publica</h3>
         <p class="how-desc">Un clic para copiar cada pieza. Pégala en tu MLS, redes o email y listo. Sin edición necesaria.</p>
@@ -827,17 +914,17 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
     <h2 class="section-title">Lo que dicen<br>nuestros agentes</h2>
     <p class="section-sub">Más de 1,200 agentes en USA confían en PropIA cada día.</p>
     <div class="testi-grid">
-      <div class="testi-card">
+      <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Antes me tomaba 2 horas escribir el MLS, hacer los posts y el email. Con PropIA lo hago en 30 segundos. Literalmente cambió mi negocio."</p>
         <div class="testi-author"><div class="testi-av av-p">MG</div><div><div class="testi-name">María González</div><div class="testi-role">Agente · Keller Williams</div><div class="testi-loc">Miami, Florida</div></div></div>
       </div>
-      <div class="testi-card featured">
+      <div class="testi-card featured reveal">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Soy broker con 8 agentes en mi equipo. Todos usan PropIA y la producción subió un 40% en el primer mes. El plan Pro vale cada centavo."</p>
         <div class="testi-author"><div class="testi-av av-t">CR</div><div><div class="testi-name">Carlos Ramírez</div><div class="testi-role">Broker Owner · RE/MAX Select</div><div class="testi-loc">Orlando, Florida</div></div></div>
       </div>
-      <div class="testi-card">
+      <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote">"Empecé con el plan gratis y en mi primera semana generé 4 listings. Los posts de Instagram me trajeron 2 clientes nuevos."</p>
         <div class="testi-author"><div class="testi-av av-g">LD</div><div><div class="testi-name">Lucía Domínguez</div><div class="testi-role">Agente · Century 21</div><div class="testi-loc">Houston, Texas</div></div></div>
@@ -853,7 +940,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
     <h2 class="section-title">Empieza gratis,<br>crece cuando quieras</h2>
     <p class="section-sub">Sin contratos. Sin tarjeta de crédito. Cancela en cualquier momento.</p>
     <div class="pricing-grid">
-      <div class="price-card">
+      <div class="price-card reveal">
         <div class="price-name">Gratis</div>
         <div class="price-amount">$0</div>
         <div class="price-period">para siempre</div>
@@ -869,7 +956,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
         </div>
         <button class="btn-price btn-price-outline" onclick="window.location.href='/app?tab=register'">Empezar Gratis</button>
       </div>
-      <div class="price-card">
+      <div class="price-card reveal">
         <div class="price-name">Básico</div>
         <div class="price-amount">$49</div>
         <div class="price-period">/ mes</div>
@@ -885,7 +972,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
         </div>
         <button class="btn-price btn-price-outline" onclick="window.location.href='/app?tab=register'">Empezar con Básico</button>
       </div>
-      <div class="price-card featured">
+      <div class="price-card featured reveal">
         <div class="feat-badge">Más Popular</div>
         <div class="price-name">Pro</div>
         <div class="price-amount">$149</div>
@@ -902,7 +989,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
         </div>
         <button class="btn-price btn-price-white" onclick="window.location.href='/app?tab=register'">Empezar con Pro →</button>
       </div>
-      <div class="price-card">
+      <div class="price-card reveal">
         <div class="price-name">Empresarial</div>
         <div class="price-amount">$399</div>
         <div class="price-period">/ mes</div>
@@ -930,12 +1017,12 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
     <h2 class="section-title">Todo lo que<br>necesitas saber</h2>
     <div style="height:40px"></div>
     <div class="faq-grid">
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">Todo el contenido se genera en español latinoamericano neutro, perfectamente comprensible para compradores de cualquier país hispanohablante. También puedes pedir inglés si lo necesitas.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Necesito saber de tecnología?<span class="faq-arrow">▼</span></button><div class="faq-a">Para nada. Si sabes usar WhatsApp o Facebook, puedes usar PropIA. Solo ingresa los datos de la propiedad, escoge el tono y haz clic en "Generar". En 30 segundos tienes todo listo.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Puedo cancelar cuando quiera?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí, cancela en cualquier momento desde tu cuenta. Sin penalizaciones ni cargos adicionales. No hay contratos anuales obligatorios.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Qué tan preciso es el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">El 98% de los usuarios reportan usar el contenido directamente sin edición. La IA usa los datos específicos que ingresas, por lo que el resultado siempre es relevante para esa propiedad.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Funciona para cualquier propiedad?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí. Casas unifamiliares, condominios, townhouses, multifamiliares, terrenos y propiedades comerciales. También funciona para rentas y propiedades de lujo.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">¿Mis datos están seguros?<span class="faq-arrow">▼</span></button><div class="faq-a">Absolutamente. Usamos encriptación SSL, tus datos se almacenan en servidores seguros de Supabase y nunca vendemos ni compartimos tu información con terceros.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿En qué idioma genera el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">Todo el contenido se genera en español latinoamericano neutro, perfectamente comprensible para compradores de cualquier país hispanohablante. También puedes pedir inglés si lo necesitas.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Necesito saber de tecnología?<span class="faq-arrow">▼</span></button><div class="faq-a">Para nada. Si sabes usar WhatsApp o Facebook, puedes usar PropIA. Solo ingresa los datos de la propiedad, escoge el tono y haz clic en "Generar". En 30 segundos tienes todo listo.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Puedo cancelar cuando quiera?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí, cancela en cualquier momento desde tu cuenta. Sin penalizaciones ni cargos adicionales. No hay contratos anuales obligatorios.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Qué tan preciso es el contenido?<span class="faq-arrow">▼</span></button><div class="faq-a">El 98% de los usuarios reportan usar el contenido directamente sin edición. La IA usa los datos específicos que ingresas, por lo que el resultado siempre es relevante para esa propiedad.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Funciona para cualquier propiedad?<span class="faq-arrow">▼</span></button><div class="faq-a">Sí. Casas unifamiliares, condominios, townhouses, multifamiliares, terrenos y propiedades comerciales. También funciona para rentas y propiedades de lujo.</div></div>
+      <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)">¿Mis datos están seguros?<span class="faq-arrow">▼</span></button><div class="faq-a">Absolutamente. Usamos encriptación SSL, tus datos se almacenan en servidores seguros de Supabase y nunca vendemos ni compartimos tu información con terceros.</div></div>
     </div>
   </div>
 </section>
@@ -1110,93 +1197,230 @@ function copyDemo() {
 </div>
 
 <script>
-// ── AI CHAT ────────────────────────────────────────
-function openAIChat(){
-  document.getElementById('aiChatWidget').classList.add('open');
-  document.getElementById('chatFab').style.display='none';
+// ── SCROLL REVEAL ────────────────────────────────────
+var revealObserver = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('visible'); }
+  });
+},{ threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+
+// ── COUNTER ANIMATION ────────────────────────────────
+function animateCounter(el, target, suffix){
+  var start=0, duration=1800, step=duration/60;
+  var timer = setInterval(function(){
+    start += target/60;
+    if(start >= target){ start=target; clearInterval(timer); }
+    el.innerHTML = Math.floor(start).toLocaleString() + (suffix||'');
+  }, step);
 }
-function closeAIChat(){
-  document.getElementById('aiChatWidget').classList.remove('open');
-  document.getElementById('chatFab').style.display='flex';
-}
-function sendQuick(btn, text){
-  document.getElementById('chatQR').style.display='none';
-  addMsg(text,'user');
-  showTyping(text);
-}
-function sendChat(){
-  var input = document.getElementById('chatInput');
-  var text = input.value.trim();
-  if(!text) return;
-  input.value='';
-  document.getElementById('chatQR').style.display='none';
-  addMsg(text,'user');
-  showTyping(text);
-}
-function addMsg(text, type){
-  var msgs = document.getElementById('chatMessages');
-  var div = document.createElement('div');
-  div.className = 'chat-msg ' + type;
-  div.innerHTML = text;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-function showTyping(userText){
-  var msgs = document.getElementById('chatMessages');
-  var typing = document.createElement('div');
-  typing.className='chat-typing'; typing.id='chatTyping';
-  typing.innerHTML='<span></span><span></span><span></span>';
-  msgs.appendChild(typing);
-  msgs.scrollTop = msgs.scrollHeight;
-  setTimeout(function(){ getBotReply(userText); }, 1200);
-}
-async function getBotReply(userText){
-  var typing = document.getElementById('chatTyping');
-  try {
-    var res = await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:300,
-        system:'Eres el asistente de ventas de PropIA, un SaaS de IA para agentes inmobiliarios latinos en USA. Respondes en español, de forma amigable y concisa (máximo 3 oraciones). Ayudas con dudas sobre precios, funciones y cómo empezar. Planes: Gratis ($0, 5 listings), Básico ($49, 50 listings), Pro ($149, 200 listings), Empresarial ($399, ilimitado). Si preguntan algo técnico fuera de PropIA, amablemente redirige.',
-        messages:[{role:'user',content:userText}]
-      })
+var statsObserver = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      statsObserver.unobserve(e.target);
+      var nums = e.target.querySelectorAll('.stat-num');
+      var targets = [[1200,'+'],[30,'s'],[4,'x'],[98,'%']];
+      nums.forEach(function(n,i){ if(targets[i]) animateCounter(n, targets[i][0], targets[i][1]); });
+    }
+  });
+},{ threshold:0.3 });
+var band = document.querySelector('.stats-band');
+if(band) statsObserver.observe(band);
+
+// ── INTERACTIVE MOCKUP AUTO-DEMO ─────────────────────
+var mockupRunning = false;
+var mockupTimer = null;
+
+function startMockupDemo(){
+  if(mockupRunning) return;
+  mockupRunning = true;
+  // Animate pills active state cycling
+  var pills = document.querySelectorAll('.m-pill');
+  var pillIndex = 0;
+  function cyclePill(){
+    pills.forEach(function(p,i){
+      p.classList.toggle('m-pill-p', i===pillIndex);
+      p.classList.toggle('m-pill-o', i!==pillIndex);
     });
-    var data = await res.json();
-    if(typing) typing.remove();
-    var reply = data.content && data.content[0] ? data.content[0].text : '¡Claro! Para cualquier consulta detallada puedes escribirnos a hola@propia.app';
-    addMsg(reply,'bot');
-  } catch(e) {
-    if(typing) typing.remove();
-    var fallbacks = {
-      'cuesta':'Tenemos plan Gratis (sin costo), Básico a $49/mes, Pro a $149/mes y Empresarial a $399/mes. ¡Todos empiezan con 5 listings gratis sin tarjeta!',
-      'funciona':'Ingresas dirección, precio y características. La IA genera el MLS, 3 posts, email y script de video en menos de 30 segundos — todo en español.',
-      'gratis':'¡Perfecto! Solo haz clic en "Empezar Gratis" — sin tarjeta de crédito. Tienes 5 listings incluidos para probar todo.',
-      'ciudad':'PropIA funciona para cualquier ciudad de USA. La IA está entrenada específicamente para el mercado inmobiliario latino americano.'
-    };
-    var reply = '¡Gracias por tu interés! Escríbenos a hola@propia.app y te respondemos en menos de 24 horas.';
-    for(var key in fallbacks){ if(userText.toLowerCase().includes(key)){ reply=fallbacks[key]; break; } }
-    addMsg(reply,'bot');
+    pillIndex = (pillIndex+1) % pills.length;
+  }
+  setInterval(cyclePill, 2200);
+
+  // Animate stat values counting up
+  var statVals = document.querySelectorAll('.m-stat-v');
+  var ends = [12,48,48];
+  statVals.forEach(function(el,i){
+    var target=ends[i], cur=0;
+    var t=setInterval(function(){
+      cur+=Math.ceil(target/20);
+      if(cur>=target){cur=target;clearInterval(t);}
+      el.textContent=cur;
+    },60);
+  });
+
+  // Listing pill shimmer
+  var pill = document.querySelector('.m-listing-pill');
+  if(pill){
+    setTimeout(function(){
+      pill.style.animation='popIn .5s cubic-bezier(.22,1,.36,1) both';
+    }, 1200);
   }
 }
 
-// ── DEMO STEPS ─────────────────────────────────────
+// Start mockup when hero is visible
+var mockupEl = document.querySelector('.hero-mockup');
+if(mockupEl){
+  new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting) startMockupDemo();
+  },{ threshold:0.4 }).observe(mockupEl);
+}
+
+// Demo panel step buttons — also auto-advance
 function showDemoStep(n){
   for(var i=0;i<3;i++){
     var panel = document.getElementById('demoPanel'+i);
-    var step  = document.querySelectorAll('.demo-step')[i];
-    if(panel) panel.style.display = i===n ? 'block' : 'none';
-    if(step)  step.classList.toggle('active', i===n);
+    var steps = document.querySelectorAll('.demo-step');
+    if(panel){ panel.style.display = i===n ? 'block':'none'; }
+    if(steps[i]){ steps[i].classList.toggle('active', i===n); }
+  }
+  // Auto-advance step 1 (generating) after 2.5s
+  if(n===1){
+    setTimeout(function(){ showDemoStep(2); }, 2500);
   }
 }
 function switchResult(btn, key){
-  document.querySelectorAll('.dmock-tab').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.dmock-tab').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
   ['mls','post','email','video'].forEach(function(k){
     var el=document.getElementById('dresult-'+k);
     if(el) el.style.display = k===key ? 'block':'none';
   });
+}
+
+// ── AI CHAT + WEB SPEECH (natural Spanish) ───────────
+var speechEnabled = false;
+var currentUtterance = null;
+
+function initSpeech(){
+  speechEnabled = ('speechSynthesis' in window);
+}
+initSpeech();
+
+function speakText(text){
+  if(!speechEnabled) return;
+  if(currentUtterance){ window.speechSynthesis.cancel(); }
+  // Strip HTML tags for speech
+  var clean = text.replace(/<[^>]+>/g,'').replace(/[*_#]/g,'');
+  var utter = new SpeechSynthesisUtterance(clean);
+  utter.lang = 'es-US';
+  utter.rate = 1.05;
+  utter.pitch = 1.0;
+  utter.volume = 1;
+  // Pick best Spanish voice
+  var voices = window.speechSynthesis.getVoices();
+  var preferred = ['Mónica','Monica','Paulina','Jorge','Diego','Andrés','María','Luciana','es-US','es-MX','es-419','es-ES'];
+  var picked = null;
+  for(var p=0; p<preferred.length && !picked; p++){
+    for(var v=0; v<voices.length; v++){
+      if(voices[v].name.includes(preferred[p]) || voices[v].lang.includes(preferred[p])){
+        picked = voices[v]; break;
+      }
+    }
+  }
+  if(picked) utter.voice = picked;
+  currentUtterance = utter;
+  window.speechSynthesis.speak(utter);
+}
+
+// Voices load async — reload on change
+if(window.speechSynthesis){
+  window.speechSynthesis.onvoiceschanged = function(){ speechEnabled=true; };
+}
+
+function openAIChat(){
+  var w = document.getElementById('aiChatWidget');
+  var fab = document.getElementById('chatFab');
+  w.classList.add('open');
+  if(fab) fab.style.display='none';
+  // Speak greeting after slight delay
+  setTimeout(function(){
+    speakText('¡Hola! Soy el asistente de PropIA. ¿En qué puedo ayudarte hoy?');
+  }, 400);
+}
+function closeAIChat(){
+  var w = document.getElementById('aiChatWidget');
+  var fab = document.getElementById('chatFab');
+  w.classList.remove('open');
+  if(fab) fab.style.display='flex';
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+}
+function sendQuick(btn, text){
+  document.getElementById('chatQR').style.display='none';
+  addMsg(text,'user');
+  showTypingAndReply(text);
+}
+function sendChat(){
+  var input=document.getElementById('chatInput');
+  var text=input.value.trim();
+  if(!text) return;
+  input.value='';
+  document.getElementById('chatQR').style.display='none';
+  addMsg(text,'user');
+  showTypingAndReply(text);
+}
+function addMsg(text,type){
+  var msgs=document.getElementById('chatMessages');
+  var div=document.createElement('div');
+  div.className='chat-msg '+type;
+  div.innerHTML=text;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function showTypingAndReply(userText){
+  var msgs=document.getElementById('chatMessages');
+  var typing=document.createElement('div');
+  typing.className='chat-typing'; typing.id='chatTyping';
+  typing.innerHTML='<span></span><span></span><span></span>';
+  msgs.appendChild(typing);
+  msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(function(){ getBotReply(userText); }, 1000+Math.random()*600);
+}
+async function getBotReply(userText){
+  var typing=document.getElementById('chatTyping');
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:200,
+        system:'Eres María, asistente de ventas de PropIA — IA para agentes inmobiliarios latinos en USA. Hablas en español conversacional natural, cálido y conciso. Máximo 2-3 oraciones por respuesta. Nunca sonas como robot. Precios: Gratis $0 (5 listings), Básico $49 (50 listings), Pro $149 (200 listings), Empresarial $399 (ilimitado). Si no sabes algo, di que lo confirmas con el equipo. No uses emojis.',
+        messages:[{role:'user',content:userText}]
+      })
+    });
+    var data=await res.json();
+    if(typing) typing.remove();
+    var reply=data.content&&data.content[0]?data.content[0].text:'Claro, déjame confirmarlo con el equipo y te escribo enseguida.';
+    addMsg(reply,'bot');
+    speakText(reply);
+  }catch(e){
+    if(typing) typing.remove();
+    var fallback=getFallback(userText);
+    addMsg(fallback,'bot');
+    speakText(fallback);
+  }
+}
+function getFallback(text){
+  var t=text.toLowerCase();
+  if(t.includes('cuesta')||t.includes('precio')||t.includes('plan'))
+    return 'Tenemos plan gratis sin tarjeta, Básico a 49 dólares, Pro a 149 y Empresarial a 399 al mes. ¿Cuál se adapta mejor a ti?';
+  if(t.includes('funciona')||t.includes('cómo')||t.includes('como'))
+    return 'Ingresas los datos de la propiedad y en 30 segundos la IA genera el MLS, posts para redes, email y script de video — todo en español.';
+  if(t.includes('gratis')||t.includes('empezar')||t.includes('comenzar'))
+    return 'Perfecto. Haz clic en Empezar Gratis arriba — no necesitas tarjeta y tienes 5 listings incluidos para probar todo.';
+  if(t.includes('ciudad')||t.includes('estado')||t.includes('usa'))
+    return 'PropIA funciona en todos los estados de USA. Está diseñada específicamente para el mercado inmobiliario latino americano.';
+  return 'Gracias por tu pregunta. Para ayudarte mejor, escríbenos a hola@propia.app y respondemos antes de 24 horas.';
 }
 </script>
 
