@@ -17,7 +17,7 @@
 <!-- Google Fonts — safe simple URL format -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,14 +44,14 @@ html { scroll-behavior: smooth; }
   --border:  rgba(0,0,0,0.07);
   --shadow:  0 2px 8px rgba(0,0,0,0.07), 0 4px 20px rgba(124,58,237,0.06);
   --shadow-lg: 0 8px 40px rgba(124,58,237,0.14), 0 2px 10px rgba(0,0,0,0.06);
-  --font: 'DM Sans', -apple-system, sans-serif;
+  --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
   --mono: 'DM Mono', 'Courier New', monospace;
 }
-h1,h2,h3,.hero-title,.section-title,.plan-name,.feat-title { font-family: 'Syne', sans-serif; }
+h1,h2,h3,.hero-title,.section-title,.plan-name,.feat-title { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
 
 
 body {
-  font-family: var(--font);
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
@@ -109,7 +109,7 @@ a { text-decoration: none; color: inherit; }
 .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; margin-bottom: 22px; background: white; border: 1.5px solid var(--p-border); border-radius: 30px; font-size: 13px; font-weight: 600; color: var(--purple); box-shadow: 0 2px 8px rgba(124,58,237,0.10); width: fit-content; }
 .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal2); box-shadow: 0 0 8px rgba(20,184,166,0.5); animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
 @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.5);} }
-.hero-title { font-size: clamp(38px, 4vw, 58px); font-weight: 800; line-height: 1.06; letter-spacing: -2px; color: var(--text); margin-bottom: 20px; }
+.hero-title { font-size: clamp(40px, 5vw, 64px); font-weight: 800; line-height: 1.06; letter-spacing: -2px; color: var(--text); margin-bottom: 20px; }
 .hero-title .t-purple { color: var(--purple); }
 .hero-title .t-teal { color: var(--teal); }
 .hero-sub { font-size: 17px; line-height: 1.75; color: var(--muted); max-width: 460px; margin-bottom: 34px; }
@@ -425,7 +425,7 @@ a { text-decoration: none; color: inherit; }
         </div>
         <div class="mockup-body">
           <div class="m-date">Lun, 7 de Julio</div>
-          <div class="m-greeting">Hola, María 👋</div>
+          <div class="m-greeting">Hola, María</div>
           <div class="m-sub">¿En qué te ayuda la IA hoy?</div>
           <div class="m-pills">
             <div class="m-pill m-pill-p">Generar Listing</div>
@@ -444,8 +444,8 @@ a { text-decoration: none; color: inherit; }
           </div>
         </div>
       </div>
-      <div class="float-badge1"><div class="fb-icon">⚡</div><div><div class="fb-main">Generado en 28 seg</div><div class="fb-sub">MLS + posts + email + video</div></div></div>
-      <div class="float-badge2"><span style="font-size:17px">🤖</span><div><div style="font-size:12px;font-weight:800;color:var(--text)">IA activa</div><div style="font-size:10px;color:var(--muted)">Groq · Llama 3</div></div></div>
+      <div class="float-badge1"><div class="fb-icon"></div><div><div class="fb-main">Generado en 28 seg</div><div class="fb-sub">MLS + posts + email + video</div></div></div>
+      <div class="float-badge2"><span style="font-size:17px"></span><div><div style="font-size:12px;font-weight:800;color:var(--text)">IA activa</div><div style="font-size:10px;color:var(--muted)">Groq · Llama 3</div></div></div>
     </div>
   </div>
 </section>
@@ -716,9 +716,9 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
         <div class="footer-logo"><div class="footer-logo-mark"></div><div class="footer-logo-name">Prop<span>IA</span></div></div>
         <p class="footer-tagline">La inteligencia artificial diseñada para el agente inmobiliario latino en Estados Unidos. Genera más, vende más.</p>
         <div class="footer-social">
-          <div class="footer-social-btn">📷</div>
-          <div class="footer-social-btn">👥</div>
-          <div class="footer-social-btn">💼</div>
+          <div class="footer-social-btn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+          <div class="footer-social-btn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+          <div class="footer-social-btn"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
           <div class="footer-social-btn">▶</div>
         </div>
       </div>
@@ -749,7 +749,7 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2025 PropIA. Todos los derechos reservados. Hecho con ❤️ para la comunidad latina en USA.</div>
+      <div class="footer-copy">© 2025 PropIA. Todos los derechos reservados. Hecho con para la comunidad latina en USA.</div>
       <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Términos</a><a href="#">Cookies</a></div>
     </div>
   </div>

@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="PropIA"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
 <style>
 /* ═══════════════════════════════════════════
    RESET & ROOT
@@ -53,11 +53,11 @@
   --sw:        220px;
   --radius:    16px;
 }
-h1,h2,.lst-page-title,.ov-title,.leads-page-title { font-family: 'Syne', sans-serif; }
+h1,h2,.lst-page-title,.ov-title,.leads-page-title { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
 
 
 body {
-  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   background: #f8f7fc;
   color: var(--text);
   min-height: 100vh;
@@ -137,7 +137,7 @@ body {
 .s-promo-text { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 12px; }
 .s-promo-btn {
   width: 100%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 8px; color: white; font-family: 'DM Sans', -apple-system, sans-serif;
+  border-radius: 8px; color: white; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   font-size: 13px; font-weight: 700; padding: 9px; cursor: pointer;
   transition: background 0.15s; text-align: center;
 }
@@ -168,7 +168,7 @@ body {
 /* ═══════════════════════════════════════════
    CONTENT AREA — no sticky topbar, like Prodify
 ═══════════════════════════════════════════ */
-.content { flex: 1; padding: 32px 36px; overflow-y: auto; width: 100%; max-width: 1140px; margin: 0 auto; }
+.content { flex: 1; padding: 28px 32px; overflow-y: auto; width: 100%; max-width: 1200px; margin: 0 auto; }
 
 .panel { display: none; }
 .panel.active { display: block; animation: fadeUp 0.2s ease; }
@@ -188,7 +188,7 @@ body {
 .ov-pill {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 9px 18px; border-radius: 30px;
-  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 600;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 600;
   cursor: pointer; transition: all 0.18s; border: none;
 }
 .ov-pill.primary {
@@ -238,7 +238,7 @@ body {
 }
 .stat-card:hover { box-shadow: var(--shadow); border-color: var(--border-p); transform: translateY(-1px); }
 .stat-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
-.stat-label-icon { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.stat-label-icon { width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0; }
 .sl-purple { background: var(--p-light); }
 .sl-teal { background: var(--t-light); }
 .sl-green { background: var(--g-light); }
@@ -300,7 +300,7 @@ body {
 .edit-banner-cancel:hover { color: var(--text); border-color: var(--muted2); }
 /* ══ PANEL: MIS LISTINGS ══ */
 .lst-page-header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}
-.lst-page-title{font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.8px;margin-bottom:4px}
+.lst-page-title { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.4px; }
 .lst-page-sub{font-size:14px;color:var(--muted)}
 .lst-count{display:inline-flex;align-items:center;font-size:12px;font-weight:700;color:var(--purple);background:var(--p-light);border:1px solid var(--p-border);border-radius:20px;padding:3px 11px;margin-left:10px;vertical-align:middle}
 .btn-lst-new{font-family:inherit;font-size:14px;font-weight:700;color:#fff;background:var(--purple);border:none;border-radius:11px;padding:11px 22px;cursor:pointer;box-shadow:0 3px 12px rgba(124,58,237,.28);transition:all .18s;white-space:nowrap}
@@ -811,7 +811,7 @@ body {
   width: 100%; margin-top: 14px;
   background: var(--purple); color: white;
   border: none; border-radius: 11px;
-  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 700;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 700;
   padding: 12px; cursor: pointer;
   transition: all 0.18s;
   box-shadow: 0 4px 14px rgba(124,58,237,0.28);
@@ -839,7 +839,7 @@ body {
   width: 100%; background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 11px; color: var(--text);
-  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 15px; padding: 12px 14px; outline: none;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 15px; padding: 12px 14px; outline: none;
   transition: all 0.2s;
 }
 .fg input:focus, .fg select:focus, .fg textarea:focus {
@@ -855,7 +855,7 @@ body {
 .tone-btn {
   padding: 7px 14px; border-radius: 30px;
   background: var(--surface); border: 1.5px solid var(--border);
-  color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif;
+  color: var(--muted); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.18s;
 }
 .tone-btn:hover { border-color: var(--p-border); color: var(--purple); }
@@ -865,7 +865,7 @@ body {
 .btn-generate {
   width: 100%; background: var(--purple);
   border: none; border-radius: 13px; color: white;
-  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 16px; font-weight: 700;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 16px; font-weight: 700;
   padding: 15px; cursor: pointer; transition: all 0.22s; margin-top: 8px;
   box-shadow: 0 6px 20px rgba(124,58,237,0.30);
   position: relative; overflow: hidden;
@@ -913,7 +913,7 @@ body {
 .info-tip { background: var(--t-light); border: 1.5px solid var(--t-border); border-radius: 10px; padding: 12px 14px; font-size: 13px; color: var(--teal); line-height: 1.6; }
 
 /* output area */
-.output-wrap { display: none; margin-top: 20px; }
+.output-wrap { display: none; margin-top: 24px; }
 .output-wrap.visible { display: block; animation: fadeUp 0.3s ease; }
 .output-success-bar {
   display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
@@ -926,7 +926,7 @@ body {
 
 /* output tabs */
 .output-tabs { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px; gap: 3px; margin-bottom: 14px; width: fit-content; }
-.otab { background: none; border: none; border-radius: 8px; color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 500; padding: 9px 18px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.otab { background: none; border: none; border-radius: 8px; color: var(--muted); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 500; padding: 9px 18px; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .otab:hover { background: var(--bg2); color: var(--text2); }
 .otab.active { background: var(--purple); color: white; font-weight: 700; box-shadow: 0 2px 10px rgba(124,58,237,0.25); }
 .otab-content { display: none; }
@@ -935,7 +935,7 @@ body {
 .output-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 22px; }
 .output-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 13px; border-bottom: 1px solid var(--border); }
 .output-lbl { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
-.btn-copy { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif; font-size: 13px; font-weight: 600; padding: 6px 14px; cursor: pointer; transition: all 0.15s; }
+.btn-copy { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; color: var(--muted); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 13px; font-weight: 600; padding: 6px 14px; cursor: pointer; transition: all 0.15s; }
 .btn-copy:hover { border-color: var(--p-border); color: var(--purple); background: var(--p-light); }
 .btn-copy.copied { color: var(--green); border-color: rgba(16,185,129,0.30); background: var(--g-light); }
 .output-text { font-size: 15px; line-height: 1.85; color: var(--text2); white-space: pre-wrap; word-break: break-word; font-weight: 400; }
@@ -969,7 +969,7 @@ body {
 .pbt-amber { background: var(--amber); color: white; }
 .plan-name { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 5px; letter-spacing: -0.4px; }
 .plan-price { font-family: 'DM Mono',monospace; font-size: 32px; font-weight: 500; color: var(--purple); line-height: 1; margin-bottom: 4px; }
-.plan-price span { font-size: 14px; font-weight: 400; color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif; }
+.plan-price span { font-size: 14px; font-weight: 400; color: var(--muted); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
 .plan-desc { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
 .plan-feats { flex: 1; display: flex; flex-direction: column; gap: 9px; margin-bottom: 18px; }
 .plan-feat { font-size: 14px; display: flex; gap: 8px; align-items: flex-start; line-height: 1.4; color: var(--text2); }
@@ -978,7 +978,7 @@ body {
 .btn-plan {
   background: var(--surface); border: 1.5px solid var(--border);
   border-radius: 11px; color: var(--muted);
-  font-family: 'DM Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 700;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 14px; font-weight: 700;
   padding: 11px; cursor: pointer; transition: all 0.18s; text-align: center;
 }
 .btn-plan:hover { border-color: var(--purple); color: var(--purple); background: var(--p-light); }
@@ -991,7 +991,7 @@ body {
 ═══════════════════════════════════════════ */
 .mobile-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid var(--border); box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 200; padding: 8px 0 max(8px,env(safe-area-inset-bottom)); }
 .mobile-nav-inner { display: flex; justify-content: space-around; }
-.mob-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; color: var(--muted); font-family: 'DM Sans', -apple-system, sans-serif; font-size: 11px; font-weight: 500; padding: 4px 14px; transition: color 0.15s; }
+.mob-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; color: var(--muted); font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 11px; font-weight: 500; padding: 4px 14px; transition: color 0.15s; }
 .mob-btn.active { color: var(--purple); font-weight: 700; }
 .mob-icon { font-size: 20px; line-height: 1; }
 
@@ -1275,7 +1275,7 @@ body {
       <div class="s-user-name" id="userName">Cargando...</div>
       <div class="s-user-status">En línea</div>
     </div>
-    <button class="s-close" onclick="closeSidebar()">✕</button>
+    <button class="s-close" onclick="closeSidebar()">×</button>
   </div>
 
   <nav class="s-nav">
@@ -1304,7 +1304,7 @@ body {
   </div>
 
   <div class="s-settings">
-    <button class="s-settings-item" onclick="showPanel('settings',document.querySelectorAll('.nav-item')[0]);closeSidebar()"><span class="nav-icon">⚙️</span>Configuración</button>
+    <button class="s-settings-item" onclick="showPanel('settings',document.querySelectorAll('.nav-item')[0]);closeSidebar()"><span class="nav-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span>Configuración</button>
     <button class="s-settings-item" onclick="showPanel('integraciones',this);closeSidebar()"><span class="nav-icon"></span>Integraciones</button>
     <button class="s-settings-item" onclick="logout()" style="color:#ef4444;"><span class="nav-icon">↩</span>Cerrar sesión</button>
   </div>
@@ -1316,7 +1316,7 @@ body {
   <!-- mobile/tablet topbar — shown via CSS at ≤1024px -->
   <div style="display:none;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;background:white;border-bottom:1px solid rgba(0,0,0,0.06);box-shadow:0 1px 6px rgba(0,0,0,0.04);position:sticky;top:0;z-index:100;" id="mobileTopbar">
     <div style="display:flex;align-items:center;gap:10px;">
-      <button class="hamburger" onclick="openSidebar()" style="display:block !important;">☰</button>
+      <button class="hamburger" onclick="openSidebar()" style="display:block !important;"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <div style="font-size:18px;font-weight:800;color:var(--text);">Prop<span style="color:var(--purple);">IA</span></div>
     </div>
     <div id="topbarPlan" style="font-size:12px;font-weight:700;color:var(--purple);background:var(--p-light);border:1px solid var(--p-border);padding:4px 12px;border-radius:20px;">FREE</div>
@@ -1334,7 +1334,7 @@ body {
         <button class="ov-pill primary" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">Generar Listing</button>
         <button class="ov-pill outlined" onclick="showPanel('overview',this)">Ver métricas</button>
         <button class="ov-pill outlined" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">Ver planes</button>
-        <button class="ov-pill outlined">🤖 Calificar leads</button>
+        <button class="ov-pill outlined">Calificar leads</button>
       </div>
 
       <!-- stats -->
@@ -1347,11 +1347,11 @@ body {
         </div>
         <div class="stat-card">
           <div class="stat-label"><div class="stat-label-icon sl-teal"></div>Plan activo</div>
-          <div class="stat-value" style="font-size:26px;padding-top:8px;font-family: 'DM Sans', -apple-system, sans-serif;font-weight:900;letter-spacing:-0.8px;" id="statPlan">Gratis</div>
+          <div class="stat-value" style="font-size:26px;padding-top:8px;font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;font-weight:900;letter-spacing:-0.8px;" id="statPlan">Gratis</div>
           <div class="stat-sub">Renueva mensualmente</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label"><div class="stat-label-icon sl-green">📄</div>Assets creados</div>
+          <div class="stat-label"><div class="stat-label-icon sl-green"></div>Assets creados</div>
           <div class="stat-value purple" id="statAssets">0</div>
           <div class="stat-sub">MLS · Posts · Email · Video</div>
         </div>
@@ -1383,7 +1383,7 @@ body {
                 <div><div class="quick-label">Calificar Leads</div><div class="quick-sub">IA califica automático</div></div>
               </div>
               <div class="quick-item">
-                <div class="quick-icon qi-amber">📊</div>
+                <div class="quick-icon qi-amber"></div>
                 <div><div class="quick-label">Ver Reportes</div><div class="quick-sub">Métricas del mes</div></div>
               </div>
               <div class="quick-item" onclick="showPanel('plans',document.querySelectorAll('.nav-item')[0])">
@@ -1425,9 +1425,9 @@ body {
 
           <!-- promo card -->
           <div class="card" style="background:linear-gradient(135deg,var(--purple),#6d28d9);border-color:transparent;">
-            <div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">🚀 Invita a tu equipo</div>
+            <div style="font-size:14px;font-weight:800;color:white;margin-bottom:6px;">Invita a tu equipo</div>
             <div style="font-size:13px;color:rgba(255,255,255,0.80);line-height:1.65;margin-bottom:14px;">Genera listings en equipo y multiplica tu producción como brokerage.</div>
-            <button style="width:100%;background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.25);border-radius:10px;color:white;font-family: 'DM Sans', -apple-system, sans-serif;font-size:13px;font-weight:700;padding:10px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">+ Invitar agentes</button>
+            <button style="width:100%;background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.25);border-radius:10px;color:white;font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;font-size:13px;font-weight:700;padding:10px;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">+ Invitar agentes</button>
           </div>
 
         </div>
@@ -1448,7 +1448,7 @@ body {
           <!-- Edit mode banner — hidden by default -->
           <div class="edit-banner" id="editBanner">
             <div>
-              <div class="edit-banner-text">✏️ Modo Edición</div>
+              <div class="edit-banner-text">Modo Edición</div>
               <div class="edit-banner-addr" id="editBannerAddr"></div>
             </div>
             <button class="edit-banner-cancel" onclick="cancelEdit()">Cancelar</button>
@@ -1473,11 +1473,11 @@ body {
             <label>Tono del contenido</label>
             <div class="tone-row">
               <button class="tone-btn active" onclick="setTone(this,'lujoso')">Lujoso</button>
-              <button class="tone-btn" onclick="setTone(this,'familiar')">👨‍👩‍👧 Familiar</button>
+              <button class="tone-btn" onclick="setTone(this,'familiar')">Familiar</button>
               <button class="tone-btn" onclick="setTone(this,'inversionista')">Inversión</button>
-              <button class="tone-btn" onclick="setTone(this,'moderno')">🏙️ Moderno</button>
+              <button class="tone-btn" onclick="setTone(this,'moderno')">Moderno</button>
               <button class="tone-btn" onclick="setTone(this,'urgente')"> Urgente</button>
-              <button class="tone-btn" onclick="setTone(this,'emocional')">❤️ Emocional</button>
+              <button class="tone-btn" onclick="setTone(this,'emocional')">Emocional</button>
             </div>
           </div>
 
@@ -1501,7 +1501,7 @@ body {
 
           <div class="output-wrap" id="outputWrap">
             <div class="output-success-bar">
-              <div class="osi">✅</div>
+              <div class="osi"></div>
               <div class="ost">Contenido generado</div>
               <div class="osub" id="outputPropTitle"></div>
             </div>
@@ -1519,7 +1519,7 @@ body {
             <div class="otab-content" id="otab-edu">
               <div class="output-card">
                 <div class="output-head">
-                  <div class="output-lbl">🎓 Script Educativo — YouTube / TikTok</div>
+                  <div class="output-lbl">Script Educativo — YouTube / TikTok</div>
                   <button class="btn-copy" onclick="copyOut('outEdu',this)">Copiar</button>
                 </div>
                 <div class="edu-topics" id="eduTopics"></div>
@@ -1533,12 +1533,12 @@ body {
         <div class="gen-right-col">
         <div class="output-photos-section" id="genPhotosSection" style="display:none">
           <div class="output-photos-header">
-            <div class="oph-title">📸 Fotos de la propiedad</div>
+            <div class="oph-title">Fotos de la propiedad</div>
             <div class="oph-sub">Sube fotos para que aparezcan en tu página pública al compartir</div>
           </div>
           <div class="pm-dropzone" id="genDrop" style="margin-bottom:12px">
             <input type="file" id="genFileInput" accept="image/*,video/*" multiple onchange="genHandleFiles(this.files)"/>
-            <div class="pm-dz-icon">📷</div>
+            <div class="pm-dz-icon"></div>
             <div class="pm-dz-title">Arrastra fotos o haz clic para seleccionar</div>
             <div class="pm-dz-sub">JPG, PNG, WebP, MP4 · Máx. 8MB · Hasta 10 archivos</div>
           </div>
@@ -1603,28 +1603,28 @@ body {
         <div class="int-inst-caps-title">Lo que PropIA publica automáticamente al generar un listing</div>
         <div class="int-inst-caps">
           <div class="int-inst-cap int-inst-cap--ok">
-            <div class="int-inst-cap-icon">✅</div>
+            <div class="int-inst-cap-icon"></div>
             <div>
               <div class="int-inst-cap-label">Posts con imagen</div>
               <div class="int-inst-cap-sub">Facebook e Instagram</div>
             </div>
           </div>
           <div class="int-inst-cap int-inst-cap--ok">
-            <div class="int-inst-cap-icon">✅</div>
+            <div class="int-inst-cap-icon"></div>
             <div>
               <div class="int-inst-cap-label">Carrusel de fotos</div>
               <div class="int-inst-cap-sub">Perfecto para listings</div>
             </div>
           </div>
           <div class="int-inst-cap int-inst-cap--ok">
-            <div class="int-inst-cap-icon">✅</div>
+            <div class="int-inst-cap-icon"></div>
             <div>
               <div class="int-inst-cap-label">Reels / Video</div>
               <div class="int-inst-cap-sub">Facebook e Instagram</div>
             </div>
           </div>
           <div class="int-inst-cap int-inst-cap--warn">
-            <div class="int-inst-cap-icon">⚠️</div>
+            <div class="int-inst-cap-icon"></div>
             <div>
               <div class="int-inst-cap-label">Stories</div>
               <div class="int-inst-cap-sub">Próximamente</div>
@@ -1710,8 +1710,8 @@ body {
         <div class="int-cs-title">Próximamente</div>
         <div class="int-cs-chips">
           <div class="int-cs-chip">▶️ YouTube</div>
-          <div class="int-cs-chip">💼 LinkedIn</div>
-          <div class="int-cs-chip">🎵 TikTok</div>
+          <div class="int-cs-chip">LinkedIn</div>
+          <div class="int-cs-chip">TikTok</div>
           <div class="int-cs-chip">WhatsApp Business</div>
         </div>
       </div>
@@ -1810,7 +1810,7 @@ body {
       <div class="crm-modal">
         <div class="crm-modal-hd">
           <div class="lst-page-title" style="font-size:18px;margin:0">Programar seguimiento</div>
-          <button class="crm-modal-close" onclick="closeFollowUpModal()">✕</button>
+          <button class="crm-modal-close" onclick="closeFollowUpModal()">×</button>
         </div>
         <div class="crm-modal-body">
           <div class="crm-modal-field">
@@ -1844,7 +1844,7 @@ body {
       </div>
       <div id="listingsBody">
         <div class="lst-empty-full">
-          <div class="lei-icon">🏠</div>
+          <div class="lei-icon"></div>
           <div class="lei-title">Aún no has generado listings</div>
           <div class="lei-sub">Cada listing que generes con PropIA aparecerá aquí.<br>Podrás editarlo cuando cambie el precio o las amenidades.</div>
           <button class="btn-lst-new" onclick="showPanel('generator',document.querySelectorAll('.nav-item')[1])">Generar mi primer listing</button>
@@ -1947,7 +1947,7 @@ body {
           <div class="pipe-cards" id="pipe-nuevo"></div>
         </div>
         <div class="pipe-col">
-          <div class="pipe-col-header"><div class="pipe-col-title">📞 Contactado</div><div class="pipe-col-count" id="cnt-contactado">0</div></div>
+          <div class="pipe-col-header"><div class="pipe-col-title">Contactado</div><div class="pipe-col-count" id="cnt-contactado">0</div></div>
           <div class="pipe-cards" id="pipe-contactado"></div>
         </div>
         <div class="pipe-col">
@@ -1955,11 +1955,11 @@ body {
           <div class="pipe-cards" id="pipe-calificado"></div>
         </div>
         <div class="pipe-col">
-          <div class="pipe-col-header"><div class="pipe-col-title">🤝 Negociando</div><div class="pipe-col-count" id="cnt-negociando">0</div></div>
+          <div class="pipe-col-header"><div class="pipe-col-title">Negociando</div><div class="pipe-col-count" id="cnt-negociando">0</div></div>
           <div class="pipe-cards" id="pipe-negociando"></div>
         </div>
         <div class="pipe-col">
-          <div class="pipe-col-header"><div class="pipe-col-title">🏆 Cerrado</div><div class="pipe-col-count" id="cnt-cerrado">0</div></div>
+          <div class="pipe-col-header"><div class="pipe-col-title">Cerrado</div><div class="pipe-col-count" id="cnt-cerrado">0</div></div>
           <div class="pipe-cards" id="pipe-cerrado"></div>
         </div>
       </div>
@@ -2261,7 +2261,7 @@ body {
     const body = document.getElementById('historyBody');
     if (!historyData.length) { body.innerHTML = '<div class="hist-empty">Aún no has generado ningún listing.<br><a onclick="showPanel(\'generator\',document.querySelectorAll(\'.nav-item\')[1])">Genera tu primer listing →</a></div>'; return; }
     const pillMap = { lujoso:'hp-prog', familiar:'hp-done', inversionista:'hp-prog', moderno:'hp-done', urgente:  'hp-soon', emocional:'hp-done' };
-    body.innerHTML = historyData.map(h => `<div class="hist-item"><div class="hist-item-icon">🏠</div><div class="hist-item-body"><div class="hist-item-addr">${h.address}</div><div class="hist-item-meta"><span>${h.price}</span><span>${formatDate(h.date)}</span></div></div><div class="hist-pill ${pillMap[h.tone]||'hp-prog'}">${h.tone}</div><button class="hist-item-edit" onclick="loadForEdit('${h.id}')">Editar</button></div>`).join('');
+    body.innerHTML = historyData.map(h => `<div class="hist-item"><div class="hist-item-icon"></div><div class="hist-item-body"><div class="hist-item-addr">${h.address}</div><div class="hist-item-meta"><span>${h.price}</span><span>${formatDate(h.date)}</span></div></div><div class="hist-pill ${pillMap[h.tone]||'hp-prog'}">${h.tone}</div><button class="hist-item-edit" onclick="loadForEdit('${h.id}')">Editar</button></div>`).join('');
   }
 
   async function loadForEdit(id) {
@@ -2444,8 +2444,8 @@ body {
     }
     if (!data.length) {
       body.innerHTML = historyData.length
-        ? '<div class="lst-empty-full"><div class="lei-icon">🔍</div><div class="lei-title">Sin resultados</div><div class="lei-sub">No hay listings que coincidan con la búsqueda.</div></div>'
-        : '<div class="lst-empty-full"><div class="lei-icon">🏠</div><div class="lei-title">Aún no has generado listings</div><div class="lei-sub">Cada listing que generes aparecerá aquí.</div><button class="btn-lst-new" onclick="showPanel(\'generator\',document.querySelectorAll(\'.nav-item\')[1])">Generar mi primer listing</button></div>';
+        ? '<div class="lst-empty-full"><div class="lei-icon"></div><div class="lei-title">Sin resultados</div><div class="lei-sub">No hay listings que coincidan con la búsqueda.</div></div>'
+        : '<div class="lst-empty-full"><div class="lei-icon"></div><div class="lei-title">Aún no has generado listings</div><div class="lei-sub">Cada listing que generes aparecerá aquí.</div><button class="btn-lst-new" onclick="showPanel(\'generator\',document.querySelectorAll(\'.nav-item\')[1])">Generar mi primer listing</button></div>';
       return;
     }
     var tC = { lujoso:'lb-p', inversionista:'lb-p', moderno:'lb-p', familiar:'lb-g', emocional:'lb-g', urgente:'lb-a' };
@@ -2699,7 +2699,7 @@ body {
       return '<div class="pm-img-wrap">'
         + media
         + '<div class="pm-img-num">' + (i+1) + '</div>'
-        + '<button class="pm-img-del" onclick="deletePhoto(\'' + url.replace(/'/g,"\\'") + '\')" title="Eliminar">✕</button>'
+        + '<button class="pm-img-del" onclick="deletePhoto(\'' + url.replace(/'/g,"\\'") + '\')" title="Eliminar">×</button>'
         + '</div>';
     }).join('');
   }
@@ -3068,7 +3068,7 @@ body {
         : '<img src="' + url + '" loading="lazy" alt="foto ' + (i+1) + '" style="width:100%;height:100%;object-fit:cover"/>';
       return '<div class="pm-img-wrap">' + media
         + '<div class="pm-img-num">' + (i+1) + '</div>'
-        + '<button class="pm-img-del" onclick="genDeletePhoto(\'' + url.replace(/'/g,"\\'") + '\')">✕</button>'
+        + '<button class="pm-img-del" onclick="genDeletePhoto(\'' + url.replace(/'/g,"\\'") + '\')">×</button>'
         + '</div>';
     }).join('');
   }
@@ -3848,15 +3848,15 @@ body {
         <div class="ob-sub">La IA que genera todo el contenido de tus listings en segundos — en español, para agentes latinos en USA.</div>
         <div class="ob-features">
           <div class="ob-feat">
-            <div class="ob-feat-icon p">📝</div>
+            <div class="ob-feat-icon p"></div>
             <div><div class="ob-feat-name">Descripción MLS profesional</div><div class="ob-feat-desc">Lista tu propiedad en segundos con texto optimizado</div></div>
           </div>
           <div class="ob-feat">
-            <div class="ob-feat-icon t">📱</div>
+            <div class="ob-feat-icon t"></div>
             <div><div class="ob-feat-name">3 Posts para redes sociales</div><div class="ob-feat-desc">Instagram, Facebook y LinkedIn listos para publicar</div></div>
           </div>
           <div class="ob-feat">
-            <div class="ob-feat-icon a">🎬</div>
+            <div class="ob-feat-icon a"></div>
             <div><div class="ob-feat-name">Email + Script de video</div><div class="ob-feat-desc">Campañas y guiones para tus videos de propiedad</div></div>
           </div>
         </div>
@@ -3868,7 +3868,7 @@ body {
 
       <!-- PASO 2 — Confirmar perfil -->
       <div class="ob-step" id="obStep2">
-        <div class="ob-emoji">✏️</div>
+        <div class="ob-emoji"></div>
         <div class="ob-title">Confirma tu perfil</div>
         <div class="ob-sub">Así te identificarás dentro de PropIA. Puedes cambiarlo después en Configuración.</div>
         <div class="ob-field">
@@ -3891,7 +3891,7 @@ body {
         <div class="ob-title">¡Genera tu primer listing!</div>
         <div class="ob-sub">Tienes <strong>5 listings gratis</strong> este mes. Solo necesitas la dirección y el precio — la IA hace el resto.</div>
         <div class="ob-step3-tip">
-          <div class="ob-step3-tip-icon">💡</div>
+          <div class="ob-step3-tip-icon"></div>
           <div class="ob-step3-tip-text">
             <strong>Tip:</strong> Entre más detalles ingreses (recámaras, baños, características especiales), mejor será el contenido que genere la IA.
           </div>
@@ -3910,8 +3910,8 @@ body {
 <div class="lead-drawer-overlay" id="newLeadOverlay">
   <div class="lead-drawer">
     <div class="ld-header">
-      <div class="ld-title">➕ Nuevo Lead</div>
-      <button class="ld-close" onclick="closeNewLead()">✕</button>
+      <div class="ld-title">Nuevo Lead</div>
+      <button class="ld-close" onclick="closeNewLead()">×</button>
     </div>
     <div class="ld-alert" id="ldAlert"></div>
     <div class="ld-row">
@@ -3935,7 +3935,7 @@ body {
     </div>
     <div class="ld-field"><label>Notas / Mensaje del lead</label><textarea id="ldMessage" placeholder="ITIN loan, busca cerca de escuelas, urgencia media..."></textarea></div>
     <button class="btn-ld-submit" id="ldSubmitBtn" onclick="submitNewLead()">
-      <span class="lbl">🤖 Guardar y calificar con IA</span>
+      <span class="lbl">Guardar y calificar con IA</span>
       <span class="spin-wrap"><span class="spinner"></span>Analizando con IA...</span>
     </button>
   </div>
@@ -3949,7 +3949,7 @@ body {
         <div class="ld-title" id="ldetName">—</div>
         <div style="font-size:13px;color:var(--muted);margin-top:3px" id="ldetContact">—</div>
       </div>
-      <button class="ld-close" onclick="closeLeadDetail()">✕</button>
+      <button class="ld-close" onclick="closeLeadDetail()">×</button>
     </div>
 
     <!-- Score bar -->
@@ -3966,10 +3966,10 @@ body {
         <div style="font-size:12px;font-weight:600;color:var(--muted)">Mover a:</div>
         <select class="status-select" id="ldetStatusSelect" onchange="updateLeadStatus()">
           <option value="nuevo">🆕 Nuevo</option>
-          <option value="contactado">📞 Contactado</option>
+          <option value="contactado">Contactado</option>
           <option value="calificado">✅ Calificado</option>
-          <option value="negociando">🤝 Negociando</option>
-          <option value="cerrado">🏆 Cerrado</option>
+          <option value="negociando">Negociando</option>
+          <option value="cerrado">Cerrado</option>
         </select>
       </div>
     </div>
@@ -4004,15 +4004,15 @@ body {
 <div class="photos-ov" id="photosOv">
   <div class="photos-modal">
     <div class="pm-header">
-      <div class="pm-title">📸 Fotos de la propiedad</div>
-      <button class="pm-close" onclick="closePhotos()">✕</button>
+      <div class="pm-title">Fotos de la propiedad</div>
+      <button class="pm-close" onclick="closePhotos()">×</button>
     </div>
     <div class="pm-alert" id="pmAlert"></div>
 
     <!-- Drop zone -->
     <div class="pm-dropzone" id="pmDrop">
       <input type="file" id="pmFileInput" accept="image/*,video/*" multiple onchange="handleFiles(this.files)"/>
-      <div class="pm-dz-icon">📷</div>
+      <div class="pm-dz-icon"></div>
       <div class="pm-dz-title">Arrastra fotos aquí o haz clic para seleccionar</div>
       <div class="pm-dz-sub">JPG, PNG, WebP, MP4 · Máx. 8MB por archivo · Hasta 10 archivos</div>
     </div>
@@ -4032,13 +4032,13 @@ body {
 
 <!-- ═══ PWA INSTALL BANNER ═══ -->
 <div class="pwa-banner" id="pwaBanner">
-  <div class="pwa-icon">🏠</div>
+  <div class="pwa-icon"></div>
   <div class="pwa-text">
     <div class="pwa-title">Instalar PropIA</div>
     <div class="pwa-sub">Accede más rápido desde tu pantalla de inicio</div>
   </div>
   <button class="pwa-btn" id="pwaInstallBtn">Instalar</button>
-  <button class="pwa-dismiss" onclick="dismissPWA()" title="Cerrar">✕</button>
+  <button class="pwa-dismiss" onclick="dismissPWA()" title="Cerrar">×</button>
 </div>
 
 <script>
