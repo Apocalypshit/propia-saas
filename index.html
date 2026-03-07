@@ -62,9 +62,108 @@ nav,.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;transit
 .nav-link:hover{color:var(--text);background:#f4f3ff}
 .nav-cta{font-size:14px;font-weight:700;color:white;background:var(--purple);padding:8px 18px;border-radius:9px;border:none;transition:background .15s}
 .nav-cta:hover{background:var(--purple2)}
-.hamburger{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:6px;line-height:1}
-.mobile-menu{display:none;flex-direction:column;gap:4px;padding:16px 20px 20px;background:white;border-top:1px solid rgba(0,0,0,.08);position:absolute;top:64px;left:0;right:0;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,.1)}
-.mobile-menu.open{display:flex}
+
+/* ── HAMBURGER DROPDOWN (justinmind best practices) ─── */
+/* Compact dropdown — never full screen                  */
+/* Slide-down + fade, items stagger in, X feedback       */
+.mobile-menu{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  padding:8px 0 12px;
+  background:white;
+  border-top:2px solid var(--purple);
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  z-index:9999;
+  box-shadow:0 12px 32px rgba(124,58,237,.13),0 2px 8px rgba(0,0,0,.07);
+  border-radius:0 0 16px 16px;
+  /* Hidden state */
+  opacity:0;
+  transform:translateY(-10px);
+  pointer-events:none;
+  transition:opacity .22s cubic-bezier(.22,1,.36,1),
+             transform .25s cubic-bezier(.22,1,.36,1);
+}
+.mobile-menu.open{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+/* Stagger each link */
+.mobile-menu a,.mobile-menu .mobile-menu-btns{
+  opacity:0;
+  transform:translateX(-8px);
+  transition:opacity .18s ease, transform .18s ease,
+             background .15s, color .15s;
+}
+.mobile-menu.open a:nth-child(1){opacity:1;transform:none;transition-delay:.05s}
+.mobile-menu.open a:nth-child(2){opacity:1;transform:none;transition-delay:.09s}
+.mobile-menu.open a:nth-child(3){opacity:1;transform:none;transition-delay:.13s}
+.mobile-menu.open a:nth-child(4){opacity:1;transform:none;transition-delay:.17s}
+.mobile-menu.open a:nth-child(5){opacity:1;transform:none;transition-delay:.21s}
+.mobile-menu.open .mobile-menu-btns{opacity:1;transform:none;transition-delay:.25s}
+/* Link styles */
+.mobile-menu a{
+  display:block;
+  padding:13px 22px;
+  font-size:15px;
+  font-weight:600;
+  color:var(--text2);
+  text-decoration:none;
+  border-radius:8px;
+  margin:0 8px;
+}
+.mobile-menu a:hover{
+  background:var(--p-light);
+  color:var(--purple);
+}
+/* Hamburger icon — smooth ☰ → ✕ morph */
+.hamburger{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:6px;
+  width:36px;
+  height:36px;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  border-radius:8px;
+  transition:background .15s;
+}
+.hamburger:hover{background:var(--p-light)}
+.hamburger .hb-line{
+  display:block;
+  width:20px;
+  height:2px;
+  background:var(--text);
+  border-radius:2px;
+  transition:transform .25s cubic-bezier(.22,1,.36,1),
+             opacity .2s ease,
+             width .2s ease;
+  transform-origin:center;
+}
+.hamburger.open .hb-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open .hb-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open .hb-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* Overlay to close on outside tap */
+.menu-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9998;
+  background:rgba(0,0,0,.15);
+  backdrop-filter:blur(1px);
+  -webkit-backdrop-filter:blur(1px);
+  opacity:0;
+  transition:opacity .22s ease;
+}
+.menu-overlay.open{display:block;opacity:1}
 .m-nav-link{font-size:15px;font-weight:500;color:var(--text2);padding:10px 12px;border-radius:9px;border:none;background:none;text-align:left;cursor:pointer}
 .m-nav-link:hover{background:#f5f5f8}
 .m-cta{font-size:15px;font-weight:700;color:white;background:var(--purple);padding:12px;border-radius:10px;border:none;margin-top:8px;text-align:center;cursor:pointer}
@@ -611,7 +710,11 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
       <button class="btn-ghost" onclick="window.location.href='/app'">Iniciar Sesión</button>
       <button class="btn-nav" onclick="window.location.href='/app?tab=register'">Empezar Gratis →</button>
     </div>
-    <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+      <span class="hb-line"></span>
+      <span class="hb-line"></span>
+      <span class="hb-line"></span>
+    </button>
   </div>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#features" onclick="toggleMenu()">Funciones</a>
@@ -625,6 +728,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
   </div>
 </div>
 </nav>
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1099,13 +1203,13 @@ window.addEventListener('scroll', function() {
 
 // Mobile menu toggle
 function toggleMenu() {
-  var menu = document.getElementById('mobileMenu');
-  var btn  = document.getElementById('hamburger');
+  var menu    = document.getElementById('mobileMenu');
+  var btn     = document.getElementById('hamburger');
+  var overlay = document.getElementById('menuOverlay');
   if (!menu) return;
-  menu.classList.toggle('open');
-  var isOpen = menu.classList.contains('open');
-  btn.textContent = isOpen ? '✕' : '☰';
-  menu.style.display = isOpen ? 'flex' : 'none';
+  var isOpen = menu.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  if (overlay) overlay.classList.toggle('open', isOpen);
 }
 
 function toggleFaq(btn) {
