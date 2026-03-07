@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Política de Cookies – PropIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--purple:#7c3aed;--text:#0f0a1e;--text2:#4b5563;--bg:#f3f0ff;--border:rgba(124,58,237,.12);--font:'Plus Jakarta Sans',sans-serif}
+body{font-family:var(--font);background:white;color:var(--text);line-height:1.7}
+.legal-nav{position:sticky;top:0;background:white;border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.legal-nav-logo{font-size:18px;font-weight:800;color:var(--text);text-decoration:none}
+.legal-nav-logo span{color:var(--purple)}
+.legal-nav-back{font-size:14px;font-weight:600;color:var(--purple);text-decoration:none}
+.legal-hero{background:var(--bg);padding:64px 24px 48px;text-align:center;border-bottom:1px solid var(--border)}
+.legal-hero-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--purple);margin-bottom:12px}
+.legal-hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1px}
+.legal-hero-meta{margin-top:16px;font-size:14px;color:var(--text2)}
+.legal-body{max-width:760px;margin:0 auto;padding:56px 24px 96px}
+.legal-body h2{font-size:20px;font-weight:800;color:var(--text);margin:40px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.legal-body h2:first-child{margin-top:0}
+.legal-body p{font-size:15px;color:var(--text2);margin-bottom:14px}
+.legal-body ul{padding-left:20px;margin-bottom:14px}
+.legal-body ul li{font-size:15px;color:var(--text2);margin-bottom:8px}
+.legal-body a{color:var(--purple);text-decoration:none;font-weight:600}
+.legal-highlight{background:var(--bg);border-left:3px solid var(--purple);padding:16px 20px;border-radius:0 10px 10px 0;margin:24px 0}
+.legal-highlight p{margin:0;font-size:14px;font-weight:600;color:var(--text)}
+.cookie-table{width:100%;border-collapse:collapse;margin:20px 0 28px;font-size:14px}
+.cookie-table th{background:var(--bg);padding:10px 14px;text-align:left;font-weight:700;color:var(--text);border:1px solid var(--border)}
+.cookie-table td{padding:10px 14px;border:1px solid var(--border);color:var(--text2);vertical-align:top}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase}
+.badge-essential{background:rgba(16,185,129,.12);color:#059669}
+.badge-functional{background:rgba(124,58,237,.12);color:var(--purple)}
+.badge-analytics{background:rgba(245,158,11,.12);color:#d97706}
+.legal-footer{background:var(--text);padding:32px 24px;text-align:center}
+.legal-footer p{font-size:13px;color:rgba(255,255,255,.45)}
+.legal-footer a{color:rgba(255,255,255,.65);text-decoration:none;font-weight:600;margin:0 8px}
+</style>
+</head>
+<body>
+
+<nav class="legal-nav">
+  <a href="/" class="legal-nav-logo">Prop<span>IA</span></a>
+  <a href="/" class="legal-nav-back">← Volver al inicio</a>
+</nav>
+
+<div class="legal-hero">
+  <div class="legal-hero-tag">Legal</div>
+  <h1>Política de Cookies</h1>
+  <p class="legal-hero-meta">Última actualización: 1 de enero de 2025 · Aplica a propia-saas.vercel.app</p>
+</div>
+
+<div class="legal-body">
+
+  <div class="legal-highlight">
+    <p>Esta política explica qué cookies usamos, por qué y cómo puedes controlarlas. Nos tomamos tu privacidad en serio — usamos únicamente las cookies necesarias para que el servicio funcione correctamente.</p>
+  </div>
+
+  <h2>1. ¿Qué son las cookies?</h2>
+  <p>Las cookies son pequeños archivos de texto que se almacenan en tu navegador cuando visitas un sitio web. Nos permiten recordar tus preferencias, mantener tu sesión activa y entender cómo usas la plataforma para mejorarla.</p>
+  <p>También existen tecnologías similares como el <strong>almacenamiento local</strong> (localStorage) y el <strong>almacenamiento de sesión</strong> (sessionStorage), que usamos de manera análoga.</p>
+
+  <h2>2. Tipos de cookies que usamos</h2>
+  <table class="cookie-table">
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo</th>
+      <th>Duración</th>
+      <th>Propósito</th>
+    </tr>
+    <tr>
+      <td><code>sb-access-token</code></td>
+      <td><span class="badge badge-essential">Esencial</span></td>
+      <td>1 hora</td>
+      <td>Token de autenticación de Supabase. Mantiene tu sesión activa.</td>
+    </tr>
+    <tr>
+      <td><code>sb-refresh-token</code></td>
+      <td><span class="badge badge-essential">Esencial</span></td>
+      <td>7 días</td>
+      <td>Renueva tu sesión automáticamente sin pedirte iniciar sesión de nuevo.</td>
+    </tr>
+    <tr>
+      <td><code>propia_plan</code></td>
+      <td><span class="badge badge-functional">Funcional</span></td>
+      <td>30 días</td>
+      <td>Recuerda tu plan de suscripción activo para mostrar las funciones correctas.</td>
+    </tr>
+    <tr>
+      <td><code>propia_onboarding</code></td>
+      <td><span class="badge badge-functional">Funcional</span></td>
+      <td>Permanente</td>
+      <td>Registra si ya completaste el proceso de bienvenida para no mostrártelo de nuevo.</td>
+    </tr>
+    <tr>
+      <td><code>propia_lang</code></td>
+      <td><span class="badge badge-functional">Funcional</span></td>
+      <td>1 año</td>
+      <td>Guarda tu preferencia de idioma en la plataforma.</td>
+    </tr>
+    <tr>
+      <td><code>_vercel_*</code></td>
+      <td><span class="badge badge-essential">Esencial</span></td>
+      <td>Sesión</td>
+      <td>Cookies técnicas de infraestructura de Vercel para enrutamiento y despliegue.</td>
+    </tr>
+    <tr>
+      <td><code>_stripe_*</code></td>
+      <td><span class="badge badge-essential">Esencial</span></td>
+      <td>Sesión</td>
+      <td>Cookies de Stripe para procesar pagos de forma segura y prevenir fraudes.</td>
+    </tr>
+    <tr>
+      <td><code>propia_analytics</code></td>
+      <td><span class="badge badge-analytics">Analítica</span></td>
+      <td>90 días</td>
+      <td>Registra páginas visitadas y funciones usadas para mejorar la experiencia (datos anónimos, sin identificación personal).</td>
+    </tr>
+  </table>
+
+  <h2>3. Cookies de terceros</h2>
+  <p>Algunos de nuestros proveedores también pueden establecer cookies cuando usas PropIA:</p>
+  <ul>
+    <li><strong>Supabase:</strong> gestión de autenticación y base de datos en tiempo real.</li>
+    <li><strong>Stripe:</strong> procesamiento seguro de pagos. Consulta la <a href="https://stripe.com/privacy" target="_blank">política de privacidad de Stripe</a>.</li>
+    <li><strong>Vercel:</strong> infraestructura de alojamiento. Consulta la <a href="https://vercel.com/legal/privacy-policy" target="_blank">política de privacidad de Vercel</a>.</li>
+  </ul>
+  <p>No usamos cookies de rastreo publicitario ni compartimos datos de cookies con redes de publicidad.</p>
+
+  <h2>4. Cookies esenciales vs. opcionales</h2>
+  <p><strong>Cookies esenciales</strong> son necesarias para que PropIA funcione. Sin ellas, no podrás iniciar sesión ni usar las funciones principales. No puedes desactivarlas.</p>
+  <p><strong>Cookies funcionales y analíticas</strong> mejoran tu experiencia pero no son estrictamente necesarias. Puedes desactivarlas desde la configuración de tu navegador sin que esto afecte el funcionamiento principal.</p>
+
+  <h2>5. Cómo controlar las cookies</h2>
+  <p>Puedes gestionar las cookies directamente desde tu navegador:</p>
+  <ul>
+    <li><strong>Chrome:</strong> Configuración → Privacidad y seguridad → Cookies y otros datos de sitios</li>
+    <li><strong>Firefox:</strong> Ajustes → Privacidad y seguridad → Cookies y datos del sitio</li>
+    <li><strong>Safari:</strong> Preferencias → Privacidad → Gestionar datos de sitios web</li>
+    <li><strong>Edge:</strong> Configuración → Privacidad, búsqueda y servicios → Cookies</li>
+  </ul>
+  <p>Ten en cuenta que bloquear todas las cookies puede afectar tu capacidad de iniciar sesión y usar PropIA correctamente.</p>
+
+  <h2>6. Do Not Track (DNT)</h2>
+  <p>PropIA respeta la señal "Do Not Track" de tu navegador. Si tienes activada esta opción, no recopilaremos datos analíticos sobre tu actividad en la plataforma.</p>
+
+  <h2>7. Cambios a esta política</h2>
+  <p>Podemos actualizar esta Política de Cookies cuando añadamos nuevas funciones o cambiemos proveedores. Te notificaremos por correo electrónico y con un aviso visible en la plataforma. La fecha de "última actualización" al inicio de esta página refleja siempre la versión vigente.</p>
+
+  <h2>8. Contacto</h2>
+  <p>Para preguntas sobre cookies o privacidad:</p>
+  <ul>
+    <li><strong>Email:</strong> <a href="mailto:privacidad@propia.ai">privacidad@propia.ai</a></li>
+    <li><strong>Horario:</strong> Lunes a viernes, 9am–6pm EST</li>
+  </ul>
+
+</div>
+
+<div class="legal-footer">
+  <p>© 2025 PropIA. Todos los derechos reservados. &nbsp;·&nbsp;
+    <a href="/privacidad.html">Privacidad</a>
+    <a href="/terminos.html">Términos</a>
+    <a href="/cookies.html">Cookies</a>
+  </p>
+</div>
+
+</body>
+</html>

@@ -62,110 +62,9 @@ nav,.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;transit
 .nav-link:hover{color:var(--text);background:#f4f3ff}
 .nav-cta{font-size:14px;font-weight:700;color:white;background:var(--purple);padding:8px 18px;border-radius:9px;border:none;transition:background .15s}
 .nav-cta:hover{background:var(--purple2)}
-
-/* ── HAMBURGER DROPDOWN (justinmind best practices) ─── */
-/* Compact dropdown — never full screen                  */
-/* Slide-down + fade, items stagger in, X feedback       */
-.mobile-menu{
-  display:none;
-  flex-direction:column;
-  gap:0;
-  padding:8px 0 12px;
-  background:white;
-  border-top:2px solid var(--purple);
-  position:absolute;
-  top:100%;
-  left:0;
-  right:0;
-  z-index:9999;
-  max-height:80vh;
-  overflow-y:auto;
-  box-shadow:0 12px 32px rgba(124,58,237,.15),0 2px 8px rgba(0,0,0,.08);
-  border-radius:0 0 16px 16px;
-}
-.mobile-menu.open{
-  display:flex;
-  animation:menuSlideDown .25s cubic-bezier(.22,1,.36,1) forwards;
-}
-@keyframes menuSlideDown{
-  from{opacity:0;transform:translateY(-12px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.mobile-menu.open{
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-}
-/* Stagger each link */
-.mobile-menu a,.mobile-menu .mobile-menu-btns{
-  opacity:0;
-  transform:translateX(-8px);
-  transition:opacity .18s ease, transform .18s ease,
-             background .15s, color .15s;
-}
-.mobile-menu.open a:nth-child(1){opacity:1;transform:none;transition-delay:.05s}
-.mobile-menu.open a:nth-child(2){opacity:1;transform:none;transition-delay:.09s}
-.mobile-menu.open a:nth-child(3){opacity:1;transform:none;transition-delay:.13s}
-.mobile-menu.open a:nth-child(4){opacity:1;transform:none;transition-delay:.17s}
-.mobile-menu.open a:nth-child(5){opacity:1;transform:none;transition-delay:.21s}
-.mobile-menu.open .mobile-menu-btns{opacity:1;transform:none;transition-delay:.25s}
-/* Link styles */
-.mobile-menu a{
-  display:block;
-  padding:13px 22px;
-  font-size:15px;
-  font-weight:600;
-  color:var(--text2);
-  text-decoration:none;
-  border-radius:8px;
-  margin:0 8px;
-}
-.mobile-menu a:hover{
-  background:var(--p-light);
-  color:var(--purple);
-}
-/* Hamburger icon — smooth ☰ → ✕ morph */
-.hamburger{
-  display:none;
-  background:none;
-  border:none;
-  cursor:pointer;
-  padding:6px;
-  width:36px;
-  height:36px;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:5px;
-  border-radius:8px;
-  transition:background .15s;
-}
-.hamburger:hover{background:var(--p-light)}
-.hamburger .hb-line{
-  display:block;
-  width:20px;
-  height:2px;
-  background:var(--text);
-  border-radius:2px;
-  transition:transform .25s cubic-bezier(.22,1,.36,1),
-             opacity .2s ease,
-             width .2s ease;
-  transform-origin:center;
-}
-.hamburger.open .hb-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.hamburger.open .hb-line:nth-child(2){opacity:0;transform:scaleX(0)}
-.hamburger.open .hb-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-/* Overlay to close on outside tap */
-.menu-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:9998;
-  background:rgba(0,0,0,.18);
-  opacity:0;
-  transition:opacity .22s ease;
-}
-.menu-overlay.open{display:block;opacity:1}
+.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:0}
+.mobile-menu{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;width:75vw;max-width:300px;background:white;z-index:9999;padding:24px 18px 36px;gap:6px;overflow-y:auto;box-shadow:-6px 0 32px rgba(0,0,0,.13);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.mobile-menu.open{transform:translateX(0)}
 .m-nav-link{font-size:15px;font-weight:500;color:var(--text2);padding:10px 12px;border-radius:9px;border:none;background:none;text-align:left;cursor:pointer}
 .m-nav-link:hover{background:#f5f5f8}
 .m-cta{font-size:15px;font-weight:700;color:white;background:var(--purple);padding:12px;border-radius:10px;border:none;margin-top:8px;text-align:center;cursor:pointer}
@@ -187,7 +86,7 @@ h1.hero-title{font-size:clamp(36px,4.5vw,58px);font-weight:800;line-height:1.1;l
 .btn-secondary:hover{border-color:var(--p-border)}
 .hero-proof{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .proof-avs{display:flex}
-.proof-av{width:30px;height:30px;border-radius:50%;border:2.5px solid white;margin-left:-8px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white}
+.proof-av{width:34px;height:34px;border-radius:50%;border:2.5px solid white;margin-left:-10px;object-fit:cover;display:block;flex-shrink:0}
 .proof-av:first-child{margin-left:0}
 .proof-stars{color:#f59e0b;font-size:13px;letter-spacing:1px}
 .proof-text{font-size:13px;color:var(--muted);font-weight:500}
@@ -381,7 +280,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
   .footer-top{grid-template-columns:1fr 1fr}
   .faq-grid{grid-template-columns:1fr}
   .nav-links,.nav-cta{display:none}
-  .hamburger{display:block}
+  .hamburger{display:flex}
 }
 @media(max-width:600px){
   .pricing-grid{grid-template-columns:1fr}
@@ -402,8 +301,8 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 .btn-nav{font-family:var(--font);font-size:14px;font-weight:700;color:white;background:var(--purple);border:none;padding:8px 18px;border-radius:9px;cursor:pointer;transition:background .15s}
 .btn-nav:hover{background:var(--purple2)}
 .logos-strip{background:var(--bg);;padding:20px 24px}
-.logos-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
-.logos-label{font-size:12px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px}
+.logos-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.logos-label{font-size:12px;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px}
 .logo-img{height:22px;opacity:.35;filter:grayscale(1)}
 .proof-bar-inner .proof-item{font-size:13px;font-weight:600;color:var(--text2)}
 
@@ -458,7 +357,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 
 /* ── LOGOS STRIP ──────────────────────────────────── */
 .logos-strip{background:white;border-bottom:1px solid rgba(0,0,0,0.06);padding:18px 24px}
-.logos-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.logos-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
 .logos-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted2);margin-right:4px}
 .logo-chip{font-size:13px;font-weight:600;color:var(--text2);background:var(--bg2,#ede9fb);border:1px solid var(--p-border);border-radius:20px;padding:5px 14px;display:flex;align-items:center;gap:6px}
 
@@ -477,7 +376,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 .btn-mo-f{background:var(--purple);color:white}
 
 /* ── FOOTER LINKS ─────────────────────────────────── */
-.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links{display:flex;flex-direction:column;gap:10px}
 .footer-links a,.footer-links button{font-size:13px;color:rgba(255,255,255,.35);background:none;border:none;cursor:pointer;font-family:var(--font);transition:color .15s;text-decoration:none}
 .footer-links a:hover,.footer-links button:hover{color:rgba(255,255,255,.7)}
 
@@ -491,7 +390,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 }
 @media(max-width:600px){
   .stats-band-inner{grid-template-columns:1fr 1fr}
-  .logos-inner{gap:8px}
+  .logos-inner{gap:48px}
 }
 
 /* ── DEMO MOCKUP ──────────────────────────────────── */
@@ -577,7 +476,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 /* ── RESPONSIVE FIXES ──────────────────────────────── */
 @media(max-width:768px){
   .nav-links,.nav-btns{display:none}
-  .hamburger{display:block !important}
+  .hamburger{display:flex !important}
   .hero-inner{grid-template-columns:1fr !important;gap:32px}
   .hero-mockup{display:none !important}
   h1.hero-title{font-size:36px !important}
@@ -599,7 +498,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
   .btn-cta-white,.btn-cta-ghost{text-align:center}
   .dmock-row2{grid-template-columns:repeat(3,1fr)}
   .stats-band-inner{grid-template-columns:1fr 1fr !important}
-  .logos-inner{gap:6px}
+  .logos-inner{gap:48px}
 }
 
 /* ── EXPRESSIVE ANIMATIONS ─────────────────────────── */
@@ -690,6 +589,28 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 .btn-primary:hover::after { background:rgba(255,255,255,.12); }
 .btn-primary:active { transform:scale(.97); }
 .btn-cta-white:active { transform:scale(.97); }
+
+.nav-overlay{display:none;position:fixed;inset:0;z-index:9998;background:rgba(15,10,30,.45);animation:fadeOv .2s ease}
+.nav-overlay.open{display:block}
+@keyframes fadeOv{from{opacity:0}to{opacity:1}}
+.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:0}
+.hb-line{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .28s cubic-bezier(.4,0,.2,1),opacity .2s;transform-origin:center}
+.hamburger.open .hb-line:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open .hb-line:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open .hb-line:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.menu-close-btn{align-self:flex-end;width:34px;height:34px;border-radius:9px;background:rgba(124,58,237,.09);border:none;cursor:pointer;color:var(--purple);font-size:17px;line-height:1;margin-bottom:6px;flex-shrink:0}
+.mobile-menu a{display:block;padding:13px 14px;font-size:15px;font-weight:600;color:var(--text2);text-decoration:none;border-radius:10px;transition:background .15s,color .15s;border-bottom:1px solid rgba(0,0,0,.12)}
+.mobile-menu a:last-of-type{border-bottom:none}
+.mobile-menu a:hover{background:rgba(124,58,237,.07);color:var(--purple)}
+.menu-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,.25) 30%,rgba(124,58,237,.25) 70%,transparent);margin:10px 0;flex-shrink:0}
+.btn-mo{font-family:var(--font);font-size:14px;font-weight:700;padding:13px 14px;border-radius:50px;cursor:pointer;width:100%;text-align:center;transition:all .15s;border:none;flex-shrink:0}
+.btn-mo-o{background:rgba(124,58,237,.08);color:var(--purple);border:1.5px solid rgba(124,58,237,.25)}
+.btn-mo-o:hover{background:rgba(124,58,237,.14)}
+.btn-mo-f{background:var(--purple);color:white;box-shadow:0 4px 14px rgba(124,58,237,.35)}
+.btn-mo-f:hover{background:var(--purple2)}
+
+.logo-img{height:24px;width:auto;object-fit:contain;opacity:.55;filter:grayscale(1);transition:opacity .2s,filter .2s}
+.logo-img:hover{opacity:.85;filter:grayscale(0)}
 </style>
 </head>
 <body>
@@ -712,13 +633,11 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
       <button class="btn-ghost" onclick="window.location.href='/app'">Iniciar Sesión</button>
       <button class="btn-nav" onclick="window.location.href='/app?tab=register'">Empezar Gratis →</button>
     </div>
-    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
-      <span class="hb-line"></span>
-      <span class="hb-line"></span>
-      <span class="hb-line"></span>
-    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú"><span class="hb-line"></span><span class="hb-line"></span><span class="hb-line"></span></button>
   </div>
+<div class="nav-overlay" id="navOverlay" onclick="toggleMenu()"></div>
 <div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close-btn" onclick="toggleMenu()">✕</button>
   <a href="#features" onclick="toggleMenu()">Funciones</a>
   <a href="#how" onclick="toggleMenu()">Cómo funciona</a>
   <a href="#testimonials" onclick="toggleMenu()">Testimonios</a>
@@ -730,7 +649,6 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
   </div>
 </div>
 </nav>
-<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -747,7 +665,11 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
       </div>
       <div class="hero-proof">
         <div class="proof-avs">
-          <div class="proof-av"></div><div class="proof-av"></div><div class="proof-av"></div><div class="proof-av"></div><div class="proof-av"></div>
+          <img class="proof-av" src="https://i.pravatar.cc/60?img=47" alt="agente">
+<img class="proof-av" src="https://i.pravatar.cc/60?img=12" alt="agente">
+<img class="proof-av" src="https://i.pravatar.cc/60?img=23" alt="agente">
+<img class="proof-av" src="https://i.pravatar.cc/60?img=7" alt="agente">
+<img class="proof-av" src="https://i.pravatar.cc/60?img=31" alt="agente">
         </div>
         <div>
           <div class="proof-stars">★★★★★</div>
@@ -818,13 +740,13 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 <!-- LOGOS -->
 <div class="logos-strip">
   <div class="logos-inner">
-    <span class="logos-label">Usado por agentes en:</span>
-    <div class="logo-chip">Keller Williams</div>
-    <div class="logo-chip">RE/MAX</div>
-    <div class="logo-chip">Century 21</div>
-    <div class="logo-chip">Coldwell Banker</div>
-    <div class="logo-chip">eXp Realty</div>
-    <div class="logo-chip">Compass</div>
+    <span class="logos-label">USADO POR AGENTES EN:</span>
+    <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Keller_Williams_Realty_Logo.svg/240px-Keller_Williams_Realty_Logo.svg.png" alt="Keller Williams">
+    <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/3/thirty/RE-MAX_logo.svg/240px-RE-MAX_logo.svg.png" alt="RE/MAX">
+    <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Century_21_Real_Estate_logo.svg/240px-Century_21_Real_Estate_logo.svg.png" alt="Century 21">
+    <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Coldwell_Banker_Logo.svg/240px-Coldwell_Banker_Logo.svg.png" alt="Coldwell Banker">
+    <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/EXp_Realty_Logo.svg/240px-EXp_Realty_Logo.svg.png" alt="eXp Realty">
+    <img class="logo-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Compass_logo_2020.svg/240px-Compass_logo_2020.svg.png" alt="Compass">
   </div>
 </div>
 
@@ -1192,7 +1114,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
     </div>
     <div class="footer-bottom">
       <div class="footer-copy">© 2025 PropIA. Todos los derechos reservados. Hecho con para la comunidad latina en USA.</div>
-      <div class="footer-legal"><a href="#">Privacidad</a><a href="#">Términos</a><a href="#">Cookies</a></div>
+      <div class="footer-legal"><a href="/privacidad.html">Privacidad</a><a href="/terminos.html">Términos</a><a href="/cookies.html">Cookies</a></div>
     </div>
   </div>
 </footer>
@@ -1205,13 +1127,14 @@ window.addEventListener('scroll', function() {
 
 // Mobile menu toggle
 function toggleMenu() {
-  var menu    = document.getElementById('mobileMenu');
-  var btn     = document.getElementById('hamburger');
-  var overlay = document.getElementById('menuOverlay');
+  var menu = document.getElementById('mobileMenu');
+  var btn  = document.getElementById('hamburger');
+  var overlay = document.getElementById('navOverlay');
   if (!menu) return;
   var isOpen = menu.classList.toggle('open');
   btn.classList.toggle('open', isOpen);
   if (overlay) overlay.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 
 function toggleFaq(btn) {
