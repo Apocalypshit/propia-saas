@@ -49,7 +49,7 @@ button{font-family:var(--font);cursor:pointer}
 .container{max-width:1100px;margin:0 auto;padding:0 24px}
 
 /* ═══ NAV ════════════════════════════════════════════ */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;transition:background .3s,box-shadow .3s}
+nav,.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;transition:background .3s,box-shadow .3s}
 .nav.scrolled{background:rgba(250,250,250,.95);backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--border)}
 .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;height:64px;gap:32px}
 .logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:auto}
@@ -63,7 +63,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 24px;transition:b
 .nav-cta{font-size:14px;font-weight:700;color:white;background:var(--purple);padding:8px 18px;border-radius:9px;border:none;transition:background .15s}
 .nav-cta:hover{background:var(--purple2)}
 .hamburger{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:6px;line-height:1}
-.mobile-menu{display:none;flex-direction:column;gap:4px;padding:12px 16px 16px;background:white;border-top:1px solid var(--border)}
+.mobile-menu{display:none;flex-direction:column;gap:4px;padding:12px 16px 16px;background:white;border-top:1px solid rgba(0,0,0,.07);position:relative;z-index:999}
 .mobile-menu.open{display:flex}
 .m-nav-link{font-size:15px;font-weight:500;color:var(--text2);padding:10px 12px;border-radius:9px;border:none;background:none;text-align:left;cursor:pointer}
 .m-nav-link:hover{background:#f5f5f8}
@@ -305,6 +305,201 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 .logos-label{font-size:12px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px}
 .logo-img{height:22px;opacity:.35;filter:grayscale(1)}
 .proof-bar-inner .proof-item{font-size:13px;font-weight:600;color:var(--text2)}
+
+/* ── NAV ──────────────────────────────────────────── */
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer;margin-right:auto}
+.nav-logo-mark{width:30px;height:30px;background:var(--purple);border-radius:8px}
+.nav-logo-name{font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.5px}
+.nav-logo-name span{color:var(--purple)}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);padding:7px 14px;border-radius:8px;transition:color .15s,background .15s;text-decoration:none;display:inline-block}
+.nav-links a:hover{color:var(--text);background:var(--p-light)}
+.nav-btns{display:flex;align-items:center;gap:8px}
+.btn-ghost{font-family:var(--font);font-size:14px;font-weight:600;color:var(--text);background:none;border:1.5px solid rgba(0,0,0,0.12);padding:8px 16px;border-radius:9px;cursor:pointer;transition:border-color .15s}
+.btn-ghost:hover{border-color:var(--p-border)}
+.btn-nav{font-family:var(--font);font-size:14px;font-weight:700;color:white;background:var(--purple);border:none;padding:8px 18px;border-radius:9px;cursor:pointer;transition:background .15s}
+.btn-nav:hover{background:var(--purple2)}
+
+/* ── HERO BLOBS ───────────────────────────────────── */
+.hero-blob1{position:absolute;width:650px;height:650px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.14) 0%,transparent 65%);top:-200px;right:-180px;pointer-events:none}
+.hero-blob2{position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(13,148,136,0.10) 0%,transparent 65%);bottom:-120px;left:-100px;pointer-events:none}
+
+/* ── HERO MOCKUP (right column) ───────────────────── */
+.hero-mockup{position:relative;flex:1;min-width:0}
+.mockup-window{background:white;border-radius:18px;border:1px solid rgba(0,0,0,0.08);box-shadow:0 8px 40px rgba(124,58,237,0.14),0 2px 10px rgba(0,0,0,0.06);overflow:hidden}
+.mockup-bar{display:flex;align-items:center;gap:0;padding:12px 16px;background:#f5f4ff;border-bottom:1px solid rgba(0,0,0,0.06)}
+.m-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.mockup-url{font-size:11px;color:var(--muted);margin-left:12px;background:white;border:1px solid rgba(0,0,0,0.08);border-radius:6px;padding:3px 10px;flex:1}
+.mockup-body{padding:18px 18px 16px}
+.m-date{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.m-greeting{font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.3px;margin-bottom:2px}
+.m-sub{font-size:12px;color:var(--teal);font-weight:600;margin-bottom:12px}
+.m-pills{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.m-pill{font-size:11px;font-weight:700;padding:5px 11px;border-radius:7px;cursor:pointer}
+.m-pill-p{background:var(--purple);color:white}
+.m-pill-o{background:var(--p-light);color:var(--purple);border:1px solid var(--p-border)}
+.m-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.m-stat{background:#f8f7ff;border-radius:10px;padding:10px 12px;border:1px solid var(--p-border)}
+.m-stat-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:3px}
+.m-stat-v{font-size:22px;font-weight:800;color:var(--purple);letter-spacing:-1px}
+.m-listing{display:flex;align-items:center;gap:10px;background:#f8f7ff;border-radius:10px;padding:11px 13px;border:1px solid var(--p-border)}
+.m-listing-ic{width:32px;height:32px;border-radius:8px;background:var(--p-light);flex-shrink:0}
+.m-listing-addr{font-size:12px;font-weight:700;color:var(--text)}
+.m-listing-meta{font-size:10px;color:var(--muted);margin-top:1px}
+.m-listing-pill{margin-left:auto;font-size:10px;font-weight:700;color:var(--green);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:20px;padding:3px 9px;white-space:nowrap}
+
+/* ── FLOAT BADGES ─────────────────────────────────── */
+.float-badge1,.float-badge2{position:absolute;background:white;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:10px 14px;box-shadow:0 4px 16px rgba(0,0,0,.08);display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;white-space:nowrap;z-index:2}
+.float-badge1{top:-16px;right:-20px}
+.float-badge2{bottom:20px;left:-20px}
+.fb-icon{width:28px;height:28px;border-radius:7px;background:#fffbeb;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.fb-main{font-size:12px;font-weight:800;color:var(--text)}
+.fb-sub{font-size:10px;color:var(--muted);margin-top:1px}
+
+/* ── LOGOS STRIP ──────────────────────────────────── */
+.logos-strip{background:white;border-bottom:1px solid rgba(0,0,0,0.06);padding:18px 24px}
+.logos-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.logos-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted2);margin-right:4px}
+.logo-chip{font-size:13px;font-weight:600;color:var(--text2);background:var(--bg2,#ede9fb);border:1px solid var(--p-border);border-radius:20px;padding:5px 14px;display:flex;align-items:center;gap:6px}
+
+/* ── STATS BAND ───────────────────────────────────── */
+.stats-band{background:var(--purple);padding:40px 24px}
+.stats-band-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stat-item{}
+.stat-num{font-size:36px;font-weight:800;color:white;letter-spacing:-1.5px;line-height:1}
+.accent{color:#a78bfa}
+.stat-desc{font-size:13px;color:rgba(255,255,255,.6);margin-top:6px;font-weight:500}
+
+/* ── MOBILE MENU BUTTONS ──────────────────────────── */
+.mobile-menu-btns{display:flex;flex-direction:column;gap:8px;padding:8px 0 4px}
+.btn-mo{font-family:var(--font);font-size:14px;font-weight:700;padding:11px 16px;border-radius:10px;cursor:pointer;border:none;text-align:center}
+.btn-mo-o{background:none;color:var(--text);border:1.5px solid rgba(0,0,0,.12)}
+.btn-mo-f{background:var(--purple);color:white}
+
+/* ── FOOTER LINKS ─────────────────────────────────── */
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a,.footer-links button{font-size:13px;color:rgba(255,255,255,.35);background:none;border:none;cursor:pointer;font-family:var(--font);transition:color .15s;text-decoration:none}
+.footer-links a:hover,.footer-links button:hover{color:rgba(255,255,255,.7)}
+
+/* ── HERO VISUAL (duplicate card — hide it) ───────── */
+.hero-visual{display:none}
+
+@media(max-width:900px){
+  .hero-mockup{display:none}
+  .stats-band-inner{grid-template-columns:repeat(2,1fr)}
+  .float-badge1,.float-badge2{display:none}
+}
+@media(max-width:600px){
+  .stats-band-inner{grid-template-columns:1fr 1fr}
+  .logos-inner{gap:8px}
+}
+
+/* ── DEMO MOCKUP ──────────────────────────────────── */
+.demo{padding:80px 24px;background:var(--bg)}
+.demo-steps{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px;flex-wrap:wrap}
+.demo-step{display:flex;align-items:center;gap:10px;cursor:pointer;opacity:.45;transition:opacity .2s}
+.demo-step.active{opacity:1}
+.demo-step-num{width:32px;height:32px;border-radius:50%;background:var(--purple);color:white;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.demo-step:not(.active) .demo-step-num{background:rgba(124,58,237,.15);color:var(--purple)}
+.demo-step-label{font-size:13px;font-weight:700;color:var(--text)}
+.demo-step-arrow{font-size:18px;color:var(--muted2);flex-shrink:0}
+.demo-mockup-wrap{max-width:800px;margin:0 auto}
+.demo-panel{}
+.dmock-window{background:white;border-radius:16px;border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 40px rgba(124,58,237,.12),0 2px 10px rgba(0,0,0,.05);overflow:hidden}
+.dmock-bar{display:flex;align-items:center;gap:0;padding:12px 16px;background:#f5f4ff;border-bottom:1px solid rgba(0,0,0,.06)}
+.dmock-title{font-size:12px;font-weight:600;color:var(--muted);margin-left:10px;flex:1}
+.dmock-ai-badge{font-size:10px;font-weight:700;background:var(--purple);color:white;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+.dmock-ai-badge.green{background:var(--green)}
+.dmock-body{padding:22px}
+.dmock-field{margin-bottom:13px}
+.dmock-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted2);margin-bottom:4px}
+.dmock-val{font-size:14px;color:var(--text2);background:#f8f7ff;border:1px solid var(--p-border);border-radius:8px;padding:8px 12px}
+.accent-val{color:var(--purple);font-weight:700}
+.dmock-row2{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:13px}
+.dmock-row2 .dmock-field{margin-bottom:0}
+.dmock-tones{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.dmock-tone-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.dmock-tone{font-size:12px;font-weight:600;color:var(--muted);background:#f4f4f6;border:1px solid var(--border);border-radius:20px;padding:4px 12px;cursor:pointer}
+.dmock-tone.active{background:var(--purple);color:white;border-color:var(--purple)}
+.dmock-btn{width:100%;background:var(--purple);color:white;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);transition:background .15s}
+.dmock-btn:hover{background:var(--purple2)}
+.demo-caption{text-align:center;font-size:13px;color:var(--muted);margin-top:16px;font-style:italic}
+/* Generating step */
+.dmock-generating{background:#f8f7ff;border-radius:12px;padding:20px;border:1px solid var(--p-border)}
+.gen-progress-bar{height:5px;background:rgba(124,58,237,.15);border-radius:3px;margin-bottom:16px;overflow:hidden}
+.gen-progress-fill{height:100%;width:88%;background:var(--purple);border-radius:3px}
+.gen-items{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.gen-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text2);font-weight:500}
+.gen-item.done{color:var(--text)}
+.gen-item.loading{color:var(--muted)}
+.gen-check{width:18px;height:18px;border-radius:5px;background:rgba(16,185,129,.12);color:var(--green);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gen-spin{width:18px;height:18px;border-radius:5px;background:var(--p-light);color:var(--purple);font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gen-timer{font-size:28px;font-weight:800;color:var(--purple);letter-spacing:-1px;text-align:center}
+/* Results step */
+.dmock-tabs{display:flex;gap:4px;margin-bottom:14px;background:#f5f4ff;border-radius:9px;padding:3px}
+.dmock-tab{font-family:var(--font);font-size:12px;font-weight:700;padding:7px 14px;border:none;background:none;color:var(--muted);border-radius:7px;cursor:pointer;transition:all .15s;flex:1}
+.dmock-tab.active{background:white;color:var(--purple);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.dmock-result{font-size:14px;color:var(--text2);line-height:1.7;background:#f8f7ff;border:1px solid var(--p-border);border-radius:10px;padding:16px;min-height:140px;margin-bottom:14px}
+.dmock-copy-btn{width:100%;font-family:var(--font);font-size:13px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:9px;padding:11px;cursor:pointer;transition:all .15s}
+.dmock-copy-btn:hover{background:var(--purple);color:white}
+
+/* ── AI CHAT WIDGET ────────────────────────────────── */
+#aiChatWidget{position:fixed;bottom:24px;right:24px;z-index:9999;display:none;flex-direction:column;width:340px;max-height:520px;background:white;border-radius:18px;box-shadow:0 12px 48px rgba(124,58,237,.22),0 2px 12px rgba(0,0,0,.1);border:1px solid var(--p-border);overflow:hidden}
+#aiChatWidget.open{display:flex}
+.chat-header{background:var(--purple);padding:16px 18px;display:flex;align-items:center;gap:12px}
+.chat-header-av{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.chat-header-info{flex:1}
+.chat-header-name{font-size:14px;font-weight:700;color:white}
+.chat-header-status{font-size:11px;color:rgba(255,255,255,.65)}
+.chat-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:200px;max-height:320px}
+.chat-msg{max-width:85%;font-size:13px;line-height:1.5;padding:10px 13px;border-radius:12px}
+.chat-msg.bot{background:#f5f4ff;color:var(--text2);border-bottom-left-radius:4px;align-self:flex-start}
+.chat-msg.user{background:var(--purple);color:white;border-bottom-right-radius:4px;align-self:flex-end}
+.chat-typing{display:flex;gap:4px;align-items:center;padding:10px 13px;background:#f5f4ff;border-radius:12px;border-bottom-left-radius:4px;align-self:flex-start;width:52px}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--muted2);animation:blink 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:.2s}
+.chat-typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.chat-quick-replies{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px}
+.chat-qr{font-family:var(--font);font-size:12px;font-weight:600;color:var(--purple);background:var(--p-light);border:1px solid var(--p-border);border-radius:20px;padding:5px 12px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.chat-qr:hover{background:var(--purple);color:white}
+.chat-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(0,0,0,.07)}
+.chat-input{flex:1;font-family:var(--font);font-size:13px;border:1.5px solid var(--border);border-radius:9px;padding:9px 12px;outline:none;color:var(--text)}
+.chat-input:focus{border-color:var(--p-border)}
+.chat-send{background:var(--purple);color:white;border:none;border-radius:9px;padding:9px 14px;cursor:pointer;font-size:16px;transition:background .15s;flex-shrink:0}
+.chat-send:hover{background:var(--purple2)}
+/* Floating chat button */
+#chatFab{position:fixed;bottom:24px;right:24px;z-index:9998;width:56px;height:56px;border-radius:50%;background:var(--purple);color:white;border:none;box-shadow:0 4px 20px rgba(124,58,237,.4);cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
+#chatFab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(124,58,237,.5)}
+
+/* ── RESPONSIVE FIXES ──────────────────────────────── */
+@media(max-width:768px){
+  .nav-links,.nav-btns{display:none}
+  .hamburger{display:block !important}
+  .hero-inner{grid-template-columns:1fr !important;gap:32px}
+  .hero-mockup{display:none !important}
+  h1.hero-title{font-size:36px !important}
+  .how-grid{grid-template-columns:1fr !important}
+  .testi-grid{grid-template-columns:1fr !important}
+  .pricing-grid{grid-template-columns:1fr 1fr !important}
+  .demo-steps{gap:8px}
+  .demo-step-label{display:none}
+  .faq-grid{grid-template-columns:1fr !important}
+  .footer-top{grid-template-columns:1fr 1fr !important}
+  .stats-band-inner{grid-template-columns:repeat(2,1fr) !important}
+  #aiChatWidget{width:calc(100vw - 32px);right:16px;bottom:16px}
+  #chatFab{right:16px;bottom:16px}
+}
+@media(max-width:480px){
+  .pricing-grid{grid-template-columns:1fr !important}
+  .footer-top{grid-template-columns:1fr !important}
+  .cta-btns{flex-direction:column;align-items:stretch}
+  .btn-cta-white,.btn-cta-ghost{text-align:center}
+  .dmock-row2{grid-template-columns:repeat(3,1fr)}
+  .stats-band-inner{grid-template-columns:1fr 1fr !important}
+  .logos-inner{gap:6px}
+}
 </style>
 </head>
 <body>
@@ -511,39 +706,116 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 </section>
 
 <!-- DEMO -->
-<section class="demo">
+<section class="demo" id="demo">
   <div class="container">
-    <div class="section-eyebrow">Demo en vivo</div>
-    <h2 class="section-title">Mira el resultado<br>antes de registrarte</h2>
-    <div style="height:40px"></div>
-    <div class="demo-grid">
-      <div>
-        <div class="demo-tabs">
-          <button class="demo-tab active" onclick="switchDemo(this,'mls')">MLS</button>
-          <button class="demo-tab" onclick="switchDemo(this,'post')">Post</button>
-          <button class="demo-tab" onclick="switchDemo(this,'email')">Email</button>
+    <div class="section-eyebrow">Cómo se ve</div>
+    <h2 class="section-title">Así luce PropIA<br>en acción</h2>
+    <p class="section-sub">Un vistazo a lo que la IA genera para ti en cada propiedad.</p>
+    <div class="demo-mockup-wrap">
+      <!-- Step indicator -->
+      <div class="demo-steps">
+        <div class="demo-step active" onclick="showDemoStep(0)">
+          <div class="demo-step-num">1</div>
+          <div class="demo-step-label">Ingresas los datos</div>
         </div>
-        <div class="demo-box">
-          <div class="demo-box-head">
-            <span class="demo-box-label" id="demoLabel">Descripción MLS</span>
-            <button class="demo-copy-btn" onclick="copyDemo()">Copiar</button>
+        <div class="demo-step-arrow">→</div>
+        <div class="demo-step" onclick="showDemoStep(1)">
+          <div class="demo-step-num">2</div>
+          <div class="demo-step-label">IA genera en 30 seg</div>
+        </div>
+        <div class="demo-step-arrow">→</div>
+        <div class="demo-step" onclick="showDemoStep(2)">
+          <div class="demo-step-num">3</div>
+          <div class="demo-step-label">Copias y publicas</div>
+        </div>
+      </div>
+
+      <!-- Step 0: Input form mockup -->
+      <div class="demo-panel" id="demoPanel0">
+        <div class="dmock-window">
+          <div class="dmock-bar">
+            <div class="m-dot" style="background:#ff5f57"></div>
+            <div class="m-dot" style="background:#febc2e;margin-left:5px"></div>
+            <div class="m-dot" style="background:#28c840;margin-left:5px"></div>
+            <span class="dmock-title">PropIA — Nuevo Listing</span>
           </div>
-          <div class="demo-text" id="demoText">Espectacular casa unifamiliar en una de las zonas más exclusivas de Miami, Florida. Esta residencia de 4 recámaras y 3 baños completos ofrece 2,200 pies cuadrados de lujosos espacios.
-
-La propiedad cuenta con cocina gourmet renovada, sala con techos altos, luz natural abundante y piscina privada rodeada de jardines impecables.
-
-Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</div>
+          <div class="dmock-body">
+            <div class="dmock-field"><div class="dmock-label">Dirección</div><div class="dmock-val">7322 34th Ct E, Sarasota, FL 34243</div></div>
+            <div class="dmock-field"><div class="dmock-label">Precio de venta</div><div class="dmock-val accent-val">$525,000</div></div>
+            <div class="dmock-row2">
+              <div class="dmock-field"><div class="dmock-label">Recámaras</div><div class="dmock-val">4</div></div>
+              <div class="dmock-field"><div class="dmock-label">Baños</div><div class="dmock-val">3</div></div>
+              <div class="dmock-field"><div class="dmock-label">Pies²</div><div class="dmock-val">2,200</div></div>
+            </div>
+            <div class="dmock-field"><div class="dmock-label">Características</div><div class="dmock-val">Piscina privada, cocina renovada, techos altos, vista al lago</div></div>
+            <div class="dmock-tones">
+              <div class="dmock-tone-label">Tono</div>
+              <div class="dmock-tone active">Lujoso</div>
+              <div class="dmock-tone">Familiar</div>
+              <div class="dmock-tone">Moderno</div>
+              <div class="dmock-tone">Urgente</div>
+            </div>
+            <button class="dmock-btn" onclick="showDemoStep(1)">Generar con IA →</button>
+          </div>
         </div>
+        <div class="demo-caption">Llenas un formulario simple — igual que un mensaje de WhatsApp</div>
       </div>
-      <div>
-        <div class="why-title">Por qué los agentes<br>eligen PropIA</div>
-        <div class="why-list">
-          <div class="why-item"><div class="why-check">✓</div><div><div class="why-item-title">100% en español</div><div class="why-item-sub">Contenido pensado para el comprador latino. Expresiones naturales, no traducción de Google.</div></div></div>
-          <div class="why-item"><div class="why-check">✓</div><div><div class="why-item-title">4 formatos en un clic</div><div class="why-item-sub">MLS, redes, email y video. No hay que repetir información entre herramientas.</div></div></div>
-          <div class="why-item"><div class="why-check">✓</div><div><div class="why-item-title">6 tonos disponibles</div><div class="why-item-sub">Lujoso, familiar, inversión, moderno, urgente o emocional. Cada propiedad tiene su voz.</div></div></div>
-          <div class="why-item"><div class="why-check">✓</div><div><div class="why-item-title">Sin contrato ni tarjeta</div><div class="why-item-sub">Plan gratis sin límite de tiempo. Mejora solo cuando veas los resultados.</div></div></div>
+
+      <!-- Step 1: AI generating -->
+      <div class="demo-panel" id="demoPanel1" style="display:none">
+        <div class="dmock-window">
+          <div class="dmock-bar">
+            <div class="m-dot" style="background:#ff5f57"></div>
+            <div class="m-dot" style="background:#febc2e;margin-left:5px"></div>
+            <div class="m-dot" style="background:#28c840;margin-left:5px"></div>
+            <span class="dmock-title">PropIA — Generando...</span>
+            <span class="dmock-ai-badge">IA activa</span>
+          </div>
+          <div class="dmock-body">
+            <div class="dmock-generating">
+              <div class="gen-progress-bar"><div class="gen-progress-fill"></div></div>
+              <div class="gen-items">
+                <div class="gen-item done"><span class="gen-check">✓</span>Descripción MLS (187 palabras)</div>
+                <div class="gen-item done"><span class="gen-check">✓</span>Post Instagram — tono lujoso</div>
+                <div class="gen-item done"><span class="gen-check">✓</span>Post Facebook con hashtags</div>
+                <div class="gen-item done"><span class="gen-check">✓</span>Email de marketing personalizado</div>
+                <div class="gen-item loading"><span class="gen-spin">⟳</span>Script YouTube / TikTok...</div>
+              </div>
+              <div class="gen-timer">28 segundos</div>
+            </div>
+            <button class="dmock-btn" onclick="showDemoStep(2)" style="margin-top:20px">Ver resultados →</button>
+          </div>
         </div>
+        <div class="demo-caption">La IA trabaja en 4 formatos simultáneamente — sin que hagas nada más</div>
       </div>
+
+      <!-- Step 2: Results -->
+      <div class="demo-panel" id="demoPanel2" style="display:none">
+        <div class="dmock-window">
+          <div class="dmock-bar">
+            <div class="m-dot" style="background:#ff5f57"></div>
+            <div class="m-dot" style="background:#febc2e;margin-left:5px"></div>
+            <div class="m-dot" style="background:#28c840;margin-left:5px"></div>
+            <span class="dmock-title">PropIA — Resultados</span>
+            <span class="dmock-ai-badge green">Listo</span>
+          </div>
+          <div class="dmock-body">
+            <div class="dmock-tabs">
+              <button class="dmock-tab active" onclick="switchResult(this,'mls')">MLS</button>
+              <button class="dmock-tab" onclick="switchResult(this,'post')">Post</button>
+              <button class="dmock-tab" onclick="switchResult(this,'email')">Email</button>
+              <button class="dmock-tab" onclick="switchResult(this,'video')">Video</button>
+            </div>
+            <div class="dmock-result" id="dresult-mls">Espectacular residencia de lujo en Sarasota, FL. Esta propiedad de <strong>4 recámaras y 3 baños</strong> ofrece 2,200 ft² de elegantes espacios con cocina renovada, techos altos y piscina privada con vista al lago.<br><br>Perfecta para familias que buscan exclusividad y confort. Ubicada en vecindario tranquilo, a minutos de escuelas A+ y del centro. <strong>Precio: $525,000.</strong></div>
+            <div class="dmock-result" id="dresult-post" style="display:none">✨ <strong>¡Propiedad de ensueño en Sarasota!</strong><br><br>4 recámaras · 3 baños · 2,200 ft²<br>Piscina privada · Cocina gourmet · Vista al lago<br><br>💰 $525,000 — Lista para mudarse<br><br>#CasaEnVenta #SarasotaRealEstate #BienesRaices #MiamiHomes #PropiedadLujosa</div>
+            <div class="dmock-result" id="dresult-email" style="display:none"><strong>Asunto:</strong> Esta casa en Sarasota no va a durar — 4 rec, piscina, $525K<br><br>Hola,<br><br>Quería compartirte esta joya antes de que salga en MLS. Cuatro recámaras, cocina renovada y piscina privada en uno de los mejores vecindarios de Sarasota...<br><br><strong>[Ver propiedad completa →]</strong></div>
+            <div class="dmock-result" id="dresult-video" style="display:none"><strong>HOOK (0-3 seg):</strong> "¿Quieres una casa con piscina en Sarasota por menos de 530K? Mira esto."<br><br><strong>PRESENTACIÓN:</strong> "Estamos en 34th Ct, Sarasota — 4 recámaras, 3 baños, cocina totalmente renovada y vista al lago..."<br><br><strong>CTA:</strong> "Escríbeme hoy, los tours se están llenando."</div>
+            <button class="dmock-copy-btn" onclick="this.textContent='✓ Copiado';setTimeout(()=>this.textContent='Copiar al portapapeles',1500)">Copiar al portapapeles</button>
+          </div>
+        </div>
+        <div class="demo-caption">Un clic copia el texto listo — pégalo directo en tu MLS, Instagram o email</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -678,7 +950,7 @@ Ubicada a minutos de las mejores escuelas y playas de Miami. Precio $450,000.</d
     <p class="cta-sub">Más de 1,200 agentes latinos en USA ya generan sus listings con PropIA. El plan gratis no tiene fecha de vencimiento.</p>
     <div class="cta-btns">
       <button class="btn-cta-white" onclick="window.location.href='/app?tab=register'">Empezar Gratis Ahora</button>
-      <button class="btn-cta-ghost" onclick="window.location.href='mailto:hola@propia.app'">Hablar con el equipo</button>
+      <button class="btn-cta-ghost" onclick="openAIChat()">Hablar con el equipo</button>
     </div>
     <p class="cta-note">Sin tarjeta de crédito · <strong>5 listings gratis</strong> · Cancela cuando quieras</p>
   </div>
@@ -740,12 +1012,14 @@ window.addEventListener('scroll', function() {
 // Mobile menu toggle
 function toggleMenu() {
   var menu = document.getElementById('mobileMenu');
-  var btn = document.getElementById('hamburger');
+  var btn  = document.getElementById('hamburger');
+  if (!menu) return;
   menu.classList.toggle('open');
-  btn.textContent = menu.classList.contains('open') ? '✕' : '☰';
+  var isOpen = menu.classList.contains('open');
+  btn.textContent = isOpen ? '✕' : '☰';
+  menu.style.display = isOpen ? 'flex' : 'none';
 }
 
-// FAQ accordion
 function toggleFaq(btn) {
   var answer = btn.nextElementSibling;
   var isOpen = btn.classList.contains('open');
@@ -800,5 +1074,131 @@ function copyDemo() {
   }
 }
 </script>
+
+<!-- AI CHAT FAB -->
+<button id="chatFab" onclick="openAIChat()" title="Hablar con el equipo">
+  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</button>
+
+<!-- AI CHAT WIDGET -->
+<div id="aiChatWidget">
+  <div class="chat-header">
+    <div class="chat-header-av">
+      <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    </div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">PropIA Asistente</div>
+      <div class="chat-header-status">· En línea ahora</div>
+    </div>
+    <button class="chat-close" onclick="closeAIChat()">×</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">¡Hola! Soy el asistente de PropIA 👋 ¿En qué puedo ayudarte hoy?</div>
+  </div>
+  <div class="chat-quick-replies" id="chatQR">
+    <button class="chat-qr" onclick="sendQuick(this,'¿Cuánto cuesta PropIA?')">¿Cuánto cuesta?</button>
+    <button class="chat-qr" onclick="sendQuick(this,'¿Cómo funciona la IA?')">¿Cómo funciona?</button>
+    <button class="chat-qr" onclick="sendQuick(this,'Quiero empezar gratis')">Empezar gratis</button>
+    <button class="chat-qr" onclick="sendQuick(this,'¿Funciona para mi ciudad?')">¿Mi ciudad?</button>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chatInput" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// ── AI CHAT ────────────────────────────────────────
+function openAIChat(){
+  document.getElementById('aiChatWidget').classList.add('open');
+  document.getElementById('chatFab').style.display='none';
+}
+function closeAIChat(){
+  document.getElementById('aiChatWidget').classList.remove('open');
+  document.getElementById('chatFab').style.display='flex';
+}
+function sendQuick(btn, text){
+  document.getElementById('chatQR').style.display='none';
+  addMsg(text,'user');
+  showTyping(text);
+}
+function sendChat(){
+  var input = document.getElementById('chatInput');
+  var text = input.value.trim();
+  if(!text) return;
+  input.value='';
+  document.getElementById('chatQR').style.display='none';
+  addMsg(text,'user');
+  showTyping(text);
+}
+function addMsg(text, type){
+  var msgs = document.getElementById('chatMessages');
+  var div = document.createElement('div');
+  div.className = 'chat-msg ' + type;
+  div.innerHTML = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function showTyping(userText){
+  var msgs = document.getElementById('chatMessages');
+  var typing = document.createElement('div');
+  typing.className='chat-typing'; typing.id='chatTyping';
+  typing.innerHTML='<span></span><span></span><span></span>';
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(function(){ getBotReply(userText); }, 1200);
+}
+async function getBotReply(userText){
+  var typing = document.getElementById('chatTyping');
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:300,
+        system:'Eres el asistente de ventas de PropIA, un SaaS de IA para agentes inmobiliarios latinos en USA. Respondes en español, de forma amigable y concisa (máximo 3 oraciones). Ayudas con dudas sobre precios, funciones y cómo empezar. Planes: Gratis ($0, 5 listings), Básico ($49, 50 listings), Pro ($149, 200 listings), Empresarial ($399, ilimitado). Si preguntan algo técnico fuera de PropIA, amablemente redirige.',
+        messages:[{role:'user',content:userText}]
+      })
+    });
+    var data = await res.json();
+    if(typing) typing.remove();
+    var reply = data.content && data.content[0] ? data.content[0].text : '¡Claro! Para cualquier consulta detallada puedes escribirnos a hola@propia.app';
+    addMsg(reply,'bot');
+  } catch(e) {
+    if(typing) typing.remove();
+    var fallbacks = {
+      'cuesta':'Tenemos plan Gratis (sin costo), Básico a $49/mes, Pro a $149/mes y Empresarial a $399/mes. ¡Todos empiezan con 5 listings gratis sin tarjeta!',
+      'funciona':'Ingresas dirección, precio y características. La IA genera el MLS, 3 posts, email y script de video en menos de 30 segundos — todo en español.',
+      'gratis':'¡Perfecto! Solo haz clic en "Empezar Gratis" — sin tarjeta de crédito. Tienes 5 listings incluidos para probar todo.',
+      'ciudad':'PropIA funciona para cualquier ciudad de USA. La IA está entrenada específicamente para el mercado inmobiliario latino americano.'
+    };
+    var reply = '¡Gracias por tu interés! Escríbenos a hola@propia.app y te respondemos en menos de 24 horas.';
+    for(var key in fallbacks){ if(userText.toLowerCase().includes(key)){ reply=fallbacks[key]; break; } }
+    addMsg(reply,'bot');
+  }
+}
+
+// ── DEMO STEPS ─────────────────────────────────────
+function showDemoStep(n){
+  for(var i=0;i<3;i++){
+    var panel = document.getElementById('demoPanel'+i);
+    var step  = document.querySelectorAll('.demo-step')[i];
+    if(panel) panel.style.display = i===n ? 'block' : 'none';
+    if(step)  step.classList.toggle('active', i===n);
+  }
+}
+function switchResult(btn, key){
+  document.querySelectorAll('.dmock-tab').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  ['mls','post','email','video'].forEach(function(k){
+    var el=document.getElementById('dresult-'+k);
+    if(el) el.style.display = k===key ? 'block':'none';
+  });
+}
+</script>
+
 </body>
 </html>
