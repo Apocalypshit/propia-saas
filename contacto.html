@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contacto – PropIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --purple:#7c3aed;--purple2:#6d28d9;--teal:#0d9488;
+  --text:#0f0a1e;--text2:#4b5563;--muted:#9ca3af;
+  --bg:#f3f0ff;--bg2:#ede9fb;--white:#fff;
+  --border:rgba(124,58,237,.12);
+  --font:'Plus Jakarta Sans',sans-serif;
+  --radius:16px;
+}
+body{font-family:var(--font);background:var(--white);color:var(--text);line-height:1.7}
+
+/* NAV */
+.contact-nav{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.nav-logo{font-size:18px;font-weight:800;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--purple)}
+.nav-back{font-size:14px;font-weight:600;color:var(--purple);text-decoration:none;transition:gap .15s}
+
+/* HERO */
+.contact-hero{background:var(--bg);padding:72px 24px 56px;text-align:center;border-bottom:1px solid var(--border)}
+.eyebrow{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--purple);margin-bottom:14px}
+.contact-hero h1{font-size:clamp(30px,4.5vw,50px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
+.contact-hero p{font-size:17px;color:var(--text2);max-width:520px;margin:0 auto}
+
+/* MAIN LAYOUT */
+.contact-main{max-width:1060px;margin:0 auto;padding:64px 24px 96px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+
+/* FORM SIDE */
+.contact-form-wrap h2{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.contact-form-wrap p{font-size:15px;color:var(--text2);margin-bottom:28px}
+.form-group{margin-bottom:18px}
+.form-label{display:block;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.form-input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:var(--font);font-size:15px;color:var(--text);background:white;transition:border-color .15s,box-shadow .15s;outline:none}
+.form-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.form-input::placeholder{color:var(--muted)}
+textarea.form-input{resize:vertical;min-height:120px}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn-submit{width:100%;background:var(--purple);color:white;padding:14px 24px;border-radius:50px;font-family:var(--font);font-size:15px;font-weight:700;border:none;cursor:pointer;transition:background .15s;margin-top:8px}
+.btn-submit:hover{background:var(--purple2)}
+.form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+.form-success{display:none;background:rgba(13,148,136,.08);border:1px solid rgba(13,148,136,.2);border-radius:12px;padding:20px;text-align:center;margin-top:16px}
+.form-success-icon{font-size:32px;margin-bottom:8px}
+.form-success-title{font-size:16px;font-weight:700;color:#0d9488;margin-bottom:4px}
+.form-success-text{font-size:14px;color:var(--text2)}
+
+/* RIGHT SIDE */
+.contact-right{display:flex;flex-direction:column;gap:20px}
+
+/* AI CHAT CARD */
+.ai-chat-card{background:linear-gradient(135deg,#0f0a1e 0%,#1e1040 100%);border-radius:var(--radius);padding:32px;position:relative;overflow:hidden}
+.ai-chat-card::after{content:'';position:absolute;bottom:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(124,58,237,.2)}
+.ai-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.25);border:1px solid rgba(124,58,237,.4);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:16px;text-transform:uppercase;letter-spacing:.8px}
+.ai-badge-dot{width:6px;height:6px;border-radius:50%;background:#a78bfa;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.ai-chat-card h3{font-size:20px;font-weight:800;color:white;margin-bottom:8px}
+.ai-chat-card p{font-size:14px;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:20px}
+.ai-features{list-style:none;padding:0;margin-bottom:24px;display:flex;flex-direction:column;gap:8px}
+.ai-features li{font-size:13px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:8px}
+.ai-features li::before{content:'✓';color:#a78bfa;font-weight:800;flex-shrink:0}
+.btn-ai-chat{width:100%;background:var(--purple);color:white;padding:13px 20px;border-radius:50px;font-family:var(--font);font-size:14px;font-weight:700;border:none;cursor:pointer;transition:background .15s;position:relative;z-index:1}
+.btn-ai-chat:hover{background:var(--purple2)}
+
+/* INFO CARDS */
+.info-card{background:var(--bg);border-radius:var(--radius);padding:24px;border:1px solid var(--border)}
+.info-card-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.info-card-icon{width:28px;height:28px;border-radius:8px;background:rgba(124,58,237,.1);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.info-item{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-bottom:1px solid var(--border)}
+.info-item:last-child{border-bottom:none;padding-bottom:0}
+.info-item-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+.info-item-value{font-size:14px;font-weight:600;color:var(--text)}
+.info-item-value a{color:var(--purple);text-decoration:none}
+.info-item-value a:hover{text-decoration:underline}
+.availability{display:flex;align-items:center;gap:6px}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:#10b981;flex-shrink:0}
+.avail-text{font-size:13px;color:#10b981;font-weight:600}
+
+/* FOOTER */
+.contact-footer{background:#0f0a1e;padding:32px 24px;text-align:center}
+.contact-footer p{font-size:13px;color:rgba(255,255,255,.35)}
+.contact-footer a{color:rgba(255,255,255,.55);text-decoration:none;font-weight:600;margin:0 8px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .contact-main{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="contact-nav">
+  <a href="/" class="nav-logo">Prop<span>IA</span></a>
+  <a href="/" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<!-- HERO -->
+<div class="contact-hero">
+  <div class="eyebrow">Contacto</div>
+  <h1>Estamos aquí para ayudarte</h1>
+  <p>Cuéntanos qué necesitas. Nuestro equipo — y nuestra IA recepcionista — están listos para atenderte en español.</p>
+</div>
+
+<!-- MAIN -->
+<div class="contact-main">
+
+  <!-- FORM -->
+  <div class="contact-form-wrap">
+    <h2>Envíanos un mensaje</h2>
+    <p>Respondemos en menos de 24 horas en días hábiles.</p>
+
+    <form id="contactForm" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nombre *</label>
+          <input type="text" class="form-input" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Apellido *</label>
+          <input type="text" class="form-input" placeholder="Tu apellido" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Correo electrónico *</label>
+        <input type="email" class="form-input" placeholder="tu@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Teléfono (opcional)</label>
+        <input type="tel" class="form-input" placeholder="+1 (305) 000-0000">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Asunto *</label>
+        <select class="form-input form-select" required>
+          <option value="" disabled selected>Selecciona un tema...</option>
+          <option>Soporte técnico</option>
+          <option>Preguntas sobre planes y precios</option>
+          <option>Ventas / Plan Enterprise</option>
+          <option>Facturación o pagos</option>
+          <option>Solicitud de demo</option>
+          <option>Partnerships o integraciones</option>
+          <option>Prensa o medios</option>
+          <option>Otro</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mensaje *</label>
+        <textarea class="form-input" placeholder="Cuéntanos cómo podemos ayudarte..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Enviar mensaje →</button>
+      <p class="form-note">Al enviar aceptas nuestra <a href="/privacidad.html" style="color:var(--purple);font-weight:600">Política de Privacidad</a></p>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <div class="form-success-icon">✓</div>
+      <div class="form-success-title">¡Mensaje recibido!</div>
+      <div class="form-success-text">Te responderemos en menos de 24 horas. Revisa tu bandeja de entrada.</div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="contact-right">
+
+    <!-- AI CHAT CARD -->
+    <div class="ai-chat-card">
+      <div class="ai-badge"><span class="ai-badge-dot"></span>IA activa ahora</div>
+      <h3>Habla con María,<br>nuestra IA recepcionista</h3>
+      <p>¿Tienes prisa? Nuestra asistente de IA puede responder tus preguntas sobre planes, funciones y precios al instante — en español, 24/7.</p>
+      <ul class="ai-features">
+        <li>Responde dudas sobre planes y precios</li>
+        <li>Explica cómo funciona PropIA paso a paso</li>
+        <li>Te conecta con el equipo si lo necesitas</li>
+        <li>Disponible los 365 días del año</li>
+      </ul>
+      <button class="btn-ai-chat" onclick="openChat()">Iniciar chat con María →</button>
+    </div>
+
+    <!-- CONTACT INFO -->
+    <div class="info-card">
+      <div class="info-card-title">
+        <div class="info-card-icon">📍</div>
+        Información de contacto
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Email general</div>
+        <div class="info-item-value"><a href="mailto:hola@propia.ai">hola@propia.ai</a></div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Soporte técnico</div>
+        <div class="info-item-value"><a href="mailto:soporte@propia.ai">soporte@propia.ai</a></div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Ventas Enterprise</div>
+        <div class="info-item-value"><a href="mailto:ventas@propia.ai">ventas@propia.ai</a></div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Horario de atención</div>
+        <div class="info-item-value">Lun–Vie · 9am–6pm EST</div>
+      </div>
+    </div>
+
+    <!-- AVAILABILITY -->
+    <div class="info-card">
+      <div class="info-card-title">
+        <div class="info-card-icon">⚡</div>
+        Estado del sistema
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Plataforma PropIA</div>
+        <div class="info-item-value">
+          <div class="availability"><span class="avail-dot"></span><span class="avail-text">Operacional</span></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Generación de IA (Groq)</div>
+        <div class="info-item-value">
+          <div class="availability"><span class="avail-dot"></span><span class="avail-text">Operacional</span></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-label">Tiempo de respuesta prom.</div>
+        <div class="info-item-value">28 segundos</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="contact-footer">
+  <p>© 2025 PropIA. Todos los derechos reservados. &nbsp;·&nbsp;
+    <a href="/privacidad.html">Privacidad</a>
+    <a href="/terminos.html">Términos</a>
+    <a href="/cookies.html">Cookies</a>
+  </p>
+</div>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+function openChat() {
+  // Redirect to main page and open AI chat
+  window.location.href = '/?chat=open';
+}
+
+// Auto-open chat if redirected back from index
+window.addEventListener('load', function() {
+  if (window.location.search.includes('chat=open')) {
+    // Trigger chat on landing page
+    if (typeof openAIChat === 'function') openAIChat();
+  }
+});
+</script>
+
+</body>
+</html>

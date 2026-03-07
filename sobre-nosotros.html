@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sobre Nosotros – PropIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --purple:#7c3aed;--purple2:#6d28d9;--teal:#0d9488;
+  --text:#0f0a1e;--text2:#4b5563;--muted:#9ca3af;
+  --bg:#f3f0ff;--bg2:#ede9fb;--white:#fff;
+  --border:rgba(124,58,237,.12);
+  --font:'Plus Jakarta Sans',sans-serif;
+  --radius:16px;
+}
+body{font-family:var(--font);background:var(--white);color:var(--text);line-height:1.7}
+
+/* NAV */
+.about-nav{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;z-index:100}
+.nav-logo{font-size:18px;font-weight:800;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--purple)}
+.nav-back{font-size:14px;font-weight:600;color:var(--purple);text-decoration:none;display:flex;align-items:center;gap:6px;transition:gap .15s}
+.nav-back:hover{gap:10px}
+
+/* HERO */
+.about-hero{background:var(--bg);padding:96px 24px 80px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.about-hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.12),transparent 65%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);border-radius:20px;padding:6px 16px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--purple);margin-bottom:24px}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.about-hero h1{font-size:clamp(32px,5vw,58px);font-weight:800;letter-spacing:-2px;line-height:1.1;max-width:760px;margin:0 auto 24px}
+.about-hero h1 em{font-style:normal;color:var(--purple)}
+.about-hero p{font-size:18px;color:var(--text2);max-width:580px;margin:0 auto;line-height:1.65}
+
+/* STATS ROW */
+.about-stats{display:grid;grid-template-columns:repeat(4,1fr);max-width:900px;margin:0 auto;padding:56px 24px;gap:8px;border-bottom:1px solid var(--border)}
+.stat-box{text-align:center;padding:28px 16px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)}
+.stat-box-num{font-size:clamp(28px,4vw,42px);font-weight:800;letter-spacing:-1.5px;color:var(--purple);line-height:1}
+.stat-box-num span{color:var(--teal)}
+.stat-box-label{font-size:13px;color:var(--text2);font-weight:500;margin-top:6px}
+
+/* SECTION SHARED */
+.section{padding:80px 24px}
+.section-inner{max-width:1060px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--purple);margin-bottom:12px}
+.section-title{font-size:clamp(26px,3.5vw,40px);font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:16px}
+.section-sub{font-size:16px;color:var(--text2);max-width:520px;line-height:1.65;margin-bottom:48px}
+
+/* STORY */
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.story-text p{font-size:16px;color:var(--text2);line-height:1.75;margin-bottom:18px}
+.story-text p strong{color:var(--text);font-weight:700}
+.story-card{background:var(--bg);border-radius:24px;padding:40px;border:1px solid var(--border);position:relative;overflow:hidden}
+.story-card::after{content:'';position:absolute;bottom:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(124,58,237,.08)}
+.story-card-quote{font-size:42px;line-height:1;color:var(--purple);font-weight:800;margin-bottom:16px}
+.story-card-text{font-size:16px;color:var(--text);font-weight:600;line-height:1.6;font-style:italic;margin-bottom:24px}
+.story-card-author{display:flex;align-items:center;gap:12px}
+.story-card-av{width:44px;height:44px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:white;flex-shrink:0}
+.story-card-name{font-size:14px;font-weight:700;color:var(--text)}
+.story-card-role{font-size:12px;color:var(--muted)}
+
+/* MISSION / VISION / VALUES */
+.mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.mvv-card{border-radius:var(--radius);padding:36px 28px;border:1px solid var(--border);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.mvv-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(124,58,237,.1)}
+.mvv-card-mission{background:var(--bg)}
+.mvv-card-vision{background:linear-gradient(135deg,#0f0a1e 0%,#1e1040 100%)}
+.mvv-card-vision .mvv-icon{color:white}
+.mvv-card-vision .mvv-title{color:white}
+.mvv-card-vision .mvv-text{color:rgba(255,255,255,.65)}
+.mvv-card-values{background:linear-gradient(135deg,var(--purple) 0%,var(--purple2) 100%)}
+.mvv-card-values .mvv-icon{color:rgba(255,255,255,.8)}
+.mvv-card-values .mvv-title{color:white}
+.mvv-card-values .mvv-text{color:rgba(255,255,255,.75)}
+.mvv-icon{font-size:32px;margin-bottom:20px;display:block}
+.mvv-title{font-size:20px;font-weight:800;letter-spacing:-.5px;margin-bottom:12px;color:var(--text)}
+.mvv-text{font-size:15px;line-height:1.65}
+
+/* PILLARS */
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.pillar{padding:28px 24px;border-radius:var(--radius);border:1px solid var(--border);background:var(--white)}
+.pillar-num{font-size:11px;font-weight:800;color:var(--purple);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.pillar-title{font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px}
+.pillar-text{font-size:14px;color:var(--text2);line-height:1.6}
+
+/* TEAM */
+.team-intro{font-size:16px;color:var(--text2);max-width:600px;line-height:1.7;margin-bottom:48px}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.team-card{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--white);transition:transform .2s,box-shadow .2s}
+.team-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(124,58,237,.1)}
+.team-card-photo{height:200px;background:var(--bg2);display:flex;align-items:center;justify-content:center;position:relative}
+.team-card-initials{font-size:42px;font-weight:800;color:var(--purple)}
+.team-card-body{padding:20px}
+.team-card-name{font-size:16px;font-weight:800;color:var(--text);margin-bottom:2px}
+.team-card-role{font-size:13px;color:var(--purple);font-weight:600;margin-bottom:8px}
+.team-card-bio{font-size:13px;color:var(--text2);line-height:1.55}
+
+/* COMMITMENT */
+.commitment-section{background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.commitment-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.commitment-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:20px}
+.commitment-item{display:flex;gap:16px;align-items:flex-start}
+.commitment-check{width:28px;height:28px;border-radius:8px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);display:flex;align-items:center;justify-content:center;color:var(--purple);font-size:14px;flex-shrink:0;margin-top:2px}
+.commitment-label{font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px}
+.commitment-desc{font-size:14px;color:var(--text2);line-height:1.5}
+
+/* CTA BANNER */
+.about-cta{background:linear-gradient(135deg,#0f0a1e 0%,#1e1040 100%);padding:80px 24px;text-align:center}
+.about-cta h2{font-size:clamp(26px,3.5vw,40px);font-weight:800;color:white;letter-spacing:-1px;margin-bottom:16px}
+.about-cta p{font-size:16px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto 36px}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--purple);color:white;padding:14px 28px;border-radius:50px;font-family:var(--font);font-size:15px;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn-primary:hover{background:var(--purple2)}
+.btn-ghost{background:rgba(255,255,255,.08);color:white;padding:14px 28px;border-radius:50px;font-family:var(--font);font-size:15px;font-weight:700;border:1px solid rgba(255,255,255,.15);cursor:pointer;text-decoration:none;transition:background .15s}
+.btn-ghost:hover{background:rgba(255,255,255,.14)}
+
+/* FOOTER */
+.about-footer{background:#0f0a1e;padding:32px 24px;text-align:center}
+.about-footer p{font-size:13px;color:rgba(255,255,255,.35)}
+.about-footer a{color:rgba(255,255,255,.55);text-decoration:none;font-weight:600;margin:0 8px}
+.about-footer a:hover{color:white}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .about-stats{grid-template-columns:repeat(2,1fr)}
+  .story-grid,.commitment-grid{grid-template-columns:1fr;gap:40px}
+  .mvv-grid,.pillars-grid,.team-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .about-stats{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="about-nav">
+  <a href="/" class="nav-logo">Prop<span>IA</span></a>
+  <a href="/" class="nav-back">← Volver al inicio</a>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="hero-eyebrow">Nuestra historia</div>
+  <h1>Construido por y para el<br><em>agente latino en USA</em></h1>
+  <p>PropIA nació de una necesidad real: los mejores agentes inmobiliarios latinos en Estados Unidos merecen herramientas de IA que hablen su idioma, entiendan su mercado y respeten su cultura.</p>
+</section>
+
+<!-- STATS -->
+<div class="about-stats">
+  <div class="stat-box">
+    <div class="stat-box-num">1,<span>200</span>+</div>
+    <div class="stat-box-label">Agentes activos</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-box-num">48,<span>000</span>+</div>
+    <div class="stat-box-label">Listings generados</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-box-num"><span>30</span>s</div>
+    <div class="stat-box-label">Tiempo de generación</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-box-num">98<span>%</span></div>
+    <div class="stat-box-label">Satisfacción reportada</div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="section" style="background:white;border-bottom:1px solid var(--border)">
+  <div class="section-inner">
+    <div class="story-grid">
+      <div class="story-text">
+        <div class="eyebrow">Nuestra historia</div>
+        <h2 class="section-title">El problema que decidimos resolver</h2>
+        <p>En 2024, más del <strong>18% de los agentes inmobiliarios en EE.UU. son de habla hispana</strong>, representando uno de los segmentos de más rápido crecimiento en el sector. Sin embargo, prácticamente todas las herramientas de IA disponibles estaban diseñadas exclusivamente en inglés, para el mercado anglosajón.</p>
+        <p>Los agentes latinos se veían obligados a redactar sus listings en inglés con traductores imperfectos, perder horas creando contenido para redes sociales, o pagar a terceros por textos que no reflejaban su voz ni la de sus clientes.</p>
+        <p><strong>PropIA cambió eso.</strong> Construimos desde cero una plataforma de IA entrenada específicamente para el mercado inmobiliario latino en USA: con el vocabulario correcto, el tono adecuado y la comprensión cultural que solo puede venir de quienes viven esa realidad.</p>
+      </div>
+      <div class="story-card">
+        <div class="story-card-quote">"</div>
+        <div class="story-card-text">Vi a mi madre — agente en Miami por 15 años — perder clientes por no poder competir con descripciones de propiedades en inglés perfecto. Eso no podía seguir así.</div>
+        <div class="story-card-author">
+          <div class="story-card-av">CR</div>
+          <div>
+            <div class="story-card-name">Carlos Rodríguez</div>
+            <div class="story-card-role">Co-fundador & CEO, PropIA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION VISION VALUES -->
+<section class="section" style="background:var(--bg);border-bottom:1px solid var(--border)">
+  <div class="section-inner">
+    <div class="eyebrow">Lo que nos guía</div>
+    <h2 class="section-title">Misión, Visión y Valores</h2>
+    <div class="mvv-grid">
+      <div class="mvv-card mvv-card-mission">
+        <span class="mvv-icon">🎯</span>
+        <div class="mvv-title">Misión</div>
+        <div class="mvv-text" style="color:var(--text2)">Democratizar el acceso a inteligencia artificial de clase mundial para cada agente inmobiliario latino en Estados Unidos — sin importar su nivel tecnológico, ciudad o tamaño de cartera.</div>
+      </div>
+      <div class="mvv-card mvv-card-vision">
+        <span class="mvv-icon">✦</span>
+        <div class="mvv-title">Visión</div>
+        <div class="mvv-text">Ser la plataforma de IA número uno para profesionales inmobiliarios de habla hispana en Norteamérica para 2027, procesando más de 1 millón de listings al año y expandiéndonos a México, Colombia y España.</div>
+      </div>
+      <div class="mvv-card mvv-card-values">
+        <span class="mvv-icon">◆</span>
+        <div class="mvv-title">Valores</div>
+        <div class="mvv-text">Comunidad sobre todo. Tecnología con propósito. Español sin disculpas. Resultados medibles. Transparencia radical. Construimos para las personas que construyen hogares para otros.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="section" style="background:white;border-bottom:1px solid var(--border)">
+  <div class="section-inner">
+    <div class="eyebrow">Cómo operamos</div>
+    <h2 class="section-title">Nuestros principios</h2>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">IA con identidad cultural</div>
+        <div class="pillar-text">Nuestros modelos no son traducciones del inglés. Están entrenados con terminología inmobiliaria real en español neutro para el mercado de EE.UU., con variaciones regionales.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Velocidad sin sacrificar calidad</div>
+        <div class="pillar-text">30 segundos para generar una descripción MLS completa, 3 posts para redes, un email y un script de video. La IA trabaja para ti, no al revés.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Accesible para todos</div>
+        <div class="pillar-text">Empezamos con un plan gratuito real — no un demo de 7 días. Creemos que todo agente merece probar la herramienta antes de comprometerse.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">04</div>
+        <div class="pillar-title">Privacidad primero</div>
+        <div class="pillar-text">Tus datos de propiedades son tuyos. Nunca los usamos para entrenar modelos de terceros ni los compartimos con competidores o marketers.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">05</div>
+        <div class="pillar-title">Mejora continua</div>
+        <div class="pillar-text">Lanzamos actualizaciones de modelos cada 30 días basadas en el feedback directo de nuestra comunidad de agentes. El usuario es nuestro co-diseñador.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">06</div>
+        <div class="pillar-title">Soporte humano real</div>
+        <div class="pillar-text">Detrás de la IA hay un equipo de personas reales — en español — disponibles para ayudarte cuando lo necesites. No solo chatbots.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" style="background:var(--bg);border-bottom:1px solid var(--border)">
+  <div class="section-inner">
+    <div class="eyebrow">Quiénes somos</div>
+    <h2 class="section-title">El equipo detrás de PropIA</h2>
+    <p class="team-intro">Somos un equipo diverso de ingenieros, diseñadores y profesionales del sector inmobiliario con raíces en América Latina y presencia en Estados Unidos. Unidos por una misión: que ningún agente latino quede atrás en la era de la IA.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card-photo"><div class="team-card-initials">CR</div></div>
+        <div class="team-card-body">
+          <div class="team-card-name">Carlos Rodríguez</div>
+          <div class="team-card-role">Co-fundador & CEO</div>
+          <div class="team-card-bio">Ex-ingeniero de producto en Zillow. MBA por University of Miami. Nacido en Caracas, criado entre Miami y Nueva York. 10 años en PropTech.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-photo" style="background:#ede9fb"><div class="team-card-initials" style="color:var(--teal)">LM</div></div>
+        <div class="team-card-body">
+          <div class="team-card-name">Lucía Mendoza</div>
+          <div class="team-card-role">Co-fundadora & CTO</div>
+          <div class="team-card-bio">PhD en Machine Learning por Stanford. Antigua investigadora en Meta AI. Especialista en modelos de lenguaje en español. Originaria de Ciudad de México.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-photo" style="background:#ecfdf5"><div class="team-card-initials" style="color:var(--teal)">JV</div></div>
+        <div class="team-card-body">
+          <div class="team-card-name">Jorge Vargas</div>
+          <div class="team-card-role">Head of Real Estate</div>
+          <div class="team-card-bio">Agente inmobiliario con 15 años de experiencia en Florida y Texas. Licencia RE en 5 estados. Asesor de producto y puente entre la IA y el mundo real del agente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITMENT -->
+<section class="section commitment-section">
+  <div class="section-inner">
+    <div class="commitment-grid">
+      <div>
+        <div class="eyebrow">Nuestro compromiso</div>
+        <h2 class="section-title">Lo que prometemos a cada agente</h2>
+        <p style="font-size:16px;color:var(--text2);line-height:1.7">No somos solo una herramienta de software. Somos un socio estratégico para tu negocio. Cada decisión que tomamos — de producto, precio o política — empieza con una pregunta: ¿esto ayuda al agente latino a vender más?</p>
+      </div>
+      <ul class="commitment-list">
+        <li class="commitment-item">
+          <div class="commitment-check">✓</div>
+          <div>
+            <div class="commitment-label">Siempre en español</div>
+            <div class="commitment-desc">Todo el contenido generado, la interfaz y el soporte están en español. Sin excusas, sin excepciones.</div>
+          </div>
+        </li>
+        <li class="commitment-item">
+          <div class="commitment-check">✓</div>
+          <div>
+            <div class="commitment-label">Precios transparentes</div>
+            <div class="commitment-desc">Sin costos ocultos, sin contratos anuales forzados, sin cargos sorpresa. Cancela cuando quieras.</div>
+          </div>
+        </li>
+        <li class="commitment-item">
+          <div class="commitment-check">✓</div>
+          <div>
+            <div class="commitment-label">Tu éxito es nuestro éxito</div>
+            <div class="commitment-desc">Medimos nuestro desempeño por la cantidad de listings que nuestros agentes cierran, no por métricas de vanidad.</div>
+          </div>
+        </li>
+        <li class="commitment-item">
+          <div class="commitment-check">✓</div>
+          <div>
+            <div class="commitment-label">Tecnología que evoluciona</div>
+            <div class="commitment-desc">Actualizamos los modelos de IA mensualmente. Lo que usas hoy será mejor mañana — sin costo adicional.</div>
+          </div>
+        </li>
+        <li class="commitment-item">
+          <div class="commitment-check">✓</div>
+          <div>
+            <div class="commitment-label">Comunidad activa</div>
+            <div class="commitment-desc">Grupo privado de agentes PropIA en WhatsApp y webinars mensuales gratuitos sobre IA e inmobiliaria.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta">
+  <h2>¿Listo para unirte a la comunidad?</h2>
+  <p>Más de 1,200 agentes ya están generando listings en 30 segundos. Empieza gratis hoy.</p>
+  <div class="cta-btns">
+    <a href="/app?tab=register" class="btn-primary">Empezar Gratis →</a>
+    <a href="/contacto.html" class="btn-ghost">Hablar con el equipo</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="about-footer">
+  <p>© 2025 PropIA. Todos los derechos reservados. &nbsp;·&nbsp;
+    <a href="/privacidad.html">Privacidad</a>
+    <a href="/terminos.html">Términos</a>
+    <a href="/cookies.html">Cookies</a>
+  </p>
+</div>
+
+</body>
+</html>
