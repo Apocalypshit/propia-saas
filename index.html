@@ -443,36 +443,6 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
 .dmock-copy-btn{width:100%;font-family:var(--font);font-size:13px;font-weight:700;color:var(--purple);background:var(--p-light);border:1.5px solid var(--p-border);border-radius:9px;padding:11px;cursor:pointer;transition:all .15s}
 .dmock-copy-btn:hover{background:var(--purple);color:white}
 
-/* ── AI CHAT WIDGET ────────────────────────────────── */
-#aiChatWidget{position:fixed;bottom:24px;right:24px;z-index:9999;display:none;flex-direction:column;width:340px;max-height:520px;background:white;border-radius:18px;box-shadow:0 12px 48px rgba(124,58,237,.22),0 2px 12px rgba(0,0,0,.1);border:1px solid var(--p-border);overflow:hidden}
-#aiChatWidget.open{display:flex}
-.chat-header{background:var(--purple);padding:16px 18px;display:flex;align-items:center;gap:12px}
-.chat-header-av{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.chat-header-info{flex:1}
-.chat-header-name{font-size:14px;font-weight:700;color:white}
-.chat-header-status{font-size:11px;color:rgba(255,255,255,.65)}
-.chat-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:20px;cursor:pointer;line-height:1;padding:4px}
-.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:200px;max-height:320px}
-.chat-msg{max-width:85%;font-size:13px;line-height:1.5;padding:10px 13px;border-radius:12px}
-.chat-msg.bot{background:#f5f4ff;color:var(--text2);border-bottom-left-radius:4px;align-self:flex-start}
-.chat-msg.user{background:var(--purple);color:white;border-bottom-right-radius:4px;align-self:flex-end}
-.chat-typing{display:flex;gap:4px;align-items:center;padding:10px 13px;background:#f5f4ff;border-radius:12px;border-bottom-left-radius:4px;align-self:flex-start;width:52px}
-.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--muted2);animation:blink 1.2s infinite}
-.chat-typing span:nth-child(2){animation-delay:.2s}
-.chat-typing span:nth-child(3){animation-delay:.4s}
-@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
-.chat-quick-replies{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px}
-.chat-qr{font-family:var(--font);font-size:12px;font-weight:600;color:var(--purple);background:var(--p-light);border:1px solid var(--p-border);border-radius:20px;padding:5px 12px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.chat-qr:hover{background:var(--purple);color:white}
-.chat-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid rgba(0,0,0,.07)}
-.chat-input{flex:1;font-family:var(--font);font-size:13px;border:1.5px solid var(--border);border-radius:9px;padding:9px 12px;outline:none;color:var(--text)}
-.chat-input:focus{border-color:var(--p-border)}
-.chat-send{background:var(--purple);color:white;border:none;border-radius:9px;padding:9px 14px;cursor:pointer;font-size:16px;transition:background .15s;flex-shrink:0}
-.chat-send:hover{background:var(--purple2)}
-/* Floating chat button */
-#chatFab{position:fixed;bottom:24px;right:24px;z-index:9998;width:56px;height:56px;border-radius:50%;background:var(--purple);color:white;border:none;box-shadow:0 4px 20px rgba(124,58,237,.4);cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
-#chatFab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(124,58,237,.5)}
-
 /* ── RESPONSIVE FIXES ──────────────────────────────── */
 @media(max-width:768px){
   .nav-links,.nav-btns{display:none}
@@ -488,8 +458,8 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
   .faq-grid{grid-template-columns:1fr !important}
   .footer-top{grid-template-columns:1fr 1fr !important}
   .stats-band-inner{grid-template-columns:repeat(2,1fr) !important}
-  #aiChatWidget{width:calc(100vw - 32px);right:16px;bottom:16px}
-  #chatFab{right:16px;bottom:16px}
+  
+  
 }
 @media(max-width:480px){
   .pricing-grid{grid-template-columns:1fr !important}
@@ -1066,7 +1036,7 @@ h2.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing
     <p class="cta-sub">Más de 1,200 agentes latinos en USA ya generan sus listings con PropIA. El plan gratis no tiene fecha de vencimiento.</p>
     <div class="cta-btns">
       <button class="btn-cta-white" onclick="window.location.href='/app?tab=register'">Empezar Gratis Ahora</button>
-      <button class="btn-cta-ghost" onclick="openAIChat()">Hablar con el equipo</button>
+      <button class="btn-cta-ghost" onclick="document.querySelector('elevenlabs-convai').shadowRoot?.querySelector('button')?.click()">Hablar con el equipo</button>
     </div>
     <p class="cta-note">Sin tarjeta de crédito · <strong>5 listings gratis</strong> · Cancela cuando quieras</p>
   </div>
@@ -1192,39 +1162,9 @@ function copyDemo() {
 }
 </script>
 
-<!-- AI CHAT FAB -->
-<button id="chatFab" onclick="openAIChat()" title="Hablar con el equipo">
-  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-</button>
-
-<!-- AI CHAT WIDGET -->
-<div id="aiChatWidget">
-  <div class="chat-header">
-    <div class="chat-header-av">
-      <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-    </div>
-    <div class="chat-header-info">
-      <div class="chat-header-name">PropIA Asistente</div>
-      <div class="chat-header-status">· En línea ahora</div>
-    </div>
-    <button class="chat-close" onclick="closeAIChat()">×</button>
-  </div>
-  <div class="chat-messages" id="chatMessages">
-    <div class="chat-msg bot">¡Hola! Soy el asistente de PropIA 👋 ¿En qué puedo ayudarte hoy?</div>
-  </div>
-  <div class="chat-quick-replies" id="chatQR">
-    <button class="chat-qr" onclick="sendQuick(this,'¿Cuánto cuesta PropIA?')">¿Cuánto cuesta?</button>
-    <button class="chat-qr" onclick="sendQuick(this,'¿Cómo funciona la IA?')">¿Cómo funciona?</button>
-    <button class="chat-qr" onclick="sendQuick(this,'Quiero empezar gratis')">Empezar gratis</button>
-    <button class="chat-qr" onclick="sendQuick(this,'¿Funciona para mi ciudad?')">¿Mi ciudad?</button>
-  </div>
-  <div class="chat-input-row">
-    <input class="chat-input" id="chatInput" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chat-send" onclick="sendChat()">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  </div>
-</div>
+<!-- ELEVENLABS CONVAI WIDGET -->
+<elevenlabs-convai agent-id="agent_4201kkb478krfqcvc1xxtn7y1ksz"></elevenlabs-convai>
+<script src="https://elevenlabs.io/convai-widget/index.js" async></script>
 
 <script>
 // ── SCROLL REVEAL ────────────────────────────────────
@@ -1319,85 +1259,11 @@ function switchResult(btn, key){
   });
 }
 
-// ── AI CHAT + WEB SPEECH (natural Spanish) ───────────
-var speechEnabled = false;
-var currentUtterance = null;
 
-function initSpeech(){
-  speechEnabled = ('speechSynthesis' in window);
-}
-initSpeech();
 
-function speakText(text){
-  if(!speechEnabled) return;
-  if(currentUtterance){ window.speechSynthesis.cancel(); }
-  // Strip HTML tags for speech
-  var clean = text.replace(/<[^>]+>/g,'').replace(/[*_#]/g,'');
-  var utter = new SpeechSynthesisUtterance(clean);
-  utter.lang = 'es-US';
-  utter.rate = 1.05;
-  utter.pitch = 1.0;
-  utter.volume = 1;
-  // Pick best Spanish voice
-  var voices = window.speechSynthesis.getVoices();
-  var preferred = ['Mónica','Monica','Paulina','Jorge','Diego','Andrés','María','Luciana','es-US','es-MX','es-419','es-ES'];
-  var picked = null;
-  for(var p=0; p<preferred.length && !picked; p++){
-    for(var v=0; v<voices.length; v++){
-      if(voices[v].name.includes(preferred[p]) || voices[v].lang.includes(preferred[p])){
-        picked = voices[v]; break;
-      }
-    }
-  }
-  if(picked) utter.voice = picked;
-  currentUtterance = utter;
-  window.speechSynthesis.speak(utter);
-}
 
-// Voices load async — reload on change
-if(window.speechSynthesis){
-  window.speechSynthesis.onvoiceschanged = function(){ speechEnabled=true; };
-}
 
-function openAIChat(){
-  var w = document.getElementById('aiChatWidget');
-  var fab = document.getElementById('chatFab');
-  w.classList.add('open');
-  if(fab) fab.style.display='none';
-  // Speak greeting after slight delay
-  setTimeout(function(){
-    speakText('¡Hola! Soy el asistente de PropIA. ¿En qué puedo ayudarte hoy?');
-  }, 400);
-}
-function closeAIChat(){
-  var w = document.getElementById('aiChatWidget');
-  var fab = document.getElementById('chatFab');
-  w.classList.remove('open');
-  if(fab) fab.style.display='flex';
-  if(window.speechSynthesis) window.speechSynthesis.cancel();
-}
-function sendQuick(btn, text){
-  document.getElementById('chatQR').style.display='none';
-  addMsg(text,'user');
-  showTypingAndReply(text);
-}
-function sendChat(){
-  var input=document.getElementById('chatInput');
-  var text=input.value.trim();
-  if(!text) return;
-  input.value='';
-  document.getElementById('chatQR').style.display='none';
-  addMsg(text,'user');
-  showTypingAndReply(text);
-}
-function addMsg(text,type){
-  var msgs=document.getElementById('chatMessages');
-  var div=document.createElement('div');
-  div.className='chat-msg '+type;
-  div.innerHTML=text;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
-}
+
 function showTypingAndReply(userText){
   var msgs=document.getElementById('chatMessages');
   var typing=document.createElement('div');
